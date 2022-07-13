@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 . 도입 | R 텍스트마이닝</title>
+<meta name="author" content="한국 R 사용자회">
+<meta name="description" content="1.1 사회과학 방법론   1.2 내용분석(Content Analysis) 내용분석은 사회과학연구자들이 많이 이용하는 연구방법론이다. 사람들 사이의 소통 내용을 효율적으로 탐구할 수 있기 때문이다. 내용분석의 초기 사례로는 1743년 스웨덴에서 간행된 90편의 성가에 대한 분석이 있다. 보다 현실적인 활용으로서는 2차대전 당시의 유럽지역 라디오방송...">
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="1 . 도입 | R 텍스트마이닝">
+<meta property="og:type" content="book">
+<meta property="og:description" content="1.1 사회과학 방법론   1.2 내용분석(Content Analysis) 내용분석은 사회과학연구자들이 많이 이용하는 연구방법론이다. 사람들 사이의 소통 내용을 효율적으로 탐구할 수 있기 때문이다. 내용분석의 초기 사례로는 1743년 스웨덴에서 간행된 90편의 성가에 대한 분석이 있다. 보다 현실적인 활용으로서는 2차대전 당시의 유럽지역 라디오방송...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1 . 도입 | R 텍스트마이닝">
+<meta name="twitter:description" content="1.1 사회과학 방법론   1.2 내용분석(Content Analysis) 내용분석은 사회과학연구자들이 많이 이용하는 연구방법론이다. 사람들 사이의 소통 내용을 효율적으로 탐구할 수 있기 때문이다. 내용분석의 초기 사례로는 1743년 스웨덴에서 간행된 90편의 성가에 대한 분석이 있다. 보다 현실적인 활용으로서는 2차대전 당시의 유럽지역 라디오방송...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R 텍스트마이닝</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">들어가며</a></li>
+<li><a class="" href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></li>
+<li><a class="active" href="intro.html"><span class="header-section-number">1</span> 도입</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="intro" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1 . </span> 도입<a class="anchor" aria-label="anchor" href="#intro"><i class="fas fa-link"></i></a>
+</h1>
+<div id="사회과학-방법론" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> 사회과학 방법론<a class="anchor" aria-label="anchor" href="#%EC%82%AC%ED%9A%8C%EA%B3%BC%ED%95%99-%EB%B0%A9%EB%B2%95%EB%A1%A0"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="내용분석content-analysis" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> 내용분석(Content Analysis)<a class="anchor" aria-label="anchor" href="#%EB%82%B4%EC%9A%A9%EB%B6%84%EC%84%9Dcontent-analysis"><i class="fas fa-link"></i></a>
+</h2>
+<p>내용분석은 사회과학연구자들이 많이 이용하는 연구방법론이다. 사람들 사이의 소통 내용을 효율적으로 탐구할 수 있기 때문이다.</p>
+<p>내용분석의 초기 사례로는 1743년 스웨덴에서 간행된 90편의 성가에 대한 분석이 있다. 보다 현실적인 활용으로서는 2차대전 당시의 유럽지역 라디오방송 인기가요 분석이 있다. 연합국 정보국이 유럽의 독일 점령 라디오 방송으로 송출된 인기 가요의 유형과 빈도를 모니터링한후 이를 독일 방송국 결과와 비교해 독일군 병력의 밀집도를 추론하는데 활용했다 (Wimmer &amp; Dominik, 2013).</p>
+<p>내용분석의 고전은 익명으로 작성된 역사적 문헌에 대한 필자 확인이다. 특정 어휘 빈도를 계산한 후 필자가 확인된 문서와 비교하는 방식을 이용해 12편의 &lt;연방주의자 논집(Federalist Papers”)&gt;의 필자로서 제임즈 메디슨임을 제시했다 (Martindale, 2015).</p>
+<p>Wimmer, R. D. &amp; Dominick, J. R. (2013). Mass Media Research: An Introduction</p>
+<p>Martindale, C. (1995). On the utility of content analysis in author attribution: The federalist. Computers and the Humanities. 29, 259-270.</p>
+<div id="내용분석의-정의" class="section level3" number="1.2.1">
+<h3>
+<span class="header-section-number">1.2.1</span> 내용분석의 정의<a class="anchor" aria-label="anchor" href="#%EB%82%B4%EC%9A%A9%EB%B6%84%EC%84%9D%EC%9D%98-%EC%A0%95%EC%9D%98"><i class="fas fa-link"></i></a>
+</h3>
+<p>내용분석은 “변수측정을 위해 체계적이고, 객관적이며, 양적인 방법으로 소통을 연구하고 분석하는 방법”으로서 3개 요소가 있다 (Wimmer &amp; Dominik, 2013).</p>
+<ul>
+<li><p>체계적(systematic): 분석규칙과 절차를 명시적으로 제시하고 일관되게 적용.</p></li>
+<li><p>객관적(obejective): 재현성. 분석자 개인의 특성이나 편향의 개입 배제해 누가 분석해도 같은 결과 산출.</p></li>
+<li><p>양적(quantitative): 메시지에 대한 숫자를 이용한 표현.</p></li>
+</ul>
+<p>내용분석을 통해 일관된 결과를 얻기 위해 코딩 절차를 준수하고, 2명 이상의 복수의 사람이 코딩을 해 개인의 편향을 줄이는 방식을 이용한다.</p>
+</div>
+<div id="컴퓨터보조-내용분석" class="section level3" number="1.2.2">
+<h3>
+<span class="header-section-number">1.2.2</span> 컴퓨터보조 내용분석<a class="anchor" aria-label="anchor" href="#%EC%BB%B4%ED%93%A8%ED%84%B0%EB%B3%B4%EC%A1%B0-%EB%82%B4%EC%9A%A9%EB%B6%84%EC%84%9D"><i class="fas fa-link"></i></a>
+</h3>
+<p>최근에는 컴퓨터를 이용한 내용분석이 늘고 있다.</p>
+<p>컴퓨터를 이용한 내용분석에는 사전방식, 기계학습(machine learning) 방식 등 다양한 접근이 있다. 사전방식은 어휘를 분석단위로 사전을 구성해 소프트웨어로 어휘의 빈도를 계산하는 방식이다. 상용제품(예: LIWC)도 있고, R이나 파이썬 등에서 사용할 수 있도록 공개한 사전도 있다 (예: moral dictionary).</p>
+<p>기계학습 방식은 컴퓨터가 텍스트에서 일정한 규칙성(pattern)을 찾도록 하는 방법이다. 사전에 규칙성을 미리 학습시키는 지도학습(supervised learning)과, 기계가 자율적으로 규칙성을 찾는 비지도학습(unsupervised learning)이 있다. 지도학습과 비지도학습 방식을 결합한 반지도학습(semi-supervized learning)도 있다.</p>
+</div>
+<div id="근거이론grounded-theory" class="section level3" number="1.2.3">
+<h3>
+<span class="header-section-number">1.2.3</span> 근거이론(grounded theory)<a class="anchor" aria-label="anchor" href="#%EA%B7%BC%EA%B1%B0%EC%9D%B4%EB%A1%A0grounded-theory"><i class="fas fa-link"></i></a>
+</h3>
+<p>분석유목 없이 텍스트데이터에서 주제를 탐색해 가는 근거이론(grounded theory)은 데이터 기반의 귀납적(inductive) 내용분석이라고 할 수 있다.</p>
+</div>
+<div id="컴퓨터-기반-근거이론" class="section level3" number="1.2.4">
+<h3>
+<span class="header-section-number">1.2.4</span> 컴퓨터 기반 근거이론<a class="anchor" aria-label="anchor" href="#%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B8%B0%EB%B0%98-%EA%B7%BC%EA%B1%B0%EC%9D%B4%EB%A1%A0"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>규칙성 탐지(pattern detection):</p></li>
+<li><p>규칙성 개선(pattern refinement):</p></li>
+<li><p>규칙성 확정(pattern confirmation):</p></li>
+</ul>
+</div>
+<div id="전산사회과학computational-social-science-디지털인문학digital-humanities" class="section level3" number="1.2.5">
+<h3>
+<span class="header-section-number">1.2.5</span> 전산사회과학(Computational Social Science) 디지털인문학(Digital Humanities)<a class="anchor" aria-label="anchor" href="#%EC%A0%84%EC%82%B0%EC%82%AC%ED%9A%8C%EA%B3%BC%ED%95%99computational-social-science-%EB%94%94%EC%A7%80%ED%84%B8%EC%9D%B8%EB%AC%B8%ED%95%99digital-humanities"><i class="fas fa-link"></i></a>
+</h3>
+<p>인문학과 사회과학에 대한 전산적 접근(Computational Approach to Humanities and Social Science)</p>
+<p>전산사회과학이 무엇인가에 대한 정의를 내리기는 어렵다. 빠르게 변하기 때문에 10년전 전산사회과학에 대한 정의가 지금의 전산사회과학에 적용되지 않을 정도다.</p>
+<p>An Introduction to Computational Social Science
+<a href="https://www.youtube.com/watch?v=zGG9wPl1C5E&amp;list=PL9UNgBC7ODr4M1_4RLr4IYcXbHPUWYMrZ" class="uri">https://www.youtube.com/watch?v=zGG9wPl1C5E&amp;list=PL9UNgBC7ODr4M1_4RLr4IYcXbHPUWYMrZ</a></p>
+<div id="전산언어학computational-linguistics" class="section level4" number="1.2.5.1">
+<h4>
+<span class="header-section-number">1.2.5.1</span> 전산언어학(Computational Linguistics)<a class="anchor" aria-label="anchor" href="#%EC%A0%84%EC%82%B0%EC%96%B8%EC%96%B4%ED%95%99computational-linguistics"><i class="fas fa-link"></i></a>
+</h4>
+<p><a href="https://web.stanford.edu/~jurafsky/slp3/" class="uri">https://web.stanford.edu/~jurafsky/slp3/</a></p>
+</div>
+</div>
+</div>
+<div id="텍스트마이닝" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> 텍스트마이닝<a class="anchor" aria-label="anchor" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%A7%88%EC%9D%B4%EB%8B%9D"><i class="fas fa-link"></i></a>
+</h2>
+<p>마이닝(mining)은 채굴이란 의미의 영어 단어다. 텍스트마이닝(text mining)이라고 하면 문서(text)를 채굴(mining)한다는 의미가 된다.</p>
+<p>텍스트마이닝은 텍스트 형식의 데이터를 알고리즘으로 수집하고 정제하고 분석해 텍스트에 담긴 의미를 파악한 다음, 그 의미를 요약해 소통하는 일련의 과정이다. 텍스트마이닝은 텍스트 데이터 마이닝이라곧 할 수 있다.</p>
+<p>텍스트마이닝이란 기계를 이용한 텍스트분석이라고 할 수 있다. 기존의 텍스트분석은 사람이 직접 문서를 읽고 그 내용을 이해하고 종합하거나(예: 근거이론), 텍스트에 분석유목을 부여해 사람이 각 유목의 빈도를 계산하는 방법(예: 내용분석)을 이용했는데, 그 과정의 상당부분을 기계가 대신하도록 했다.</p>
+<p>텍스트마이닝의 도입으로 분석할 수 있는 텍스트의 양이 과거에는 불가능했던 규모로 확장됐다. 사람은 신문기사 수천건 정도는 내용분석을 할수 있겠지만, 수백만건의 기사를 사람이 분석한다는 것은 현실적으로 불가능하다.</p>
+<p>텍스트마이닝은 크게 기계학습에 의한 방법과 그렇지 않은 방법으로 구분할 수 있다. 기계학습에 의한 방법은 지도학습, 비지도학습, 반지도학습 등으로 구분할 수 있다.</p>
+</div>
+<div id="텍스트데이터" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> 텍스트데이터<a class="anchor" aria-label="anchor" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%8D%B0%EC%9D%B4%ED%84%B0"><i class="fas fa-link"></i></a>
+</h2>
+<p>텍스트 형식의 데이터(문자형 데이터)는 다른 형식의 데이터(숫자형, 논리형)와는 많이 다르다. 문자형 데이터는 컴퓨터가 곧바로 처리할 수 없을 뿐만 아니라, 텍스트를 컴퓨터가 처리할 수 있도록 디지털화하는 매우 다양한 방식이 혼용되고 있다.</p>
+<ul>
+<li><p>숫자형
+정수, 실수 등 컴퓨터가 숫자로서 계산할 수 있는 데이터</p></li>
+<li><p>논리형
+참(TRUE), 거짓(FALSE) 등</p></li>
+</ul>
+<div id="텍스트의-단위" class="section level3" number="1.4.1">
+<h3>
+<span class="header-section-number">1.4.1</span> 텍스트의 단위<a class="anchor" aria-label="anchor" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%9D%98-%EB%8B%A8%EC%9C%84"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>말뭉치(corpus):
+문서들의 뭉치. 신문 말뭉치는 여러 신문기사들의 모음, 소설 말뭉치는 여러 소설을 모아놓은 문서들의 집합. 말뭉치는 상대적인 개념이다. 예를 들어, 소설집을 말뭉치라고 하면 개별 소설이 문서가 된다. 반면, 소설 한편을 말뭉치라고 하면, 소설의 각 장이 문서가 된다.</p></li>
+<li><p>문서(document)</p></li>
+<li><p>단어(term)</p></li>
+</ul>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#intro"><span class="header-section-number">1</span> 도입</a></li>
+<li><a class="nav-link" href="#%EC%82%AC%ED%9A%8C%EA%B3%BC%ED%95%99-%EB%B0%A9%EB%B2%95%EB%A1%A0"><span class="header-section-number">1.1</span> 사회과학 방법론</a></li>
+<li>
+<a class="nav-link" href="#%EB%82%B4%EC%9A%A9%EB%B6%84%EC%84%9Dcontent-analysis"><span class="header-section-number">1.2</span> 내용분석(Content Analysis)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EB%82%B4%EC%9A%A9%EB%B6%84%EC%84%9D%EC%9D%98-%EC%A0%95%EC%9D%98"><span class="header-section-number">1.2.1</span> 내용분석의 정의</a></li>
+<li><a class="nav-link" href="#%EC%BB%B4%ED%93%A8%ED%84%B0%EB%B3%B4%EC%A1%B0-%EB%82%B4%EC%9A%A9%EB%B6%84%EC%84%9D"><span class="header-section-number">1.2.2</span> 컴퓨터보조 내용분석</a></li>
+<li><a class="nav-link" href="#%EA%B7%BC%EA%B1%B0%EC%9D%B4%EB%A1%A0grounded-theory"><span class="header-section-number">1.2.3</span> 근거이론(grounded theory)</a></li>
+<li><a class="nav-link" href="#%EC%BB%B4%ED%93%A8%ED%84%B0-%EA%B8%B0%EB%B0%98-%EA%B7%BC%EA%B1%B0%EC%9D%B4%EB%A1%A0"><span class="header-section-number">1.2.4</span> 컴퓨터 기반 근거이론</a></li>
+<li><a class="nav-link" href="#%EC%A0%84%EC%82%B0%EC%82%AC%ED%9A%8C%EA%B3%BC%ED%95%99computational-social-science-%EB%94%94%EC%A7%80%ED%84%B8%EC%9D%B8%EB%AC%B8%ED%95%99digital-humanities"><span class="header-section-number">1.2.5</span> 전산사회과학(Computational Social Science) 디지털인문학(Digital Humanities)</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%A7%88%EC%9D%B4%EB%8B%9D"><span class="header-section-number">1.3</span> 텍스트마이닝</a></li>
+<li>
+<a class="nav-link" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8%EB%8D%B0%EC%9D%B4%ED%84%B0"><span class="header-section-number">1.4</span> 텍스트데이터</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8%EC%9D%98-%EB%8B%A8%EC%9C%84"><span class="header-section-number">1.4.1</span> 텍스트의 단위</a></li></ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-13.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

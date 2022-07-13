@@ -1,5 +1,23 @@
-book_filename: "bookdown-demo"
+book_filename: "book-tm"
 language:
+  label:
+    fig: "그림 "
+    table: "표 "
   ui:
-    chapter_name: "Chapter "
+    chapter_name: !expr function(i) paste( i, ". ")
 delete_merged_file: true
+
+
+new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+
+  # 공통사항 -------
+  "00-about-the-author.Rmd",
+
+  "01-intro.Rmd",
+
+]
+
+output_dir: docs

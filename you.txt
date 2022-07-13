@@ -1,1 +1,0 @@
-c("you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves", "young", "younger", "youngest"), 
