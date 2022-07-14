@@ -44,6 +44,7 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">들어가며</a></li>
 <li><a class="active" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
+<li><a class="" href="view-text.html"><span class="header-section-number">2</span> 텍스트 살펴보기</a></li>
 </ul>
 
         <div class="book-extra">
@@ -105,11 +106,30 @@ R마크다운 코드 덩어리에 다음 사항을 추가하고 R마크다운 �
 <p>이를 확장하여 콘솔, R마크다운, 그리고 데이터프레임에도 색상을 적용하여
 반영시킬 수 있다.</p>
 
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"_common.R"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## ──  [1mAttaching packages [22m ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>##  [32m✔ [39m  [34mggplot2 [39m 3.3.6      [32m✔ [39m  [34mpurrr   [39m 0.3.4
+##  [32m✔ [39m  [34mtibble  [39m 3.1.7      [32m✔ [39m  [34mdplyr   [39m 1.0.9
+##  [32m✔ [39m  [34mtidyr   [39m 1.2.0      [32m✔ [39m  [34mstringr [39m 1.4.0
+##  [32m✔ [39m  [34mreadr   [39m 2.1.2      [32m✔ [39m  [34mforcats [39m 0.5.1</code></pre>
+<pre><code>## ──  [1mConflicts [22m ────────────────────────────────────────── tidyverse_conflicts() ──
+##  [31m✖ [39m  [34mggplot2 [39m:: [32m%+%() [39m  masks  [34mcrayon [39m::%+%()
+##  [31m✖ [39m  [34mdplyr [39m:: [32mfilter() [39m masks  [34mstats [39m::filter()
+##  [31m✖ [39m  [34mdplyr [39m:: [32mlag() [39m    masks  [34mstats [39m::lag()</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/knit_hooks.html">knit_hooks</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>output <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">options</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
+<span>    <span class="st">'&lt;pre class="r-output"&gt;&lt;code&gt;'</span>,</span>
+<span>    <span class="fu">fansi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fansi/man/sgr_to_html.html">sgr_to_html</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/htmlEscape.html">htmlEscape</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>    <span class="st">'&lt;/code&gt;&lt;/pre&gt;'</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="index.html">들어가며</a></div>
-<div class="empty"></div>
+<div class="next"><a href="view-text.html"><span class="header-section-number">2</span> 텍스트 살펴보기</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">

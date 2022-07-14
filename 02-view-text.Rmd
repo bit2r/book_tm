@@ -17,6 +17,9 @@ knitr::knit_hooks$set(output = function(x, options){
 
 ## 특정 단어 강조 {#text-highlight}
 
+윤석열 대통령 취임사 텍스트를 `취임사_윤석열.txt` 파일로 저장한 후에 
+특정 단어 **자유** 를 탐색하여 색상을 달리하여 출력해보자. 
+
 
 ```{r view-crayon}
 ## 기본 텍스트 패키지

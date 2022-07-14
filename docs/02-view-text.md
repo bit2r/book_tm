@@ -5,20 +5,21 @@ source("_common.R")
 ```
 
 ```
-## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+## ── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.1 ──
 ```
 
 ```
-## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-## ✔ tibble  3.1.7     ✔ dplyr   1.0.9
-## ✔ tidyr   1.2.0     ✔ stringr 1.4.0
-## ✔ readr   2.1.2     ✔ forcats 0.5.1
+## [32m✔[39m [34mggplot2[39m 3.3.6     [32m✔[39m [34mpurrr  [39m 0.3.4
+## [32m✔[39m [34mtibble [39m 3.1.7     [32m✔[39m [34mdplyr  [39m 1.0.9
+## [32m✔[39m [34mtidyr  [39m 1.2.0     [32m✔[39m [34mstringr[39m 1.4.0
+## [32m✔[39m [34mreadr  [39m 2.1.2     [32m✔[39m [34mforcats[39m 0.5.1
 ```
 
 ```
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
+## ── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
+## [31m✖[39m [34mggplot2[39m::[32m%+%()[39m  masks [34mcrayon[39m::%+%()
+## [31m✖[39m [34mdplyr[39m::[32mfilter()[39m masks [34mstats[39m::filter()
+## [31m✖[39m [34mdplyr[39m::[32mlag()[39m    masks [34mstats[39m::lag()
 ```
 
 ```r
@@ -36,6 +37,39 @@ knitr::knit_hooks$set(output = function(x, options){
 
 ## 특정 단어 강조 {#text-highlight}
 
+윤석열 대통령 취임사 텍스트를 `취임사_윤석열.txt` 파일로 저장한 후에 
+특정 단어 **자유** 를 탐색하여 색상을 달리하여 출력해보자. 
+
+
+
+```r
+## 기본 텍스트 패키지
+library(tidyverse)
+library(tidytext)
+## 한국 텍스트 처리 패키지
+library(RMeCab)
+library(bitTA)
+## 글 색상
+library(glue)
+library(crayon)
+library(fansi)
+options(crayon.enabled = TRUE)
+
+
+yoon_txt <- read_lines("data/취임사_윤석열.txt")
+
+crayon_words <- function(input_text, word = "자유") {
+
+  replaced_text <- str_replace_all(input_text, word, "{red {word}}")
+
+  for(i in 1:length(replaced_text)) {
+    crayon_text <- glue::glue_col(deparse(replaced_text[[i]]))
+    print(crayon_text)
+  }
+}
+
+crayon_words(input_text = yoon_txt, "자유")
+```
 
 <pre class="r-output"><code>## "존경하고 사랑하는 국민 여러분,"
 ## "750만 재외동포 여러분,"

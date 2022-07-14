@@ -17,12 +17,10 @@ rmd_files: [
   # "00-about-the-author.Rmd",
 
   # 설치 및 환경설정 -------
-
   "01-setup.Rmd",
 
   # 텍스트 살펴보기 -------
-
-  # "02-view-text.Rmd",
+  "02-view-text.Rmd",
 
 ]
 

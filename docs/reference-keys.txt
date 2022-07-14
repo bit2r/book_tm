@@ -8,3 +8,5 @@ install-setup
 console-colors
 rmarkdown-colors
 dataframe-color
+view-text
+text-highlight

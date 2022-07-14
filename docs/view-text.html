@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>2 . 텍스트 살펴보기 | R 텍스트마이닝</title>
 <meta name="author" content="한국 R 사용자회">
-<meta name="description" content='2.1 특정 단어 강조 ## "존경하고 사랑하는 국민 여러분," ## "750만 재외동포 여러분," ## "그리고 자유를 사랑하는 세계 시민 여러분," ## "" ## "저는 이 나라를 자유민주주의와 시장경제 체제를 기반으로 국민이 진정한 주인인 나라로 재건하고, 국제사회에서 책임과 역할을 다하는 나라로 만들어야 하는 시대적 소명을 갖고 오늘 이...'>
+<meta name="description" content="2.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 library(RMeCab) library(bitTA) ## 글 색상...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
 <meta property="og:title" content="2 . 텍스트 살펴보기 | R 텍스트마이닝">
 <meta property="og:type" content="book">
-<meta property="og:description" content='2.1 특정 단어 강조 ## "존경하고 사랑하는 국민 여러분," ## "750만 재외동포 여러분," ## "그리고 자유를 사랑하는 세계 시민 여러분," ## "" ## "저는 이 나라를 자유민주주의와 시장경제 체제를 기반으로 국민이 진정한 주인인 나라로 재건하고, 국제사회에서 책임과 역할을 다하는 나라로 만들어야 하는 시대적 소명을 갖고 오늘 이...'>
+<meta property="og:description" content="2.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 library(RMeCab) library(bitTA) ## 글 색상...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2 . 텍스트 살펴보기 | R 텍스트마이닝">
-<meta name="twitter:description" content='2.1 특정 단어 강조 ## "존경하고 사랑하는 국민 여러분," ## "750만 재외동포 여러분," ## "그리고 자유를 사랑하는 세계 시민 여러분," ## "" ## "저는 이 나라를 자유민주주의와 시장경제 체제를 기반으로 국민이 진정한 주인인 나라로 재건하고, 국제사회에서 책임과 역할을 다하는 나라로 만들어야 하는 시대적 소명을 갖고 오늘 이...'>
+<meta name="twitter:description" content="2.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 library(RMeCab) library(bitTA) ## 글 색상...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -60,6 +60,35 @@
 <h2>
 <span class="header-section-number">2.1</span> 특정 단어 강조<a class="anchor" aria-label="anchor" href="#text-highlight"><i class="fas fa-link"></i></a>
 </h2>
+<p>윤석열 대통령 취임사 텍스트를 <code>취임사_윤석열.txt</code> 파일로 저장한 후에
+특정 단어 <strong>자유</strong> 를 탐색하여 색상을 달리하여 출력해보자.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## 기본 텍스트 패키지</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span>
+<span><span class="co">## 한국 텍스트 처리 패키지</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RMeCab</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bitTA</span><span class="op">)</span></span>
+<span><span class="co">## 글 색상</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/glue">glue</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/crayon#readme">crayon</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/brodieG/fansi">fansi</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>crayon.enabled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">yoon_txt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_lines.html">read_lines</a></span><span class="op">(</span><span class="st">"data/취임사_윤석열.txt"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">crayon_words</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input_text</span>, <span class="va">word</span> <span class="op">=</span> <span class="st">"자유"</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>  <span class="va">replaced_text</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">input_text</span>, <span class="va">word</span>, <span class="st">"{red {word}}"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">replaced_text</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">crayon_text</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue_col.html">glue_col</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/deparse.html">deparse</a></span><span class="op">(</span><span class="va">replaced_text</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">crayon_text</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">crayon_words</span><span class="op">(</span>input_text <span class="op">=</span> <span class="va">yoon_txt</span>, <span class="st">"자유"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## "존경하고 사랑하는 국민 여러분,"
 ## "750만 재외동포 여러분,"
 ## "그리고 <span style="color: #BB0000;">자유</span>를 사랑하는 세계 시민 여러분,"
