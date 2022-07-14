@@ -5,15 +5,5 @@ r기초
 분석-i
 분석-ii-예정
 도움받은-자료
-intro
-사회과학-방법론
-내용분석content-analysis
-내용분석의-정의
-컴퓨터보조-내용분석
-근거이론grounded-theory
-컴퓨터-기반-근거이론
-전산사회과학computational-social-science-디지털인문학digital-humanities
-전산언어학computational-linguistics
-텍스트마이닝
-텍스트데이터
-텍스트의-단위
+view-text
+section

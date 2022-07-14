@@ -14,9 +14,11 @@ rmd_files: [
   "index.Rmd",
 
   # 공통사항 -------
-  "00-about-the-author.Rmd",
+  # "00-about-the-author.Rmd",
 
-  "01-intro.Rmd",
+  # 텍스트 살펴보기 -------
+
+  "02-view-text.Rmd",
 
 ]
 
