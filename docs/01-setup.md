@@ -5,37 +5,6 @@ editor_options:
 ---
 
 
-```r
-source("_common.R")
-```
-
-```
-## ── [1mAttaching packages[22m ─────────────────────────────────────── tidyverse 1.3.1 ──
-```
-
-```
-## [32m✔[39m [34mggplot2[39m 3.3.6     [32m✔[39m [34mpurrr  [39m 0.3.4
-## [32m✔[39m [34mtibble [39m 3.1.7     [32m✔[39m [34mdplyr  [39m 1.0.9
-## [32m✔[39m [34mtidyr  [39m 1.2.0     [32m✔[39m [34mstringr[39m 1.4.0
-## [32m✔[39m [34mreadr  [39m 2.1.2     [32m✔[39m [34mforcats[39m 0.5.1
-```
-
-```
-## ── [1mConflicts[22m ────────────────────────────────────────── tidyverse_conflicts() ──
-## [31m✖[39m [34mggplot2[39m::[32m%+%()[39m  masks [34mcrayon[39m::%+%()
-## [31m✖[39m [34mdplyr[39m::[32mfilter()[39m masks [34mstats[39m::filter()
-## [31m✖[39m [34mdplyr[39m::[32mlag()[39m    masks [34mstats[39m::lag()
-```
-
-```r
-knitr::knit_hooks$set(output = function(x, options){
-  paste0(
-    '<pre class="r-output"><code>',
-    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),
-    '</code></pre>'
-  )
-})
-```
 
 # 설치 및 환경설정 {#install-setup}
 
@@ -192,13 +161,13 @@ $ sudo make install
 
 
 ```r
-remotes::install_github("bit2r/bitTA")
-
-library(bitTA)
-
-morpho_mecab("아버지가 방에 들어가신다.")
-#>      NNG      NNG 
-#> "아버지"     "방"
+# remotes::install_github("bit2r/bitTA")
+# 
+# library(bitTA)
+# 
+# morpho_mecab("아버지가 방에 들어가신다.")
+# #>      NNG      NNG 
+# #> "아버지"     "방"
 ```
 
 
@@ -210,9 +179,9 @@ morpho_mecab("아버지가 방에 들어가신다.")
 
 
 ```r
-library(bitTA)
-
-morpho_mecab("아버지가 방에 들어가신다.")
+# library(bitTA)
+# 
+# morpho_mecab("아버지가 방에 들어가신다.")
 ```
 
 

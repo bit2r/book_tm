@@ -1,5 +1,5 @@
 
-```{r setup}
+```{r setup, include = FALSE}
 source("_common.R")
 
 knitr::knit_hooks$set(output = function(x, options){
@@ -26,8 +26,8 @@ knitr::knit_hooks$set(output = function(x, options){
 library(tidyverse)
 library(tidytext)
 ## 한국 텍스트 처리 패키지
-library(RMeCab)
-library(bitTA)
+# library(RMeCab)
+# library(bitTA)
 ## 글 색상
 library(glue)
 library(crayon)

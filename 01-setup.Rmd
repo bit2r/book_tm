@@ -4,7 +4,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup}
+```{r setup, include = FALSE}
 source("_common.R")
 
 knitr::knit_hooks$set(output = function(x, options){
@@ -164,13 +164,13 @@ $ sudo make install
 
 
 ```{r install-bitTA, eval = FALSE}
-remotes::install_github("bit2r/bitTA")
-
-library(bitTA)
-
-morpho_mecab("아버지가 방에 들어가신다.")
-#>      NNG      NNG 
-#> "아버지"     "방"
+# remotes::install_github("bit2r/bitTA")
+# 
+# library(bitTA)
+# 
+# morpho_mecab("아버지가 방에 들어가신다.")
+# #>      NNG      NNG 
+# #> "아버지"     "방"
 
 ```
 
@@ -182,9 +182,9 @@ morpho_mecab("아버지가 방에 들어가신다.")
 
 
 ```{r mecab-win-install, eval = FALSE}
-library(bitTA)
-
-morpho_mecab("아버지가 방에 들어가신다.")
+# library(bitTA)
+# 
+# morpho_mecab("아버지가 방에 들어가신다.")
 
 ```
 

@@ -14,5 +14,16 @@ install-mecab-mac-rmecab
 install-mecab-mac-mecab-ko
 install-mecab-bitTA
 윈도우
+browse
+수집
+정제전처리
+정돈텍스트tidy-text
+토큰화-unnest_tokens-함수
+분석
+빈도-count-함수
+소통
+시각화
+연습
+과제
 view-text
 text-highlight

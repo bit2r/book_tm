@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>3 . 텍스트 살펴보기 | R 텍스트마이닝</title>
+<title>4 . 텍스트 살펴보기 | R 텍스트마이닝</title>
 <meta name="author" content="한국 R 사용자회">
-<meta name="description" content="3.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 library(RMeCab) library(bitTA) ## 글 색상...">
+<meta name="description" content="4.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="3 . 텍스트 살펴보기 | R 텍스트마이닝">
+<meta property="og:title" content="4 . 텍스트 살펴보기 | R 텍스트마이닝">
 <meta property="og:type" content="book">
-<meta property="og:description" content="3.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 library(RMeCab) library(bitTA) ## 글 색상...">
+<meta property="og:description" content="4.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="3 . 텍스트 살펴보기 | R 텍스트마이닝">
-<meta name="twitter:description" content="3.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 library(RMeCab) library(bitTA) ## 글 색상...">
+<meta name="twitter:title" content="4 . 텍스트 살펴보기 | R 텍스트마이닝">
+<meta name="twitter:description" content="4.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -45,7 +45,8 @@
 <li><a class="" href="index.html">들어가며</a></li>
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="" href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></li>
-<li><a class="active" href="view-text.html"><span class="header-section-number">3</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
+<li><a class="active" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
 </ul>
 
         <div class="book-extra">
@@ -53,23 +54,23 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="view-text" class="section level1" number="3">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="view-text" class="section level1" number="4">
 <h1>
-<span class="header-section-number">3 . </span> 텍스트 살펴보기<a class="anchor" aria-label="anchor" href="#view-text"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4 . </span> 텍스트 살펴보기<a class="anchor" aria-label="anchor" href="#view-text"><i class="fas fa-link"></i></a>
 </h1>
-<div id="text-highlight" class="section level2" number="3.1">
+<div id="text-highlight" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">3.1</span> 특정 단어 강조<a class="anchor" aria-label="anchor" href="#text-highlight"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> 특정 단어 강조<a class="anchor" aria-label="anchor" href="#text-highlight"><i class="fas fa-link"></i></a>
 </h2>
 <p>윤석열 대통령 취임사 텍스트를 <code>취임사_윤석열.txt</code> 파일로 저장한 후에
 특정 단어 <strong>자유</strong> 를 탐색하여 색상을 달리하여 출력해보자.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## 기본 텍스트 패키지</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span>
 <span><span class="co">## 한국 텍스트 처리 패키지</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RMeCab</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">bitTA</span><span class="op">)</span></span>
+<span><span class="co"># library(RMeCab)</span></span>
+<span><span class="co"># library(bitTA)</span></span>
 <span><span class="co">## 글 색상</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/glue">glue</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/crayon#readme">crayon</a></span><span class="op">)</span></span>
@@ -212,13 +213,13 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></div>
+<div class="prev"><a href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></div>
 <div class="empty"></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#view-text"><span class="header-section-number">3</span> 텍스트 살펴보기</a></li>
-<li><a class="nav-link" href="#text-highlight"><span class="header-section-number">3.1</span> 특정 단어 강조</a></li>
+<li><a class="nav-link" href="#view-text"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li><a class="nav-link" href="#text-highlight"><span class="header-section-number">4.1</span> 특정 단어 강조</a></li>
 </ul>
 
       <div class="book-extra">
