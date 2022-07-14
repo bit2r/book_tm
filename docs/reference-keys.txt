@@ -7,6 +7,12 @@ r기초
 install-setup
 console-colors
 rmarkdown-colors
-dataframe-color
+install-stacks
+install-mecab-mac
+install-mecab-mac-mecab
+install-mecab-mac-rmecab
+install-mecab-mac-mecab-ko
+install-mecab-bitTA
+윈도우
 view-text
 text-highlight

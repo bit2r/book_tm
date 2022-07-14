@@ -44,7 +44,8 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">들어가며</a></li>
 <li><a class="active" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
-<li><a class="" href="view-text.html"><span class="header-section-number">2</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></li>
+<li><a class="" href="view-text.html"><span class="header-section-number">3</span> 텍스트 살펴보기</a></li>
 </ul>
 
         <div class="book-extra">
@@ -87,56 +88,33 @@
 <a href="https://cran.r-project.org/web/packages/fansi/index.html"><code>fansi</code></a> 패키지가 필요하다.
 R마크다운 코드 덩어리에 다음 사항을 추가하고 R마크다운 작업을 수행하면
 자동으로 해당 색상을 <code>.html</code>, <code>.pdf</code>, <code>shiny</code> 결과물에 반영할 수 있다.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="install-setup.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup}</span></span>
-<span id="cb7-2"><a href="install-setup.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::knit_hooks$set(output = function(x, options){</span></span>
-<span id="cb7-3"><a href="install-setup.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">  paste0(</span></span>
-<span id="cb7-4"><a href="install-setup.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="in">    '&lt;pre class="r-output"&gt;&lt;code&gt;',</span></span>
-<span id="cb7-5"><a href="install-setup.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),</span></span>
-<span id="cb7-6"><a href="install-setup.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="in">    '&lt;/code&gt;&lt;/pre&gt;'</span></span>
-<span id="cb7-7"><a href="install-setup.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">  )</span></span>
-<span id="cb7-8"><a href="install-setup.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="in">})</span></span>
-<span id="cb7-9"><a href="install-setup.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
-<p>R마크다운 색상 적용에 대한 자세한 사항은 <a href="https://logfc.wordpress.com/2020/07/20/rmarkdown-and-terminal-colors/">rmarkdown and terminal colors</a>를
-참조한다.</p>
-</div>
-<div id="dataframe-color" class="section level2" number="1.3">
-<h2>
-<span class="header-section-number">1.3</span> 데이터프레임<a class="anchor" aria-label="anchor" href="#dataframe-color"><i class="fas fa-link"></i></a>
-</h2>
-<p>이를 확장하여 콘솔, R마크다운, 그리고 데이터프레임에도 색상을 적용하여
-반영시킬 수 있다.</p>
-
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="st">"_common.R"</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## ──  [1mAttaching packages [22m ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>##  [32m✔ [39m  [34mggplot2 [39m 3.3.6      [32m✔ [39m  [34mpurrr   [39m 0.3.4
-##  [32m✔ [39m  [34mtibble  [39m 3.1.7      [32m✔ [39m  [34mdplyr   [39m 1.0.9
-##  [32m✔ [39m  [34mtidyr   [39m 1.2.0      [32m✔ [39m  [34mstringr [39m 1.4.0
-##  [32m✔ [39m  [34mreadr   [39m 2.1.2      [32m✔ [39m  [34mforcats [39m 0.5.1</code></pre>
-<pre><code>## ──  [1mConflicts [22m ────────────────────────────────────────── tidyverse_conflicts() ──
-##  [31m✖ [39m  [34mggplot2 [39m:: [32m%+%() [39m  masks  [34mcrayon [39m::%+%()
-##  [31m✖ [39m  [34mdplyr [39m:: [32mfilter() [39m masks  [34mstats [39m::filter()
-##  [31m✖ [39m  [34mdplyr [39m:: [32mlag() [39m    masks  [34mstats [39m::lag()</code></pre>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/knit_hooks.html">knit_hooks</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>output <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">options</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span></span>
-<span>    <span class="st">'&lt;pre class="r-output"&gt;&lt;code&gt;'</span>,</span>
-<span>    <span class="fu">fansi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fansi/man/sgr_to_html.html">sgr_to_html</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/htmlEscape.html">htmlEscape</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>    <span class="st">'&lt;/code&gt;&lt;/pre&gt;'</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<!-- ````markdown -->
+<!-- ```{r setup} -->
+<!-- knitr::knit_hooks$set(output = function(x, options){ -->
+<!--   paste0( -->
+<!--     '<pre class="r-output"><code>', -->
+<!--     fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE), -->
+<!--     '</code></pre>' -->
+<!--   ) -->
+<!-- }) -->
+<!-- ``` -->
+<!-- ```` -->
+<!-- R마크다운 색상 적용에 대한 자세한 사항은 [rmarkdown and terminal colors](https://logfc.wordpress.com/2020/07/20/rmarkdown-and-terminal-colors/)를  -->
+<!-- 참조한다. -->
+<!-- ## 데이터프레임 {#dataframe-color} -->
+<!-- 이를 확장하여 콘솔, R마크다운, 그리고 데이터프레임에도 색상을 적용하여  -->
+<!-- 반영시킬 수 있다. -->
 </div>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="index.html">들어가며</a></div>
-<div class="next"><a href="view-text.html"><span class="header-section-number">2</span> 텍스트 살펴보기</a></div>
+<div class="next"><a href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#install-setup"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="nav-link" href="#console-colors"><span class="header-section-number">1.1</span> 콘솔 색상</a></li>
 <li><a class="nav-link" href="#rmarkdown-colors"><span class="header-section-number">1.2</span> R마크다운 색상</a></li>
-<li><a class="nav-link" href="#dataframe-color"><span class="header-section-number">1.3</span> 데이터프레임</a></li>
 </ul>
 
       <div class="book-extra">
