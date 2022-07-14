@@ -1,7 +1,21 @@
 
+```{r setup}
+source("_common.R")
+
+knitr::knit_hooks$set(output = function(x, options){
+  paste0(
+    '<pre class="r-output"><code>',
+    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),
+    '</code></pre>'
+  )
+})
+
+```
+
+
 # 텍스트 살펴보기 {#view-text}
 
-## 
+## 특정 단어 강조 {#text-highlight}
 
 
 ```{r view-crayon}
@@ -14,7 +28,9 @@ library(bitTA)
 ## 글 색상
 library(glue)
 library(crayon)
+library(fansi)
 options(crayon.enabled = TRUE)
+
 
 yoon_txt <- read_lines("data/취임사_윤석열.txt")
 

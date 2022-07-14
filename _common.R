@@ -1,8 +1,9 @@
+## 기본설정 -----------------
 set.seed(7654)
 options(digits = 3)
 
 knitr::opts_chunk$set(
-  echo = FALSE,
+  echo = TRUE,
   message = FALSE,
   warning = FALSE,
   cache = FALSE,
@@ -14,6 +15,21 @@ knitr::opts_chunk$set(
 )
 
 options(dplyr.print_min = 6, dplyr.print_max = 6)
+
+## 색상 ----------------------
+knitr::knit_hooks$set(output = function(x, options){
+  paste0(
+    '<pre class="r-output"><code>',
+    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),
+    '</code></pre>'
+  )
+})
+
+library(crayon)
+library(fansi)
+options(crayon.enabled = TRUE)
+
+
 
 ################################################################################
 # 데이터베이스
