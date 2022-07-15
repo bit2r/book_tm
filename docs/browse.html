@@ -17,7 +17,8 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -43,10 +44,16 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">들어가며</a></li>
+<li><a class="" href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></li>
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="" href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></li>
 <li><a class="active" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
 <li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></li>
+<li><a class="" href="tf-idf.html"><span class="header-section-number">6</span> 단어 빈도수</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></li>
+<li><a class="" href="topic-modeling.html"><span class="header-section-number">8</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></li>
 </ul>
 
         <div class="book-extra">
@@ -90,7 +97,7 @@
 벗이 먼 곳에서부터 온다면 참으로 즐겁지 않겠는가?
 남이 알아주지 않아도 성내지 않는다면 참으로 군자답지 않겠는가?
 </code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"배우며 제때에 실행하면 진실로 즐겁지 않겠는가?</span></span>
 <span><span class="st">            벗이 먼 곳에서부터 온다면 참으로 즐겁지 않겠는가?</span></span>
 <span><span class="st">            남이 알아주지 않아도 성내지 않는다면 참으로 군자답지 않겠는가?"</span><span class="op">)</span></span>
@@ -121,7 +128,7 @@ f
 <li><p>토큰화 <code>unnest_tokens</code></p></li>
 </ul>
 <p>정돈된 세계(tidyverse)에서 텍스트데이터를 정돈텍스트 구조에 담는 함수가 <code>tidytext</code>패키지에서 제공하는 <code>unnest_tokens</code>다. (철자에 주의하자. 복수 <code>s</code>가 붙어 있다.)</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span></span></code></pre></div>
 <p><code>tidytext</code>의 자세한 사용법은 아래 사용설명서를 참조한다.</p>
 <ul>
@@ -131,7 +138,7 @@ f
 <p><code>unnest_tokens</code>은 데이트프레임 구조의 데이터를 받아 처리한다. 앞서 만든 문자벡터 <code>text_v</code>를 <strong>정돈텍스트로 바꾸기 위해서는 먼저 데이터프레임으로 바꿔야 한다.</strong> <code>tibble</code>패키지의 <code>tibble</code>함수를 이용해 <code>text_v</code>의 내용을 데이터프레임에 담아 보자. <code>tibble</code>은 <code>tidyverse</code>에 부착돼 있다.</p>
 <p>티블(tibble)은 현대적인 데이터프레임의 형식이다. 문자열을 요인(factor)형식으로 로 바꾸지 않는 등 텍스트분석에 사용하기 좋다.</p>
 <p>데이터프레임의 열 이름을 무엇으로 설정했는지에 주의하자. 여기서는 “text”로 설정했다.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="va">text_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span></span>
 <span><span class="va">text_df</span></span></code></pre></div>
@@ -142,7 +149,7 @@ f
 </code></pre>
 <p>이제 생성된 데이터프레임을 <code>tidytext</code>패키지의 <code>unnest_tokens</code>함수를 이용해 정돈텍스트 구조로 바꿔보자. (철자에 주의. 복수 s)</p>
 <p>앞서 만든 데이터프레임의 열 이름(“text”)을 <code>input</code>에 투입한 것을 잘 기억하자.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span>
 <span><span class="va">text_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 21 × 1</span>
@@ -162,7 +169,7 @@ f
 </ul>
 <p>이처럼 텍스트데이터를 컴퓨터가 분석할 수 있도록 양화할 수 있는 단위로 나누는 것은 토큰화(tkoenization)이라고 한다.</p>
 <p>이번에는 토큰을 단어 2개로 묶은 ngram으로 정돈텍스트를 만들어 보자.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span>, </span>
 <span>                          token <span class="op">=</span> <span class="st">"ngrams"</span>, n <span class="op">=</span> <span class="fl">2</span> <span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 20 × 1</span>
@@ -189,7 +196,7 @@ f
 </h3>
 <p>이제 텍스트마이닝을 해보자. 어떤 문서에서 많이 사용하는 단어가 있다면, 그 문서는 그 단어가 나타내는 의미에 의해 규정된다고 할 수 있다. “사랑”이란 단어를 많이 사용한 문서면 사랑에 대한 문서이고, “학습”이란 단어를 많이 사용했으면 학습에 대한 문서일 가능성이 높다.</p>
 <p>문서에 등장하는 단어를 세어 주는 함수가 <code>count</code>다. <code>count</code>함수를 앞서 정돈텍스트 구조에 저장된 텍스트에 많이 등장한 단어가 무멋인지 찾아보자.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_tk</span> <span class="op">&lt;-</span> <span class="va">text_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span><span class="op">)</span></span>
 <span><span class="va">text_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -219,7 +226,7 @@ f
 <p>분석결과가 데이터프레임에 저장돼 있으므로 <code>ggplot2</code>패키지로 직접 파이핑(piping)할 수 있다. <code>ggplot2</code>는 파이프(<code>%&gt;%</code>)가 아니라 <code>+</code>로 레이어를 더하는 방식을 이용한다는 점에 주의하자.</p>
 <p><code>ggplot2</code>는 <code>tidyverse</code>에 부착돼 있다.</p>
 <p>다음 코드는 2회 이상 등장<code>filter(n &gt; 1)</code>한 단어를 등장빈도 순서대로 정렬<code>mutate(word = reorder(word, n))</code>해 막대도포<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code>로 시각화했다.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -283,7 +290,7 @@ f
 </li>
 </ul>
 <p>텍스트 양이 많은 편이니 텍스트 객체를 별도로 마련하자.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_txt</span> <span class="op">&lt;-</span> <span class="st">"13인의 아해가 도로로 질주하오.</span></span>
 <span><span class="st">(길은 막다른 골목이 적당하오.)</span></span>
 <span><span class="st"></span></span>
@@ -309,7 +316,7 @@ f
 <span><span class="st"></span></span>
 <span><span class="st">(길은 뚫린 골목이라도 적당하오.)</span></span>
 <span><span class="st">13인의 아해가 도로로 질주하지 아니하여도 좋소."</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 자료준비</span></span>
 <span><span class="va">txt_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">ogamdo_txt</span><span class="op">)</span></span>
 <span></span>
@@ -331,7 +338,7 @@ f
 ## <span style="color: #555555;"># … with 39 more rows</span>
 </code></pre>
 <p>이제 분석결과를 <code>ggplot2</code>의 막대도표로 시각화하자. 4회 이상 등장한 단어만 포함시키자.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">txt_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -387,7 +394,7 @@ f
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-14.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -395,6 +402,34 @@ f
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

@@ -1,0 +1,638 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+source("_common.R")
+```
+
+
+# 감성분석 {#sentiment}
+
+## 감정어 빈도 {#anal1freq}
+
+
+단어(term) - 문서(document) - 말뭉치(corpus)
+
+- 사전방식
+  - 말뭉치에서 많이 사용된 일군의 단어집단의 빈도 계산. 감정사전을 이용하면 감정어 빈도를 구할 수 있다. 
+- tf_idf
+  - 말뭉치의 문서별로 중요하게 사용된 단어의 빈도 계산
+- 주제모형(topic modeling)
+  - 말뭉치에서 주제를 나타내는 단어의 분포 계산
+
+
+사전방식은 말뭉치에서 많이 사용된 일군의 단어를 사전으로 만들어 해당 단어 집단의 빈도 계산.  
+
+- 감정사전
+각 단어를 감정에 따라 분류
+- 도덕기반사전
+각 단어를 도덕감정에 따라 분류
+- LIWC(Linguistic Inquiry and Word Count)
+일상에서 사용하는 단어를 통해 생각, 느낌 등의 심리 측정. 상용.
+
+
+## 국문 감정사전
+
+ - 영문감정사전은 `tidytext`에 포함된 3종의 감정사전이 있다. 
+
+[KNU한국어감성사전](https://github.com/park1200656/KnuSentiLex)
+
+군산대 소프트웨어융합공학과 Data Intelligence Lab에서 개발한 한국어감정사전이다. 표준국어대사전을 구성하는 각 단어의 뜻풀이를 분석하여 긍부정어를 추출했다. 
+
+보편적인 기본 감정 표현을 나타내는 긍부정어로 구성된다. 보편적인 긍정 표현으로는 ‘감동받다’, ‘가치 있다’, ‘감사하다’와 보편적인 부정 표현으로는 ‘그저 그렇다’, ‘도저히 ~수 없다’, ‘열 받다’ 등이  있다. 이 사전을 토대로 각 영역(음식, 여행지 등)별 감정사전을 구축하는 기초 자료로 활용할 수 있다. 
+
+[KNU한국어감성사전](https://github.com/park1200656/KnuSentiLex)은 다음 자료를 통합해 개발했다. 
+
+(1) 국립국어원 표준국어대사전의 뜻풀이(glosses) 분석을 통한 긍부정 추출(이 방법을 통해 대부분의 긍부정어 추출) 
+(2) 김은영(2004)의 긍부정어 목록 
+(3) SentiWordNet 및 SenticNet-5.0에서 주로 사용되는 긍부정어 번역 
+(4) 최근 온라인에서 많이 사용되는 축약어 및 긍부정 이모티콘 목록
+
+위 자료를 통합해 총 1만4천여개의 1-gram, 2-gram, 관용구, 문형, 축약어, 이모티콘 등에 대한 긍정, 중립, 부정 판별 및 정도(degree)의 값 계산했다. 
+
+
+### 사전 데이터프레임 만들기
+
+KNU한국어감정사전을 다운로드 받아 압축을 풀어 데이터프레임 "senti_dic_df"에 할당하자. 
+
+먼저 파일을 `data`폴더에 다운로드해  `knusenti.zip`파일로 저장한다.
+
+```{r frq1 }
+pkg_v <- c("tidyverse", "tidytext", "epubr", "RcppMeCab")
+lapply(pkg_v, require, ch = T)
+
+```
+
+```{r frq2 , eval=FALSE}
+url_v <- "https://github.com/park1200656/KnuSentiLex/archive/refs/heads/master.zip"
+dest_v <- "data/knusenti.zip"
+
+download.file(url = url_v, 
+              destfile = dest_v,
+              mode = "wb")
+
+list.files("data/.")
+
+```
+
+다운로드받은 `knusenti.zip`파일을 압축해제해 필요한 사전자료의 위치를 파악한다. 
+
+```{r frq3 , eval=FALSE}
+unzip("knusenti.zip", exdir = "data")
+list.files("data/.")
+
+```
+
+
+`data/KnuSentiLex-master` 폴더에 있는 파일의 종류를 탐색한다. 
+
+```{r frq4 }
+list.files("data/KnuSentiLex-master/.")
+
+```
+
+`SentiWord_Dict.txt`가 사전내용이 들어있는 파일이다. 9번째 있으므로, 이를 선택해 R환경으로 이입하자. 
+
+```{r frq5 }
+senti_name_v <- list.files("data/KnuSentiLex-master/.")[9]
+senti_name_v
+read_lines(str_c("data/KnuSentiLex-master/", senti_name_v)) %>% head(10)
+
+```
+
+개별 요소와 요소 사이가 공백문자로 구분돼 있다. 
+
+```{r frq6 , eval=FALSE}
+read_lines(str_c("data/KnuSentiLex-master/", senti_name_v)) %>% 
+  head(10) %>% str_extract("\t|\n| ")
+
+```
+
+요소를 구분한 공백문자는 탭(`\t`)이다. `read_tsv`로 이입해 내용을 검토하자. 
+
+```{r frq7 , eval=FALSE}
+read_tsv(str_c("data/KnuSentiLex-master/", senti_name_v)) %>% head(10)
+read_tsv(str_c("data/KnuSentiLex-master/", senti_name_v), col_names = F) %>% head(10)
+
+```
+
+`senti_dic_df`에 할당하자. 
+
+```{r frq8 }
+senti_dic_df <- read_tsv(str_c("data/KnuSentiLex-master/", senti_name_v), col_names = F)
+glimpse(senti_dic_df)
+senti_dic_df[1-5, ]
+
+```
+
+열의 이름을 내용에 맞게 변경하자. 감정단어의 열은 `word`로, 감정점수의 열은 `sScore`로 변경. 
+
+```{r frq9 }
+senti_dic_df <- senti_dic_df %>% rename(word = X1, sScore = X2)
+glimpse(senti_dic_df)
+
+```
+
+이제 [KNU한국어감성사전](https://github.com/park1200656/KnuSentiLex)을 R환경에서 사용할 수 있다. 
+
+
+##### 사전내용
+
+KNU감성사전에 포함된 긍정단어와 부정단어를 살펴보자.
+
+```{r frq10 }
+senti_dic_df %>% filter(sScore == 2) %>% arrange(word)
+senti_dic_df %>% filter(sScore == -2) %>% arrange(word)
+
+```
+
+
+각 감정점수별로 단어의 수를 계산해보자.
+
+```{r frq11 }
+senti_dic_df %>% count(sScore)
+
+```
+
+
+감정점수가 -2 ~ 2까지 정수로 부여돼 있다. 이를 3단계로 줄여 각각 '긍정, 중립, 부정'으로 명칭을 바꾸자. 
+
+```{r frq12 }
+senti_dic_df %>% 
+  mutate(emotion = ifelse(sScore >= 1, "positive", 
+                          ifelse(sScore <= -1, "negative", "neutral"))) %>% 
+  count(emotion)
+
+```
+
+
+`sScore` 열에 결측값이 한 행에 있다. 감정단어와 감정값 사이에 `\t`이 아닌 기호로 분리돼 있었기 때문이다. 결측값이 있는 행을 제거하고, 해당 내용을 추가하자. 
+
+```{r frq13 }
+senti_dic_df$sScore %>% unique()
+
+senti_dic_df %>% 
+  filter(is.na(sScore)) 
+
+senti_dic_df %>% 
+  filter(!is.na(sScore)) %>% 
+  add_row(word = "갈등", sScore = -1) -> senti_dic_df 
+
+senti_dic_df %>% 
+  filter(!is.na(sScore)) %>% count(sScore)
+
+knu_dic_df <- senti_dic_df %>% 
+  filter(!is.na(sScore))
+
+```
+
+
+### 연습 
+
+헌번전문을 토큰화한 다음, 긍정어와 부정어의 빈도를 계산하려고 한다. 이를 위해 토큰화한 헌법전문과 KNU한국어감성사전을 결합해 감정 단어만 추려내려 한다. 다음 중 어느 결합을 이용해야 하는가? 왜?
+
+- semi_join
+- anti_join
+- inner_join
+- left_join
+- right_join
+- full_join
+
+위에서 선택한 _join으로 KNU한국어감성사전을 이용해 헌법전문에서 긍정어와 부정어를 추출하자. 
+
+```{r frq14 }
+con_v <- "유구한 역사와 전통에 빛나는 우리 대한국민은 3·1운동으로 건립된 대한민국임시정부의 법통과 불의에 항거한 4·19민주이념을 계승하고, 조국의 민주개혁과 평화적 통일의 사명에 입각하여 정의·인도와 동포애로써 민족의 단결을 공고히 하고, 모든 사회적 폐습과 불의를 타파하며, 자율과 조화를 바탕으로 자유민주적 기본질서를 더욱 확고히 하여 정치·경제·사회·문화의 모든 영역에 있어서 각인의 기회를 균등히 하고, 능력을 최고도로 발휘하게 하며, 자유와 권리에 따르는 책임과 의무를 완수하게 하여, 안으로는 국민생활의 균등한 향상을 기하고 밖으로는 항구적인 세계평화와 인류공영에 이바지함으로써 우리들과 우리들의 자손의 안전과 자유와 행복을 영원히 확보할 것을 다짐하면서 1948년 7월 12일에 제정되고 8차에 걸쳐 개정된 헌법을 이제 국회의 의결을 거쳐 국민투표에 의하여 개정한다."
+
+tibble(text = con_v) %>% 
+  unnest_tokens(output = word, 
+                input = text) %>% 
+  inner_join(knu_dic_df)
+
+```
+
+형태소를 추출해 분석해보자. `RcppMeCab` 사용
+
+```{r frq15 }
+con_v %>% enc2utf8 %>% tibble(text = .) %>% 
+  unnest_tokens(output = word, 
+                input = text,
+                token = pos) %>%
+  separate(col = word, 
+           into = c("word", "morph"),
+           sep = "/") %>% 
+  inner_join(knu_dic_df)
+```
+
+`KoNLP`로 분석해보자.  
+
+```{r frq16, eval = FALSE }
+con_v %>% SimplePos09() %>% flatten_dfc() %>% 
+  pivot_longer(everything(), 
+               names_to = "header", 
+               values_to = "value") %>% 
+  separate_rows(value, sep = "\\+") %>% 
+  separate(value, into = c("word", "pos"), sep = "/") %>% 
+  inner_join(knu_dic_df)
+  
+```
+
+감정사전에 없는 단어를 제거하지 말고 결합해보자. `left_join`을 이용한다. 감성사전에 없는 단어에는 `sScore`열의 `NA`를 `0`으로 바꾼다.  
+
+
+```{r frq17, eval = FALSE }
+con_v %>% SimplePos09() %>% flatten_dfc() %>% 
+  pivot_longer(everything(), 
+               names_to = "header", 
+               values_to = "value") %>% 
+  separate_rows(value, sep = "\\+") %>% 
+  separate(value, into = c("word", "pos"), sep = "/") %>% 
+  left_join(knu_dic_df) %>% 
+  mutate(sScore = ifelse(is.na(sScore), 0, sScore)) %>% 
+  arrange(desc(sScore))
+
+```
+
+
+헌법 전문의 감정점수를 구해보자. 
+
+```{r frq18, eval = FALSE }
+con_v %>% SimplePos09() %>% flatten_dfc() %>% 
+  pivot_longer(everything(), 
+               names_to = "header", 
+               values_to = "value") %>% 
+  separate_rows(value, sep = "\\+") %>% 
+  separate(value, into = c("word", "pos"), sep = "/") %>% 
+  left_join(knu_dic_df) %>% 
+  mutate(sScore = ifelse(is.na(sScore), 0, sScore)) %>% 
+  summarise(score = sum(sScore))
+
+```
+
+
+
+
+## 감정분석
+
+긴 문서를 이용해 분석해보자. 
+
+### 수집
+
+한글소설을 모아놓은 직지프로젝트 파일을 다운로드 받는다. 
+
+```{r frq19 , eval=FALSE}
+dir.create("data")
+file_url <- 'https://www.dropbox.com/s/ug3pi74dnxb66wj/jikji.epub?dl=1'
+download.file(url = file_url, 
+              destfile = "data/jikji.epub",
+              mode="wb")
+
+```
+
+
+다운로드받은 epub파일을 R환경으로 이입해 데이터구조를 살핀다. 
+
+```{r frq20 }
+epub("data/jikji.epub") %>% glimpse()
+
+```
+
+데이터는 리스트구조의 `data`열 안의 93행 4열의 데이터프레임에 저장돼 있다. 리스트구조의 첬재 요소이므로 `[[ ]]`로 부분선택해 구조를 살펴보자.  
+
+
+```{r frq21 }
+jikji_all_df <- epub("data/jikji.epub") %>% .$data %>% .[[1]] %>% 
+  arrange(desc(nchar))
+
+```
+
+
+### 정제
+
+`text`열에 93편의 소설 본문이 들어있다. `sosul_v`에 할당해 구조를 살펴보자. 
+
+```{r frq22 }
+sosul_v <- epub("data/jikji.epub") %>% .$data %>% .[[1]] %>% .$text
+sosul_v %>% glimpse
+
+```
+
+
+소설 제목, 지은이, 출전, 본문을 추출해보자. 
+
+```{r frq23 }
+sosul_v %>% str_extract(".*\\b")
+sosul_v %>% str_extract("지은이.*\\b") %>% str_remove("지은이: ")
+sosul_v %>% str_extract("출전.*\\b") %>% 
+  str_remove(":") %>% str_remove("\\)") %>% str_remove("출전 ")
+sosul_v %>% str_squish() %>% 
+  str_extract("본문.*") %>%
+  str_remove("본문|:") %>% .[5]
+
+```
+
+
+데이터프레임에 저장하자. 마지막 4행은 소설본문이 아니므로 제외하고 저장. 
+
+```{r frq24 }
+title_v <- sosul_v %>% str_extract(".*\\b")
+author_v <- sosul_v %>% str_extract("지은이.*\\b") %>% str_remove("지은이: ")
+source_v <- sosul_v %>% str_extract("출전.*\\b") %>% 
+  str_remove(":") %>% str_remove("\\)") %>% str_remove("출전 ")
+main_v <- sosul_v %>% str_squish() %>% 
+  str_extract("본문.*") %>% str_remove("본문|:")
+
+sosul_df <- tibble(title = title_v, 
+       author = author_v,
+       source = source_v,
+       main = main_v) %>% .[1:89,]
+```
+
+
+```{r frq25 }
+sosul_df %>% glimpse()
+
+```
+
+비슷한 길이의 소설 1편씩 추출해보자. 
+
+
+```{r frq26 }
+jikji_all_df$nchar[1:10]
+sosul2_df <- sosul_df[9:10, ] 
+sosul2_df
+
+```
+
+
+9번째와 10번째 소설의 길이가 둘다 21000자로 비슷하다. 이상의 '권태'와 나혜석의 '규원'이다. 
+
+두 편의 소설은 웹에서도 볼수 있다.
+
+- [이상의 '권태'](https://ko.wikisource.org/wiki/권태)
+
+일제식민지 시기 지식인의 무기력함과 좌절을 여름날 벽촌에서의 권태로운 생활에 대한 묘사를 통해 나타낸 수필. 
+
+- [나혜석의 '규원'](https://ko.wikisource.org/wiki/규원)
+
+1921년 여성 최초의 서양화가이자 소설가 나혜석의 단편소설. 양반집 규수였던 여인이 사랑하는 이에에 버림받은 한을 여성 특유의 섬세한 표현으로 그린 단편. 규수의 원한이라 규원. 
+
+
+### 분석 및 소통
+
+감정어휘 빈도를 계산해 두 문서에 감정을 분석해보자.
+
+
+```{r frq27 }
+sosul2_senti_df <- sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  inner_join(knu_dic_df) %>% 
+  group_by(author) %>% 
+  count(word, sScore, sort = T) %>% 
+  filter(str_length(word) > 1) %>% 
+  mutate(word = reorder(word, n)) %>% 
+  slice_head(n = 20)
+
+sosul2_senti_df %>% 
+  ggplot() + geom_col(aes(n, word, fill = sScore), show.legend = F) +
+  facet_wrap(~author, scales = "free")
+
+
+```
+
+형태소를 분석해 감정을 분석해 보자. `RcppMeCab`의 `pos()`함수를 이용하자. 
+
+```{r frq28 }
+sosul2_senti_tk <- sosul2_df %>% 
+  unnest_tokens(word, main, token = pos) %>% 
+  separate(col = word, 
+           into = c("word", "morph"), 
+           sep = "/" ) %>% 
+  inner_join(knu_dic_df) %>% 
+  group_by(author) %>% 
+  count(word, sScore, sort = T) %>% 
+  filter(str_length(word) > 1) %>% 
+  mutate(word = reorder(word, n)) %>% 
+  slice_head(n = 20)
+
+sosul2_senti_tk %>% 
+  ggplot() + geom_col(aes(n, word, fill = sScore), show.legend = F) +
+  facet_wrap(~author, scales = "free")
+
+```
+
+형태소를 분석한 결과를 통해 나타난 두 문서의 감정이 조금 더 긍정적으로 변했다. 형태소분석하면서 부정어휘로 구분됐던 단어들이 한글자로 분리돼 불용어로 제거된 결과다. 
+
+
+
+### 문서의 감정점수 계산
+
+'권태'와 '규원'의 감정점수를 비교해 어느 글이 더 부정적인지 살펴보자. 각 토큰에 감정점수 부여한다. 감정사전에 없는 단어를 남겨두기 위해 `left_join()`이용 
+
+```{r frq29 }
+sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  left_join(knu_dic_df) %>% 
+  mutate(sScore = ifelse(is.na(sScore), 0, sScore)) %>% 
+  arrange(sScore)
+
+```
+
+
+감정단어를 극성별로 분류하자. 사전의 감정점수가 5수준으로 돼 있는 것을  3수준으로 줄인다. 
+
+```{r frq30 }
+sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  left_join(knu_dic_df) %>% 
+  mutate(sScore = ifelse(sScore >= 1, "긍정",
+                         ifelse(sScore <= -1, "부정", "중립"))) %>% 
+  count(sScore)
+
+```
+
+'권태'와 '규원'의 감정점수 계산
+
+
+```{r frq31 }
+sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  left_join(knu_dic_df) %>% 
+  mutate(sScore = ifelse(is.na(sScore), 0, sScore)) %>% 
+  summarise(emotion = sum(sScore))
+
+```
+
+
+
+### 감정 극성별 단어빈도
+
+감정사전에서 긍정감정 단어와 부정단어를 각각 긍정단어 사전과 부정단어 사전  만들자
+
+```{r frq32 }
+knu_pos_df <- knu_dic_df %>% 
+  filter(sScore > 0)
+knu_pos_df$sScore %>% unique()
+
+knu_neg_df <- knu_dic_df %>% 
+  filter(sScore < 0)
+knu_neg_df$sScore %>% unique()
+
+
+```
+
+```{r frq33 }
+sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  inner_join(knu_pos_df) %>% 
+  count(author, word, sort = T)
+
+sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  inner_join(knu_neg_df) %>% 
+  count(author, word, sort = T)
+
+
+```
+
+
+
+
+### 단어구름에 극성별 단어빈도 표시
+
+```{r frq34 , eval=FALSE}
+install.packages("wordcloud")
+
+```
+
+```{r frq35 }
+library(wordcloud)
+sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  count(word) %>% 
+  filter(str_length(word) > 1) %>% 
+  with(wordcloud(word, n, max.words = 50))
+
+```
+
+긍정단어와 부정단어 분리
+
+```{r frq36 }
+library(wordcloud)
+sosul2_df %>% 
+  unnest_tokens(word, main) %>% 
+  inner_join(knu_dic_df) %>% 
+  mutate(emotion = ifelse(sScore > 0, "긍정", ifelse(sScore < 0, "부정", "중립"))) %>% 
+  filter(emotion != "중립") %>% 
+  count(word, emotion, sort = T) %>% 
+  filter(str_length(word) > 1) %>% 
+  reshape2::acast(word ~ emotion, value.var = "n", fill = 0) %>% 
+  comparison.cloud(colors = c("blue", "red"), max.words = 50)
+  
+```
+
+
+
+### 문장 전개에 따른 감정 변화
+
+문장 단위로 토큰화하고, `row_number()`를 이용해 각 문장단위로 번호를 부여한다. 
+
+```{r frq37 }
+sosul2_df %>% 
+  unnest_tokens(sentence, main, token = "sentences") %>% 
+  mutate(linenumber = row_number()) %>% 
+  unnest_tokens(word, sentence)
+
+```
+
+
+5수준인 감정사전의 감정점수를 긍정과 부정 등 2수준으로 축소하자. 
+
+```{r frq38 }
+sosul2_df %>% 
+  unnest_tokens(sentence, main, token = "sentences") %>% 
+  mutate(linenumber = row_number()) %>% 
+  unnest_tokens(word, sentence) %>% 
+  inner_join(knu_dic_df) %>% 
+  mutate(emotion = ifelse(sScore > 0, "긍정", 
+                          ifelse(sScore < 0, "부정", "중립")))
+
+```
+
+긍정감정과 부정감정의 차이를 계산한다. 지은이를 기준으로 각 문장(행)별로 감정의 빈도를 계산하면, 글의 진행에 따른 감정의 변화를 나타낼 수 있다. 그런데, 개별 문장에는 감정어가 들어있는 빈도가 적기 때문에, 여러 문장을 하나의 단위로 묶을 필요가 있다. 이를 위해 몫만을 취하는 정수 나눗셈(`%/%`)활용. 
+
+```{r frq39 }
+c(1, 10, 20, 30, 40, 50) / 20
+c(1, 10, 20, 30, 40, 50) %/% 20
+
+```
+
+여러 행을 묶지 않고 지은이 별로 감정어의 빈도를 계산하면 334행에는 긍정단어 2개, 부정단어가 1개 있음을 알수 있다. 
+
+```{r frq40 }
+sosul2_df %>% 
+  unnest_tokens(sentence, main, token = "sentences") %>% 
+  mutate(linenumber = row_number()) %>% 
+  unnest_tokens(word, sentence) %>% 
+  inner_join(knu_dic_df) %>% 
+  mutate(emotion = ifelse(sScore > 0, "긍정", 
+                          ifelse(sScore < 0, "부정", "중립"))) %>% 
+  count(author, index = linenumber, emotion)
+
+```
+
+각 행을 10으로 정수나눗셈을 하면 10개 행씩 모두 같은 값으로 묶을 수 있다. 334행부터 339행인 33이 된다. 긍정단어와 부정단어도 각각 5개가 된다. 
+
+```{r frq41 }
+sosul2_df %>% 
+  unnest_tokens(sentence, main, token = "sentences") %>% 
+  mutate(linenumber = row_number()) %>% 
+  unnest_tokens(word, sentence) %>% 
+  inner_join(knu_dic_df) %>% 
+  mutate(emotion = ifelse(sScore > 0, "긍정", 
+                          ifelse(sScore < 0, "부정", "중립"))) %>% 
+  count(author, index = linenumber %/% 10, emotion)
+
+```
+
+
+긍정감정 점수에서 부정감정 점수를 빼 감정의 상대강도를 계산하기 위해 감정의 값을 열의 제목으로 만들고, 각 감정어 빈도를 해당 열의 값으로 할당한다.  감정어가 없어 결측값이 나올수 있으므로, `values_fill = `인자로 '0'을 할당한다.  
+
+```{r frq42 }
+sosul2_emo_df <- sosul2_df %>% 
+  unnest_tokens(sentence, main, token = "sentences") %>% 
+  mutate(linenumber = row_number()) %>% 
+  unnest_tokens(word, sentence) %>% 
+  inner_join(knu_dic_df) %>% 
+  mutate(emotion = ifelse(sScore > 0, "긍정", 
+                          ifelse(sScore < 0, "부정", "중립"))) %>% 
+  count(author, index = linenumber %/% 10, emotion) %>% 
+  pivot_wider(names_from = emotion, values_from = n, values_fill = 0) %>%   mutate(sentiment = 긍정 - 부정) 
+
+sosul2_emo_df
+
+```
+
+
+막대도표로 시각화한다. 
+
+```{r frq43 }
+sosul2_emo_df %>% 
+  ggplot() + 
+  geom_col(aes(index, sentiment, fill = author), show.legend = F) +
+  facet_wrap(~author, scales = "free_x")
+
+```
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>8 . 주제모형 | R 텍스트마이닝</title>
+<meta name="author" content="한국 R 사용자회">
+<meta name="description" content='8.1 개관 문서에 빈번하는 등장하는 단어를 통해 그 문서의 주제를 추론할 수 있다. 한 문서에는 다양한 주제가 들어있다. 예를 들어, 아래 문장은 AP가 보도한 1988년 허스트재단의 링컨센터 기부 기사다. ap_v &lt;- c("The William Randolph Hearst Foundation will give $1.25 million to...'>
+<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta property="og:title" content="8 . 주제모형 | R 텍스트마이닝">
+<meta property="og:type" content="book">
+<meta property="og:description" content='8.1 개관 문서에 빈번하는 등장하는 단어를 통해 그 문서의 주제를 추론할 수 있다. 한 문서에는 다양한 주제가 들어있다. 예를 들어, 아래 문장은 AP가 보도한 1988년 허스트재단의 링컨센터 기부 기사다. ap_v &lt;- c("The William Randolph Hearst Foundation will give $1.25 million to...'>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8 . 주제모형 | R 텍스트마이닝">
+<meta name="twitter:description" content='8.1 개관 문서에 빈번하는 등장하는 단어를 통해 그 문서의 주제를 추론할 수 있다. 한 문서에는 다양한 주제가 들어있다. 예를 들어, 아래 문장은 AP가 보도한 1988년 허스트재단의 링컨센터 기부 기사다. ap_v &lt;- c("The William Randolph Hearst Foundation will give $1.25 million to...'>
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">R 텍스트마이닝</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">들어가며</a></li>
+<li><a class="" href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></li>
+<li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
+<li><a class="" href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></li>
+<li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
+<li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></li>
+<li><a class="" href="tf-idf.html"><span class="header-section-number">6</span> 단어 빈도수</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></li>
+<li><a class="active" href="topic-modeling.html"><span class="header-section-number">8</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="topic-modeling" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8 . </span> 주제모형<a class="anchor" aria-label="anchor" href="#topic-modeling"><i class="fas fa-link"></i></a>
+</h1>
+<div id="개관" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> 개관<a class="anchor" aria-label="anchor" href="#%EA%B0%9C%EA%B4%80"><i class="fas fa-link"></i></a>
+</h2>
+<p>문서에 빈번하는 등장하는 단어를 통해 그 문서의 주제를 추론할 수 있다. 한 문서에는 다양한 주제가 들어있다.</p>
+<p>예를 들어, 아래 문장은 AP가 보도한 1988년 허스트재단의 링컨센터 기부 기사다.</p>
+<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ap_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"The William Randolph Hearst Foundation will give $1.25 million to Lincoln Center, Metropolitan Opera Co., New York Philharmonic and Juilliard School. “Our board felt that we had a</span></span>
+<span><span class="st">real opportunity to make a mark on the future of the performing arts with these grants an act</span></span>
+<span><span class="st">every bit as important as our traditional areas of support in health, medical research, education</span></span>
+<span><span class="st">and the social services,” Hearst Foundation President Randolph A. Hearst said Monday in</span></span>
+<span><span class="st">announcing the grants. Lincoln Center’s share will be $200,000 for its new building, which</span></span>
+<span><span class="st">will house young artists and provide new public facilities. The Metropolitan Opera Co. and</span></span>
+<span><span class="st">New York Philharmonic will receive $400,000 each. The Juilliard School, where music and</span></span>
+<span><span class="st">the performing arts are taught, will get $250,000. The Hearst Foundation, a leading supporter</span></span>
+<span><span class="st">of the Lincoln Center Consolidated Corporate Fund, will make its usual annual $100,000</span></span>
+<span><span class="st">donation, too."</span><span class="op">)</span></span></code></pre></div>
+<p>단어의 총빈도와 상대빈도를 계산하면, 이 문서의 주요 내용이 무엇인지 파악할 수 있다.
+먼저 총빈도 상위단어를 찾아보자.</p>
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pkg_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"tidytext"</span>, <span class="st">"tidylo"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">pkg_v</span>, <span class="va">require</span>, ch <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## [[1]]
+## [1] TRUE
+## 
+## [[2]]
+## [1] TRUE
+## 
+## [[3]]
+## [1] TRUE
+</code></pre>
+<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ap_count</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">ap_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<p>상대빈도를 구해보자.</p>
+<p>먼저 문장 단위로 토큰화해 문장별 ID를 구한다음 단어 단위로 토큰화한다. 대문자 앞의 마침표와 공백(<code>"\\.\\s(?=[:upper:])"</code>)을 기준으로 구분하면 된다.</p>
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ap_tfidf</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">ap_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">sentence</span>, <span class="va">text</span>, token <span class="op">=</span> <span class="st">"regex"</span>, pattern <span class="op">=</span> <span class="st">"\\.\\s(?=[:upper:])"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">sentence</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/bind_tf_idf.html">bind_tf_idf</a></span><span class="op">(</span>term <span class="op">=</span> <span class="va">word</span>, document <span class="op">=</span> <span class="va">ID</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">tf_idf</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ap_wlo</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">ap_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">sentence</span>, <span class="va">text</span>, token <span class="op">=</span> <span class="st">"regex"</span>, pattern <span class="op">=</span> <span class="st">"\\.\\s(?=[:upper:])"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">sentence</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://juliasilge.github.io/tidylo/reference/bind_log_odds.html">bind_log_odds</a></span><span class="op">(</span>feature <span class="op">=</span> <span class="va">word</span>, set <span class="op">=</span> <span class="va">ID</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">log_odds_weighted</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<p>추출한 상위 10대 빈도 단어를 비교해 보자.</p>
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ap_count</span>,  총빈도  <span class="op">=</span> <span class="va">word</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ap_tfidf</span>, tf_idf <span class="op">=</span> <span class="va">word</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ap_wlo</span>,  가중승산비  <span class="op">=</span> <span class="va">word</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 10 × 3</span>
+##   총빈도     tf_idf     가중승산비  
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>       
+## <span style="color: #555555;">1</span> hearst     announcing hearst      
+## <span style="color: #555555;">2</span> foundation monday     grants      
+## <span style="color: #555555;">3</span> lincoln    400,000    announcing  
+## <span style="color: #555555;">4</span> arts       receive    monday      
+## <span style="color: #555555;">5</span> center     grants     metropolitan
+## <span style="color: #555555;">6</span> grants     250,000    opera       
+## <span style="color: #555555;"># … with 4 more rows</span>
+</code></pre>
+<p>총빈도와 상대빈도를 보면, 허스트재단이 링컨아트센터에 기부금 발표한 내용이란 것을 추론할 수 있지만, 기사에는 보다 다양한 주제를 담고 있다. 기사의 내용을 읽어보면 다양한 주제가 있음을 알수 있다 (Figure <a href="topic-modeling.html#fig:ap">8.1</a>).</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:ap"></span>
+<img src="images/ap.png" alt="AP 기사" width="1222"><p class="caption">
+그림 8.1: AP 기사
+</p>
+</div>
+<p>기사에 포함된 단어 중 같은 색으로 구부된 단어들을 모아보면 예술, 재정, 아동, 교육 등의 주제를 나타내는 일관된 단어로 구성됐음을 알수 있다 (Figure <a href="topic-modeling.html#fig:ap2">8.2</a>).</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:ap2"></span>
+<img src="images/ap2.png" alt="AP 기사 주제" width="878"><p class="caption">
+그림 8.2: AP 기사 주제
+</p>
+</div>
+<p>Blei 등 일군의 전산학자들은 문서 내 단어의 확률분포를 계산해 찾아낸 일련의 단어 군집을 통해 문서의 주제를 추론하는 방법으로서 LDA(Latent Dirichlet Allocation)을 제시했다.</p>
+<ul>
+<li>Blei, D. M., Ng, A. Y., &amp; Jordan, M. I. (2003). Latent dirichlet allocation. Journal of Machine Learning Research, 3, 993-1022.</li>
+</ul>
+<p>19세기 독일 수학자 러죈 디리클레(Lejeune Dirichlet, 1805 ~ 1859)가 제시한 디리클래 분포(Dirichlet distribution)를 이용해 문서에 잠재된 주제를 추론하기에 잠재 디리클레 할당(LDA: Latent Dirichlet Allocation)이라고 했다. 문서의 주제를 추론하는 방법이므로 주제모형(topic models)이라고 한다.</p>
+<p>Beli(2012)가 설명한 LDA에 대한 직관적인 이해는 다음과 같다. Figure<a href="topic-modeling.html#fig:topic">8.3</a>에 제시된 논문 “Seeking life’s bare (genetics) necessities”은 진화의 틀에서 유기체가 생존하기 위해 필요한 유전자의 수를 결정하기 위한 데이터분석에 대한 내용이다. 문서(documents)에 파란색으로 표시된 ‘computer’ ‘prediction’ 등은 데이터분석에 대한 단어들이다. 분홍색으로 표시된 ‘life’ ‘organism’은 진화생물학에 대한 내용이다. 노란색으로 표시된 ’sequenced’ ’genes’는 유전학에 대한 내용이다. 이 논문의 모든 단어를 이런 식으로 분류하면 아마도 이 논문은 유전학, 데이터분석, 진화생물학 등이 상이한 비율로 혼합돼 있음을 알게 된다.</p>
+<ul>
+<li>Blei, D. M. (2012). Probabilistic topic models. Communications of the ACM, 55(4), 77-84.</li>
+</ul>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:topic"></span>
+<img src="images/topic.JPG" alt="LDA의 직관적 예시" width="1462"><p class="caption">
+그림 8.3: LDA의 직관적 예시
+</p>
+</div>
+<p>LDA에는 다음과 같은 전제가 있다.</p>
+<ul>
+<li>말뭉치에는 단어를 통해 분포된 다수의 주제가 있다 (위 그림의 가장 왼쪽).</li>
+</ul>
+<p>각 문서에서 주제를 생성하는 과정은 다음과 같다.</p>
+<ul>
+<li>주제에 대해 분포 선택(오른쪽 히스토그램)</li>
+<li>각 단어에 대해 주제의 분포 선택(색이 부여된 동그라미)</li>
+<li>해당 주제를 구성하는 단어 선택(가운데 화살표)</li>
+</ul>
+<p>LDA에서 정의하는 주제(topic)는 특정 단어에 대한 분포다. 예를 들어, 유전학 주제라면 유전학에 대하여 높은 확률로 분포하는 단어들이고, 진화생물학 주제라면 진화생물학에 대하여 높은 확률로 분포하는 단어들이다.</p>
+<p>LDA에서는 문서를 주머니에 무작위로 섞여 있는 임의의 혼합물로 본다(Bag of words). 일반적으로 사용하는 문장처럼 문법이라는 짜임새있는 구조로 보는 것이 아니다. 임의의 혼합물이지만 온전하게 무작위로 섞여 있는 것은 아니다. 서로 함께 모여 있는 군집이 확률적으로 존재한다. 즉, 주제모형에서 접근하는 문서는 잠재된 주제의 혼합물로서, 각 주제를 구성하는 단어 단위가 확률적으로 혼합된 주머니(bag)인 셈이다.</p>
+<ul>
+<li>개별 문서: 여러 주제(topic)가 섞여 있는 혼합물
+<ul>
+<li>문서마다 주제(예술, 교육, 예산 등)의 분포 비율 상이</li>
+<li>주제(예: 예술)마다 단어(예: 오페라, 교향악단)의 분포 상이</li>
+</ul>
+</li>
+</ul>
+<p>주제모형의 목표는 말뭉치에서 주제의 자동추출이다. 문서 자체는 관측가능하지만, 주제의 구조(문서별 주제의 분포와 문서별-단어별 주제할당)는 감춰져 있다. 감춰진 주제의 구조를 찾아내는 작업은 뒤집어진 생성과정이라고 할 수 있다. 관측된 말뭉치를 생성하는 감춰진 구조를 찾아내는 작업이기 때문이다. 문서에 대한 사전 정보없이 문서의 주제를 분류하기 때문에 주제모형은 비지도학습(unsupervised learning) 방식의 기계학습(machine learning)이 된다.</p>
+<ul>
+<li>기계학습(machine learing)
+<ul>
+<li>인공지능 작동방식. 투입한 데이터에서 규칙성 탐지해 분류 및 예측. 지도학습, 비지도학습, 강화학습 등으로 구분.<br>
+</li>
+</ul>
+</li>
+<li>지도학습(supervised learning)
+<ul>
+<li>인간이 사전에 분류한 결과를 학습해 투입한 자료에서 규칙성 혹은 경향 발견</li>
+</ul>
+</li>
+<li>비지도학습(unsupervised learning)
+<ul>
+<li>사전분류한 결과 없이 기계 스스로 투입한 자료에서 규칙성 혹은 경향 발견</li>
+</ul>
+</li>
+<li>강화학습(reinforced learning)
+<ul>
+<li>행동의 결과에 대한 피드백(보상, 처벌 등)을 통해 투입한 자료에서 규칙성 혹은 경향 발견</li>
+</ul>
+</li>
+</ul>
+<p>주제모형의 효용은 대량의 문서에서 의미구조를 닮은 주제구조를 추론해 주석을 자동으로 부여할 수 있다는데 있다.</p>
+<p>주제모형은 다양한 패지키가 있다.</p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/lda/">lda</a></li>
+<li><a href="https://cran.r-project.org/web/packages/topicmodels/">topicmodels</a></li>
+<li><a href="https://cran.r-project.org/web/packages/stm/">stm</a></li>
+</ul>
+<p>여기서는 구조적 주제모형(structural topic model)이 가능한 <code>stm</code>패키지를 이용한다. <code>stm</code>은 메타데이터를 이용한 추출한 주제에 대하여 다양한 분석을 할 수 있는 장점이 있다.</p>
+</div>
+<div id="자료-준비-1" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> 자료 준비<a class="anchor" aria-label="anchor" href="#%EC%9E%90%EB%A3%8C-%EC%A4%80%EB%B9%84-1"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://www.bigkinds.or.kr/">빅카인즈</a>에서 다음의 조건으로 기사를 추출한다.</p>
+<ul>
+<li>검색어: 인공지능</li>
+<li>기간: 2010.1.1 ~ 2020.12.31</li>
+<li>언론사: 중앙일보, 조선일보, 한겨레, 경향신문, 한국경제, 매일경제</li>
+<li>분석: 분석 기사</li>
+</ul>
+<p>모두 5145건이다.</p>
+<div id="자료-이입" class="section level3" number="8.2.1">
+<h3>
+<span class="header-section-number">8.2.1</span> 자료 이입<a class="anchor" aria-label="anchor" href="#%EC%9E%90%EB%A3%8C-%EC%9D%B4%EC%9E%85"><i class="fas fa-link"></i></a>
+</h3>
+<p>다운로드한 기사를 작업디렉토리 아래 <code>data</code>폴더에 복사한다.</p>
+<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"data/."</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>##  [1] "bunn.epub"                            
+##  [2] "dfm.rds"                              
+##  [3] "jikji.epub"                           
+##  [4] "knusenti.zip"                         
+##  [5] "KnuSentiLex-master"                   
+##  [6] "KoreanPOStags.xlsx"                   
+##  [7] "meta_fit.rds"                         
+##  [8] "moby.epub"                            
+##  [9] "newsData"                             
+## [10] "newsData.zip"                         
+## [11] "NewsResult_20200101-20201231.xlsx"    
+## [12] "NewsResult_20200601-20210531_hdm.xlsx"
+## [13] "NewsResult_20200601-20210531_tsl.xlsx"
+## [14] "NewsResult_20210101-20210330.xlsx"    
+## [15] "NewsResult_20210201-20210228.xlsx"    
+## [16] "NewsResult_20210330-20210330.xlsx"    
+## [17] "ogamdo.txt"                           
+## [18] "ogamdo2.txt"                          
+## [19] "poliblogs2008.csv"                    
+## [20] "ratings.txt"                          
+## [21] "sense.epub"                           
+## [22] "topic.csv"                            
+## [23] "취임사_문재인.txt"                    
+## [24] "취임사_윤석열.txt"
+</code></pre>
+<p>파일명이 ’NewsResult_20200101-20201201.xlsx’다.</p>
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20200101-20201231.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>##  [1] "뉴스 식별자"                  "일자"                        
+##  [3] "언론사"                       "기고자"                      
+##  [5] "제목"                         "통합 분류1"                  
+##  [7] "통합 분류2"                   "통합 분류3"                  
+##  [9] "사건/사고 분류1"              "사건/사고 분류2"             
+## [11] "사건/사고 분류3"              "인물"                        
+## [13] "위치"                         "기관"                        
+## [15] "키워드"                       "특성추출(가중치순 상위 50개)"
+## [17] "본문"                         "URL"                         
+## [19] "분석제외 여부"
+</code></pre>
+<p>분석에 필요한 열을 선택해 데이터프레임으로 저장한다. 분석 텍스트는 제목과 본문이다. 빅카인즈는 본문을 200자까지만 무료로 제공하지만, 학습 목적을 달성하기에는 충분하다. 제목은 본문의 핵심 내용을 반영하므로, 제목과 본문을 모두 주제모형 분석에 투입한다. 시간별, 언론사별, 분류별로 분석할 계획이므로, 해당 열을 모두 선택한다.</p>
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai_df</span> <span class="op">&lt;-</span> </span>
+<span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20200101-20201231.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">일자</span>, <span class="va">제목</span>, <span class="va">본문</span>, <span class="va">언론사</span>, cat <span class="op">=</span> <span class="va">`통합 분류1`</span><span class="op">)</span> </span>
+<span><span class="va">ai_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 6 × 5</span>
+##   일자     제목                                               본문  언론사 cat  
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>                                              <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>
+## <span style="color: #555555;">1</span> 20201231 <span style="color: #555555;">"</span>`사모펀드 책임` 놓고 새해부터 금융위 탓한 금감원<span style="color: #555555;">"</span> <span style="color: #555555;">"</span>은…  매일…  경제…
+## <span style="color: #555555;">2</span> 20201231 <span style="color: #555555;">"</span>[이광석의 디지털 이후](25)시민 자율과 자치의 상…  <span style="color: #555555;">"</span>ㆍ…  경향…  IT_… 
+## <span style="color: #555555;">3</span> 20201231 <span style="color: #555555;">"</span>\"소처럼 묵묵하게 경제 통합 코로나 극복\"<span style="color: #555555;">"</span>        <span style="color: #555555;">"</span>역…  매일…  지역…
+## <span style="color: #555555;">4</span> 20201231 <span style="color: #555555;">"</span>GS건설, `강릉자이 파인베뉴` 견본주택 오픈 강릉 …  <span style="color: #555555;">"</span>GS…  매일…  경제…
+## <span style="color: #555555;">5</span> 20201231 <span style="color: #555555;">"</span>디지털 강조한 금융협회장들 사회적 책임에도 `앞장… <span style="color: #555555;">"</span>\"…  매일…  경제…
+## <span style="color: #555555;">6</span> 20201231 <span style="color: #555555;">"</span>정치인 거짓말도 진실로 둔갑 딥페이크, 민주주의 …  <span style="color: #555555;">"</span>◆ …  매일…  IT_…
+</code></pre>
+<p>시간열에는 연월일의 값이 있다. 월별 추이에 따른 주제를 분석할 것이므로 열의 값을 월에 대한 값으로 바꾼다. <code>tidyverse</code>패키지에 함께 설치되는 <code>lubridate</code>패키지를 이용해 문자열을 날짜형으로 변경하고 월 데이터 추출해 새로운 열 <code>month</code> 생성한다. <code>lubridate</code>는 <code>tidyverse</code>에 포함돼 있으나 함께 부착되지 않으므로 별도로 실행해야 한다.</p>
+<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span><span class="op">(</span><span class="st">"20201231"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## [1] 12
+</code></pre>
+<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="st">"20201231"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## [1] 12
+</code></pre>
+<p>DB에 같은 기사가 중복 등록되는 경우가 있으므로, <code>dplyr</code>패키지의 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>함수를 이용해 중복된 문서를 제거한다. <code>.keep_all =</code>인자의 기본값은 <code>FALSE</code>다. 투입한 열 이외의 열은 유지하지 않는다. 다른 변수(열)도 분석에 필요하므로 <code>.keep_all =</code>인자를 <code>TRUE</code>로 지정한다.</p>
+<p>분석 목적에 맞게 열을 재구성한다.</p>
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org">lubridate</a></span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">ai2_df</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">ai_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># 중복기사 제거</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">제목</span>, .keep_all <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># 기사별 ID부여</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># 월별로 구분한 열 추가</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="va">일자</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># 기사 제목과 본문 결합</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html">unite</a></span><span class="op">(</span><span class="va">제목</span>, <span class="va">본문</span>, col <span class="op">=</span> <span class="st">"text"</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># 중복 공백 제거</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># 언론사 분류: 보수 진보 경제 %&gt;% </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>press <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">언론사</span> <span class="op">==</span> <span class="st">"조선일보"</span> <span class="op">~</span> <span class="st">"종합지"</span>,</span>
+<span>    <span class="va">언론사</span> <span class="op">==</span> <span class="st">"중앙일보"</span> <span class="op">~</span> <span class="st">"종합지"</span>,</span>
+<span>    <span class="va">언론사</span> <span class="op">==</span> <span class="st">"경향신문"</span> <span class="op">~</span> <span class="st">"종합지"</span>,</span>
+<span>    <span class="va">언론사</span> <span class="op">==</span> <span class="st">"한겨레"</span> <span class="op">~</span> <span class="st">"종합지"</span>,</span>
+<span>    <span class="va">언론사</span> <span class="op">==</span> <span class="st">"한국경제"</span> <span class="op">~</span> <span class="st">"경제지"</span>,</span>
+<span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">"경제지"</span><span class="op">)</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># 기사 분류 구분 </span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">cat</span>, sep <span class="op">=</span> <span class="st">"&gt;"</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"cat"</span>, <span class="st">"cat2"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># IT_과학, 경제, 사회 만 선택</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">cat</span>, <span class="st">"IT_과학|경제|사회"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">cat2</span><span class="op">)</span>  </span>
+<span></span>
+<span><span class="va">ai2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 5 × 7</span>
+##   일자     text                                   언론사 cat   ID    month press
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>                                  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;fct&gt;</span> <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>
+## <span style="color: #555555;">1</span> 20201231 <span style="color: #555555;">"</span>`사모펀드 책임` 놓고 새해부터 금융위… 매일…  경제  1        12 경제…
+## <span style="color: #555555;">2</span> 20201231 <span style="color: #555555;">"</span>[이광석의 디지털 이후](25)시민 자율…  경향…  IT_…  2        12 종합…
+## <span style="color: #555555;">3</span> 20201231 <span style="color: #555555;">"</span>GS건설, `강릉자이 파인베뉴` 견본주택… 매일…  경제  4        12 경제…
+## <span style="color: #555555;">4</span> 20201231 <span style="color: #555555;">"</span>디지털 강조한 금융협회장들 사회적 책… 매일…  경제  5        12 경제…
+## <span style="color: #555555;">5</span> 20201231 <span style="color: #555555;">"</span>정치인 거짓말도 진실로 둔갑 딥페이크… 매일…  IT_…  6        12 경제…
+</code></pre>
+<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## [1] "일자"   "text"   "언론사" "cat"    "ID"     "month"  "press"
+</code></pre>
+<p>기사의 분류된 종류, 월 등 새로 생성한 열의 내용을 확인해보자.</p>
+<div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_df</span><span class="op">$</span><span class="va">cat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## [1] "경제"    "IT_과학" "사회"
+</code></pre>
+<div class="sourceCode" id="cb228"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_df</span><span class="op">$</span><span class="va">month</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>##  [1] 12 11 10  9  8  7  6  5  4  3  2  1
+</code></pre>
+<div class="sourceCode" id="cb229"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_df</span><span class="op">$</span><span class="va">press</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## [1] "경제지" "종합지"
+</code></pre>
+<p>분류별, 월별로 기사의 양을 계산해보자.</p>
+<div class="sourceCode" id="cb230"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cat</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 3 × 2</span>
+##   cat         n
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>
+## <span style="color: #555555;">1</span> IT_과학  <span style="text-decoration: underline;">1</span>922
+## <span style="color: #555555;">2</span> 경제     <span style="text-decoration: underline;">1</span>409
+## <span style="color: #555555;">3</span> 사회      460
+</code></pre>
+<div class="sourceCode" id="cb231"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">month</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 12 × 2</span>
+##   month     n
+##   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>
+## <span style="color: #555555;">1</span>     1   382
+## <span style="color: #555555;">2</span>     9   379
+## <span style="color: #555555;">3</span>    12   366
+## <span style="color: #555555;">4</span>     7   345
+## <span style="color: #555555;">5</span>     6   335
+## <span style="color: #555555;">6</span>     5   334
+## <span style="color: #555555;"># … with 6 more rows</span>
+</code></pre>
+<div class="sourceCode" id="cb232"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">press</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2 × 2</span>
+##   press      n
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>
+## <span style="color: #555555;">1</span> 경제지  <span style="text-decoration: underline;">2</span>049
+## <span style="color: #555555;">2</span> 종합지  <span style="text-decoration: underline;">1</span>742
+</code></pre>
+</div>
+<div id="정제-2" class="section level3" number="8.2.2">
+<h3>
+<span class="header-section-number">8.2.2</span> 정제<a class="anchor" aria-label="anchor" href="#%EC%A0%95%EC%A0%9C-2"><i class="fas fa-link"></i></a>
+</h3>
+<div id="토큰화-1" class="section level4" number="8.2.2.1">
+<h4>
+<span class="header-section-number">8.2.2.1</span> 토큰화<a class="anchor" aria-label="anchor" href="#%ED%86%A0%ED%81%B0%ED%99%94-1"><i class="fas fa-link"></i></a>
+</h4>
+<p><code>KoNLP</code>패키지의 <code>extractNoun()</code>함수로 명사만 추출해 토큰화한다. 명사가 문서의 주제를 잘 나타내므로 주제모형에서는 주로 명사를 이용하지만, 목적에 따라서는 다른 품사(용언 등)를 분석에 투여하기도 한다.</p>
+<p>(* 형태소 추출전에 문자 혹은 공백 이외의 요소(예: 구둣점)를 먼저 제거한다.)</p>
+<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># library(KoNLP)</span></span>
+<span><span class="co"># ai_tk &lt;- </span></span>
+<span><span class="co"># ai2_df %&gt;% </span></span>
+<span><span class="co">#   mutate(text = str_remove_all(text, "[^(\\w+|\\s)]")) %&gt;%  # 문자 혹은 공백 이외 것 제거</span></span>
+<span><span class="co">#   unnest_tokens(word, text, token = extractNoun, drop = F) </span></span>
+<span><span class="co"># ai_tk %&gt;% glimpse()</span></span></code></pre></div>
+</div>
+<div id="불용어-제거" class="section level4" number="8.2.2.2">
+<h4>
+<span class="header-section-number">8.2.2.2</span> 불용어 제거<a class="anchor" aria-label="anchor" href="#%EB%B6%88%EC%9A%A9%EC%96%B4-%EC%A0%9C%EA%B1%B0"><i class="fas fa-link"></i></a>
+</h4>
+<p>’인공지능’으로 검색한 기사이므로, ’인공지능’관련 단어는 제거한다.
+문자가 아닌 요소를 모두 제거한다. (숫자를 반드시 제거해야 하는 것은 아니다.)</p>
+<div class="sourceCode" id="cb234"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai_tk</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">ai_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">word</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"인공지능"</span>, <span class="st">"AI"</span>, <span class="st">"ai"</span>, <span class="st">"인공지능AI"</span>, <span class="st">"인공지능ai"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">word</span>, <span class="st">"[:alpha:]+"</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
+<p>단어의 총빈도와 상대빈도를 살펴보자</p>
+<div class="sourceCode" id="cb235"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p>상대빈도가 높은 단어와 낮은 단어를 확인한다.</p>
+<div class="sourceCode" id="cb236"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cat</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://juliasilge.github.io/tidylo/reference/bind_log_odds.html">bind_log_odds</a></span><span class="op">(</span>set <span class="op">=</span> <span class="va">cat</span>, feature <span class="op">=</span> <span class="va">word</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">log_odds_weighted</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ai_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cat</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/bind_tf_idf.html">bind_tf_idf</a></span><span class="op">(</span>term <span class="op">=</span> <span class="va">word</span>, document <span class="op">=</span> <span class="va">word</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">idf</span><span class="op">)</span></span></code></pre></div>
+<p>한글자 단어는 문서의 주제를 나타내는데 기여하지 못하는 경우도 있고, 고유명사인데 형태소로 분리돼 있는 경우도 있다. 상대빈도가 높은 단어를 살펴 특이한 단어가 있으면 형태소 추출전 단어가 무엇인지 확인한다. 특이한 경우가 없으면 한글자 단어는 모두 제거한다.
+tibble데이터프레임은 문자열의 일부만 보여준다. <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code>함수로 열에 포함된 문자열을 벡터로 출력하므로, 모든 내용을 확인할 수 있다.</p>
+<div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">==</span> <span class="st">"하"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<p>‘기업’ ‘기술’ 등의 단어는 총사용빈도가 높지만, 상대빈도는 낮다. 대부분의 분류에서 널리 사용된 단어다. 지금 제거할필요는 없지만, 제거가능성을 염두에 둔다.</p>
+<div class="sourceCode" id="cb238"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_length.html">str_length</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ai2_tk</span></span>
+<span></span>
+<span><span class="va">ai2_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> </span></code></pre></div>
+<p>상대빈도를 다시 확인하자.</p>
+<div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ai2_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cat</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://juliasilge.github.io/tidylo/reference/bind_log_odds.html">bind_log_odds</a></span><span class="op">(</span>set <span class="op">=</span> <span class="va">cat</span>, feature <span class="op">=</span> <span class="va">word</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">log_odds_weighted</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ai2_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cat</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/bind_tf_idf.html">bind_tf_idf</a></span><span class="op">(</span>term <span class="op">=</span> <span class="va">word</span>, document <span class="op">=</span> <span class="va">word</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">tf_idf</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="stm-말뭉치" class="section level3" number="8.2.3">
+<h3>
+<span class="header-section-number">8.2.3</span> stm 말뭉치<a class="anchor" aria-label="anchor" href="#stm-%EB%A7%90%EB%AD%89%EC%B9%98"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb240"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"stm"</span>, dependencies <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p>토큰화한 데이터프레임을 <code>stm</code>패키지 형식의 말뭉치로 변환한다. 이를 위해 먼저 분리된 토큰을 원래 문장에 속한 하나의 열로 저장한다.</p>
+<ul>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_flatten.html">str_flatten()</a></code>은 <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code>함수와 달리, 문자열을 결합해 단일 요소로 산출한다.
+<ul>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code>함수에 <code>collapse =</code>인자를 사용한 경우에 해당한다.<br>
+</li>
+<li>
+<code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code>는 R기본함수 <code><a href="https://rdrr.io/r/base/paste.html">paste0()</a></code>와 비슷하다. 결측값 처리방법이 서로 다르다.</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">combined_df</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">ai2_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>text2 <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_flatten.html">str_flatten</a></span><span class="op">(</span><span class="va">word</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">ai2_df</span>, by <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="https://rdrr.io/pkg/stm/man/textProcessor.html">textProcessor()</a></code>함수로 리스트 형식의 stm말뭉치로 변환한다. ‘documents’ ‘vacab’ ’meta’등의 하부요소가 생성된다. ’meta’에 텍스트데이터가 저장돼 있다.</p>
+<p>영문문서의 경우, <code><a href="https://rdrr.io/pkg/stm/man/textProcessor.html">textProcessor()</a></code>함수로 정제과정을 수행하므로, 한글문서처럼 별도의 형태소 추출과정 바로 영문데이터프레임을 투입하면 된다.</p>
+<p>’text2’열에 토큰화한 단어가 저장돼 있다.</p>
+<p>만일 <code>tm</code>패키지나 <code>SnowballC</code>패키지가 설치돼 있지 않으면</p>
+<div class="sourceCode" id="cb242"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.structuraltopicmodel.com/">stm</a></span><span class="op">)</span></span>
+<span><span class="va">processed</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">ai2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/stm/man/textProcessor.html">textProcessor</a></span><span class="op">(</span>documents <span class="op">=</span> <span class="va">combined_df</span><span class="op">$</span><span class="va">text2</span>, metadata <span class="op">=</span> <span class="va">.</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="https://rdrr.io/pkg/stm/man/prepDocuments.html">prepDocuments()</a></code>함수로 주제모형에 사용할 데이터의 인덱스(wordcounts)를 만든다.</p>
+<div class="sourceCode" id="cb243"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/stm/man/prepDocuments.html">prepDocuments</a></span><span class="op">(</span><span class="va">processed</span><span class="op">$</span><span class="va">documents</span>,</span>
+<span>                     <span class="va">processed</span><span class="op">$</span><span class="va">vocab</span>,</span>
+<span>                     <span class="va">processed</span><span class="op">$</span><span class="va">meta</span><span class="op">)</span></span></code></pre></div>
+<p>제거할수 있는 단어와 문서의 수를 <code><a href="https://rdrr.io/pkg/stm/man/plotRemoved.html">plotRemoved()</a></code>함수로 확인할 수 있다.</p>
+<div class="sourceCode" id="cb244"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stm/man/plotRemoved.html">plotRemoved</a></span><span class="op">(</span><span class="va">processed</span><span class="op">$</span><span class="va">documents</span>, lower.thresh <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><code>lower.thresh =</code>로 최소값 설정하면 빈도가 낮아 제거할 용어의 수를 설정할 수 있다. 설정값을 너무 높게 잡으면 분석의 정확도가 떨어진다. 여기서는 계산 편의를 위해 설정값을 높게 잡았다.</p>
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/stm/man/prepDocuments.html">prepDocuments</a></span><span class="op">(</span><span class="va">processed</span><span class="op">$</span><span class="va">documents</span>,</span>
+<span>                <span class="va">processed</span><span class="op">$</span><span class="va">vocab</span>,</span>
+<span>                <span class="va">processed</span><span class="op">$</span><span class="va">meta</span>, </span>
+<span>                lower.thresh <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
+<p>산출결과를 개별 객체로 저장한다. 이 객체들은 이후 모형구축에 사용된다.</p>
+<div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">docs</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">$</span><span class="va">documents</span></span>
+<span><span class="va">vocab</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">$</span><span class="va">vocab</span></span>
+<span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">$</span><span class="va">meta</span></span></code></pre></div>
+</div>
+</div>
+<div id="분석-1" class="section level2" number="8.3">
+<h2>
+<span class="header-section-number">8.3</span> 분석<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="주제의-수k-설정" class="section level3" number="8.3.1">
+<h3>
+<span class="header-section-number">8.3.1</span> 주제의 수(K) 설정<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EC%9D%98-%EC%88%98k-%EC%84%A4%EC%A0%95"><i class="fas fa-link"></i></a>
+</h3>
+<p>주제를 몇개로 설정할지 탐색한다. 7개와 10개를 놓고 비교해보자. <code><a href="https://rdrr.io/pkg/stm/man/searchK.html">searchK()</a></code>함수는 주제의 수에 따라 4가지 계수를 제공한다.</p>
+<ul>
+<li><p>배타성(exclusivity): 특정 주제에 등장한 단어가 다른 주제에는 나오지 않는 정도. 확산타당도에 해당.</p></li>
+<li><p>의미 일관성(semantic coherence): 특정 주제에 높은 확률로 나타나는 단어가 동시에 등장하는 정도. 수렴타당도에 해당.</p></li>
+<li><p>지속성(heldout likelihood): 데이터 일부가 존재하지 않을 때의 모형 예측 지속 정도.</p></li>
+<li><p>잔차(residual): 투입한 데이터로 모형을 설명하지 못하는 오차.</p></li>
+</ul>
+<p>배타성, 의미 일관성, 지속성이 높을 수록, 그리고 잔차가 작을수록 모형의 적절성 증가.</p>
+<p>보통 10개부터 100개까지 10개 단위로 주제의 수를 구분해 연구자들이 정성적으로 최종 주제의 수 판단한다.</p>
+<p>학습 상황이므로 계산시간을 줄이기 위해 주제의 수를 3개와 10개의 결과만 비교한다. (iteration을 200회 이상 수행하므로 계산시간이 오래 걸린다.)</p>
+<p>백그라운드에서 계산하도록 하면, RStudio에서 다른 작업을 병행할 수 있다.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=84rNE63H8gA">RStudio 코드 백그라운드에서 돌리기</a></li>
+</ul>
+<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># topicN &lt;- seq(from = 10, to = 100, by = 10)</span></span>
+<span><span class="va">topicN</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">storage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stm/man/searchK.html">searchK</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">documents</span>, <span class="va">out</span><span class="op">$</span><span class="va">vocab</span>, K <span class="op">=</span> <span class="va">topicN</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">storage</span><span class="op">)</span></span></code></pre></div>
+<p>배타성, 지속성, 잔차 등 3개 지표에서 모두 주제의 수가 10개인 모형이 3개인 모형보다 우수하고, 3개인 모형은 의미일관성만 높다. 따라서 이미 10개로 분석한 모형을 그대로 이용한다.</p>
+</div>
+<div id="주제모형-구성" class="section level3" number="8.3.2">
+<h3>
+<span class="header-section-number">8.3.2</span> 주제모형 구성<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%AA%A8%ED%98%95-%EA%B5%AC%EC%84%B1"><i class="fas fa-link"></i></a>
+</h3>
+<p>docs, vocab, meta에 저장된 문서와 텍스트정보를 이용해 주제모형을 구성한다. 추출한 주제의 수는 <code>K =</code>인자로 설정한다. 처음에는 임의의 값을 투입한다. 이후 적절한 주제의 수를 다시 추정하는 단계가 있다.
+모형 초기값은 <code>init.type =</code>인자에 “Spectral”을 투입한다. 같은 결과가 나오도록 하려면 <code>seed =</code>인자를 지정한다. 투입하는 값은 개인의 선호대로 한다.</p>
+<div class="sourceCode" id="cb248"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">stm_fit</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/stm/man/stm.html">stm</a></span><span class="op">(</span></span>
+<span>    documents <span class="op">=</span> <span class="va">docs</span>,</span>
+<span>    vocab <span class="op">=</span> <span class="va">vocab</span>,</span>
+<span>    K <span class="op">=</span> <span class="fl">10</span>,    <span class="co"># 토픽의 수</span></span>
+<span>    data <span class="op">=</span> <span class="va">meta</span>,</span>
+<span>    init.type <span class="op">=</span> <span class="st">"Spectral"</span>,</span>
+<span>    seed <span class="op">=</span> <span class="fl">37</span> <span class="co"># 반복실행해도 같은 결과가 나오게 난수 고정</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">stm_fit</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">stm_fit</span><span class="op">)</span></span></code></pre></div>
+<p><code>stm</code>패키지는 4종의 가중치를 이용해 주제별로 주요 단어를 제시한다.</p>
+<ul>
+<li>Highest probability: 각 주제별로 단어가 등장할 확률이 높은 정도. 베타() 값.</li>
+<li>FREX: 전반적인 단어빈도의 가중 평균. 해당 주제에 배타적으로 포함된 정도.</li>
+<li>Lift: 다른 주제에 덜 등장하는 정도. 해당 주제에 특정된 정도.</li>
+<li>score: 다른 주제에 등장하는 로그 빈도. 해당 주제에 특정된 정도.</li>
+</ul>
+<p>FREX와 Lift는 드문 빈도의 단어도 분류하는 경향이 있으므로, 주로 Highest probability(베타)를 이용한다.</p>
+<p>stm패키지의 자세한 내용은 패키지 저자 Roberts의 <a href="https://www.structuraltopicmodel.com/">stm홈페이지</a>와 해설 논문을 참조한다.</p>
+<ul>
+<li><p><a href="https://cran.r-project.org/web/packages/stm/vignettes/stmVignette.pdf">stm: R Package for Structural Topic Models</a></p></li>
+<li><p><a href="https://scholar.princeton.edu/sites/default/files/bstewart/files/stm.pdf">Roberts, M. E., Stewart, B. M., &amp; Airoldi, E. M. (2016). A model of text for experimentation in the social sciences. Journal of the American Statistical Association, 111(515), 988-1003.</a></p></li>
+</ul>
+</div>
+</div>
+<div id="소통-1" class="section level2" number="8.4">
+<h2>
+<span class="header-section-number">8.4</span> 소통<a class="anchor" aria-label="anchor" href="#%EC%86%8C%ED%86%B5-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>분석한 모형을 통해 말뭉치에 포함된 주제와 주제별 단어의 의미가 무엇인지 전달하기 위해서는 우선 모형에 대한 해석을 제시할 수 있는 시각화가 필요하다. 이를 위해서는 먼저 주요 계수의 의미를 이해할 필요가 있다. 주제모형에서 주제별 확률분포를 나타내는 베타와 감마다.</p>
+<ul>
+<li><p>베타 <span class="math inline">\(\beta\)</span>: 단어가 각 주제에 등장할 확률. 각 단어별로 베타 값 부여. stm모형 요약에서 제시한 Highest probability의 지표다.</p></li>
+<li><p>감마 <span class="math inline">\(\gamma\)</span>: 문서가 각 주제에 등장할 확률. 각 문서별로 감마 값 부여.</p></li>
+</ul>
+<p>즉, 베타와 감마 계수를 이용해 시각화하면 주제와 주제단어의 의미를 간명하게 나타낼 수 있다.</p>
+<p>먼저 <code><a href="https://generics.r-lib.org/reference/tidy.html">tidy()</a></code>함수를 이용해 <code><a href="https://rdrr.io/pkg/stm/man/stm.html">stm()</a></code>함수로 주제모형을 계산한 결과를 정돈텍스트 형식으로 변환한다(<a href="https://juliasilge.com/blog/evaluating-stm/">줄리아 실기의 시각화 참고</a>)</p>
+<p>학습편의를 위해 주제의 수롤 6개로 조정해 다시 모형을 구성하자.</p>
+<div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">stm_fit</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/stm/man/stm.html">stm</a></span><span class="op">(</span></span>
+<span>    documents <span class="op">=</span> <span class="va">docs</span>,</span>
+<span>    vocab <span class="op">=</span> <span class="va">vocab</span>,</span>
+<span>    K <span class="op">=</span> <span class="fl">6</span>,    <span class="co"># 토픽의 수</span></span>
+<span>    data <span class="op">=</span> <span class="va">meta</span>,</span>
+<span>    init.type <span class="op">=</span> <span class="st">"Spectral"</span>,</span>
+<span>    seed <span class="op">=</span> <span class="fl">37</span>, <span class="co"># 반복실행해도 같은 결과가 나오게 난수 고정</span></span>
+<span>    verbose <span class="op">=</span> <span class="cn">F</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">stm_fit</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">stm_fit</span><span class="op">)</span></span></code></pre></div>
+<div id="주제별-단어-분포" class="section level3" number="8.4.1">
+<h3>
+<span class="header-section-number">8.4.1</span> 주제별 단어 분포<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%8B%A8%EC%96%B4-%EB%B6%84%ED%8F%AC"><i class="fas fa-link"></i></a>
+</h3>
+<p>베타 값을 이용해 주제별로 단어의 분포를 막대도표로 시각화하자.</p>
+<div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">td_beta</span> <span class="op">&lt;-</span> <span class="va">stm_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>matrix <span class="op">=</span> <span class="st">'beta'</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">td_beta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">topic</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">beta</span>, n <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"주제"</span>, <span class="va">topic</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beta</span>, </span>
+<span>             y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">term</span>, <span class="va">beta</span><span class="op">)</span>,</span>
+<span>             fill <span class="op">=</span> <span class="va">topic</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">topic</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="st">"단어 확률분포: "</span><span class="op">~</span><span class="va">beta</span><span class="op">)</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"주제별 단어 확률 분포"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"각 주제별로 다른 단어들로 군집"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="주제별-문서-분포" class="section level3" number="8.4.2">
+<h3>
+<span class="header-section-number">8.4.2</span> 주제별 문서 분포<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%AC%B8%EC%84%9C-%EB%B6%84%ED%8F%AC"><i class="fas fa-link"></i></a>
+</h3>
+<p>감마 값을 이용해 주제별로 문서의 분포를 히스토그램으로 시각화한다. x축과 y축에 각각 변수를 투입하는 막대도표와 달리, 히스토그램은 x축에만 변수를 투입하고, y축에는 x축 값을 구간(bin)별로 요약해 표시한다.</p>
+<p>각 문서가 각 주제별로 등장할 확률인 감마(<span class="math inline">\(\gamma\)</span>)의 분포가 어떻게 히스토그램으로 표시되는지 살펴보자.</p>
+<div class="sourceCode" id="cb251"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">td_gamma</span> <span class="op">&lt;-</span> <span class="va">stm_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>matrix <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span> </span>
+<span><span class="va">td_gamma</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">td_gamma</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>max <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span>,</span>
+<span>         min <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span>,</span>
+<span>         median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><code>td_gamma</code>에는 문서별로 감마 값이 부여돼 있다. 1번 문서는 주제1에 포함될 확률(감마)이 0.4이고, 2번 문서는 주제1에 포함될 확률이 0.2다. 감마 값은 최저 0.04에서 최고 0.74까지 있다. 감마는 연속적인 값이므로 이 감마의 값을 일정한 구간(bin)으로 나누면, 각 감마의 구간에 문서(document)가 몇개 있는지 계산해, 감마 값에 따른 각 문서의 분포를 구할 수 있다. 연속하는 값을 구간(bin)으로 구분해 분포를 표시한 도표가 히스토그램이다.</p>
+<p>주제별로 문서의 분포를 감마 값에 따라 히스토그램으로 시각해하자. <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>함수에서 <code>bins =</code>인자의 기본값은 30이다. 즉, bin을 30개로 나눠 분포를 그린다.</p>
+<div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">td_gamma</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gamma</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">topic</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">100</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">topic</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"주제별 문서 확률 분포"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"문서(기사)의 수"</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="st">"문서 확률분포: "</span><span class="op">~</span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>감마가 높은 문서(기사)가 많지 않고, 대부분 낮은 값에 치우쳐 있다. ‘인공지능’ 단일 검색어로 추출한 말뭉치이기 때문이다.</p>
+</div>
+<div id="주제별-단어-문서-분포" class="section level3" number="8.4.3">
+<h3>
+<span class="header-section-number">8.4.3</span> 주제별 단어-문서 분포<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%8B%A8%EC%96%B4-%EB%AC%B8%EC%84%9C-%EB%B6%84%ED%8F%AC"><i class="fas fa-link"></i></a>
+</h3>
+<p>주제별로 감마의 평균값을 구하면 비교적 각 주제와 특정 문서와 관련성이 높은 순서로 주제를 구분해 표시할 수 있다. 또한 각 주제 별로 대표 단어를 표시할 수 있다. 가장 간단하게 주제별로 단어와 문서의 분포를 표시하는 방법은 <code>stm</code>패키지에서 제공하는 <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>함수다.</p>
+<p><code>stm</code> <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>함수는 <code>type =</code>인자에 ‘summary’ ‘labels’ ‘perspective’ ‘hist’ 등을 투입해 다양한 방식으로 결과를 탐색할 수 있다. 기본적인 정보는 ’summary’를 통해 제시한다.</p>
+<div class="sourceCode" id="cb253"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stm_fit</span>, type <span class="op">=</span> <span class="st">"summary"</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<p>위 결과를 <code>ggplot2</code> 패키지로 시각화하는 방법은 다음과 같다.</p>
+<ul>
+<li>주제별 상위 5개 단어 추출해 데이터프레임에 저장.</li>
+<li>문서의 감마 평균값 주제별로 계산해 주제별 상위 단어 데이터프레임과 결합</li>
+</ul>
+<div id="주제별-상위-5개-단어-추출" class="section level4" number="8.4.3.1">
+<h4>
+<span class="header-section-number">8.4.3.1</span> 주제별 상위 5개 단어 추출<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EC%83%81%EC%9C%84-5%EA%B0%9C-%EB%8B%A8%EC%96%B4-%EC%B6%94%EC%B6%9C"><i class="fas fa-link"></i></a>
+</h4>
+<p><code>td_beta</code>에서 주제별로 상위 5개 단어 추출해 <code>top_terms</code>에 할당한다. 각 주제별로 그룹을 묶어 list형식으로 각 상위단어 5개를 각 주제에 리스트로 묶어준 다음, 다시 데이터프레임의 열로 바꿔준다.</p>
+<div class="sourceCode" id="cb254"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">top_terms</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">td_beta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">topic</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">beta</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">topic</span>, <span class="va">term</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>terms <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_flatten.html">str_flatten</a></span><span class="op">(</span><span class="va">term</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
+</div>
+<div id="주제별-감마-평균-계산" class="section level4" number="8.4.3.2">
+<h4>
+<span class="header-section-number">8.4.3.2</span> 주제별 감마 평균 계산<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EA%B0%90%EB%A7%88-%ED%8F%89%EA%B7%A0-%EA%B3%84%EC%82%B0"><i class="fas fa-link"></i></a>
+</h4>
+<p><code>td_gamma</code>에서 각 주제별 감마 평균값 계산해 <code>top_terms</code>(주제별로 추출한 상위 5개 단어 데이터프레임)와 결합해 <code>gamma_terms</code>에 할당한다.</p>
+<div class="sourceCode" id="cb255"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gamma_terms</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">td_gamma</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">topic</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>gamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">top_terms</span>, by <span class="op">=</span> <span class="st">'topic'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"주제"</span>, <span class="va">topic</span><span class="op">)</span>,</span>
+<span>         topic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">topic</span>, <span class="va">gamma</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>결합한 데이터프레임을 막대도표에 표시한다. 문서 확률분포 평균값과 주제별로 기여도가 높은 단어를 표시한다. 주제별로 문서의 확률분포와 단어의 확률분포를 한눈에 볼수 있다.
+X축을 0에서 1까지 설정한 이유는 구간을 국소로 설정할 경우, 막대도표가 크기가 상대적으로 크게 보여 결과적으로 데이터의 왜곡이 되기 때문이다.</p>
+<div class="sourceCode" id="cb256"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gamma_terms</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gamma</span>, y <span class="op">=</span> <span class="va">topic</span>, fill <span class="op">=</span> <span class="va">topic</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">gamma</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="co"># 소수점 2자리 </span></span>
+<span>            hjust <span class="op">=</span> <span class="fl">1.4</span><span class="op">)</span> <span class="op">+</span>                <span class="co"># 라벨을 막대도표 안쪽으로 이동</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">terms</span><span class="op">)</span>, </span>
+<span>            hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">+</span>              <span class="co"># 단어를 막대도표 바깥으로 이동</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,    <span class="co"># x축 막대 위치를 Y축쪽으로 조정</span></span>
+<span>                     limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>   <span class="co"># x축 범위 설정</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="st">"문서 확률분포"</span><span class="op">~</span><span class="op">(</span><span class="va">gamma</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"인공지능 관련보도 상위 주제어"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"주제별로 기여도가 높은 단어 중심"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="과제-3" class="section level3" number="8.4.4">
+<h3>
+<span class="header-section-number">8.4.4</span> 과제<a class="anchor" aria-label="anchor" href="#%EA%B3%BC%EC%A0%9C-3"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>관심있는 검색어를 이용해 빅카인즈에서 기사를 검색해 수집한 기사의 주제모형을 구축한다.</p></li>
+<li><p>구축한 주제 모형에 대해 시각화한다(주제별 단어분포, 주제별 문서분포, 주제별 단어-문서 분포)</p></li>
+</ol>
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></div>
+<div class="next"><a href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#topic-modeling"><span class="header-section-number">8</span> 주제모형</a></li>
+<li><a class="nav-link" href="#%EA%B0%9C%EA%B4%80"><span class="header-section-number">8.1</span> 개관</a></li>
+<li>
+<a class="nav-link" href="#%EC%9E%90%EB%A3%8C-%EC%A4%80%EB%B9%84-1"><span class="header-section-number">8.2</span> 자료 준비</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EC%9E%90%EB%A3%8C-%EC%9D%B4%EC%9E%85"><span class="header-section-number">8.2.1</span> 자료 이입</a></li>
+<li><a class="nav-link" href="#%EC%A0%95%EC%A0%9C-2"><span class="header-section-number">8.2.2</span> 정제</a></li>
+<li><a class="nav-link" href="#stm-%EB%A7%90%EB%AD%89%EC%B9%98"><span class="header-section-number">8.2.3</span> stm 말뭉치</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#%EB%B6%84%EC%84%9D-1"><span class="header-section-number">8.3</span> 분석</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EC%A3%BC%EC%A0%9C%EC%9D%98-%EC%88%98k-%EC%84%A4%EC%A0%95"><span class="header-section-number">8.3.1</span> 주제의 수(K) 설정</a></li>
+<li><a class="nav-link" href="#%EC%A3%BC%EC%A0%9C%EB%AA%A8%ED%98%95-%EA%B5%AC%EC%84%B1"><span class="header-section-number">8.3.2</span> 주제모형 구성</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#%EC%86%8C%ED%86%B5-1"><span class="header-section-number">8.4</span> 소통</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%8B%A8%EC%96%B4-%EB%B6%84%ED%8F%AC"><span class="header-section-number">8.4.1</span> 주제별 단어 분포</a></li>
+<li><a class="nav-link" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%AC%B8%EC%84%9C-%EB%B6%84%ED%8F%AC"><span class="header-section-number">8.4.2</span> 주제별 문서 분포</a></li>
+<li><a class="nav-link" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%8B%A8%EC%96%B4-%EB%AC%B8%EC%84%9C-%EB%B6%84%ED%8F%AC"><span class="header-section-number">8.4.3</span> 주제별 단어-문서 분포</a></li>
+<li><a class="nav-link" href="#%EA%B3%BC%EC%A0%9C-3"><span class="header-section-number">8.4.4</span> 과제</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-15.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

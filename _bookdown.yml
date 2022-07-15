@@ -14,14 +14,28 @@ rmd_files: [
   "index.Rmd",
 
   # 공통사항 -------
-  # "00-about-the-author.Rmd",
+  "00-about-the-author.Rmd",
 
   # 설치 및 환경설정 -------
   "01-setup.Rmd",
   "02-hello-world.Rmd",
 
   # 텍스트 살펴보기 -------
-  "03-view-text.Rmd",
+  "10-view-text.Rmd",
+  #
+  # 텍스트를 숫자변환 -------
+  "20-text-to-freq.Rmd",
+  "21-tf-idf.Rmd",
+  #
+  # # 텍스트 빈도분석 -------
+  # "30-word-freq.Rmd",
+  #
+  # 감성분석 -------
+  "40-sentiment.Rmd",
+
+  # 주제모형 -------
+  "50-tm.Rmd",
+  "51-tm-covariate.Rmd",
 
 ]
 

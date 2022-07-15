@@ -43,26 +43,26 @@ glue_col("{blue 1 + 2 = {red 1 + 2}}")
 R마크다운 코드 덩어리에 다음 사항을 추가하고 R마크다운 작업을 수행하면
 자동으로 해당 색상을 `.html`, `.pdf`, `shiny` 결과물에 반영할 수 있다.
 
-<!-- ````markdown -->
-<!-- ```{r setup} -->
-<!-- knitr::knit_hooks$set(output = function(x, options){ -->
-<!--   paste0( -->
-<!--     '<pre class="r-output"><code>', -->
-<!--     fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE), -->
-<!--     '</code></pre>' -->
-<!--   ) -->
-<!-- }) -->
-<!-- ``` -->
-<!-- ```` -->
+````markdown
+```{r setup}
+knitr::knit_hooks$set(output = function(x, options){
+  paste0(
+    '<pre class="r-output"><code>',
+    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),
+    '</code></pre>'
+  )
+})
+```
+````
 
-<!-- R마크다운 색상 적용에 대한 자세한 사항은 [rmarkdown and terminal colors](https://logfc.wordpress.com/2020/07/20/rmarkdown-and-terminal-colors/)를  -->
-<!-- 참조한다. -->
+R마크다운 색상 적용에 대한 자세한 사항은 [rmarkdown and terminal colors](https://logfc.wordpress.com/2020/07/20/rmarkdown-and-terminal-colors/)를
+참조한다.
 
 
-<!-- ## 데이터프레임 {#dataframe-color} -->
+## 데이터프레임 {#dataframe-color}
 
-<!-- 이를 확장하여 콘솔, R마크다운, 그리고 데이터프레임에도 색상을 적용하여  -->
-<!-- 반영시킬 수 있다. -->
+이를 확장하여 콘솔, R마크다운, 그리고 데이터프레임에도 색상을 적용하여
+반영시킬 수 있다.
 
 
 # 메카브(MeCab) 설치 {#install-stacks}

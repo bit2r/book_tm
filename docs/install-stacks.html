@@ -17,7 +17,8 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -43,10 +44,16 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">들어가며</a></li>
+<li><a class="" href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></li>
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="active" href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></li>
 <li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
 <li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></li>
+<li><a class="" href="tf-idf.html"><span class="header-section-number">6</span> 단어 빈도수</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></li>
+<li><a class="" href="topic-modeling.html"><span class="header-section-number">8</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></li>
 </ul>
 
         <div class="book-extra">
@@ -75,31 +82,31 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
 <span class="header-section-number">2.1.1</span> MeCab 설치<a class="anchor" aria-label="anchor" href="#install-mecab-mac-mecab"><i class="fas fa-link"></i></a>
 </h3>
 <p>GitHub <a href="https://github.com/IshidaMotohiro/RMeCab/issues/13">Installation of RMeCab 1.07 on M1 Mac #13</a> 에 자세한 사항이 나와 있지만 간략하게 정리하면 다음과 같다.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="install-stacks.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## xcode 설치되면 생략 ----- </span></span>
-<span id="cb2-2"><a href="install-stacks.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> xcode-select <span class="at">--install</span></span>
-<span id="cb2-3"><a href="install-stacks.html#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="install-stacks.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">## MeCab 설치 --------------</span></span>
-<span id="cb2-5"><a href="install-stacks.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
-<span id="cb2-6"><a href="install-stacks.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE'</span>  <span class="at">-o</span> mecab-0.996.tar.gz</span>
-<span id="cb2-7"><a href="install-stacks.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar xf mecab-0.996.tar.gz</span>
-<span id="cb2-8"><a href="install-stacks.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-0.996</span>
-<span id="cb2-9"><a href="install-stacks.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf8</span>
-<span id="cb2-10"><a href="install-stacks.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
-<span id="cb2-11"><a href="install-stacks.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span>
-<span id="cb2-12"><a href="install-stacks.html#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="install-stacks.html#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">## MeCab 사전 설치 --------------</span></span>
-<span id="cb2-14"><a href="install-stacks.html#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
-<span id="cb2-15"><a href="install-stacks.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM'</span>  <span class="at">-o</span> mecab-ipadic-2.7.0-20070801.tar.gz</span>
-<span id="cb2-16"><a href="install-stacks.html#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar zvxf mecab-ipadic-2.7.0-20070801.tar.gz</span>
-<span id="cb2-17"><a href="install-stacks.html#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar xf mecab-ipadic-2.7.0-20070801.tar.gz</span>
-<span id="cb2-18"><a href="install-stacks.html#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-ipadic-2.7.0-20070801</span>
-<span id="cb2-19"><a href="install-stacks.html#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf-8</span>
-<span id="cb2-20"><a href="install-stacks.html#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
-<span id="cb2-21"><a href="install-stacks.html#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span>
-<span id="cb2-22"><a href="install-stacks.html#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="install-stacks.html#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">## MeCab 설치 테스트 --------------</span></span>
-<span id="cb2-24"><a href="install-stacks.html#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mecab</span>
-<span id="cb2-25"><a href="install-stacks.html#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="ex">すもももももももものうち</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="install-stacks.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## xcode 설치되면 생략 ----- </span></span>
+<span id="cb3-2"><a href="install-stacks.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> xcode-select <span class="at">--install</span></span>
+<span id="cb3-3"><a href="install-stacks.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="install-stacks.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">## MeCab 설치 --------------</span></span>
+<span id="cb3-5"><a href="install-stacks.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
+<span id="cb3-6"><a href="install-stacks.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE'</span>  <span class="at">-o</span> mecab-0.996.tar.gz</span>
+<span id="cb3-7"><a href="install-stacks.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar xf mecab-0.996.tar.gz</span>
+<span id="cb3-8"><a href="install-stacks.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-0.996</span>
+<span id="cb3-9"><a href="install-stacks.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf8</span>
+<span id="cb3-10"><a href="install-stacks.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
+<span id="cb3-11"><a href="install-stacks.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span>
+<span id="cb3-12"><a href="install-stacks.html#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="install-stacks.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">## MeCab 사전 설치 --------------</span></span>
+<span id="cb3-14"><a href="install-stacks.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
+<span id="cb3-15"><a href="install-stacks.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM'</span>  <span class="at">-o</span> mecab-ipadic-2.7.0-20070801.tar.gz</span>
+<span id="cb3-16"><a href="install-stacks.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar zvxf mecab-ipadic-2.7.0-20070801.tar.gz</span>
+<span id="cb3-17"><a href="install-stacks.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar xf mecab-ipadic-2.7.0-20070801.tar.gz</span>
+<span id="cb3-18"><a href="install-stacks.html#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-ipadic-2.7.0-20070801</span>
+<span id="cb3-19"><a href="install-stacks.html#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf-8</span>
+<span id="cb3-20"><a href="install-stacks.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
+<span id="cb3-21"><a href="install-stacks.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span>
+<span id="cb3-22"><a href="install-stacks.html#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="install-stacks.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">## MeCab 설치 테스트 --------------</span></span>
+<span id="cb3-24"><a href="install-stacks.html#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mecab</span>
+<span id="cb3-25"><a href="install-stacks.html#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="ex">すもももももももものうち</span></span></code></pre></div>
 </div>
 <div id="install-mecab-mac-rmecab" class="section level3" number="2.1.2">
 <h3>
@@ -108,7 +115,7 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
 <p><a href="https://github.com/IshidaMotohiro/RMeCab">RMeCab</a> GitHub 저장소에 설치사항을
 정리하여 보면 MeCab와 사전을 설치한 후에 <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> 에 RMeCab 패키지
 저장소를 달리 지정하여 설치하면 된다.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"RMeCab"</span>, repos <span class="op">=</span> <span class="st">"https://rmecab.jp/R"</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RMeCab</span><span class="op">)</span></span>
@@ -126,28 +133,28 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
 <li>Bitbucket <a href="https://bitbucket.org/eunjeon/mecab-ko/downloads/">eunjeon/mecab-ko</a> 저장소에서 <code>mecab-ko</code> 최신버전을 다운로드 한다.</li>
 <li>Bitbucket <a href="https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/">eunjeon/mecab-ko-dic</a> 저장소에서 <code>mecab-ko-dic</code> 사전 최신버전을 다운로드 한다.</li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="install-stacks.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MeCab-ko 설치 ------------</span></span>
-<span id="cb4-2"><a href="install-stacks.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
-<span id="cb4-3"><a href="install-stacks.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://bitbucket.org/eunjeon/mecab-ko/downloads/mecab-0.996-ko-0.9.2.tar.gz'</span> <span class="at">-o</span> mecab-0.996-ko-0.9.2.tar.gz</span>
-<span id="cb4-4"><a href="install-stacks.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar xzvf mecab-0.996-ko-0.9.2.tar.gz</span>
-<span id="cb4-5"><a href="install-stacks.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-0.996-ko-0.9.2</span>
-<span id="cb4-6"><a href="install-stacks.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf-8</span>
-<span id="cb4-7"><a href="install-stacks.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
-<span id="cb4-8"><a href="install-stacks.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span>
-<span id="cb4-9"><a href="install-stacks.html#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="install-stacks.html#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># MeCab-ko-dic 사전 설치 ------------</span></span>
-<span id="cb4-11"><a href="install-stacks.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
-<span id="cb4-12"><a href="install-stacks.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.1.1-20180720.tar.gz'</span> <span class="at">-o</span> mecab-ko-dic-2.1.1-20180720.tar.gz</span>
-<span id="cb4-13"><a href="install-stacks.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-ko-dic-2.1.1-20180720</span>
-<span id="cb4-14"><a href="install-stacks.html#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf-8</span>
-<span id="cb4-15"><a href="install-stacks.html#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
-<span id="cb4-16"><a href="install-stacks.html#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="install-stacks.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MeCab-ko 설치 ------------</span></span>
+<span id="cb5-2"><a href="install-stacks.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
+<span id="cb5-3"><a href="install-stacks.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://bitbucket.org/eunjeon/mecab-ko/downloads/mecab-0.996-ko-0.9.2.tar.gz'</span> <span class="at">-o</span> mecab-0.996-ko-0.9.2.tar.gz</span>
+<span id="cb5-4"><a href="install-stacks.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> tar xzvf mecab-0.996-ko-0.9.2.tar.gz</span>
+<span id="cb5-5"><a href="install-stacks.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-0.996-ko-0.9.2</span>
+<span id="cb5-6"><a href="install-stacks.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf-8</span>
+<span id="cb5-7"><a href="install-stacks.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
+<span id="cb5-8"><a href="install-stacks.html#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span>
+<span id="cb5-9"><a href="install-stacks.html#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="install-stacks.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># MeCab-ko-dic 사전 설치 ------------</span></span>
+<span id="cb5-11"><a href="install-stacks.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ~/Downloads</span>
+<span id="cb5-12"><a href="install-stacks.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl <span class="at">-fsSL</span> <span class="st">'https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.1.1-20180720.tar.gz'</span> <span class="at">-o</span> mecab-ko-dic-2.1.1-20180720.tar.gz</span>
+<span id="cb5-13"><a href="install-stacks.html#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd mecab-ko-dic-2.1.1-20180720</span>
+<span id="cb5-14"><a href="install-stacks.html#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./configure <span class="at">--with-charset</span><span class="op">=</span>utf-8</span>
+<span id="cb5-15"><a href="install-stacks.html#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> make</span>
+<span id="cb5-16"><a href="install-stacks.html#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo make install</span></code></pre></div>
 </div>
 <div id="install-mecab-bitTA" class="section level3" number="2.1.4">
 <h3>
 <span class="header-section-number">2.1.4</span> bitTA 설치<a class="anchor" aria-label="anchor" href="#install-mecab-bitTA"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># remotes::install_github("bit2r/bitTA")</span></span>
 <span><span class="co"># </span></span>
 <span><span class="co"># library(bitTA)</span></span>
@@ -162,7 +169,7 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
 <span class="header-section-number">2.2</span> 윈도우<a class="anchor" aria-label="anchor" href="#%EC%9C%88%EB%8F%84%EC%9A%B0"><i class="fas fa-link"></i></a>
 </h2>
 <p><a href="https://github.com/bit2r/bitTA/issues/5">MeCab 설치 이슈</a> 참조</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># library(bitTA)</span></span>
 <span><span class="co"># </span></span>
 <span><span class="co"># morpho_mecab("아버지가 방에 들어가신다.")</span></span></code></pre></div>
@@ -201,7 +208,7 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-14.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -209,6 +216,34 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
 </body>
 </html>

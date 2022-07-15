@@ -1,0 +1,816 @@
+
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+source("_common.R")
+```
+
+
+# 주제모형(공변인) {#anal4topic}
+
+## 주제 명명과 공변인 주제모형
+
+### 개관
+
+주제모형은 기계학습의 비지도학습에 해당한다. 기계가 인간의 '지도'를 받지 않고 '스스로' 자료에서 일정한 규칙을 찾아 비슷한 유형끼리 군집하는 학습방식이다. 인간이 데이터셋을 미리 분류한 정보를 투입하지 않기 때문에, 기계가 분류한 군집에 대해 인간이 사후적으로 의미를 추론해야 한다. 이번 장에서는 기계가 도출한 각 주제의 주요 단어와 문서를 통해 주제의 의미를 추론하는 방법으로서의 주제 명명에 대해 학습한다. 
+
+이와 함께, 메타데이터를 이용한 공변인(covariate) 주제모형 분석에 대해서도 학습한다. 메타데이터는 데이터에 대한 데이터다. 예를 들어, 말뭉치에 포함된 문서의 유형(예: 소설, 논설), 분류(예: 사회면, 정치면), 소속(예: 언론사), 시기(예: 연, 월, 주)에 대한 정보가 메타데이터다. 이 메타데이터를 변수로서 투입해 분석하면 말뭉치의 주제에 대해 보다 의미있는 분석이 가능하다. 
+
+예를 들어, 기간대별로 말뭉치의 주제가 어떻게 변하는지, 혹은 문서의 분류에 따라 주제가 어떻게 다른지 등을 분석할 수 있다. 주제의 구조적인 측면은 다룬다고 해서 구조적 주제모형(structural topic models)이라고 한다. 
+
+공변인을 투입한 주제모형 분석이므로 여기서는 동적 주제모형과 구조적 주제모형을 모두 공변인 주제모형(Covariates topic models)이라고 하겠다. 
+
+[`stm`패키지](https://cran.r-project.org/web/packages/stm/index.html)와 [`keyATM`패키지](https://cran.r-project.org/web/packages/keyATM/index.html)는 말뭉치의 메타데이터를 공변인으로 투입해 말뭉치의 주제에 대한 회귀분석 기능을 제공한다. `keyATM`이 보다 최근의 패키지라 보다 다양한 기능이 있지만, 윈도에서 멀티바이트문자를 지원하지 않아 윈도에서는 한글문서를 분석할 수 없다는 단점이 있다. 
+
+
+```{r pkg10, message=FALSE, warning=FALSE}
+pkg_v <- c("tidyverse", "tidytext", "stm", "lubridate")
+purrr::map(pkg_v, require, ch = T)
+
+```
+
+
+## 자료 준비
+
+### 수집
+
+[빅카인즈](https://www.bigkinds.or.kr/)의 '뉴스분석' 메뉴에서 '뉴스검색·분석'을 선택한 다음, '상세검색'을 클릭한다. 상세검색은 다양한 기준으로 검색할 수 있다. 검색유형 기본값은 '뉴스', 검색어처리 기본값은 '형태소분석', 검색어범위 기본값은 '제목+본문'이다. 모두 기본값으로 검색한다.
+
+- 기간: 2021-01-01 - 2021-03-31
+- 검색어: '백신', '코로나19', '신종 코로나', '신종코로나', '우한 폐렴', '우한폐렴', '바이러스' (쉼표로 분리하면 각 검색어를 'OR' 연산자로 검색이 된다.)
+- 언론사: 경향신문, 조선일보, 중앙일보, 한겨레
+- 통합분류: 정치, 경제, 사회, 국제, 지역, IT_과학 
+- 분석: 분석기사 (분석기사를 선택하면 중복(반복되는 유사도 높은 기사)과 예외(인사 부고 동정 포토)가 검색에서 제외된다.
+
+모두 14,097건이다. 
+
+다운로드한 엑셀파일을 작업디렉토리 아래 `data`폴더로 복사한다. `data`폴더에서 'News'로 시작해서 '.xlsx'로 끝나는 파일명만 표시해 보자. 
+
+```{r cov1}
+list.files(path = 'data', pattern = '^News.*20210101.*\\.xlsx$')
+
+```
+
+데이터셋의 파일명이 'NewsResult_20210101-20210330.xlsx'이다. 
+
+```{r cov2}
+readxl::read_excel("data/NewsResult_20210101-20210330.xlsx") %>% names()
+
+```
+
+분석에 필요한 열을 선택해 데이터프레임으로 저장한다. 분석 텍스트는 제목과 본문이다. 제목은 본문의 핵심 내용을 반영하므로, 제목과 본문을 모두 주제모형 분석에 투입한다. 시간별, 언론사별, 분류별로 분석할 계획이므로, 해당 열을 모두 선택한다. 키워드 열은 빅카인즈가 본문에서 추출한 키워드 중 단순 숫자, 이메일주소, 시간이 아닌 단어 등이다. 빅카인즈의 형태소분석결과를 이용할 계획이므로 키워드 열도 선택한다. 빅카인즈는 본문을 200자까지만 무료로 제공하지만, 빅카인즈에서 형태소분석을 통해 추출한 키워드는 기사 전문에서 추출한 결과다. 키워드를 이용하면 기사 전문을 이용하는 효과가 있다.   
+
+```{r cov3}
+vac_df <- 
+readxl::read_excel("data/NewsResult_20210101-20210330.xlsx") %>% 
+  select(일자, 제목, 본문, 언론사, cat = `통합 분류1`, 키워드) 
+vac_df %>% head(3)
+
+```
+
+### (선택) 표집
+
+LDA 모형은 베이지언 모형이므로 사후확률의 근사치를 주어진 자료로부터 반복적으로 계산해 주제를 추론한다. 복잡한 계산을 반복적으로 수행하기 때문에 컴퓨터 사양이 낮은 경우 분석이 매우 느릴 수 있다. 데이터 크기와 컴퓨터 서능에 따라 수십분 혹은 수시간 이상 소요될 수 있다. 주제모형 분석 방법 학습 맥락에서 시간 절약을 위해 데이터셋의 일부만 추려 분석에 활용한다. 아래 코드는 1만4천개 행에서 3천개행 표집. 
+
+```{r cov3-1, eval=FALSE}
+set.seed(37)
+vac_sample_df <-   
+  vac_df %>% 
+  sample_n(size = 3000) 
+vac_df %>% glimpse()
+
+```
+
+기사 본문과 키워드를 비교해보자. 
+
+```{r cov4}
+vac_df %>% pull(키워드) %>% head(1)
+```
+
+
+```{r cov4-1}
+vac_df %>% pull(제목) %>% head(1)
+vac_df %>% pull(본문) %>% head(1)
+
+```
+
+
+분석 목적에 맞게 열을 재구성한다. 언론사는 '여당지'와 '야당지'로 구분한다. 분류는 '사회면'와 '비사회면'로 나눈다. 
+
+```{r cov5}
+vac2_df <- 
+vac_df %>% 
+  # 중복기사 제거
+  distinct(제목, .keep_all = T) %>% 
+  # 기사별 ID부여
+  mutate(ID = factor(row_number())) %>% 
+  # 월별로 구분한 열 추가(lubridate 패키지)
+  mutate(week = week(ymd(일자))) %>%       
+  # 기사 제목과 본문 결합
+  unite(제목, 본문, col = "text", sep = " ") %>% 
+  # 중복 공백 제거
+  mutate(text = str_squish(text)) %>% 
+  # 언론사 구분: 야당지, 여당지 %>% 
+  mutate(press = case_when(
+    언론사 == "조선일보" ~ "야당지",
+    언론사 == "중앙일보" ~ "야당지",
+    언론사 == "경향신문" ~ "여당지",
+    TRUE ~ "여당지") ) %>% 
+  # 기사 분류 구분 
+  separate(cat, sep = ">", into = c("cat", "cat2")) %>% 
+  # IT_과학, 경제, 사회 만 선택
+  select(-cat2) %>% 
+  # 분류 구분: 사회, 비사회
+  mutate(catSoc = case_when(
+    cat == "사회" ~ "사회면",
+    cat == "지역" ~ "사회면",
+    TRUE ~ "비사회면") )
+
+vac2_df %>% glimpse()
+
+```
+
+새로 생성된 열의 기사 양을 계산해보자.
+
+```{r cov6}
+vac2_df %>% count(cat, sort = T)
+
+```
+
+문화와 스포츠를 검색단계서 선택하지 않았음에도 데이터셋에 포함된 이유는 하부 분류에 포함돼 있었기 때문이다. 
+
+
+```{r cov6-1}
+vac2_df %>% count(catSoc, sort = T)
+
+```
+
+비사회면 8436건, 사회면 5653건으로 문서 수에서 큰 차이가 나지 않는다. 
+
+```{r cov6-2}
+vac2_df %>% count(week)
+vac2_df %>% count(press, sort = T)
+
+```
+
+월 및 언론사 구분에서도 문서 수에서 큰 차이가 나지 않는다. 
+
+
+### 정제
+
+#### 토큰화
+
+빅카인즈의 형태소분석이 된 키워드를 이용하므로 이미 토큰화가 된 상태이나, 본 분석에 앞서 단어의 빈도 등을 검토하기 위해 정돈텍스트 형식으로 변경하기 위해 토큰화를 진행한다. 'text'열이 아니라 '키워드'열의 ','를 기준으로 토큰화한다. 토큰화하기 전 문자, 숫자, 쉼표 이외의 요소를 제거한다. 전각문자는 문자가 아님에도 정규표현식으로 걸리지지 않으므로 추가로 제거한다.  
+
+- 추가로 지워야 하는 주요 기호 :  
+  - `ㆍㅣ‘’“” ○ ● ◎ ◇ ◆ □ ■ △ ▲ ▽ ▼ 〓 ◁ ◀ ▷ ▶ ♤ ♠ ♡ ♥ ♧ ♣ ⊙ ◈ ▣ `
+  
+이외에도 빈도 분석을 통해 정규표현식으로 걸러지지 않은 기호가 나오면 추가로 제거한다. 
+
+```{r regex10}
+"!@#$... 전각ㆍㅣ문자 %^&*()" %>% str_remove("\\w+")
+
+```
+
+
+
+```{r cov7}
+fullchar_v <- "ㆍ|ㅣ|‘|’|“|”|○|●|◎|◇|◆|□|■|△|▲|▽|▼|〓|◁|◀|▷|▶|♤|♠|♡|♥|♧|♣|⊙|◈|▣"
+
+vac_tk <- 
+vac2_df %>% 
+  mutate(키워드 = str_remove_all(키워드, "[^(\\w+|\\d+|,)]")) %>% 
+  mutate(키워드 = str_remove_all(키워드, fullchar_v)) %>% 
+  unnest_tokens(word, 키워드, token = "regex", pattern = ",") 
+
+vac_tk %>% arrange(ID) %>% head(30)
+vac_tk %>% arrange(ID) %>% tail(30)
+
+```
+
+
+#### 불용어 처리
+
+빅카인즈의 형태소분석 결과를 이용하므로 별도의 불용어처리는 불필요하나, 의미없는 고빈도 단어를 선별할 필요가 있다. 단어의 총빈도를 계산해본다. '백신'과 '코로나19'의 빈도가 높다.  어느 한 단어가 압도적인 비중을 차지하는 것이 아니므로 제거하지 않고 그대로 둔다. '코로나'는 '코로나19'라는 질병의 이름으로 사용됐을수 있고, '코로나바이러스'라는 병인으로 사용됐을수도 있으므로, '코로나19'와 병합하지 말고 그대로 둔다.  
+
+```{r cov8}
+count_df <- 
+vac_tk %>% count(word, sort = T)
+
+count_df %>% head(40)
+count_df %>% tail(40)
+
+```
+
+
+### `stm`말뭉치
+
+`stm()`함수에서 처리하는 데이터는 각 기사의 토큰이 하나의 열에 함께 있어야 한다. 정돈텍스트형식은 한개의 열에 하나의 토큰만 있으므로 `str_flatten()`함수로 하나의 열에 결합한다. 
+
+
+```{r cov11}
+combined_df <-
+  vac_tk %>%
+  group_by(ID) %>%
+  summarise(text2 = str_flatten(word, " ")) %>%
+  ungroup() %>% 
+  inner_join(vac2_df, by = "ID")
+
+combined_df %>% glimpse()
+
+```
+
+
+`textProcessor()`함수는 영문처리를 기본값으로 하고 있다. 영문은 두 글자 단어가 거의 없기 때문에 기본값이 세글자 이상만 분석에 투입하도록 기본값이 설정돼 있다. 국문은 두 글자 단어도 의미있는 단어가 많기 때문에, 단어의 길이를 두 글자 이상으로 설정한다. 
+
+```{r cov12}
+processed <-
+  combined_df %>% textProcessor(
+    documents = combined_df$text2,
+    metadata = .,
+    wordLengths = c(2, Inf)
+  )
+summary(processed)
+
+```
+
+prepDocuments()함수로 주제모형에 사용할 데이터의 인덱스(wordcounts)를 만든다. 이후 stm말뭉치와 기사 본문을 연결해 확인해야 하므로, 단어와 문서를 제거하지 않는다.  
+
+```{r cov12-1}
+out <-
+  prepDocuments(processed$documents,
+                processed$vocab,
+                processed$meta,
+                lower.thresh = 0)
+summary(out)
+```
+
+산출결과를 개별 객체로 저장한다. 이 객체들은 이후 모형구축에 사용된다.
+
+```{r cov12-2}
+docs <- out$documents
+vocab <- out$vocab
+meta <- out$meta
+```
+
+
+## 분석
+
+주제모형 구축에 앞서 먼저 도출한 주제의 수를 정한다. 
+
+### 주제(topic)의 수 설정
+
+보통 10개부터 100개까지 10개 단위로 주제의 수를 구분해 연구자들이 정성적으로 최종 주제의 수 판단한다.
+
+학습 상황이므로 계산시간을 줄이기 위해 주제의 수를 3개, 9개, 100개의 결과를 비교해보자.  
+
+주제모형 분석은 사후 확률의 근사치를 주어진 자료로부터 반복적으로 최적화하는 계산을 수행하기 때문에 자료가 크면 계산시간이 오래 걸린다. 컴퓨터 성능에 따라 수십분 이상 소요될 수 있다. 
+
+
+```{r cov13, eval=FALSE}
+topicN <- c(3, 9, 100)
+
+storage <- searchK(docs, vocab, K = topicN)
+storage
+plot(storage)
+```
+
+
+### 모형 구성
+
+`stm`패키지가 추출한 주제에 대하여 메타데이터를 변수로 투입하는 방식은 2가지다. 'topical prevalence'와 'topical content'를 이용하는 방식이다. 'topical prevalence' 공변인은 `prevalence = `인자를 통해 투입하고, 'topical content'는 `cotent = `인자를 통해 투입한다. 모형에 따라 `prevalence`와 `content` 중 하나만 투입하기도 하고 둘다 투입하기도 한다. 
+
+- Topical prevalence: 공변인에 따른 문서별 주제 분포의 비율
+
+- Topical content: 공변인에 따른 단어별 주제 분포
+
+연속변수를 투입할 때는 `s()`함수를 이용해 구간의 수를 지정한다. `s()`함수는 공변인을 연속변수로 투입할때 spline으로 추정하도록 한다. 즉, 구간을 지정해 각 구간별로 따로 회귀식을 구하면서 각 구간을 연속적인 형태로 만들어준다. 구간의 수는 `df = `인자를 통해 투입한다. 기본값은 10이다. 
+
+주제모형분석을 위해서는 주제어 선정과 분포계산을 반복적으로 수행한다. 이 과정을 화면에 출력되지 않게 `verbose = ` 인자를 `FALSE`로 설정할 수 있다.  
+
+- 주의: 메타데이터 인자(`prevalence =~ ` 와 `content =~ `)에 투입할 때 `=`가 아니라 `=~` !!! 
+
+아래 모형에서는 언론사의 정치성향과 시간을 공변인으로 투입했다. 
+
+
+```{r cov14, eval = FALSE}
+t1 <- Sys.time()
+meta_fit <-
+  stm(
+    documents = docs,
+    vocab = vocab,
+    data = meta,
+    K = 9,         
+    prevalence =~ press + s(week, 6), # 투입하는 공변인
+    max.em.its = 75,                # 최대 반복계산 회수 
+    verbose = F,                    # 반복계산결과 화면출력 여부
+    init.type = "Spectral",
+    seed = 37 
+  )
+t2 <- Sys.time()
+t2-t1
+
+meta_fit %>% 
+  write_rds("data/meta_fit.rds")
+```
+
+```{r cov14-read, eval = TRUE}
+meta_fit <-  
+  read_rds("data/meta_fit.rds")
+
+summary(meta_fit)
+
+```
+
+
+## 주제 이름짓기
+
+### 주제별 단어와 원문 결합
+
+주제 단어가 추출된 원문을 살펴보면 해당 주제를 보다 명확하게 파악할 수 있다. 모형 구성에 투입한 데이터와 문서(이 경우 개별 기사) 본문이 포함된 데이터를 결합해야 한다. `stm`패키지는 `findThoughts()`함수를 통해 각 모형별로 전형적인 문서를 확인할 수 있도록 한다. 
+
+```{r cov15}
+findThoughts(
+  model = meta_fit,     # 구성한 주제모형
+  texts = vac2_df$text,  # 문서 본문 문자 벡터
+  topics = c(1, 2),     # 찾고자 하는 주제의 값. 기본값은 모든 주제
+  n = 3                 # 찾고자 하는 문서의 수
+)
+
+
+
+```
+
+구성한 stm모형과 구성전 데이터프레임을 결합하면 보다 다양한 방식으로 문서의 원문을 탐색할 수 있다. 
+
+결합하는 두 데이터프레임의 기준이 되는 열에 포함된 자료의 유형을 통일시킨다. 여기서는 정수(integer)로 통일시켰다. 
+
+```{r cov16}
+td_gamma <- meta_fit %>% tidy(matrix = "gamma")
+td_gamma$document <- as.integer(td_gamma$document)
+combined_df$ID <- as.integer(combined_df$ID) 
+
+```
+
+각 주제는 독립된 열로 분리한다. 
+
+```{r cov17}
+text_gamma <- 
+combined_df %>% 
+  select(ID, text2, text, 키워드) %>% 
+  left_join(td_gamma, by = c("ID" = "document")) %>% 
+  pivot_wider(
+    names_from = topic,
+    values_from = gamma,
+    names_prefix = "tGamma",
+    values_fill = 0
+    ) 
+
+text_gamma %>% glimpse()  
+
+```
+
+
+각 주제별로 확률분포가 높은 문서를 확인해 보자. 각 문서에서 감마가 높은 순서로 정열하면, 해당 주제에 속할 확률이 높은 문서 순서대로 볼수 있다.  `pull()`함수를 이용하면 해당 열의 모든 내용을 볼수 있다. 
+
+```{r cov18}
+text_gamma %>% 
+  arrange(-tGamma7) %>% 
+  pull(text) %>% head(9)
+
+text_gamma %>% 
+  arrange(-tGamma7) %>% 
+  pull(키워드) %>% .[6]
+
+```
+
+
+각 주제별로 대표 단어를 선택해 원문을 살펴보자. 
+
+```{r cov19}
+text_gamma %>% 
+  arrange(-tGamma2) %>% 
+  filter(str_detect(text, "지원금")) %>% 
+  mutate(text = str_replace_all(text, "지원금", "**지원금**")) %>% 
+  pull(text) %>% 
+  head(5)
+
+```
+
+
+### 주제 이름 목록
+
+각 주제별로 주요 주제어와 해당 문서의 본문을 비교해 주제별로 주요 문서를 살펴보고 주제에 대한 이름을 짓는다. 각 주제별 주요 단어는  `labelTopics()`함수를 통해 주요단어를 찾을 수 있다. 주제별 이름은 목록을 만들어 데이터프레임에 저장한다. 
+
+
+```{r cov20}
+labelTopics(meta_fit)
+
+```
+
+
+주제별 이름 목록을 데이터프레임에 저장한다. 
+
+```{r cov21}
+topic_name <- tibble(topic = 1:9,
+                     name = c("1. 백신 접종자",
+                              "2. 코로나 지원금",
+                              "3. 경제 영향",
+                              "4. 집단 수용자",
+                              "5. 국제 관계",
+                              "6. 교육 온라인",
+                              "7. 정치권 동향",
+                              "8. 확진자 검진",
+                              "9. 사회 영향") )
+
+```
+
+주제별 상위 7개 단어목록을 데이터프레임에 저장한 다음, 이름 목록과 결합한다. 
+
+```{r cov22}
+td_beta <- meta_fit %>% tidy(matrix = 'beta') 
+
+term_topic_name <- 
+td_beta %>% 
+  group_by(topic) %>% 
+  slice_max(beta, n = 7) %>% 
+  left_join(topic_name, by = "topic")
+
+term_topic_name
+
+```
+
+
+### 주제별 단어 분포도
+
+단어별로 부여된 베타 값을 이용해 주제별 단어 분포도를 각 주제의 이름과 함께 시각화한다. 
+
+```{r cov23}
+term_topic_name %>% 
+  
+  ggplot(aes(x = beta, 
+             y = reorder_within(term, beta, name),  # 각 주제별로 재정렬
+             fill = name)) +
+  geom_col(show.legend = F) +
+  facet_wrap(~name, scales = "free") +
+  scale_y_reordered() +                             # 재정렬한 y축의 값 설정
+  labs(x = expression("단어 확률분포: "~beta), y = NULL,
+       title = "주제별 단어 확률 분포",
+       subtitle = "주제별로 다른 단어들로 군집") +
+  theme(plot.title = element_text(size = 20))
+
+
+```
+
+
+### 주제별 문서 분포도
+
+문서별로 부여된 감마 값을 이용한 주제별로 문서의 분포도를 각 주제의 이름과 함께 시각화한다. 
+
+```{r cov24}
+td_gamma <- meta_fit %>% tidy(matrix = 'gamma') 
+
+doc_topic_name <- 
+td_gamma %>% 
+  group_by(topic) %>% 
+  left_join(topic_name, by = "topic")
+
+doc_topic_name
+
+doc_topic_name %>% 
+  ggplot(aes(x = gamma, fill = name)) +
+  geom_histogram(bins = 50, show.legend = F) +
+  facet_wrap(~name) + 
+  labs(title = "주제별 문서 확률 분포",
+       y = "문서(기사)의 수", x = expression("문서 확률분포"~(gamma))) +
+  theme(plot.title = element_text(size = 20))
+
+```
+
+### 주제별 단어-문서 분포
+
+```{r cov25}
+# 주제별 상위 7개 단어 추출
+top_terms <- 
+td_beta %>% 
+  group_by(topic) %>% 
+  slice_max(beta, n = 7) %>% 
+  select(topic, term) %>% 
+  summarise(terms = str_flatten(term, collapse = ", ")) 
+
+# 주제별 감마 평균 계산  
+gamma_terms <- 
+td_gamma %>% 
+  group_by(topic) %>% 
+  summarise(gamma = mean(gamma)) %>% 
+  left_join(top_terms, by = 'topic') %>%  # 주제별 단어 데이터프레임과 결합
+  left_join(topic_name, by = 'topic')     # 주제 이름 데이터프레임과 결합
+
+gamma_terms
+
+```
+
+결합한 데이터프레임을 막대도표로 시각화.
+
+```{r cov25-1}
+gamma_terms %>% 
+  
+  ggplot(aes(x = gamma, y = reorder(name, gamma), fill = name)) +
+  geom_col(show.legend = F) +
+  geom_text(aes(label = round(gamma, 2)), # 소수점 2자리 
+            hjust = 1.15) +                # 라벨을 막대도표 안쪽으로 이동
+  geom_text(aes(label = terms), 
+            hjust = -0.05) +              # 단어를 막대도표 바깥으로 이동
+  scale_x_continuous(expand = c(0, 0),    # x축 막대 위치를 Y축쪽으로 조정
+                     limit = c(0, .8)) +   # x축 범위 설정
+  labs(x = expression("문서 확률분포"~(gamma)), y = NULL,
+       title = "코로나19와 백신 관련보도 상위 주제어",
+       subtitle = "주제별로 기여도가 높은 단어 중심") +
+  theme(plot.title = element_text(size = 20))
+
+
+```
+
+
+
+## 공변인 분석
+
+`stm`패키지는  메타데이터와 주제 사이의 관계 탐색을 위해 `estimateEffect()`함수를 제공한다. 각 주제를 종속변수(산출요소)로 설정하고, 메타데이터를 독립변수(투입요소)로 설정해 회귀분석으로 수행한다. 분석결과는 회귀계수(estimate), 표준오차, t값으로 요약해 제시한다. 
+
+여기서 사용한 자료에서 메타데이터로 투입한 독립변수는 press(언론사의 정치성향)와 시간(week)이다. 즉, 언론사 정치성향과 시간은 독립변수로서 종속변수인 추촐한 주제를 예측하는  변인이 된다. 
+
+회귀계수는 독립변수가 종속변수를 설명하는 정도다. 예를 들어, press(언론사 정치성향)가 각 주제를 예측하는 정도가 회귀계수이므로, 이 회귀계수가 야당지에 비해 여당지에서 해당 주제에 대해 평균적으로 더 많이 언급한 정도를 나타낸다. 회귀계수가 음수면 야당지에서 언급이 더 많은 주제이고, 양수면 여당지에서 언급이 더 많은 주제다. t값과 p값은 그 효과(회귀계수)가 0과 유의하게 다른지를 나타낸다. 
+
+분석 결과는  `plot.estimateEffect()`함수로 시각화한다. 주제 분포의 불확실성은 `uncertainty = `인자를 통해 다양한 방법으로 계산하는데, 기본값은 모든 경우를 고려하는 'Global'이다. 만일 계산속도를 높이고 싶으면 추가적인 불확실성 계산을 생략하는 'None'으로 투입한다. 
+
+언론사의 정치성향(press)과 보도시점을 주 단위를 6개로 구분해 독립변수로 투입하고, 추출한 9개 주제를 종속변수로 투입해 분석해보자. 
+
+```{r cov26}
+out$meta$rating <- as.factor(out$meta$press)
+prep <- estimateEffect(formula = 1:9 ~ press + s(week, 6), 
+                       stmobj = meta_fit,
+                       metadata = out$meta,
+                       uncertainty = "Global")
+
+summary(prep, topics= 1:9)
+
+```
+
+주제4와 주제7을 제외하고 모두 언론사의 정치성향에 따라 기사의 주제가 다른 경향을 보이고 있다. 주제3과 주제5를 제외하고 모두 3월에 기사의 주제가 바뀌었다. 
+언론사의 정치성향을 '여당지'와 '야당지'로 구분했는데, 분석결과에 '여당지'만 나오는 이유는 야당지를 기준으로 여당지의 분포를 계산했기 때문이다. 즉, 계수가 음수면 야당지를 기준으로 여당지에 해당 주제를 구성하는 단어의 빈도가 상대적으로 적게 나타났다는 의미이다. 반대로 계수가 양수면 여당지에 해당 주제를 구성하는 단어의 빈도가 더 크다는 의미다. 
+
+
+### 문서 내용 확인
+
+주제1은 '백신접종'에 관련된 내용이다. 언론사 별로 각 주제에 대해 전형적인 기사가 무엇인지 확인해보자. 원문과 언론사 정보가 포함된 데이터프레임과 감마 계수 데이터프레임을 결합해 전형적인 기사를 찾을 수 있다.
+
+```{r cov29}
+combined_df %>% names()
+
+combined_df %>% 
+  left_join(td_gamma, by = c("ID" = "document")) %>% 
+  pivot_wider(
+    names_from = topic,
+    values_from = gamma,
+    names_prefix = "tGamma",
+    values_fill = 0
+    ) %>% 
+
+  arrange(-tGamma1) %>% 
+  filter(str_detect(text, "백신")) %>% 
+  mutate(text = str_replace_all(text, "백신", "**백신**")) %>% 
+  head(30)
+
+```
+
+'백신 접종'을 주제로 보도한 기사에서 주제1의 감마 계수 상위 10대 기사 중 9건이 야당지 보도다. 기사의 제목과 본문을 살펴보자. 4번째가 여당지 기사이고, 나머지는 모두 야당지 기사다. 
+
+
+```{r cov29-1}
+combined_df %>% names()
+
+combined_df %>% 
+  left_join(td_gamma, by = c("ID" = "document")) %>% 
+  pivot_wider(
+    names_from = topic,
+    values_from = gamma,
+    names_prefix = "tGamma",
+    values_fill = 0
+    ) %>% 
+
+  arrange(-tGamma1) %>% 
+  filter(str_detect(text, "백신")) %>% 
+  mutate(text = str_replace_all(text, "백신", "**백신**")) %>% 
+  pull(text) %>% .[1:10]
+
+```
+
+
+
+### 공변인 분석 시각화 
+
+공변인이 주제를 어떻게 예측하는지에 대해 도표로 시각화할 수 있다. 간단한 방법은 `stm`패키지에서 제공하는 `plot.estimate()`함수를 이용하는 방식이다. `ggplot2`패키지를 이용하면 보다 다양한 방식으로 독립변수와 종속변수의 관계를 시각화할 수 있다.   
+
+#### 정치성향에 따른 주제분포  
+
+
+```{r cov26-1}
+plot.estimateEffect(
+  prep,
+  covariate = "press",
+  topics = c(1, 2, 4),
+  model = meta_fit,
+  method = "difference",
+  cov.value1 = "여당지",
+  cov.value2 = "야당지",
+  xlab = "문서당 주제 분포 비율(야당지 대 여당지)",
+  main = "언론사 정치성향에 따른 문서별 주제 분포",
+  xlim = c(-.1, .1),
+  labeltype = "custom",
+  custom.labels = c("주제1", "주제2", "주제4")
+)
+
+```
+
+
+`ggplot2`패키지를 이용하면 모다 다양한 방식으로 시각화할 수 있다. 앞서 명명한 주제의 이름이 막대도표에 표시되도록 먼저 데이터프레임을 결합한다. 
+
+
+```{r cov26-2}
+# 주제 이름
+topic_name
+
+# 공변인 계수
+coef_df <- 
+prep %>% tidy() %>% 
+  filter(term == "press여당지")
+coef_df
+
+# 주제별 상위 10개 단어 추출
+top_terms <- 
+meta_fit %>% tidy(matrix = "beta")  %>% 
+  group_by(topic) %>% 
+  slice_max(beta, n = 7) %>% 
+  select(topic, term) %>% 
+  summarise(terms = str_flatten(term, " "))
+
+top_terms
+
+# 데이터프레임 결합
+term_coef_name <- 
+top_terms %>% 
+  left_join(topic_name, by = "topic") %>% 
+  left_join(coef_df, by = "topic") 
+  
+term_coef_name %>% glimpse()
+
+
+
+```
+
+데이터셋이 마련됐으면 막대도표에 시각화한다. 
+
+```{r cov26-3}
+term_coef_name %>% 
+  
+  ggplot(aes(x = estimate,
+             y = reorder(name, estimate),
+             fill = name)) +
+  geom_col(show.legend = F) +
+  geom_errorbar(aes(xmin = estimate - std.error,
+                    xmax = estimate + std.error), 
+                width = .9, size = .4, color = "grey10",
+                show.legend = F) +
+  scale_x_continuous(expand = c(0, 0),
+                     limits = c(-.75, .15),
+                     breaks = 0) +
+  geom_text(aes(x =-.4, label = terms), show.legend = F) +
+  geom_text(aes(label = round(estimate, 3)),
+            hjust = -.2) +
+  
+  labs(x = "문서당 주제 분포 비율(야당지 대 여당지)",
+       y = NULL,
+       title = "언론사 정치성향에 따른 문서별 주제 분포") +
+  theme(plot.title = element_text(size = 20))
+
+```
+
+
+
+#### 시간대별 주제 변화
+
+
+```{r cov27}
+plot.estimateEffect(
+  prep,
+  covariate = "week",    
+  topics = c(1, 8),
+  model = meta_fit,
+  method = "continuous", # 시간대 연속적으로 표시
+  xlab = "기간 (1월 ~ 3월)",
+  main = "시간대별 주제 분포"
+)
+
+```
+
+`ggplot2`패키지로 시각화하기 위해 먼저 데이터프레임을 결합한다. 
+
+
+```{r cov27-1}
+# 주제 이름
+topic_name
+
+# 공변인 계수
+coef_time <- 
+prep %>% tidy() %>% 
+  filter(str_detect(term, "^s"))
+coef_time
+
+# 데이터프레임 결합
+term_coef_time <- 
+coef_time %>% 
+  left_join(topic_name, by = "topic") 
+  
+term_coef_time %>% glimpse()
+
+```
+
+
+
+```{r cov27-2}
+term_coef_time %>% 
+  mutate(term = str_extract(term, "\\d$")) %>% 
+  mutate(term = as.integer(term)) %>% 
+  mutate(term = term * 2 - 1) %>% 
+  mutate(term = as.factor(term)) %>% 
+           
+  filter(str_detect(name, "^1|^2|^8")) %>% 
+  
+  ggplot(aes(x = term,
+             y = estimate,
+             color = name)) +
+  geom_line(aes(group = name), size = 1.2) +
+  geom_point(aes(shape = name), size = 3,) +
+  geom_errorbar(aes(ymin = estimate - std.error, 
+                    ymax = estimate + std.error), 
+                width = .4, size = 1,
+                position = position_dodge(.01)) +
+  labs(x = "기간(1월 ~ 3월)",
+       y = "문서당 주제 분포 비율",
+       title = "시간대별 주제 분포") +
+  theme(plot.title = element_text(size = 20))
+
+
+```
+
+
+
+
+### 주제 사이 상관성
+
+주제사이의 상관성을 표시할 수 있다. 
+
+```{r cov34, eval=FALSE}
+library(reshape2)
+
+get_lower_tri <- function(x){
+  x[upper.tri(x)] <- NA
+  return(x)
+}
+
+topicCorr(meta_fit) %>% .$cor %>% 
+  get_lower_tri() %>% 
+  melt(na.rm = T) %>% 
+  
+  ggplot(aes(x = factor(Var1), 
+             y = factor(Var2), 
+             fill = value)) +
+  geom_tile(color = "white") + 
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white",
+                       midpoint = 0,
+                       limit = c(-1, 1), space = "Lab") +
+  geom_text(aes(Var1, Var2, label = round(value, 3)), color = "black", size = 3) +
+  theme_minimal()
+  
+
+```
+
+
+
+
+
+### 과제
+
+1. 관심있는 검색어를 이용해 빅카인즈에서 기사를 검색해 수집한 기사의 주제모형을 구축한다. 
+2. 주요 주제어에 대하여 시각화한다. 
+3. 공변인(메타데이터)를 설정해, 공변인과 주제와의 관계를 탐색한다. 공변인은 시간, 언론사, 기사분류 등 선택. 
+
+
+
+
+
+
