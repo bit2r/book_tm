@@ -71,7 +71,7 @@
 <li>불용어제거</li>
 <li>정규화</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pkg_l</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"tidytext"</span>, <span class="st">"textdata"</span><span class="op">)</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">pkg_l</span>, <span class="va">require</span>, ch <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [[1]]
@@ -106,7 +106,7 @@
 <span class="header-section-number">5.1.1.0.1</span> 단어<a class="anchor" aria-label="anchor" href="#%EB%8B%A8%EC%96%B4"><i class="fas fa-link"></i></a>
 </h5>
 <p><code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code>함수에서 토큰의 기본값으로 설정된 단위는 단어(“words”)다.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_v</span> <span class="op">&lt;-</span> <span class="st">"You still fascinate and inspire me.</span></span>
 <span><span class="st">You influence me for the better. </span></span>
 <span><span class="st">You’re the object of my desire, the #1 Earthly reason for my existence."</span></span>
@@ -131,7 +131,7 @@
 <span class="header-section-number">5.1.1.0.2</span> 글자 토큰<a class="anchor" aria-label="anchor" href="#%EA%B8%80%EC%9E%90-%ED%86%A0%ED%81%B0"><i class="fas fa-link"></i></a>
 </h5>
 <p><code>token =</code>인자에 “characters”를 투입하면 글자 단위로 토큰화한다.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span>,</span>
 <span>                token <span class="op">=</span> <span class="st">"characters"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -153,7 +153,7 @@
 <span class="header-section-number">5.1.1.0.3</span> 복수의 글자<a class="anchor" aria-label="anchor" href="#%EB%B3%B5%EC%88%98%EC%9D%98-%EA%B8%80%EC%9E%90"><i class="fas fa-link"></i></a>
 </h5>
 <p>복수의 글자를 토큰의 단위로 할 때는 “character_shingles”을 <code>token =</code>인자에 투입한다. 기본값은 3글자.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span>,</span>
 <span>                token <span class="op">=</span> <span class="st">"character_shingles"</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -175,7 +175,7 @@
 <span class="header-section-number">5.1.1.0.4</span> 복수의 단어(n-gram)<a class="anchor" aria-label="anchor" href="#%EB%B3%B5%EC%88%98%EC%9D%98-%EB%8B%A8%EC%96%B4n-gram"><i class="fas fa-link"></i></a>
 </h5>
 <p>복수의 단어를 토콘 단위로 나눌 때는 <code>token =</code>인자에 “ngrams”인자를 투입한다. 기본값은3개이다.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span>,</span>
 <span>                token <span class="op">=</span> <span class="st">"ngrams"</span>, n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -199,7 +199,7 @@
 <p>정규표현식(regex: regular expressions)을 이용하면, 토콘을 보다 다양한 방식으로 나눌 수 있다.</p>
 <p><code>token =</code>인자에 “regex”를 지정한다. <code>pattern =</code>에 정규표현식을 투입한다.</p>
 <p>정규표현식에서 “new line”을 의미하는 <code>"\n"</code>를 이용해 토큰화할 경우 문장 단위로 토큰화할 경우, 수 있다. 만일 공백 단위로 토큰화한다면, 공백을 의미하는 <code>"\\s"</code>를 투입한다.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span>,</span>
 <span>                token <span class="op">=</span> <span class="st">"regex"</span>, pattern <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
@@ -218,7 +218,7 @@
 </h3>
 <p><code>format =</code>인자를 이용해 토큰화하는 문서의 형식을 지정할 수 있다.</p>
 <p>“html”문서를 토큰화해보자.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pp_html_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_lines.html">read_lines</a></span><span class="op">(</span><span class="st">"https://www.gutenberg.org/files/1342/1342-h/1342-h.htm"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">pp_html_df</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span></span>
 <span><span class="va">pp_html_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span>, format <span class="op">=</span> <span class="st">"html"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span></span></code></pre></div>
@@ -228,7 +228,7 @@
 <span class="header-section-number">5.1.3</span> <code>to_lower = TRUE</code><a class="anchor" aria-label="anchor" href="#to_lower-true"><i class="fas fa-link"></i></a>
 </h3>
 <p>영문은 대문자와 소문자 구분이 있다. <code>to_lower =</code>인자의 기본값은 <code>TRUE</code>다. <code>FALSE</code>를 로 지정하면 대문자를 모두 소문자로 변경하지 않는다. 영문문서에서 사람이름이나 지명을 구분해야 한다면 토큰화 과정에서 모든 단어를 소문자화하지 말아야 한다.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span>,</span>
 <span>                to_lower <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -249,7 +249,7 @@
 <span class="header-section-number">5.1.4</span> <code>strip_punct =</code><a class="anchor" aria-label="anchor" href="#strip_punct"><i class="fas fa-link"></i></a>
 </h3>
 <p>추가인자는 <code>tokenizers</code>함수로 전달해 다양한 설정을 할 수 있다. 예를 들어, <code>strip_punct =</code>인자에 <code>FALSE</code>를 투입하면, 문장부호를 제거하지 않는다.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span>,</span>
 <span>                token <span class="op">=</span> <span class="st">"words"</span>,</span>
@@ -274,7 +274,7 @@
 <p>불용어는 말 그대로 사용하지 않는 단어다. 불용어를 문자 그대로 해석하면 사용하지 않는 단어에 국한된다. 넓은 의미로 해석하면, 사용빈도가 높아 분석에 의미가 없거나, 내용을 나타내는데 기여하지 않는 단어, 숫자, 특수문자, 구두점, 공백문자, 기호 등이 포함된다.</p>
 <p>무엇이 불용어가 돼야 하는지는 상황에 따라 다르다. 에를 들어, 대명사는 대부분의 불용어사전에 불용어로 포함돼 있지만, 분석 목적에 따라서는 대명사는 분석의 핵심단위가 되기도 한다. 기호도 마찬가지다. 기호를 이용한 이모티콘은 문서의 의미를 전달하기 때문에 모든 기호를 일괄적으로 제거해서는 안된다.</p>
 <p>앞서 제시한 연애편지를 문자 단위로 토큰화해 단어의 빈도를 계산해보자.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -302,10 +302,10 @@
 </h3>
 <p>주로 사용되는 불용어목록은 불용어사전으로 제공된다. <code>tidytext</code>패키지는 <code>stop_words</code>에 불용어를 모아 놓았다. <code>stop_words</code>의 구조부터 살며보자.</p>
 <p><code>kableExtra</code>패키지를 이용하면 데이터프레임을 깔끔하게 출력할 수 있다.(<a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">사용법은 여기</a>)</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"kableExtra"</span><span class="op">)</span></span></code></pre></div>
 <p>데이터셋을 R세션에 올리는 함수는 <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code>함수다.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://haozhu233.github.io/kableExtra/">kableExtra</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span></span>
 <span><span class="va">stop_words</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -314,7 +314,7 @@
 ## $ word    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> "a", "a's", "able", "about", "above", "according", "accordingl…
 ## $ lexicon <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> "SMART", "SMART", "SMART", "SMART", "SMART", "SMART", "SMART",…
 </code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_words</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">701</span><span class="op">:</span><span class="fl">703</span>, <span class="fl">1001</span><span class="op">:</span><span class="fl">1003</span><span class="op">)</span>,<span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kable_classic.html">kable_classic</a></span><span class="op">(</span>full_width <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-table"><table class=" lightable-classic" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
@@ -402,12 +402,12 @@ onix
 </tbody>
 </table></div>
 <p><code>stop_words</code>는 행이 1,149개(불용어 1,149개)이고, 열이 2개(word와 lexicon)인 데이터프레임이다. word열에 있는 단어가 불용어고, lexicon열에 있는 값은 불용어 용어집의 이름이다. <code>tidytext</code>패키지의 <code>stop_words</code>에는 세 개의 불용어 용어집(SMART, snowball, onix) 이 포함돼 있다. <code>filter</code>함수로 특정 용어집에 있는 불용어 사전만 골라 이용할 수 있다.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_words</span><span class="op">$</span><span class="va">lexicon</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">unique</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "SMART"    "snowball" "onix"
 </code></pre>
 <p>불용어사전으로 불용어를 걸러낸 다음 단어빈도를 계산해보자.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -431,7 +431,7 @@ onix
 <span class="header-section-number">5.2.1.1</span> 본문 수정<a class="anchor" aria-label="anchor" href="#%EB%B3%B8%EB%AC%B8-%EC%88%98%EC%A0%95"><i class="fas fa-link"></i></a>
 </h4>
 <p>먼저 본문 수정을 해보자.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tapo_v</span> <span class="op">&lt;-</span> <span class="va">text_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="st">"’"</span>, <span class="st">"'"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">tapo_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -456,7 +456,7 @@ onix
 </h4>
 <p>불용어 사전에 “you’re”를 추가해보자. 데이터프레임을 만들어 <code><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows()</a></code>로 데이터프레임을 결합할수도 있고, <code><a href="https://tibble.tidyverse.org/reference/add_row.html">add_row()</a></code>로 불용사전에 열을 곧바로 추가할수도 있다.</p>
 <p>먼저 <code><a href="https://tibble.tidyverse.org/reference/add_row.html">add_row()</a></code>로 행에 곧바로 추가하는 방법을 이용해보자. 추가됐는지 확인이 수월하도록 첫째행 전에 추가하자.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_words</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_row.html">add_row</a></span><span class="op">(</span>word <span class="op">=</span> <span class="st">"you’re"</span>, lexicon <span class="op">=</span> <span class="st">"NEW"</span>, .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 3 × 2</span>
 ##   word   lexicon
@@ -467,11 +467,11 @@ onix
 </code></pre>
 <p>이번에는 데이터프레임을 결합해보자. 또한 숫자 “1”도 함께 불용어사전에 추가하자.
 먼저 추가할 용어를 불용어사전과 같은 구조의 데이터프레임에 저장한다.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "word"    "lexicon"
 </code></pre>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_add</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"you’re"</span>, <span class="st">"1"</span><span class="op">)</span>,</span>
 <span>                   lexicon <span class="op">=</span> <span class="st">"added"</span><span class="op">)</span></span>
 <span><span class="va">stop_add</span></span></code></pre></div>
@@ -482,7 +482,7 @@ onix
 ## <span style="color: #555555;">2</span> 1      added
 </code></pre>
 <p><code><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows()</a></code>함수로 불용어사전과 결합한다.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_words2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">stop_words</span>, <span class="va">stop_add</span><span class="op">)</span></span>
 <span><span class="va">stop_words2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 6 × 2</span>
@@ -496,7 +496,7 @@ onix
 ## <span style="color: #555555;">6</span> 1        added
 </code></pre>
 <p>새로 만든 불용어사전으로 정체한 후 단어 빈도를 계산해보자.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -519,14 +519,14 @@ onix
 <span class="header-section-number">5.2.1.3</span> 불용어 사전 수정2<a class="anchor" aria-label="anchor" href="#%EB%B6%88%EC%9A%A9%EC%96%B4-%EC%82%AC%EC%A0%84-%EC%88%98%EC%A0%952"><i class="fas fa-link"></i></a>
 </h4>
 <p>통상적으로 쓰이는 불용어 중에는 실은 문서의 의미를 파악하는데 중요한 단서를 제공하는 단어도 있다. “you” “me” “my” 등과 같은 대명사는 흔하게 사용되기 때문에 불용어로 분류되지만, 맥락를 파악하는데 중요한 역할을 하기도 한다. 불용어 사전에서 대명사를 찾아 불용어 사전에서 제거하자.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_words</span><span class="op">$</span><span class="va">word</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset</a></span><span class="op">(</span><span class="st">"(^i$|^i[:punct:]+|^mys*|^me$|mine)"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##  [1] "i"      "i'd"    "i'll"   "i'm"    "i've"   "me"     "my"     "myself"
 ##  [9] "i"      "me"     "my"     "myself" "i'm"    "i've"   "i'd"    "i'll"  
 ## [17] "i"      "me"     "my"     "myself"
 </code></pre>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_words3</span> <span class="op">&lt;-</span> <span class="va">stop_words</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
 <span>    <span class="op">!</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">word</span>, <span class="st">"(^i$|^i[:punct:]+|^mys*|^me$|^mine$)"</span><span class="op">)</span>,</span>
@@ -549,7 +549,7 @@ onix
 <span class="header-section-number">5.2.1.4</span> 불용어 목록 만들기<a class="anchor" aria-label="anchor" href="#%EB%B6%88%EC%9A%A9%EC%96%B4-%EB%AA%A9%EB%A1%9D-%EB%A7%8C%EB%93%A4%EA%B8%B0"><i class="fas fa-link"></i></a>
 </h4>
 <p>제거하고 싶은 불용어를 최소화하고 싶을 때는 불용어 목록을 직접 만들수도 있다. “the, for, and”등이 포함된 불용어 목록을 만들어 정제해 보자. “the, for, and”등 불용어목록을 데이터프레임에 저장한 다음, <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>함수를 이용해 토큰데이터프레임과 배제결합한다.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stop_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"the"</span>,<span class="st">"for"</span>, <span class="st">"and"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -578,19 +578,19 @@ onix
 <p>예를 들어, 숫자를 불용어로 취급해 제거하는 상황에서 숫자를 불용어 사전에 넣지 말고 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>로 걸러보자. 정규표현식(regex: regular expression)에서 숫자를 의미하는 <code>[:digit:]</code> 또는 <code>\\d</code>를 이용해 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>함수와 <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code>함수 및 부정연산자 <code>!</code>를 이용해 걸러낸다.</p>
 <p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>함수를 <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code>함수와 함께 이용하는 이유는 다음과 같다.</p>
 <p><code><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset()</a></code>함수는 패턴이 일치하는 문자를 출력하는 반면, <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code>함수는 패턴이 일치하는 문자에 대한 논리값(TRUE or FALSE)을 출력한다.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span></span>
 <span><span class="va">df</span><span class="op">$</span><span class="va">word</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"\\d+"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "1"
 </code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">word</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"\\d+"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
 </code></pre>
 <p>불용어를 제거한 다음 추가로 본문에서 숫자와 홑낫표”’“가 포함된 문제를 제거하자.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">text_v</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span>output <span class="op">=</span> <span class="va">word</span>, input <span class="op">=</span> <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1485,13 +1485,13 @@ F
 <span class="header-section-number">5.3.4</span> RcppMeCab<a class="anchor" aria-label="anchor" href="#rcppmecab-1"><i class="fas fa-link"></i></a>
 </h3>
 <p><code>RcppMeCab</code>패키지를 설치하고 실행하자. 설치되는 기본폴더는 <code>C:\mecab</code>다. 설치폴더를 변경하지 않는다.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'RcppMeCab'</span><span class="op">)</span></span></code></pre></div>
 <p><strong>주의</strong></p>
 <p>C드라이브에 <code>C:\mecab</code>폴더가 생성됐는지 확인한다. 사전파일이 이곳에 있다. 만일 <code>C:\mecab</code>폴더가 생성되지 않았다면 설치가 안된것이다. RStudio를 관리자권한으로 실행해 설치한다.</p>
 <p>만일, RStudio를 관리자권한으로 실행해 설치해도 <code>C:\mecab</code>가 생성되지 않는경우, <a href="https://1drv.ms/u/s!AkK5d7f0xyCHkH1yCmXI_sHq4T8V?e=uZWpey">이 링크</a>에서 사전파일을 다운로드 받아 파일을 압축해제해 복사한다. <code>C:\mecab</code>가 생성되고, 이 폴더 바로 아래에 <code>libmecab.dll</code>파일과 <code>mecab-ko-dic</code>폴더가 생성돼 있어야 한다.</p>
 <p>기본함수는 <code><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos()</a></code>다. 문자벡터를 받아 리스트로 산출한다.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RcppMeCab</span><span class="op">)</span></span>
 <span><span class="va">test</span> <span class="op">&lt;-</span> <span class="st">"한글 테스트 입니다."</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span></code></pre></div>
@@ -1499,7 +1499,7 @@ F
 ## [1] "한글/NNG"      "테스트/NNG"    "입니다/VCP+EF" "./SF"
 </code></pre>
 <p>한글이 깨지는 경우가 있는데, 이는 한글인코딩 방식이 맞지 않기 때문이다. 윈도는 EUC-KR방식을 확장한 CP949방식을 사용하기 때문에 UTF-8방식과 호환이 안된다. 이 경우 <code>enc2utf8</code>함수를 이용해 한글인코딩 방식을 UTF-8으로 변경한다.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="va">test_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span></span>
 <span><span class="va">test_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">pos</span></span></code></pre></div>
@@ -1507,14 +1507,14 @@ F
 ## [1] "한글/NNG"      "테스트/NNG"    "입니다/VCP+EF" "./SF"
 </code></pre>
 <p>참고: UTF-8을 CP949로 인코딩을 바꾸고 싶으면 <code>iconv</code>함수를 이용한다.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="clean.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">iconv</span>(x, <span class="at">from =</span> <span class="st">"UTF-8"</span>, <span class="at">to =</span> <span class="st">"CP949"</span>)<span class="st">`</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="clean.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">iconv</span>(x, <span class="at">from =</span> <span class="st">"UTF-8"</span>, <span class="at">to =</span> <span class="st">"CP949"</span>)<span class="st">`</span></span></code></pre></div>
 <p><code>x</code>는 문자벡터. 자세한 사용법은 <code><a href="https://rdrr.io/r/base/iconv.html">?iconv</a></code> 참조.</p>
 <div id="join-false" class="section level4" number="5.3.4.1">
 <h4>
 <span class="header-section-number">5.3.4.1</span> <code>join = FALSE</code><a class="anchor" aria-label="anchor" href="#join-false"><i class="fas fa-link"></i></a>
 </h4>
 <p><code>join = FALSE</code>인자를 이용하면 품사태그를 제외하고 형태소만 산출한다.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span>join <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## $`한글 테스트 입니다.`
 ##      NNG      NNG   VCP+EF       SF 
@@ -1526,7 +1526,7 @@ F
 <span class="header-section-number">5.3.4.2</span> <code>format = "data.frame"</code><a class="anchor" aria-label="anchor" href="#format-data.frame"><i class="fas fa-link"></i></a>
 </h4>
 <p><code>format = "data.frame"</code>을 지정하면 데이터프레임으로 산출한다.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"data.frame"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##   doc_id sentence_id token_id  token    pos subtype
 ## 1      1           1        1   한글    NNG        
@@ -1540,7 +1540,7 @@ F
 <span class="header-section-number">5.3.4.3</span> <code>posParallel(x)</code><a class="anchor" aria-label="anchor" href="#posparallelx"><i class="fas fa-link"></i></a>
 </h4>
 <p><code><a href="https://rdrr.io/pkg/RcppMeCab/man/posParallel.html">posParallel()</a></code>함수는 메모리를 많이 사용하지만 처리속도가 빠르다.</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/posParallel.html">posParallel</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"data.frame"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##   doc_id sentence_id token_id  token    pos subtype
 ## 1      1           1        1   한글    NNG        
@@ -1621,53 +1621,53 @@ F
 <li>devtools (&gt;= 1.12.0)</li>
 </ul>
 <p>아래 코드로 필요한 패키지가 이미 설치돼 있는지 확인할 수 있다.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">package_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"rJava"</span>, <span class="st">"utils"</span>, <span class="st">"stringr"</span>, <span class="st">"hash"</span>, <span class="st">"remote"</span>,</span>
 <span>                  <span class="st">"tau"</span>, <span class="st">"Sejong"</span>, <span class="st">"RSQLite"</span>, <span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="op">(</span> <span class="va">package_list_installed</span> <span class="op">&lt;-</span> <span class="va">package_list</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>,<span class="st">"Package"</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE
 </code></pre>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span> <span class="va">new_pkg</span> <span class="op">&lt;-</span> <span class="va">package_list</span><span class="op">[</span><span class="op">!</span><span class="va">package_list_installed</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "rJava"  "hash"   "remote" "tau"    "Sejong"
 </code></pre>
 <p>아래 코드로 미설치된 패키지를 한번에 설치할 수 있다. 만일 설치가 안되면 이 교재 <a href="https://bookdown.org/ahn_media/bookdown-demo/prep.html#%EC%98%A4%EB%A5%98error"><code>2.4 오류</code></a>를 참고해 개별적으로 설치한다.</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">new_pkg</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">new_pkg</span><span class="op">)</span></span></code></pre></div>
 <p>의존성 패키지가 의존하는 패키지가 있다. 만일 오류메시지가 나오면 메시지를 잘 읽어보고, 필요한 패키지를 추가로 설치한다.</p>
 <p>KoNLP설치 준비가 됐으면 아래 코드로 설치한다.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'haven-jeon/KoNLP'</span>, </span>
 <span>                        upgrade <span class="op">=</span> <span class="st">"never"</span>, </span>
 <span>                        INSTALL_opts<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"--no-multiarch"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>제대로 설치됐는지 확인해보자.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># library(KoNLP)</span></span>
 <span><span class="co"># extractNoun("한글테스트입니다.")</span></span>
 <span><span class="co"># SimplePos09("한글테스트입니다.")</span></span></code></pre></div>
 <p><code>KoNLP</code>에서 사용할 사전을 설치하자. <code>NIADic</code>이 <code>SejongDic</code>보다 더 많은 형태소를 포함하고 있다. 설치과정에서 기 설치된 패키지 업데이트 여부를 묻는다. 모두 최신버전으로 업데이트한다.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">useNIADic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>한글띄어쓰기가 안돼 있는 문서는 <code>autoSpacing = T</code>인자를 투입한다.</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"아버지가가방에들어가신다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="st">"아버지가가방에들어가신다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span>autoSpacing <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <p>띄어쓰기 안된 문서의 행태소 분석에는 <code>MeCab</code>이 유리하다.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"한글테스트입니다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span>autoSpacing <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="st">"한글테스트입니다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span><span class="st">"아버지가가방에들어가신다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 <p><code>KoNLP</code>를 이용해 띄어쓰기가 잘 안된 문서를 분석할 때는 <code>KoSpacing</code>패키지로 띄어쓰기를 조절할 수 있다(설치과정이 복잡하므로 선택 사항.)</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># remotes::install_github("haven-jeon/KoSpacing")</span></span>
 <span><span class="co"># library(KoSpacing)</span></span>
 <span><span class="co"># set_env()</span></span>
 <span><span class="co"># </span></span>
 <span><span class="co"># spacing("한글테스트입니다.")</span></span></code></pre></div>
 <p><code>KoNLP</code>의 장점은 기존 사전에 사용자사전을 추가할 수 있다는데 있다.</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"힣탈로미를 어떻게 할까요"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">SimplePos09</span></span></code></pre></div>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">buildDictionary</span><span class="op">(</span>ext_dic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sejong'</span>, <span class="st">'woorimalsam'</span><span class="op">)</span>,</span>
 <span>                user_dic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>term<span class="op">=</span><span class="st">"전작권"</span>, tag<span class="op">=</span><span class="st">'ncn'</span><span class="op">)</span>,</span>
 <span>                category_dic_nms<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'political'</span><span class="op">)</span><span class="op">)</span></span>
@@ -1689,7 +1689,7 @@ F
 <span class="header-section-number">5.3.7</span> 연습<a class="anchor" aria-label="anchor" href="#%EC%97%B0%EC%8A%B5-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>이상의 <code>오감도</code>를 <code>KoNLP</code>와 <code>RcppMeCab</code>을 이용해 각각 형태소분석해 자주 사용된 단어의 빈도를 비교하자. 이 결과를 형태소를 추출하지 않은 결과와도 비교하자.</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_txt</span> <span class="op">&lt;-</span> <span class="st">"13인의 아해가 도로로 질주하오.</span></span>
 <span><span class="st">(길은 막다른 골목이 적당하오.)</span></span>
 <span><span class="st"></span></span>
@@ -1720,11 +1720,11 @@ F
 <span class="header-section-number">5.3.7.1</span> <code>KoNLP</code><a class="anchor" aria-label="anchor" href="#konlp-2"><i class="fas fa-link"></i></a>
 </h4>
 <p><code>KoNLP</code>의 <code>SimplePos09()</code>함수를 <code>unnset_tokens()</code>의 <code>token =</code>인자로 투입하면 오류가 발생한다.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_txt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span>, token <span class="op">=</span> <span class="va">SimplePos09</span><span class="op">)</span></span></code></pre></div>
 <p>문자벡터에서 형태소 추출해 데이터프레임으로 저장한다.</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_txt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten_dfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"header"</span>, values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">value</span>, sep <span class="op">=</span> <span class="st">"\\+"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1736,7 +1736,7 @@ F
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><code>KoNLP</code>의 <code>extractNoun()</code>함수 이용</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_txt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">extractNoun</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="rcppmecab-2" class="section level4" number="5.3.7.2">
@@ -1744,7 +1744,7 @@ F
 <span class="header-section-number">5.3.7.2</span> <code>RcppMeCab</code><a class="anchor" aria-label="anchor" href="#rcppmecab-2"><i class="fas fa-link"></i></a>
 </h4>
 <p><code>RcppMeCab</code>의 <code><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos()</a></code>함수 이용</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="va">ogamdo_txt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"data.frame"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">token</span><span class="op">:</span><span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">token</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1755,7 +1755,7 @@ F
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="20-text-to-freq_files/figure-html/clean45-1.png" width="576" style="display: block; margin: auto;"></div>
 <p><code>RcppMeCab</code>의 <code><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos()</a></code>함수는 <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code>의 <code>token =</code>인자에 투입해도 된다.</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_txt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">enc2utf8</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">word</span>, </span>
@@ -1773,7 +1773,7 @@ F
 <h4>
 <span class="header-section-number">5.3.7.3</span> 형태소 미추출<a class="anchor" aria-label="anchor" href="#%ED%98%95%ED%83%9C%EC%86%8C-%EB%AF%B8%EC%B6%94%EC%B6%9C"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_txt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1789,7 +1789,7 @@ F
 <span class="header-section-number">5.3.7.4</span> 비교<a class="anchor" aria-label="anchor" href="#%EB%B9%84%EA%B5%90"><i class="fas fa-link"></i></a>
 </h4>
 <p>먼저 데이터프레임으로 결합한 후 행과 열 확인.</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">KoNLP_df</span> <span class="op">&lt;-</span> <span class="va">ogamdo_txt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/flatten.html">flatten_dfc</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"header"</span>, values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">value</span>, sep <span class="op">=</span> <span class="st">"\\+"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1817,20 +1817,20 @@ F
 <span><span class="va">MeCab_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">word_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>행의 수와 열의 이름이 같으므로 세 데이터프레임을 행방향 결합할 수 있다. 결합한 데이터프레임으로 막대도표로 시각화한다.</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span>KoNLP <span class="op">=</span> <span class="va">KoNLP_df</span>, MeCab <span class="op">=</span> <span class="va">MeCab_df</span>, word <span class="op">=</span> <span class="va">word_df</span>, .id <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">ID</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>세 경우에 대해 <code>ID</code>열로 값이 부여돼 있으므로 <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code>함수로 구분할 수 있다.</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">ID</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">ID</span><span class="op">)</span></span></code></pre></div>
 <p>라벨을 세개의 도표에 분리해 표시하자. scales =인자를 “free”로 지정한다. 기본값은 “fixed”다.</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">ID</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1869,7 +1869,7 @@ F
 </ul>
 <p>포터알고리즘에 사전 방식 결합</p>
 <p><code>SnowballC</code>와 <code>hunspell</code>은 <code>tidytext</code> 등 텍스트분석 패키지와 패키지로 함께 설치되나 함께 부착되지는 않는다.</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">love_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"love"</span>, <span class="st">"loves"</span>, <span class="st">"loved"</span>,<span class="st">"love's"</span> ,<span class="st">"lovely"</span>, </span>
 <span>            <span class="st">"loving"</span>, <span class="st">"lovingly"</span>, <span class="st">"lover"</span>, <span class="st">"lovers"</span>, <span class="st">"lovers'"</span>, <span class="st">"go"</span>, <span class="st">"went"</span><span class="op">)</span> </span>
 <span></span>
@@ -1877,7 +1877,7 @@ F
 <pre class="r-output"><code>##  [1] "love"     "love"     "love"     "love'"    "love"     "love"    
 ##  [7] "lovingli" "lover"    "lover"    "lovers'"  "go"       "went"
 </code></pre>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">hunspell</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/hunspell/reference/hunspell.html">hunspell_stem</a></span><span class="op">(</span><span class="va">love_v</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [[1]]
 ## [1] "love"
@@ -1916,7 +1916,7 @@ F
 ## [1] "went"
 </code></pre>
 <p><code>hunspell</code>은 리스트로 산출하므로 <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code>함수로 리스트구조를 풀어준다. <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code>는 <code>flatten_()</code>계열과 달리 데이터프레임을 입력값으로 받는다.</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/hunspell/">hunspell</a></span><span class="op">)</span></span>
 <span><span class="va">love_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hunspell <span class="op">=</span> <span class="fu"><a href="https://docs.ropensci.org/hunspell/reference/hunspell.html">hunspell_stem</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
@@ -1932,7 +1932,7 @@ F
 ## <span style="color: #555555;"># … with 6 more rows</span>
 </code></pre>
 <p><code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code>로 리스트를 풀면 토큰의 수가 늘어난다. <code><a href="https://docs.ropensci.org/hunspell/reference/hunspell.html">hunspell_stem()</a></code>함수가 스테밍 전후의 단어를 모두 산출하기 때문이다. <code>hunspell</code>로 어간추출할때는 주의해야 한다. <code>hunspell</code>패키지의 목적이 텍스트분석이 아니라 철자확인이다.</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nalimilan/R.TeMiS">SnowballC</a></span><span class="op">)</span></span>
 <span><span class="va">love_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>SnowballC <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1960,7 +1960,7 @@ F
 </h4>
 <p>어근은 단어의 일부로서 변하지 않는다. 예를 들어, “produced” “producing” “production”의 표제어는 “produce”이고 어근은 “produc-”다.</p>
 <p>“me”와 “my” 그리고, “you”와 “you’re”는 형태는 다르지만, 같은 의미를 공유하하고 있다. 각각 같은 의미이므로 하나로 묶어 줄 필요가 있지만, 어근추출로는 그 목적을 달성할 수 없다. 형태가 달라 어근추출처럼 규칙성을 찾을 수 없기 때문이다.</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">word_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"love"</span>, <span class="st">"loves"</span>, <span class="st">"loved"</span>, <span class="st">"You"</span>, <span class="st">"You're"</span>, <span class="st">"You'll"</span>, <span class="st">"me"</span>, <span class="st">"my"</span>, <span class="st">"myself"</span>, <span class="st">"go"</span>, <span class="st">"went"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu">SnowballC</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="va">word_v</span><span class="op">)</span></span></code></pre></div>
@@ -1996,11 +1996,11 @@ F
 <span class="header-section-number">5.3.9.2.2</span> <code>spacyr</code> 패키지 설치<a class="anchor" aria-label="anchor" href="#spacyr-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%84%A4%EC%B9%98"><i class="fas fa-link"></i></a>
 </h5>
 <p><code>spacyr</code> 패키지를 설치하고 구동한다. (패키지 설치할 때는 R이나 RStudio를 관리자 권한으로 실행해 설치한다.)</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("spacyr")</span></span>
 <span><span class="co"># library(spacyr)</span></span></code></pre></div>
 <p>패키지를 설치하고 구동했으면 <code>spacy_install()</code>을 실행한다. 콘솔에 Proceed여부를 묻는 화면이 나면 <code>2: Yes</code>를 선택해 진행한다.</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">spacy_install</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><code>spacy_install()</code>은 시스템 파이썬(또는 아나콘다 파이썬)과는 별개로 R환경에서 파이썬을 실행할 수 있는 콘다환경이 생성된다.</p>
 </div>
@@ -2009,7 +2009,7 @@ F
 <span class="header-section-number">5.3.9.2.3</span> <code>reticulate</code> 패키지 설치<a class="anchor" aria-label="anchor" href="#reticulate-%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%84%A4%EC%B9%98"><i class="fas fa-link"></i></a>
 </h5>
 <p>파이썬 모듈을 R환경에서 실행할 수 있도록 하는 파이썬-R 인터페이스 패키지다.</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"reticulate"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="spacy_initialize" class="section level5" number="5.3.9.2.4">
@@ -2017,7 +2017,7 @@ F
 <span class="header-section-number">5.3.9.2.4</span> <code>spacy_initialize()</code><a class="anchor" aria-label="anchor" href="#spacy_initialize"><i class="fas fa-link"></i></a>
 </h5>
 <p><code>spacy_initialize()</code>로 R에서 <code>spaCy</code>를 초기화한다.</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># library(spacyr)</span></span>
 <span><span class="co"># spacy_initialize() </span></span></code></pre></div>
 </div>
@@ -2091,7 +2091,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <h5>
 <span class="header-section-number">5.3.9.2.6</span> <code>spacyr</code> 설치 확인<a class="anchor" aria-label="anchor" href="#spacyr-%EC%84%A4%EC%B9%98-%ED%99%95%EC%9D%B8"><i class="fas fa-link"></i></a>
 </h5>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># word_v &lt;- c("love", "loves", "loved", "You", "You're", "You'll", "me", "my", "myself", "go", "went")</span></span>
 <span><span class="co"># </span></span>
 <span><span class="co"># library(spacyr)</span></span>
@@ -2108,7 +2108,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span class="header-section-number">5.3.10</span> 연습<a class="anchor" aria-label="anchor" href="#%EC%97%B0%EC%8A%B5-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>셰익스피어의 소네트27을 <code>SnowbalC</code>와 <code>spacyr</code>을 이용해 분석해 보자</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s27_v</span> <span class="op">&lt;-</span> <span class="st">"Weary with toil I haste me to my bed,</span></span>
 <span><span class="st">The dear repose for limbs with travel tired;</span></span>
 <span><span class="st">But then begins a journey in my head</span></span>
@@ -2128,7 +2128,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span class="header-section-number">5.3.10.1</span> <code>SnowballC</code><a class="anchor" aria-label="anchor" href="#snowballc"><i class="fas fa-link"></i></a>
 </h4>
 <p><code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code>의 <code>token =</code>인자에 <code><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem()</a></code>함수를 투입하면 오류 발생.</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nalimilan/R.TeMiS">SnowballC</a></span><span class="op">)</span></span>
 <span><span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span>, token <span class="op">=</span> <span class="va">wordStem</span><span class="op">)</span></span></code></pre></div>
@@ -2136,12 +2136,12 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <ul>
 <li>행(row) 하나에 토큰(token)이 하나만 할당 (one-token-per-row).</li>
 </ul>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SnowballC</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "Weary with toil I haste me to my bed,\nThe dear repose for limbs with travel tired;\nBut then begins a journey in my head\nTo work my mind when body's work's expired;\nFor then my thoughts, from far where I abide,\nIntend a zealous pilgrimage to thee,\nAnd keep my drooping eyelids open wide\nLooking on darkness which the blind do see:\nSave that my soul's imaginary sight\nPresents thy shadow to my sightless view,\nWhich like a jewel hung in ghastly night\nMakes black night beauteous and her old face new.\nLo! thus by day my limbs, by night my mind,\nFor thee, and for myself, no quietness find."
 </code></pre>
 <p>토큰화를 먼저 한 다음에 어간을 추출한다.</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>stemmed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -2163,14 +2163,14 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span class="header-section-number">5.3.10.2</span> <code>spacyr</code><a class="anchor" aria-label="anchor" href="#spacyr-1"><i class="fas fa-link"></i></a>
 </h4>
 <p><code>spacy_parse()</code>는 표제어(lemme)와 품사 태그(pos) 등의 정보가 포함된 데이터프레임으로 산출한다.</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">spacy_parse</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>분석에 필요한 열만 선택한다.</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">spacy_parse</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">token</span><span class="op">:</span><span class="va">pos</span><span class="op">)</span> </span></code></pre></div>
 <p><code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code>로 출력 형식 통일</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">spacy_parse</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">token</span><span class="op">:</span><span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">lemma</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -2181,7 +2181,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span class="header-section-number">5.3.10.3</span> 비교<a class="anchor" aria-label="anchor" href="#%EB%B9%84%EA%B5%90-1"><i class="fas fa-link"></i></a>
 </h4>
 <p>불용어를 제거하지 않고 SnowballC 및 spacyr를 이용한 정규화 결과와 정규화하지 않은 결과를 비교해보자.</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SnowballC_df</span> <span class="op">&lt;-</span> <span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>stemmed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -2201,7 +2201,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span>SnowballC <span class="op">=</span> <span class="va">SnowballC_df</span>, spacyr <span class="op">=</span> <span class="va">spacyr_df</span>, noNor <span class="op">=</span> <span class="va">noNor_df</span>,</span>
 <span>                .id <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">ID</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2212,7 +2212,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span>        axis.title.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">18</span><span class="op">)</span>,</span>
 <span>        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">18</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>불용어를 제거하고 SnowballC 및 spacyr를 이용한 정규화 결과와 정규화하지 않은 결과를 비교해보자.</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SnowballC_df</span> <span class="op">&lt;-</span> <span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>stemmed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -2235,7 +2235,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span>SnowballC <span class="op">=</span> <span class="va">SnowballC_df</span>, spacyr <span class="op">=</span> <span class="va">spacyr_df</span>, noNor <span class="op">=</span> <span class="va">noNor_df</span>,</span>
 <span>                .id <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">ID</span><span class="op">)</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2248,7 +2248,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <p>막대도표 대신 표를 만들어 비교해 보자. 이를 위해서는 데이터프레임을 행방향으로 결합해야 한다.</p>
 <p>행결합하면 행의 이름이 구분할 필요가 있으므로, <code><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens()</a></code>함수에서 <code>output =</code>인자를 설정할 때 해당 패키지 이름으로 설정한다.</p>
 <p>불용어 처리 전과 후를 구분해서 비교해보자.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SnowballC_df</span> <span class="op">&lt;-</span> <span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">SnowballC</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>SnowballC <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="va">SnowballC</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -2272,7 +2272,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span></span>
 <span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">noNor_df</span>, <span class="va">SnowballC_df</span>, <span class="va">spacyr_df</span><span class="op">)</span></span></code></pre></div>
 <p>불용어 처리한 다음에도 결과를 비교해보자.</p>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SnowballC2_df</span> <span class="op">&lt;-</span> <span class="va">s27_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">.</span> <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">SnowballC</span>, <span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SnowballC/man/wordStem.html">wordStem</a></span><span class="op">(</span><span class="va">SnowballC</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -2300,7 +2300,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">noNor2_df</span>, <span class="va">SnowballC2_df</span>, <span class="va">spacyr2_df</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s27_v</span> <span class="op">&lt;-</span> <span class="st">"Weary with toil I haste me to my bed,</span></span>
 <span><span class="st">The dear repose for limbs with travel tired;</span></span>
 <span><span class="st">But then begins a journey in my head</span></span>
@@ -2382,7 +2382,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-15.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

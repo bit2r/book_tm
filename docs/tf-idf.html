@@ -69,7 +69,7 @@
 <h2>
 <span class="header-section-number">6.1</span> 개관<a class="anchor" aria-label="anchor" href="#tf-idf-overview"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pkg_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"tidytext"</span>,<span class="st">"RcppMeCab"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">pkg_v</span>, <span class="va">require</span>, ch <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [[1]]
@@ -165,7 +165,7 @@ idf(t, D) = log(\frac{N}{df})
 <span class="header-section-number">6.2.2</span> 적용<a class="anchor" aria-label="anchor" href="#%EC%A0%81%EC%9A%A9"><i class="fas fa-link"></i></a>
 </h3>
 <p>짧은 문장을 이용해 tf_idf의 원리를 파악해 보자. 먼저 토큰화한다. 여기서 각 행은 개별 문서에 해당하고, 4개 행의 합의 말뭉치에 해당한다. 각 행을 식별하기 위해 문장별로 토큰화해 ID를 부여하자.</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_v</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="st">"The sky is blue."</span>, </span>
 <span>           <span class="st">"The sun is bright today."</span>,</span>
 <span>           <span class="st">"The sun in the sky is bright."</span>, </span>
@@ -200,7 +200,7 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 <span class="math inline">\(tf_{total}\)</span>: 각 문서에 등장한 모든 단어의 수</li>
 </ul>
 <p>tf의 분자인 <span class="math inline">\(tf_{document}\)</span>(각 문서에 등장한 해당 단어의 빈도)를 구한다. 여기서 각 문서는 각 행이다. 따라서 각 행에서 등장한 단어의 빈도를 계산하면 된다.</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tfd</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">sky_doc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">sentence</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -221,7 +221,7 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 ## <span style="color: #555555;"># … with 4 more rows</span>
 </code></pre>
 <p>tf의 분모 <span class="math inline">\(tf_{total}\)</span>(각 문서에 등장한 모든 단어의 수)를 구한다. 각 행을 이루는 모든 단어의 수를 계산하면 된다.</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tft</span> <span class="op">&lt;-</span> <span class="va">sky_tfd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">lineID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co">#total number of documnets</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">lineID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -237,7 +237,7 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 ## <span style="color: #555555;">4</span> 4            3
 </code></pre>
 <p><span class="math inline">\(tf_{document}\)</span>(각 문서에 등장한 해당 단어의 빈도)를 <span class="math inline">\(tf_{total}\)</span>(각 문서에 등장한 모든 단어의 수)로 나눈다.</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">sky_tfd</span>, <span class="va">sky_tft</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tf <span class="op">=</span> <span class="va">tfdoc</span><span class="op">/</span><span class="va">tftotal</span><span class="op">)</span></span>
 <span></span>
@@ -263,7 +263,7 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 df(t, D)
 \]</span>
 특정 단어가 등장한 문서의 수를 계산해 구할 수 있다.</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sky_tf</span><span class="op">$</span><span class="va">word</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>word <span class="op">=</span> <span class="va">Var1</span>, df <span class="op">=</span> <span class="va">Freq</span><span class="op">)</span></span>
@@ -287,7 +287,7 @@ df(t, D)
 idf(t, D) = log(\frac{N}{df})
 \]</span></p>
 <p>공식을 그대로 적용해 계산한다. <code>sky_tf</code>에 N의 값을 계산해 두 데이터프레임을 열방향 결합한다.</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tf</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">sky_tf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">lineID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co">#total number of documnets</span></span>
@@ -326,7 +326,7 @@ idf(t, D) = log(\frac{N}{df})
 <li>
 <code>D</code>: 개별 문서의 집합(말뭉치)</li>
 </ul>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_idf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tf_idf <span class="op">=</span> <span class="va">tf</span> <span class="op">*</span> <span class="va">idf</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">tf_idf</span><span class="op">)</span></span></code></pre></div>
@@ -354,7 +354,7 @@ idf(t, D) = log(\frac{N}{df})
 <li><p>document: 문자열이나 기호 등의 문서식별부호가 저장된 열.</p></li>
 <li><p>n: 문자열이나 기호 등의 문서-용어의 빈도가 저장된 열.</p></li>
 </ul>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tfd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/bind_tf_idf.html">bind_tf_idf</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">.</span>, term <span class="op">=</span> <span class="va">word</span>, document <span class="op">=</span> <span class="va">lineID</span>, n <span class="op">=</span> <span class="va">tfdoc</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 10 × 6</span>
@@ -405,19 +405,19 @@ A:B = \frac{A}{B}
 <ul>
 <li><a href="https://github.com/e9t/nsmc">Naver sentiment movie corpus</a></li>
 </ul>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">url_v</span> <span class="op">&lt;-</span> <span class="st">'https://github.com/e9t/nsmc/raw/master/ratings.txt'</span></span>
 <span><span class="va">dest_v</span> <span class="op">&lt;-</span> <span class="st">'data/ratings.txt'</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url_v</span>, <span class="va">dest_v</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">'data/.'</span><span class="op">)</span></span></code></pre></div>
 <p>다운로드한 자료 이입 및 검토</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_lines.html">read_lines</a></span><span class="op">(</span><span class="st">"data/ratings.txt"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##  chr [1:200001] "id\tdocument\tlabel" ...
 </code></pre>
 <p>공백문자 <code>\t</code>으로 구분된 문자데이터이므로, <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv()</a></code>로 이입한다.</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">"data/ratings.txt"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## Rows: 200,000
 ## Columns: 3
@@ -425,7 +425,7 @@ A:B = \frac{A}{B}
 ## $ document <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> "어릴때보고 지금다시봐도 재밌어요ㅋㅋ", "디자인을 배우는 학생…
 ## $ label    <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
 </code></pre>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ratings_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">"data/ratings.txt"</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ratings_df</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 6 × 3</span>
@@ -439,7 +439,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;">6</span>  2<span style="text-decoration: underline;">190</span>435 사랑을 해본사람이라면 처음부터 끝까지 웃을수 있는영화               1
 </code></pre>
 <p>데이터셋이 커 처리에 시간이 걸리므로 각 라벨별로 1000개 행씩 추출한다.</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">37</span><span class="op">)</span></span>
 <span><span class="va">by1000_df</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">ratings_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -455,7 +455,7 @@ A:B = \frac{A}{B}
 ## $ label    <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
 </code></pre>
 <p><code>RcppMeCab</code>패키지에서 <code><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos()</a></code>함수로 형태소를 추출한 뒤, 일반명사(‘nng’)만 추출해 빈도를 계산한다.</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -479,7 +479,7 @@ A:B = \frac{A}{B}
 <span class="header-section-number">6.3.1.1</span> 자료 준비<a class="anchor" aria-label="anchor" href="#%EC%9E%90%EB%A3%8C-%EC%A4%80%EB%B9%84"><i class="fas fa-link"></i></a>
 </h4>
 <p>영화평은 긍정적인 평에는 ‘1’, 부정적인 평에는 ’0’으로 분류돼 있다. 긍정적인 평과 부정적인 평에 사용된 명사의 승산비를 구해보자. 이를 위해 long form을 wide form으로 변형해 <code>label</code>열의 값을 열의 헤더로 변환하고, 각 열의 값으로는 토큰을 투입한다. 결측값이 있으면 연산이 안되므로 <code>NA</code>값은 ’0’으로 채운다.</p>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -506,7 +506,7 @@ A:B = \frac{A}{B}
 <span class="header-section-number">6.3.1.2</span> 승산비 계산<a class="anchor" aria-label="anchor" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-%EA%B3%84%EC%82%B0"><i class="fas fa-link"></i></a>
 </h4>
 <p>긍정평과 부정평의 승산을 구한다음, 승산비를 계산한다.</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -532,7 +532,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 2,297 more rows</span>
 </code></pre>
 <p>승산비를 이용해 영화의 긍정평과 부정평에서 상대적으로 많이 사용된 명사를 추출했다. 순서대로 정렬하자.</p>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_odds_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -561,7 +561,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;">5</span> 마음      0     9   0.001<span style="text-decoration: underline;">81</span>  0.000<span style="text-decoration: underline;">167</span>            10.8
 ## <span style="color: #555555;">6</span> 최고      8    83   0.015<span style="text-decoration: underline;">2</span>   0.001<span style="text-decoration: underline;">50</span>             10.1
 </code></pre>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 6 × 6</span>
 ##   word    nega  posi odds_posi odds_nega posi_odds_ratio
@@ -574,7 +574,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;">6</span> 최악      24     0  0.000<span style="text-decoration: underline;">181</span>   0.004<span style="text-decoration: underline;">17</span>          0.043<span style="text-decoration: underline;">3</span>
 </code></pre>
 <p>’밋’과 ’ㄷ’이 사용된 문장을 살펴보자. <code>drop =</code>인자에 <code>FALSE</code>를 투입하면 토큰화한 문장을 제거하지 않고 남겨둔다.</p>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -593,14 +593,14 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 25 more rows</span>
 </code></pre>
 <p>’재밋었음’에서 <code>MeCab</code>형태소 분석기가 ’밋’을 명사로 추출한 결과이다.</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="st">"재밋었음10자는뭐여"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## $재밋었음10자는뭐여
 ## [1] "재/XPN"    "밋/NNG"    "었/EP"     "음/ETN"    "10/SN"     "자/NNG"   
 ## [7] "는/JX"     "뭐/NP"     "여/VCP+EC"
 </code></pre>
 <p>막대도표로 시각화하자. 긍정평과 부정평 도표를 분리해 표시하기 위해 승산비 1을 기준으로 크면 ‘긍정평’ 작으면 ’부정평’을 부여한다.</p>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">posi_odds_ratio</span> <span class="op">&gt;</span> <span class="fl">1</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">posi_odds_ratio</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -612,7 +612,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">label</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-tf-idf_files/figure-html/cmp20-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>중요도가 비슷한 단어를 추출해보자. 승산비가 1이면 분자와 분모가 같으므로 긍정평과 부정평의 승산이 같다는 의미다.</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -641,7 +641,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 14 more rows</span>
 </code></pre>
 <p>중요도가 비슷하면서 빈도가 높은 단어를 찾아 보자.</p>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -683,7 +683,7 @@ A:B = \frac{A}{B}
 <p><span class="math display">\[
 로그 승산비 = log(\frac{승산A}{승산B})
 \]</span></p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -710,7 +710,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 2,297 more rows</span>
 </code></pre>
 <p>로그 승산비를 이용하면 하나의 도표에 상대빈도를 표시할 수 있다. 먼저 로그승산비를 구한뒤, 0을 기준으로 긍정평과 부정평을 group으로 구분한다. 긍정평과 부정평 집단별로 구분돼 있으므로, 로그승산비의 절대값 상위 10개를 지정하면, 긍정평과 부정평 별로 각각 상위 10개 단어를 추출할 수 있다.</p>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_log_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -744,7 +744,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 16 more rows</span>
 </code></pre>
 <p>막대도표로 시각화.</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_log_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">log_odds_ratio</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_ratio</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -764,7 +764,7 @@ A:B = \frac{A}{B}
 <p>tf_idf의 한계를 Tyler Schnoebelen이 [Monroe, Colaresi, and Quinn(2008)](Monroe, Colaresi, and Quinn(2008)의 연구를 토대 블로그문서
 <a href="https://medium.com/@TSchnoebelen/i-dare-say-you-will-never-use-tf-idf-again-4918408b2310">“I dare say you will never use tf-idf again”</a>을 통해 지적하며, 대안으로 로그승산비에 베이지언 확률모형을 적용한 <a href="https://bookdown.org/Maxine/tidy-text-mining/weighted-log-odds-ratio.html">가중로그승산비(weighted log odds ratio)</a>를 제안했다.</p>
 <p>이에 <code>tidytext</code> 개발자인 Julia Silge가 <a href="https://github.com/juliasilge/tidylo"><code>tydylo</code></a>패키지를 개발해 가중로그승산비를 간단하게 계산할 수 있도록 했다. (<a href="https://juliasilge.com/blog/introducing-tidylo/">Silge의 패키지 소개 글</a>)</p>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidylo"</span><span class="op">)</span></span></code></pre></div>
 <div id="bind_log_oddstbl-set-feature-n-uninformative-false-unweighted-false" class="section level3" number="6.4.1">
 <h3>
@@ -779,7 +779,7 @@ A:B = \frac{A}{B}
 <li><p>unweighted: 비가중 로그승산 사용여부. 기본값은 <code>FALSE</code>. <code>TRUE</code>로 지정하면 비가중 로그승산비(<code>log_odds</code>) 열을 추가한다.</p></li>
 </ul>
 <p>가중로그승산비를 이용해 네이버영화 댓글 중 긍정평과 부정평에 사용된 단어의 상대빈도를 구해보자.</p>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://juliasilge.github.io/tidylo/">tidylo</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">weighted_log_odds_df</span> <span class="op">&lt;-</span> </span>
@@ -808,7 +808,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 2,825 more rows</span>
 </code></pre>
 <p>긍정평과 부정평별 가중로그승산비 상위 10개 추출한다.</p>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weighted_log_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_weighted</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span></code></pre></div>
@@ -825,7 +825,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 14 more rows</span>
 </code></pre>
 <p>막대도표로 시각화한다.</p>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weighted_log_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_weighted</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span>
@@ -837,7 +837,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">label</span>, scale <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-tf-idf_files/figure-html/cmp29-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>부정평으로 분류된 내용 중 ’최고’와 ’감동’이 부정평에 들어 있다. 어떤 문장인지 확인해보자.</p>
-<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -869,7 +869,7 @@ A:B = \frac{A}{B}
 <span class="header-section-number">6.4.2.1</span> 로그승산비<a class="anchor" aria-label="anchor" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84-1"><i class="fas fa-link"></i></a>
 </h4>
 <p>먼저 가중치를 사용하지않은 로그승산비를 구한다.</p>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_log_df</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># 승산비에 로그를 취한다.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">log_odds_ratio</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_ratio</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span>
@@ -886,7 +886,7 @@ A:B = \frac{A}{B}
 <span class="header-section-number">6.4.2.2</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf-3"><i class="fas fa-link"></i></a>
 </h4>
 <p>tf_idf 계산</p>
-<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf_idf_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="va">pos</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -911,7 +911,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 2,825 more rows</span>
 </code></pre>
 <p>긍정평과 부정평별 상위 10개 추출한다.</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf_idf_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">tf_idf</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span></code></pre></div>
@@ -928,7 +928,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 16 more rows</span>
 </code></pre>
 <p>막대도표로 시각화한다.</p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf_idf_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">tf_idf</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span>
@@ -945,7 +945,7 @@ A:B = \frac{A}{B}
 <span class="header-section-number">6.4.2.3</span> 비교<a class="anchor" aria-label="anchor" href="#%EB%B9%84%EA%B5%90-2"><i class="fas fa-link"></i></a>
 </h4>
 <p>가중로그승산비, 로그승산비, tf_idf의 값을 비교해보자. 먼저 3개 데이터프레임을 행방향으로 결합해 하나의 데이터프레임으로 저장한다.</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wlo_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">weighted_log_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -978,7 +978,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;">6</span> 3     긍정평 행복  0.902
 ## <span style="color: #555555;"># … with 14 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">wlo_df</span>, <span class="va">rlo_df</span>, <span class="va">ti_df</span>, .id <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">ID</span> <span class="op">==</span> <span class="st">"1"</span>, <span class="st">"1.가중로그승산비"</span>, </span>
 <span>                     <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">ID</span> <span class="op">==</span> <span class="st">"2"</span>, <span class="st">"2.로그승산비"</span>, <span class="st">"3.tf_idf"</span><span class="op">)</span><span class="op">)</span></span>
@@ -1030,13 +1030,13 @@ A:B = \frac{A}{B}
 </ul>
 <p>작업디렉토리 아래 <code>data</code>폴더에 다운로드 받는다.</p>
 <p>파일명을 확인한다. <code>NewsResult_20210201-20210228.xlsx</code>다.</p>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"data/."</span><span class="op">)</span></span></code></pre></div>
 <p><code>readxl</code>패키지의 <code>read_excel()</code>함수로 해당 파일을 R환경으로 이입한다.</p>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20210201-20210228.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>분석에 활용할 열만 추출해 <code>vac_df</code>에 할당한다.</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20210201-20210228.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">제목</span>, <span class="va">언론사</span>, <span class="va">본문</span>, <span class="va">URL</span><span class="op">)</span></span>
@@ -1056,7 +1056,7 @@ A:B = \frac{A}{B}
 <span class="header-section-number">6.5.2</span> 정제<a class="anchor" aria-label="anchor" href="#%EC%A0%95%EC%A0%9C"><i class="fas fa-link"></i></a>
 </h3>
 <p>먼저 <code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code>함수로 결측값을 제거하고, 토큰화한 다음, <code>pos</code>함수로 일반명사만 추출해, <code>vac_tk</code>로 저장한다.</p>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_tk</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1086,7 +1086,7 @@ A:B = \frac{A}{B}
 <h4>
 <span class="header-section-number">6.5.3.1</span> 언론사별 총빈도<a class="anchor" aria-label="anchor" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EC%B4%9D%EB%B9%88%EB%8F%84"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">!=</span> <span class="st">"경향"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1107,7 +1107,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">언론사</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-tf-idf_files/figure-html/cmp41-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>주요 단어가 사용된 내용(제목)을 살펴보자.</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1159,7 +1159,7 @@ A:B = \frac{A}{B}
 ## [43] "아스트라제네카, 조건부로 허용되나?"
 </code></pre>
 <p>’카’의 빈도가 높았던 이유는 ’아스트라제네카’를 형태소분석기가 하나의 일반명사로 추출하지 않았기 때문이다.</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="st">"아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 이상’은 의사가 판단"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## $`아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 이상’은 의사가 판단`
 ##  [1] "아스트라/NNP" "제/NP"        "네/XSN"       "카/NNG"       "‘/SY"       
@@ -1167,7 +1167,7 @@ A:B = \frac{A}{B}
 ## [11] "‘/SY"        "65/SN"        "살/NNBC"      "이상/NNG"     "’/SY"       
 ## [16] "은/JX"        "의사/NNG"     "가/JKS"       "판단/NNG"
 </code></pre>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1226,7 +1226,7 @@ A:B = \frac{A}{B}
 <h4>
 <span class="header-section-number">6.5.3.2</span> 언론사별 가중로그승산비<a class="anchor" aria-label="anchor" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">!=</span> <span class="st">"경향"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1250,7 +1250,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">언론사</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="21-tf-idf_files/figure-html/cmp45-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>주요 단어가 사용된 내용(제목)을 살펴보자.</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1264,7 +1264,7 @@ A:B = \frac{A}{B}
 ## [4] "아스트라제네카 백신, 만 65세 고령층에도 접종 허가  식약처 \"현장에서 의사가 판단\""
 ## [5] "[오늘은 이런 경향] 2월 9일 정 총리 답신 한달 지냈지만...현장 간호사들은..."
 </code></pre>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1275,7 +1275,7 @@ A:B = \frac{A}{B}
 <pre class="r-output"><code>## [1] "백신 접종 D-7 명단 확정 65세미만 27만명으로 줄어"       
 ## [2] "국내 1호 AZ백신 첫 접종 대상은 누구? 19일까지 명단 확정"
 </code></pre>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1289,7 +1289,7 @@ A:B = \frac{A}{B}
 ## [4] "국민 41%가 백신 맞았다, 이스라엘 제치고 세계 1위된 이 나라"           
 ## [5] "“과학자 입 막으면 국민 건강권 침해” 기자협회 과학기자협회 공동 발표"
 </code></pre>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="va">pos</span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1310,7 +1310,7 @@ A:B = \frac{A}{B}
 </h3>
 <p>언론사별로 각 기사에서 사용된 단어의 총빈도와 상대빈도를 비교하자.</p>
 <p>먼저 총빈도를 구한다.</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">total_fq</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1338,7 +1338,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 26 more rows</span>
 </code></pre>
 <p>상대빈도</p>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wlo_fq</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1369,7 +1369,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># … with 32 more rows</span>
 </code></pre>
 <p>총빈도와 상대빈도 데이터프레임을 행방향으로 결합한다.</p>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">total_fq</span>, <span class="va">언론사</span>, <span class="va">word</span>, score <span class="op">=</span> <span class="va">n</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">wlo_fq</span>, <span class="va">언론사</span>, <span class="va">word</span>, score <span class="op">=</span> <span class="va">log_odds_weighted</span><span class="op">)</span>,</span>
@@ -1450,7 +1450,7 @@ A:B = \frac{A}{B}
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-15.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
