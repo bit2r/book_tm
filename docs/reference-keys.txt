@@ -9,6 +9,7 @@ r기초
 분석-i
 분석-ii-예정
 install-setup
+tm-colors
 console-colors
 rmarkdown-colors
 dataframe-color
@@ -18,7 +19,9 @@ install-mecab-mac-mecab
 install-mecab-mac-rmecab
 install-mecab-mac-mecab-ko
 install-mecab-bitTA
+리눅스
 윈도우
+ggplot-font
 browse
 수집
 정제전처리
