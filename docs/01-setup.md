@@ -6,6 +6,9 @@ editor_options:
 
 
 
+# (PART\*) 환경설정 {#tm-setup .unnumbered}
+
+
 # 설치 및 환경설정 {#install-setup}
 
 즐거운 텍스트 마이닝(Text Mining) 작업환경을 구축하기 위해서는 몇가지 

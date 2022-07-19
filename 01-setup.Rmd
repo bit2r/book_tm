@@ -14,8 +14,10 @@ knitr::knit_hooks$set(output = function(x, options){
     '</code></pre>'
   )
 })
-
 ```
+
+# (PART\*) 환경설정 {#tm-setup .unnumbered}
+
 
 # 설치 및 환경설정 {#install-setup}
 

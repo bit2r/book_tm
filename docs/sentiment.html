@@ -45,12 +45,15 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">들어가며</a></li>
 <li><a class="" href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></li>
+<li class="book-part">환경설정</li>
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="" href="install-stacks.html"><span class="header-section-number">2</span> 메카브(MeCab) 설치</a></li>
 <li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
 <li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li class="book-part">자료구조</li>
 <li><a class="" href="clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></li>
 <li><a class="" href="tf-idf.html"><span class="header-section-number">6</span> 단어 빈도수</a></li>
+<li class="book-part">텍스트 마이닝</li>
 <li><a class="active" href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></li>
 <li><a class="" href="topic-modeling.html"><span class="header-section-number">8</span> 주제모형</a></li>
 <li><a class="" href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></li>
@@ -426,7 +429,7 @@
 <code class="sourceCode R"><span><span class="va">sosul_v</span> <span class="op">&lt;-</span> <span class="fu">epub</span><span class="op">(</span><span class="st">"data/jikji.epub"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">$</span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">$</span><span class="va">text</span></span>
 <span><span class="va">sosul_v</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">glimpse</span></span></code></pre></div>
 <pre class="r-output"><code>##  Named chr [1:93] "17원 50전(十七圓五十錢)--- 젋은 화가 A의 눈물 한 방울\n\n  지은이: 나도향\n\n    출전: 개벽, &lt;1923&gt;\n\n    공개"| __truncated__ ...
-##  - attr(*, "names")= chr [1:93] "C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/2.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/3.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/4.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/5.xhtml" ...
+##  - attr(*, "names")= chr [1:93] "C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/2.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/3.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/4.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/5.xhtml" ...
 </code></pre>
 <p>소설 제목, 지은이, 출전, 본문을 추출해보자.</p>
 <div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
@@ -622,25 +625,25 @@
 <p>비슷한 길이의 소설 1편씩 추출해보자.</p>
 <div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">jikji_all_df</span><span class="op">$</span><span class="va">nchar</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code></pre></div>
-<pre class="r-output"><code>##  C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/1.xhtml 
+<pre class="r-output"><code>##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/1.xhtml 
 ##                                                                    102011 
-##  C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/9.xhtml 
+##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/9.xhtml 
 ##                                                                     86078 
-## C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/90.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/90.xhtml 
 ##                                                                     61151 
-## C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/84.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/84.xhtml 
 ##                                                                     51379 
-## C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/78.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/78.xhtml 
 ##                                                                     36357 
-## C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/85.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/85.xhtml 
 ##                                                                     32444 
-##  C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/4.xhtml 
+##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/4.xhtml 
 ##                                                                     27801 
-## C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/20.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/20.xhtml 
 ##                                                                     23159 
-## C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/68.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/68.xhtml 
 ##                                                                     21976 
-## C:/Users/STATKC~1/AppData/Local/Temp/Rtmpmyspju/jikji/OEBPS/Text/71.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpyWjKWd/jikji/OEBPS/Text/71.xhtml 
 ##                                                                     21821
 </code></pre>
 <div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">

@@ -8,6 +8,7 @@ editor_options:
 source("_common.R")
 ```
 
+# (PART\*) 텍스트 마이닝 {#tm-text-mining .unnumbered}
 
 # 감성분석 {#sentiment}
 

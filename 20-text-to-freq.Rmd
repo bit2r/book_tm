@@ -9,6 +9,7 @@ editor_options:
 source("_common.R")
 ```
 
+# (PART\*) 자료구조 {#tm-data-structure .unnumbered}
 
 # 정제(전처리)  {#clean}
 
