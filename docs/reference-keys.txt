@@ -37,7 +37,11 @@ view-text
 text-highlight
 text-highlight-locatin
 취임사-요약
-clean
+text-processing
+text-repex
+nlp-stringr-basic-operation
+tibble-stringr
+text-clean
 토큰화
 unnest_tokensdf-output-input-token-words-format-ctext-man-latex-html-xml-to_lower-true-drop-true-collapse-null-...
 단어

@@ -22,10 +22,11 @@ rmd_files: [
 
   # 텍스트 살펴보기 -------
   "10-view-text.Rmd",
-  #
+
   # 텍스트를 숫자변환 -------
-  "20-text-to-freq.Rmd",
-  "21-tf-idf.Rmd",
+  "20-text-manipulation.Rmd",
+  "21-text-cleansing.Rmd",
+  "22-tf-idf.Rmd",
   #
   # # 텍스트 빈도분석 -------
   # "30-word-freq.Rmd",

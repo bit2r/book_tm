@@ -49,17 +49,18 @@ R마크다운 코드 덩어리에 다음 사항을 추가하고 R마크다운 �
 자동으로 해당 색상을 `.html`, `.pdf`, `shiny` 결과물에 반영할 수 있다.
 
 
-<!-- ````{verbatim} -->
-<!-- ```{r setup} -->
-<!-- knitr::knit_hooks$set(output = function(x, options){ -->
-<!--   paste0( -->
-<!--     '<pre class="r-output"><code>', -->
-<!--     fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE), -->
-<!--     '</code></pre>' -->
-<!--   ) -->
-<!-- }) -->
-<!-- ``` -->
-<!-- ```` -->
+<pre>
+
+```r
+knitr::knit_hooks$set(output = function(x, options){
+  paste0(
+    '<pre class="r-output"><code>',
+    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),
+    '</code></pre>'
+  )
+})
+```
+</pre>
 
 R마크다운 색상 적용에 대한 자세한 사항은 [rmarkdown and terminal colors](https://logfc.wordpress.com/2020/07/20/rmarkdown-and-terminal-colors/)를
 참조한다.
@@ -248,12 +249,12 @@ font_files() %>% tibble() %>% filter(str_detect(family, "Maru"))
 ```
 
 <pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 4 × 6</span>
-##   path             file                  family            face  version ps_name
-##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>                 <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>             <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  
-## <span style='color: #555555;'>1</span> C:/Windows/Fonts MaruBuri-Bold.ttf     MaruBuri Bold     Regu… Versio… MaruBu…
-## <span style='color: #555555;'>2</span> C:/Windows/Fonts MaruBuri-Light.ttf    MaruBuri Light    Regu… Versio… MaruBu…
-## <span style='color: #555555;'>3</span> C:/Windows/Fonts MaruBuri-Regular.ttf  MaruBuri Regular  Regu… Versio… MaruBu…
-## <span style='color: #555555;'>4</span> C:/Windows/Fonts MaruBuri-SemiBold.ttf MaruBuri SemiBold Regu… Versio… MaruBu…
+##   path             file         family face  version ps_name
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  
+## <span style='color: #555555;'>1</span> C:/Windows/Fonts MaruBuri-Bo… MaruB… Regu… Versio… MaruBu…
+## <span style='color: #555555;'>2</span> C:/Windows/Fonts MaruBuri-Li… MaruB… Regu… Versio… MaruBu…
+## <span style='color: #555555;'>3</span> C:/Windows/Fonts MaruBuri-Re… MaruB… Regu… Versio… MaruBu…
+## <span style='color: #555555;'>4</span> C:/Windows/Fonts MaruBuri-Se… MaruB… Regu… Versio… MaruBu…
 </code></pre>
 
 ```r

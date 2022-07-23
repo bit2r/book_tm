@@ -1,6 +1,7 @@
 ## 기본설정 -----------------
 set.seed(7654)
 options(digits = 3)
+options(width = 60)
 
 knitr::opts_chunk$set(
   echo = TRUE,

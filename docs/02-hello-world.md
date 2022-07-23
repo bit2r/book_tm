@@ -110,9 +110,9 @@ text_df
 ```
 
 <pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 1 × 1</span>
-##   text                                                                          
-##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>                                                                         
-## <span style='color: #555555;'>1</span> <span style='color: #555555;'>"</span>배우며 제때에 실행하면 진실로 즐겁지 않겠는가?\n            벗이 먼 곳에서부…
+##   text                                                      
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>                                                     
+## <span style='color: #555555;'>1</span> <span style='color: #555555;'>"</span>배우며 제때에 실행하면 진실로 즐겁지 않겠는가?\n        …
 </code></pre>
 
 이제 생성된 데이터프레임을 `tidytext`패키지의 `unnest_tokens`함수를 이용해 정돈텍스트 구조로 바꿔보자. (철자에 주의. 복수 s)

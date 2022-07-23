@@ -128,8 +128,9 @@ senti_name_v
 read_lines(str_c("data/KnuSentiLex-master/", senti_name_v)) %>% head(10)
 ```
 
-<pre class="r-output"><code>##  [1] "(-;\t1"    "(;_;)\t-1" "(^^)\t1"   "(^-^)\t1"  "(^^*\t1"   "(^_^)\t1" 
-##  [7] "(^_^;\t-1" "(^o^)\t1"  "(-_-)\t-1" "(T_T)\t-1"
+<pre class="r-output"><code>##  [1] "(-;\t1"    "(;_;)\t-1" "(^^)\t1"   "(^-^)\t1" 
+##  [5] "(^^*\t1"   "(^_^)\t1"  "(^_^;\t-1" "(^o^)\t1" 
+##  [9] "(-_-)\t-1" "(T_T)\t-1"
 </code></pre>
 
 개별 요소와 요소 사이가 공백문자로 구분돼 있다. 
@@ -158,8 +159,8 @@ glimpse(senti_dic_df)
 
 <pre class="r-output"><code>## Rows: 14,855
 ## Columns: 2
-## $ X1 <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "(-;", "(;_;)", "(^^)", "(^-^)", "(^^*", "(^_^)", "(^_^;", "(^o^)",…
-## $ X2 <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> 1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1,…
+## $ X1 <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "(-;", "(;_;)", "(^^)", "(^-^)", "(^^*", "(^_^)…
+## $ X2 <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> 1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, -1, 1, 1,…
 </code></pre>
 
 ```r
@@ -188,8 +189,8 @@ glimpse(senti_dic_df)
 
 <pre class="r-output"><code>## Rows: 14,855
 ## Columns: 2
-## $ word   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "(-;", "(;_;)", "(^^)", "(^-^)", "(^^*", "(^_^)", "(^_^;", "(^o…
-## $ sScore <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> 1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, 1, -1, 1,…
+## $ word   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "(-;", "(;_;)", "(^^)", "(^-^)", "(^^*", "(…
+## $ sScore <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> 1, -1, 1, 1, 1, 1, -1, 1, -1, -1, -1, -1, 1…
 </code></pre>
 
 이제 [KNU한국어감성사전](https://github.com/park1200656/KnuSentiLex)을 R환경에서 사용할 수 있다. 
@@ -449,12 +450,12 @@ epub("data/jikji.epub") %>% glimpse()
 
 <pre class="r-output"><code>## Rows: 1
 ## Columns: 8
-## $ identifier <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "urn:uuid:15037ed1-7721-4f33-8534-f6a7473ab654"
+## $ identifier <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "urn:uuid:15037ed1-7721-4f33-8534-f6a74…
 ## $ title      <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "직지 프로젝트|직지프로텍트"
 ## $ creator    <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "수학방"
 ## $ language   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "ko"
 ## $ date       <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "2013-05-10"
-## $ rights     <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "크리에이티브 커먼즈 저작자표시-비영리-동일조건변경허락 2.0…
+## $ rights     <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "크리에이티브 커먼즈 저작자표시-비영리-…
 ## $ source     <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "직지프로젝트(http://www.jikji.org)"
 ## $ data       <span style='color: #555555; font-style: italic;'>&lt;list&gt;</span> [&lt;tbl_df[93 x 4]&gt;]
 </code></pre>
@@ -480,7 +481,7 @@ sosul_v %>% glimpse
 ```
 
 <pre class="r-output"><code>##  Named chr [1:93] "17원 50전(十七圓五十錢)--- 젋은 화가 A의 눈물 한 방울\n\n  지은이: 나도향\n\n    출전: 개벽, &lt;1923&gt;\n\n    공개"| __truncated__ ...
-##  - attr(*, "names")= chr [1:93] "C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/2.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/3.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/4.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/5.xhtml" ...
+##  - attr(*, "names")= chr [1:93] "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/2.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/3.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/4.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/5.xhtml" ...
 </code></pre>
 
 
@@ -590,18 +591,22 @@ sosul_v %>% str_extract(".*\\b")
 sosul_v %>% str_extract("지은이.*\\b") %>% str_remove("지은이: ")
 ```
 
-<pre class="r-output"><code>##  [1] "나도향" "현진건" "나혜석" "나도향" "현진건" "이상"   "김동인" "김만중"
-##  [9] "이상"   "나혜석" "현진건" "김유정" "전영택" "전영택" "현진건" "이효석"
-## [17] "나도향" "이효석" "이상"   "이효석" "전영택" "이상"   "이효석" "현진건"
-## [25] "이상"   "이효석" "이효석" "방정환" "전영택" "이효석" "김동인" "나도향"
-## [33] "전영택" "지은이" "김동인" "김동인" "나도향" "나도향" "이상"   "이상"  
-## [41] "이효석" "김동인" "현진건" "나도향" "현진건" "전영택" "이효석" "김유정"
-## [49] "이효석" "전영택" "김유정" "이효석" "현진건" "이상"   "이상"   "이효석"
-## [57] "이상"   "나도향" "신채호" "전영택" "현진건" "김동인" "이효석" "나도향"
-## [65] "나도향" "현진건" "이상"   "이효석" "이상"   "이상"   "이상"   "나도향"
-## [73] "전영택" "전영택" "김유정" "전영택" "현진건" NA       "전영택" "전영택"
-## [81] "현진건" "나도향" "이인직" "전영택" "이상"   "이상"   "나혜석" "이상"  
-## [89] "전영택" NA       NA       "이상"   NA
+<pre class="r-output"><code>##  [1] "나도향" "현진건" "나혜석" "나도향" "현진건" "이상"  
+##  [7] "김동인" "김만중" "이상"   "나혜석" "현진건" "김유정"
+## [13] "전영택" "전영택" "현진건" "이효석" "나도향" "이효석"
+## [19] "이상"   "이효석" "전영택" "이상"   "이효석" "현진건"
+## [25] "이상"   "이효석" "이효석" "방정환" "전영택" "이효석"
+## [31] "김동인" "나도향" "전영택" "지은이" "김동인" "김동인"
+## [37] "나도향" "나도향" "이상"   "이상"   "이효석" "김동인"
+## [43] "현진건" "나도향" "현진건" "전영택" "이효석" "김유정"
+## [49] "이효석" "전영택" "김유정" "이효석" "현진건" "이상"  
+## [55] "이상"   "이효석" "이상"   "나도향" "신채호" "전영택"
+## [61] "현진건" "김동인" "이효석" "나도향" "나도향" "현진건"
+## [67] "이상"   "이효석" "이상"   "이상"   "이상"   "나도향"
+## [73] "전영택" "전영택" "김유정" "전영택" "현진건" NA      
+## [79] "전영택" "전영택" "현진건" "나도향" "이인직" "전영택"
+## [85] "이상"   "이상"   "나혜석" "이상"   "전영택" NA      
+## [91] NA       "이상"   NA
 </code></pre>
 
 ```r
@@ -609,52 +614,98 @@ sosul_v %>% str_extract("출전.*\\b") %>%
   str_remove(":") %>% str_remove("\\)") %>% str_remove("출전 ")
 ```
 
-<pre class="r-output"><code>##  [1] "개벽, &lt;1923"                     "조선문단 5호 &lt;1925"             
-##  [3] NA                                "조선 문단 5월호 &lt;1925"          
-##  [5] "조선의 얼굴 &lt;1926.3"             "매일신보 , 1937.4.15~5.15"      
-##  [7] "야담 1(1935.12"                  "출전"                           
-##  [9] NA                                "신가정1, 1921년 7월"            
-## [11] "폐허이후 1 &lt;1923"                "&lt;개벽&gt; 3월호, 1935"             
-## [13] "?, &lt;1959"                        "?, &lt;1955"                       
-## [15] "개벽 43호 &lt;1923"                 "대중공론(大衆公論 》4, 1930. 4" 
-## [17] "조선문단 11월호 &lt;1925"           "백광(白光》 1호. 1937. 1"       
-## [19] "조광 11, 1936.9"                 "조선강단(朝鮮講壇》1., 1930. 1" 
-## [21] "?, &lt;1959"                        "조선문학 17, 1939.4"            
-## [23] "조선지광(朝鮮之光》79., 1928. 7" "조선의 얼굴 &lt;1926"              
-## [25] "조광 16, 1936.10"                "조선지광(朝鮮之光》1933. 10"    
-## [27] "신동아》 1936.3"                 "어린이, 1927년 3월"             
-## [29] "?, &lt;1964"                        "조광(朝光》 1936.10"            
-## [31] "매일신보』 (1930.9"              "조선문단 11 &lt;1925.9"            
-## [33] "?, &lt;1925"                        "출전"                           
-## [35] "동광 29(1924.1"                  "창조 9(1921.6"                  
-## [37] "현대평론, &lt;1926"                 "백조 2호, &lt;1922"                
-## [39] "청색지 5, 1939.5"                "여성 9, 1936.12"                
-## [41] "신소설》5호, 1930.9"             "조선 문단 4(1925.1"             
-## [43] "개벽 12월호 &lt;1921"               "개벽 12월호 &lt;1925"              
-## [45] "개벽 &lt;1926"                      "?, &lt;1924"                       
-## [47] "삼천리》69호, 1936.1-3"          "제1선지 3월호, 1933"            
-## [49] "대중공론(大衆公論》, 1930.6"     "?, &lt;1947"                       
-## [51] "조선일보 신춘문예, 1935"         "《삼천리》, 1933.11"            
-## [53] "개벽 17호 &lt;1921"                 "조광, 1939.2"                   
-## [55] "출전"                            "삼천리》, 1930"                 
-## [57] "중앙, 1936.7"                    "개벽 30, &lt;1922.12"              
-## [59] "출전"                            "창조 3호, &lt;1920"                
-## [61] "개벽 48호 &lt;1924"                 "출전"                           
-## [63] "조광》 9호, 1936.7"              "개벽, &lt;1924"                    
-## [65] "백조, &lt;1922.1"                   "신소설 1 &lt;1929"                 
-## [67] "조광 19, 1937.5"                 "청년》, 1927.3"                 
-## [69] "조선과 건축, 1932.3"             "&lt;중앙&gt;, 1936년 6월"             
-## [71] "월간매신, 1934.8"                "조선문단 3, 4, 5월호, &lt;1926"    
-## [73] "???, &lt;1960"                      "창조 2호, &lt;1919"                
-## [75] "신여성 9월호, 1933"              "?, &lt;1960"                       
-## [77] "개벽 19-22, &lt;1922"               NA                               
-## [79] "?, &lt;1948"                        "?, &lt;1959"                       
-## [81] "백조 3호 &lt;1923"                  "개벽 40호, &lt;1923"               
-## [83] "만세보(1906.7.22~1906.10.10"     "?, &lt;1925"                       
-## [85] "청색지 1, 1938.6"                "매일신보, 1937.3.5~9"           
-## [87] "여자계1, 1918년 9월"             "조선 4, 1931.4"                 
-## [89] "?, &lt;1925"                        NA                               
-## [91] NA                                NA                               
+<pre class="r-output"><code>##  [1] "개벽, &lt;1923"                    
+##  [2] "조선문단 5호 &lt;1925"             
+##  [3] NA                               
+##  [4] "조선 문단 5월호 &lt;1925"          
+##  [5] "조선의 얼굴 &lt;1926.3"            
+##  [6] "매일신보 , 1937.4.15~5.15"      
+##  [7] "야담 1(1935.12"                 
+##  [8] "출전"                           
+##  [9] NA                               
+## [10] "신가정1, 1921년 7월"            
+## [11] "폐허이후 1 &lt;1923"               
+## [12] "&lt;개벽&gt; 3월호, 1935"             
+## [13] "?, &lt;1959"                       
+## [14] "?, &lt;1955"                       
+## [15] "개벽 43호 &lt;1923"                
+## [16] "대중공론(大衆公論 》4, 1930. 4" 
+## [17] "조선문단 11월호 &lt;1925"          
+## [18] "백광(白光》 1호. 1937. 1"       
+## [19] "조광 11, 1936.9"                
+## [20] "조선강단(朝鮮講壇》1., 1930. 1" 
+## [21] "?, &lt;1959"                       
+## [22] "조선문학 17, 1939.4"            
+## [23] "조선지광(朝鮮之光》79., 1928. 7"
+## [24] "조선의 얼굴 &lt;1926"              
+## [25] "조광 16, 1936.10"               
+## [26] "조선지광(朝鮮之光》1933. 10"    
+## [27] "신동아》 1936.3"                
+## [28] "어린이, 1927년 3월"             
+## [29] "?, &lt;1964"                       
+## [30] "조광(朝光》 1936.10"            
+## [31] "매일신보』 (1930.9"             
+## [32] "조선문단 11 &lt;1925.9"            
+## [33] "?, &lt;1925"                       
+## [34] "출전"                           
+## [35] "동광 29(1924.1"                 
+## [36] "창조 9(1921.6"                  
+## [37] "현대평론, &lt;1926"                
+## [38] "백조 2호, &lt;1922"                
+## [39] "청색지 5, 1939.5"               
+## [40] "여성 9, 1936.12"                
+## [41] "신소설》5호, 1930.9"            
+## [42] "조선 문단 4(1925.1"             
+## [43] "개벽 12월호 &lt;1921"              
+## [44] "개벽 12월호 &lt;1925"              
+## [45] "개벽 &lt;1926"                     
+## [46] "?, &lt;1924"                       
+## [47] "삼천리》69호, 1936.1-3"         
+## [48] "제1선지 3월호, 1933"            
+## [49] "대중공론(大衆公論》, 1930.6"    
+## [50] "?, &lt;1947"                       
+## [51] "조선일보 신춘문예, 1935"        
+## [52] "《삼천리》, 1933.11"            
+## [53] "개벽 17호 &lt;1921"                
+## [54] "조광, 1939.2"                   
+## [55] "출전"                           
+## [56] "삼천리》, 1930"                 
+## [57] "중앙, 1936.7"                   
+## [58] "개벽 30, &lt;1922.12"              
+## [59] "출전"                           
+## [60] "창조 3호, &lt;1920"                
+## [61] "개벽 48호 &lt;1924"                
+## [62] "출전"                           
+## [63] "조광》 9호, 1936.7"             
+## [64] "개벽, &lt;1924"                    
+## [65] "백조, &lt;1922.1"                  
+## [66] "신소설 1 &lt;1929"                 
+## [67] "조광 19, 1937.5"                
+## [68] "청년》, 1927.3"                 
+## [69] "조선과 건축, 1932.3"            
+## [70] "&lt;중앙&gt;, 1936년 6월"             
+## [71] "월간매신, 1934.8"               
+## [72] "조선문단 3, 4, 5월호, &lt;1926"    
+## [73] "???, &lt;1960"                     
+## [74] "창조 2호, &lt;1919"                
+## [75] "신여성 9월호, 1933"             
+## [76] "?, &lt;1960"                       
+## [77] "개벽 19-22, &lt;1922"              
+## [78] NA                               
+## [79] "?, &lt;1948"                       
+## [80] "?, &lt;1959"                       
+## [81] "백조 3호 &lt;1923"                 
+## [82] "개벽 40호, &lt;1923"               
+## [83] "만세보(1906.7.22~1906.10.10"    
+## [84] "?, &lt;1925"                       
+## [85] "청색지 1, 1938.6"               
+## [86] "매일신보, 1937.3.5~9"           
+## [87] "여자계1, 1918년 9월"            
+## [88] "조선 4, 1931.4"                 
+## [89] "?, &lt;1925"                       
+## [90] NA                               
+## [91] NA                               
+## [92] NA                               
 ## [93] NA
 </code></pre>
 
@@ -693,10 +744,10 @@ sosul_df %>% glimpse()
 
 <pre class="r-output"><code>## Rows: 89
 ## Columns: 4
-## $ title  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "17원 50전(十七圓五十錢)--- 젋은 화가 A의 눈물 한 방울", "B사감…
-## $ author <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "나도향", "현진건", "나혜석", "나도향", "현진건", "이상", "김동…
-## $ source <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "개벽, &lt;1923", "조선문단 5호 &lt;1925", NA, "조선 문단 5월호 &lt;1925…
-## $ main   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> " 첫 째 사랑하시는 C선생님께 어린 심정에서 때없이 솟아오르는 끝…
+## $ title  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "17원 50전(十七圓五十錢)--- 젋은 화가 A의 …
+## $ author <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "나도향", "현진건", "나혜석", "나도향", "현…
+## $ source <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> "개벽, &lt;1923", "조선문단 5호 &lt;1925", NA, "…
+## $ main   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> " 첫 째 사랑하시는 C선생님께 어린 심정에서 …
 </code></pre>
 
 비슷한 길이의 소설 1편씩 추출해보자. 
@@ -707,25 +758,25 @@ sosul_df %>% glimpse()
 jikji_all_df$nchar[1:10]
 ```
 
-<pre class="r-output"><code>##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/1.xhtml 
+<pre class="r-output"><code>##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/1.xhtml 
 ##                                                                    102011 
-##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/9.xhtml 
+##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/9.xhtml 
 ##                                                                     86078 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/90.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/90.xhtml 
 ##                                                                     61151 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/84.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/84.xhtml 
 ##                                                                     51379 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/78.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/78.xhtml 
 ##                                                                     36357 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/85.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/85.xhtml 
 ##                                                                     32444 
-##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/4.xhtml 
+##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/4.xhtml 
 ##                                                                     27801 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/20.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/20.xhtml 
 ##                                                                     23159 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/68.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/68.xhtml 
 ##                                                                     21976 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpUL0kBd/jikji/OEBPS/Text/71.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/71.xhtml 
 ##                                                                     21821
 </code></pre>
 
@@ -735,10 +786,10 @@ sosul2_df
 ```
 
 <pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2 × 4</span>
-##   title author source              main                                        
-##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>                                       
-## <span style='color: #555555;'>1</span> 권태  이상   <span style='color: #BB0000;'>NA</span>                  <span style='color: #555555;'>"</span> 1 어서, 차라리 어둬버리기나 했으면 좋겠는…
-## <span style='color: #555555;'>2</span> 규원  나혜석 신가정1, 1921년 7월 <span style='color: #555555;'>"</span> 때는 정히 오월 중순이라. 비온 뒤끝은 아직…
+##   title author source              main                    
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>                   
+## <span style='color: #555555;'>1</span> 권태  이상   <span style='color: #BB0000;'>NA</span>                  <span style='color: #555555;'>"</span> 1 어서, 차라리 어둬버…
+## <span style='color: #555555;'>2</span> 규원  나혜석 신가정1, 1921년 7월 <span style='color: #555555;'>"</span> 때는 정히 오월 중순이…
 </code></pre>
 
 

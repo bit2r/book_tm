@@ -50,12 +50,13 @@
 <li><a class="" href="browse.html"><span class="header-section-number">2</span> 헬로 월드</a></li>
 <li><a class="" href="view-text.html"><span class="header-section-number">3</span> 텍스트 살펴보기</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="" href="clean.html"><span class="header-section-number">4</span> 정제(전처리)</a></li>
-<li><a class="" href="tf-idf.html"><span class="header-section-number">5</span> 단어 빈도수</a></li>
+<li><a class="" href="text-processing.html"><span class="header-section-number">4</span> 텍스트 전처리</a></li>
+<li><a class="" href="text-clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></li>
+<li><a class="" href="tf-idf.html"><span class="header-section-number">6</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
-<li><a class="" href="sentiment.html"><span class="header-section-number">6</span> 감성분석</a></li>
-<li><a class="" href="topic-modeling.html"><span class="header-section-number">7</span> 주제모형</a></li>
-<li><a class="" href="anal4topic.html"><span class="header-section-number">8</span> 주제모형(공변인)</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></li>
+<li><a class="" href="topic-modeling.html"><span class="header-section-number">8</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></li>
 </ul>
 
         <div class="book-extra">
@@ -102,17 +103,18 @@
 <a href="https://cran.r-project.org/web/packages/fansi/index.html"><code>fansi</code></a> 패키지가 필요하다.
 R마크다운 코드 덩어리에 다음 사항을 추가하고 R마크다운 작업을 수행하면
 자동으로 해당 색상을 <code>.html</code>, <code>.pdf</code>, <code>shiny</code> 결과물에 반영할 수 있다.</p>
-<!-- ````{verbatim} -->
-<!-- ```{r setup} -->
-<!-- knitr::knit_hooks$set(output = function(x, options){ -->
-<!--   paste0( -->
-<!--     '<pre class="r-output"><code>', -->
-<!--     fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE), -->
-<!--     '</code></pre>' -->
-<!--   ) -->
-<!-- }) -->
-<!-- ``` -->
-<!-- ```` -->
+<pre>
+
+```r
+knitr::knit_hooks$set(output = function(x, options){
+  paste0(
+    '<pre class="r-output"><code>',
+    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),
+    '</code></pre>'
+  )
+})
+```
+</pre>
 <p>R마크다운 색상 적용에 대한 자세한 사항은 <a href="https://logfc.wordpress.com/2020/07/20/rmarkdown-and-terminal-colors/">rmarkdown and terminal colors</a>를
 참조한다.</p>
 </div>
@@ -293,12 +295,12 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
 <span><span class="co"># 마루부리 글꼴이 설치되었는지 확인</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_files.html">font_files</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">family</span>, <span class="st">"Maru"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 4 × 6</span>
-##   path             file                  family            face  version ps_name
-##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  
-## <span style="color: #555555;">1</span> C:/Windows/Fonts MaruBuri-Bold.ttf     MaruBuri Bold     Regu… Versio… MaruBu…
-## <span style="color: #555555;">2</span> C:/Windows/Fonts MaruBuri-Light.ttf    MaruBuri Light    Regu… Versio… MaruBu…
-## <span style="color: #555555;">3</span> C:/Windows/Fonts MaruBuri-Regular.ttf  MaruBuri Regular  Regu… Versio… MaruBu…
-## <span style="color: #555555;">4</span> C:/Windows/Fonts MaruBuri-SemiBold.ttf MaruBuri SemiBold Regu… Versio… MaruBu…
+##   path             file         family face  version ps_name
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  
+## <span style="color: #555555;">1</span> C:/Windows/Fonts MaruBuri-Bo… MaruB… Regu… Versio… MaruBu…
+## <span style="color: #555555;">2</span> C:/Windows/Fonts MaruBuri-Li… MaruB… Regu… Versio… MaruBu…
+## <span style="color: #555555;">3</span> C:/Windows/Fonts MaruBuri-Re… MaruB… Regu… Versio… MaruBu…
+## <span style="color: #555555;">4</span> C:/Windows/Fonts MaruBuri-Se… MaruB… Regu… Versio… MaruBu…
 </code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ggplot에서 사용할 수 있도록 설정</span></span>
@@ -369,7 +371,7 @@ RMeCaB 패키지를 설치하면 일본어 형태소 분석 작업을 바로 시
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-19.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
