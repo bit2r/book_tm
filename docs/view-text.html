@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>3 . 텍스트 살펴보기 | R 텍스트마이닝</title>
+<title>4 . 텍스트 살펴보기 | R 텍스트마이닝</title>
 <meta name="author" content="한국 R 사용자회">
-<meta name="description" content="3.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
+<meta name="description" content="4.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="3 . 텍스트 살펴보기 | R 텍스트마이닝">
+<meta property="og:title" content="4 . 텍스트 살펴보기 | R 텍스트마이닝">
 <meta property="og:type" content="book">
-<meta property="og:description" content="3.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
+<meta property="og:description" content="4.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="3 . 텍스트 살펴보기 | R 텍스트마이닝">
-<meta name="twitter:description" content="3.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
+<meta name="twitter:title" content="4 . 텍스트 살펴보기 | R 텍스트마이닝">
+<meta name="twitter:description" content="4.1 특정 단어 강조 윤석열 대통령 취임사 텍스트를 취임사_윤석열.txt 파일로 저장한 후에 특정 단어 자유 를 탐색하여 색상을 달리하여 출력해보자. ## 기본 텍스트 패키지 library(tidyverse) library(tidytext) ## 한국 텍스트 처리 패키지 # library(RMeCab) # library(bitTA) ## 글 색상...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -21,6 +21,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -44,19 +66,19 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">들어가며</a></li>
-<li><a class="" href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></li>
 <li class="book-part">환경설정</li>
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
-<li><a class="" href="browse.html"><span class="header-section-number">2</span> 헬로 월드</a></li>
-<li><a class="active" href="view-text.html"><span class="header-section-number">3</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="prep.html"><span class="header-section-number">2</span> 준비운동</a></li>
+<li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
+<li><a class="active" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="" href="text-processing.html"><span class="header-section-number">4</span> 텍스트 전처리</a></li>
-<li><a class="" href="text-clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></li>
-<li><a class="" href="tf-idf.html"><span class="header-section-number">6</span> 단어 빈도수</a></li>
+<li><a class="" href="text-processing.html"><span class="header-section-number">5</span> 텍스트 전처리</a></li>
+<li><a class="" href="text-clean.html"><span class="header-section-number">6</span> 정제(전처리)</a></li>
+<li><a class="" href="tf-idf.html"><span class="header-section-number">7</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
-<li><a class="" href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></li>
-<li><a class="" href="topic-modeling.html"><span class="header-section-number">8</span> 주제모형</a></li>
-<li><a class="" href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></li>
+<li><a class="" href="topic-modeling.html"><span class="header-section-number">9</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">10</span> 주제모형(공변인)</a></li>
 </ul>
 
         <div class="book-extra">
@@ -64,17 +86,17 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="view-text" class="section level1" number="3">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="view-text" class="section level1" number="4">
 <h1>
-<span class="header-section-number">3 . </span> 텍스트 살펴보기<a class="anchor" aria-label="anchor" href="#view-text"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4 . </span> 텍스트 살펴보기<a class="anchor" aria-label="anchor" href="#view-text"><i class="fas fa-link"></i></a>
 </h1>
-<div id="text-highlight" class="section level2" number="3.1">
+<div id="text-highlight" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">3.1</span> 특정 단어 강조<a class="anchor" aria-label="anchor" href="#text-highlight"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> 특정 단어 강조<a class="anchor" aria-label="anchor" href="#text-highlight"><i class="fas fa-link"></i></a>
 </h2>
 <p>윤석열 대통령 취임사 텍스트를 <code>취임사_윤석열.txt</code> 파일로 저장한 후에
 특정 단어 <strong>자유</strong> 를 탐색하여 색상을 달리하여 출력해보자.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## 기본 텍스트 패키지</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span>
@@ -174,15 +196,15 @@
 ## "감사합니다."
 </code></pre>
 </div>
-<div id="text-highlight-locatin" class="section level2" number="3.2">
+<div id="text-highlight-locatin" class="section level2" number="4.2">
 <h2>
-<span class="header-section-number">3.2</span> 단어 위치<a class="anchor" aria-label="anchor" href="#text-highlight-locatin"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2</span> 단어 위치<a class="anchor" aria-label="anchor" href="#text-highlight-locatin"><i class="fas fa-link"></i></a>
 </h2>
 <p>윤석열 대통령 취임사에서 가장 빈도수가 높은 명사 5개를 찾아낸다.
 이를 위해서 먼저 텍스트를 각행별로 텍스트를 데이터프레임으로 변환시킨다.
 그리고 나서 메카브(MeCab) 형태소 분석기를 사용해서 연설문 형태소 분석을 수행하고
 명사만 추출한 후에 가장 빈도수가 높은 단어 3개를 뽑아낸다.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RcppMeCab</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span>
 <span></span>
@@ -209,7 +231,7 @@
 <p>윤 대통령 취임사에서 가장 많이 언급된 명사 3개(자유, 국민, 시민)가 취임사 어느
 부분에 위치하는지 시각화를 한다. 이를 위해서 <a href="https://cran.r-project.org/web/packages/ggpage/"><code>ggpage</code></a>
 패키지를 활용하여 <code><a href="https://rdrr.io/pkg/ggpage/man/ggpage_build.html">ggpage_build()</a></code> 함수와 <code><a href="https://rdrr.io/pkg/ggpage/man/ggpage_plot.html">ggpage_plot()</a></code> 함수를 사용하여 깔끔하게 시각화한다.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/EmilHvitfeldt/ggpage">ggpage</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">yoon_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -232,38 +254,38 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"NanumGothic"</span><span class="op">)</span>  </span></code></pre></div>
 <div class="inline-figure"><img src="10-view-text_files/figure-html/youn-top-five-ggpage-1.png" width="100%" style="display: block; margin: auto;"></div>
 </div>
-<div id="취임사-요약" class="section level2" number="3.3">
+<div id="취임사-요약" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">3.3</span> 취임사 요약<a class="anchor" aria-label="anchor" href="#%EC%B7%A8%EC%9E%84%EC%82%AC-%EC%9A%94%EC%95%BD"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> 취임사 요약<a class="anchor" aria-label="anchor" href="#%EC%B7%A8%EC%9E%84%EC%82%AC-%EC%9A%94%EC%95%BD"><i class="fas fa-link"></i></a>
 </h2>
 <p>Ainize Teachable-NLP를 사용한 <a href="https://huggingface.co/ainize/kobart-news">kobart 문서요약 텍스트/신문기사</a>를 사용하여 윤 대통령 취임사를 요약한다.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="view-text.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> PreTrainedTokenizerFast, BartForConditionalGeneration</span>
-<span id="cb27-2"><a href="view-text.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  사전 훈련 토큰, 모형 다운로드</span></span>
-<span id="cb27-3"><a href="view-text.html#cb27-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> PreTrainedTokenizerFast.from_pretrained(<span class="st">"ainize/kobart-news"</span>)</span>
-<span id="cb27-4"><a href="view-text.html#cb27-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> BartForConditionalGeneration.from_pretrained(<span class="st">"ainize/kobart-news"</span>)</span>
-<span id="cb27-5"><a href="view-text.html#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 입력 텍스트</span></span>
-<span id="cb27-6"><a href="view-text.html#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/취임사_윤석열.txt'</span>) <span class="im">as</span> f:</span>
-<span id="cb27-7"><a href="view-text.html#cb27-7" aria-hidden="true" tabindex="-1"></a>  input_text <span class="op">=</span> f.read()</span>
-<span id="cb27-8"><a href="view-text.html#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-9"><a href="view-text.html#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb27-10"><a href="view-text.html#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="view-text.html#cb27-11" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> re.sub(<span class="vs">r"\n"</span>, <span class="st">" "</span>, input_text)</span>
-<span id="cb27-12"><a href="view-text.html#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="view-text.html#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-14"><a href="view-text.html#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="view-text.html#cb27-15" aria-hidden="true" tabindex="-1"></a>input_ids <span class="op">=</span> tokenizer.encode(input_text, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
-<span id="cb27-16"><a href="view-text.html#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Summary Text Ids</span></span>
-<span id="cb27-17"><a href="view-text.html#cb27-17" aria-hidden="true" tabindex="-1"></a>summary_text_ids <span class="op">=</span> model.generate(</span>
-<span id="cb27-18"><a href="view-text.html#cb27-18" aria-hidden="true" tabindex="-1"></a>    input_ids<span class="op">=</span>input_ids,</span>
-<span id="cb27-19"><a href="view-text.html#cb27-19" aria-hidden="true" tabindex="-1"></a>    bos_token_id<span class="op">=</span>model.config.bos_token_id,</span>
-<span id="cb27-20"><a href="view-text.html#cb27-20" aria-hidden="true" tabindex="-1"></a>    eos_token_id<span class="op">=</span>model.config.eos_token_id,</span>
-<span id="cb27-21"><a href="view-text.html#cb27-21" aria-hidden="true" tabindex="-1"></a>    length_penalty<span class="op">=</span><span class="fl">2.0</span>,</span>
-<span id="cb27-22"><a href="view-text.html#cb27-22" aria-hidden="true" tabindex="-1"></a>    max_length<span class="op">=</span><span class="dv">142</span>,</span>
-<span id="cb27-23"><a href="view-text.html#cb27-23" aria-hidden="true" tabindex="-1"></a>    min_length<span class="op">=</span><span class="dv">56</span>,</span>
-<span id="cb27-24"><a href="view-text.html#cb27-24" aria-hidden="true" tabindex="-1"></a>    num_beams<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb27-25"><a href="view-text.html#cb27-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb27-26"><a href="view-text.html#cb27-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Decoding Text</span></span>
-<span id="cb27-27"><a href="view-text.html#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokenizer.decode(summary_text_ids[<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="view-text.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> PreTrainedTokenizerFast, BartForConditionalGeneration</span>
+<span id="cb79-2"><a href="view-text.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  사전 훈련 토큰, 모형 다운로드</span></span>
+<span id="cb79-3"><a href="view-text.html#cb79-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> PreTrainedTokenizerFast.from_pretrained(<span class="st">"ainize/kobart-news"</span>)</span>
+<span id="cb79-4"><a href="view-text.html#cb79-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> BartForConditionalGeneration.from_pretrained(<span class="st">"ainize/kobart-news"</span>)</span>
+<span id="cb79-5"><a href="view-text.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 입력 텍스트</span></span>
+<span id="cb79-6"><a href="view-text.html#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/취임사_윤석열.txt'</span>) <span class="im">as</span> f:</span>
+<span id="cb79-7"><a href="view-text.html#cb79-7" aria-hidden="true" tabindex="-1"></a>  input_text <span class="op">=</span> f.read()</span>
+<span id="cb79-8"><a href="view-text.html#cb79-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-9"><a href="view-text.html#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb79-10"><a href="view-text.html#cb79-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-11"><a href="view-text.html#cb79-11" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> re.sub(<span class="vs">r"\n"</span>, <span class="st">" "</span>, input_text)</span>
+<span id="cb79-12"><a href="view-text.html#cb79-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-13"><a href="view-text.html#cb79-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-14"><a href="view-text.html#cb79-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-15"><a href="view-text.html#cb79-15" aria-hidden="true" tabindex="-1"></a>input_ids <span class="op">=</span> tokenizer.encode(input_text, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb79-16"><a href="view-text.html#cb79-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Summary Text Ids</span></span>
+<span id="cb79-17"><a href="view-text.html#cb79-17" aria-hidden="true" tabindex="-1"></a>summary_text_ids <span class="op">=</span> model.generate(</span>
+<span id="cb79-18"><a href="view-text.html#cb79-18" aria-hidden="true" tabindex="-1"></a>    input_ids<span class="op">=</span>input_ids,</span>
+<span id="cb79-19"><a href="view-text.html#cb79-19" aria-hidden="true" tabindex="-1"></a>    bos_token_id<span class="op">=</span>model.config.bos_token_id,</span>
+<span id="cb79-20"><a href="view-text.html#cb79-20" aria-hidden="true" tabindex="-1"></a>    eos_token_id<span class="op">=</span>model.config.eos_token_id,</span>
+<span id="cb79-21"><a href="view-text.html#cb79-21" aria-hidden="true" tabindex="-1"></a>    length_penalty<span class="op">=</span><span class="fl">2.0</span>,</span>
+<span id="cb79-22"><a href="view-text.html#cb79-22" aria-hidden="true" tabindex="-1"></a>    max_length<span class="op">=</span><span class="dv">142</span>,</span>
+<span id="cb79-23"><a href="view-text.html#cb79-23" aria-hidden="true" tabindex="-1"></a>    min_length<span class="op">=</span><span class="dv">56</span>,</span>
+<span id="cb79-24"><a href="view-text.html#cb79-24" aria-hidden="true" tabindex="-1"></a>    num_beams<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb79-25"><a href="view-text.html#cb79-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb79-26"><a href="view-text.html#cb79-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Decoding Text</span></span>
+<span id="cb79-27"><a href="view-text.html#cb79-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokenizer.decode(summary_text_ids[<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code></pre></div>
 
 </div>
 </div>
@@ -271,15 +293,15 @@
 
 
   <div class="chapter-nav">
-<div class="prev"><a href="browse.html"><span class="header-section-number">2</span> 헬로 월드</a></div>
-<div class="next"><a href="text-processing.html"><span class="header-section-number">4</span> 텍스트 전처리</a></div>
+<div class="prev"><a href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></div>
+<div class="next"><a href="text-processing.html"><span class="header-section-number">5</span> 텍스트 전처리</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#view-text"><span class="header-section-number">3</span> 텍스트 살펴보기</a></li>
-<li><a class="nav-link" href="#text-highlight"><span class="header-section-number">3.1</span> 특정 단어 강조</a></li>
-<li><a class="nav-link" href="#text-highlight-locatin"><span class="header-section-number">3.2</span> 단어 위치</a></li>
-<li><a class="nav-link" href="#%EC%B7%A8%EC%9E%84%EC%82%AC-%EC%9A%94%EC%95%BD"><span class="header-section-number">3.3</span> 취임사 요약</a></li>
+<li><a class="nav-link" href="#view-text"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li><a class="nav-link" href="#text-highlight"><span class="header-section-number">4.1</span> 특정 단어 강조</a></li>
+<li><a class="nav-link" href="#text-highlight-locatin"><span class="header-section-number">4.2</span> 단어 위치</a></li>
+<li><a class="nav-link" href="#%EC%B7%A8%EC%9E%84%EC%82%AC-%EC%9A%94%EC%95%BD"><span class="header-section-number">4.3</span> 취임사 요약</a></li>
 </ul>
 
       <div class="book-extra">
@@ -296,7 +318,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-23.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

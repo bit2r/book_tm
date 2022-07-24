@@ -1,16 +1,5 @@
 
-```{r setup, include = FALSE}
-source("_common.R")
 
-knitr::knit_hooks$set(output = function(x, options){
-  paste0(
-    '<pre class="r-output"><code>',
-    fansi::sgr_to_html(x = htmltools::htmlEscape(x), warn = FALSE),
-    '</code></pre>'
-  )
-})
-
-```
 
 # 헬로 월드 {#browse}
 
@@ -65,12 +54,16 @@ knitr::knit_hooks$set(output = function(x, options){
 ```
 
 
-```{r brs1 }
+
+```r
 text_v <- c("배우며 제때에 실행하면 진실로 즐겁지 않겠는가?
             벗이 먼 곳에서부터 온다면 참으로 즐겁지 않겠는가?
             남이 알아주지 않아도 성내지 않는다면 참으로 군자답지 않겠는가?")
 text_v
 ```
+
+<pre class="r-output"><code>## [1] "배우며 제때에 실행하면 진실로 즐겁지 않겠는가?\n            벗이 먼 곳에서부터 온다면 참으로 즐겁지 않겠는가?\n            남이 알아주지 않아도 성내지 않는다면 참으로 군자답지 않겠는가?"
+</code></pre>
 
 `\n`은 행바꿈을 의미하는 정규표현식이다. 
 
@@ -94,9 +87,9 @@ f
 
 정돈된 세계(tidyverse)에서 텍스트데이터를 정돈텍스트 구조에 담는 함수가 `tidytext`패키지에서 제공하는 `unnest_tokens`다. (철자에 주의하자. 복수 `s`가 붙어 있다.)
 
-```{r brs2,  eval=FALSE}
-install.packages("tidytext")
 
+```r
+install.packages("tidytext")
 ```
 
 `tidytext`의 자세한 사용법은 아래 사용설명서를 참조한다. 
@@ -109,22 +102,40 @@ install.packages("tidytext")
 
 데이터프레임의 열 이름을 무엇으로 설정했는지에 주의하자. 여기서는 "text"로 설정했다. 
 
-```{r brs3 }
+
+```r
 library(tidyverse)
 text_df <- tibble(text = text_v)
 text_df
-
 ```
+
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 1 × 1</span>
+##   text                                                      
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>                                                     
+## <span style='color: #555555;'>1</span> <span style='color: #555555;'>"</span>배우며 제때에 실행하면 진실로 즐겁지 않겠는가?\n        …
+</code></pre>
 
 이제 생성된 데이터프레임을 `tidytext`패키지의 `unnest_tokens`함수를 이용해 정돈텍스트 구조로 바꿔보자. (철자에 주의. 복수 s)
 
 앞서 만든 데이터프레임의 열 이름("text")을 `input`에 투입한 것을 잘 기억하자. 
 
-```{r brs4 }
+
+```r
 library(tidytext)
 text_df %>% unnest_tokens(output = word, input = text)
-
 ```
+
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 21 × 1</span>
+##   word    
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>   
+## <span style='color: #555555;'>1</span> 배우며  
+## <span style='color: #555555;'>2</span> 제때에  
+## <span style='color: #555555;'>3</span> 실행하면
+## <span style='color: #555555;'>4</span> 진실로  
+## <span style='color: #555555;'>5</span> 즐겁지  
+## <span style='color: #555555;'>6</span> 않겠는가
+## <span style='color: #555555;'># … with 15 more rows</span>
+</code></pre>
 
  - input : 입력한 데이터프레임의 열 이름
  - output : 출력할 정돈텍스트의 열 이름 
@@ -134,11 +145,23 @@ text_df %>% unnest_tokens(output = word, input = text)
 이번에는 토큰을 단어 2개로 묶은 ngram으로 정돈텍스트를 만들어 보자. 
 
 
-```{r brs5 }
+
+```r
 text_df %>% unnest_tokens(output = word, input = text, 
                           token = "ngrams", n = 2 )
-
 ```
+
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 20 × 1</span>
+##   word           
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>          
+## <span style='color: #555555;'>1</span> 배우며 제때에  
+## <span style='color: #555555;'>2</span> 제때에 실행하면
+## <span style='color: #555555;'>3</span> 실행하면 진실로
+## <span style='color: #555555;'>4</span> 진실로 즐겁지  
+## <span style='color: #555555;'>5</span> 즐겁지 않겠는가
+## <span style='color: #555555;'>6</span> 않겠는가 벗이  
+## <span style='color: #555555;'># … with 14 more rows</span>
+</code></pre>
 
 `unnest_tokens`함수의 자세한 사용법은 `?unnest_tokens`의 도움말을 참고한다. 
 
@@ -152,19 +175,26 @@ text_df %>% unnest_tokens(output = word, input = text,
 
 문서에 등장하는 단어를 세어 주는 함수가 `count`다. `count`함수를 앞서 정돈텍스트 구조에 저장된 텍스트에 많이 등장한 단어가 무멋인지 찾아보자. 
 
-```{r brs6 }
+
+```r
 text_tk <- text_df %>% unnest_tokens(output = word, input = text)
 text_tk %>% 
   count(word, sort = TRUE)
-
 ```
 
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 17 × 2</span>
+##   word           n
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>      <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>
+## <span style='color: #555555;'>1</span> 않겠는가       3
+## <span style='color: #555555;'>2</span> 즐겁지         2
+## <span style='color: #555555;'>3</span> 참으로         2
+## <span style='color: #555555;'>4</span> 곳에서부터     1
+## <span style='color: #555555;'>5</span> 군자답지       1
+## <span style='color: #555555;'>6</span> 남이           1
+## <span style='color: #555555;'># … with 11 more rows</span>
+</code></pre>
+
 "않겠는가"가 3회, "즐겁지"와 "참으로"로가 각각 2회 사용됐다. 즐거움에 관한 문서라고 가늠할 수 있다. 
-
-
-
-
-
 
 
 ## 소통
@@ -178,7 +208,8 @@ text_tk %>%
 
 다음 코드는 2회 이상 등장`filter(n > 1)`한 단어를 등장빈도 순서대로 정렬`mutate(word = reorder(word, n))`해 막대도포`geom_col()`로 시각화했다. 
 
-```{r brs7 }
+
+```r
 text_tk %>% 
   count(word, sort = TRUE) %>% 
   filter(n > 1) %>% 
@@ -186,14 +217,9 @@ text_tk %>%
   ggplot(aes(word, n)) +
   geom_col() +
   coord_flip()
-
 ```
 
-
-
-
-
-
+<img src="03-hello-world_files/figure-html/brs7-1.png" width="576" style="display: block; margin: auto;" />
 
 ## 연습
 
@@ -242,7 +268,8 @@ text_tk %>%
 
 텍스트 양이 많은 편이니 텍스트 객체를 별도로 마련하자.  
 
-```{r brs8 }
+
+```r
 ogamdo_txt <- "13인의 아해가 도로로 질주하오.
 (길은 막다른 골목이 적당하오.)
 
@@ -272,7 +299,8 @@ ogamdo_txt <- "13인의 아해가 도로로 질주하오.
            
 
 
-```{r brs9 }
+
+```r
 # 자료준비
 txt_df <- tibble(text = ogamdo_txt)
 
@@ -284,18 +312,32 @@ txt_tk <- txt_df %>%
 txt_tk
 ```
 
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 45 × 2</span>
+##   word         n
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>
+## <span style='color: #555555;'>1</span> 그리오      13
+## <span style='color: #555555;'>2</span> 무섭다고    13
+## <span style='color: #555555;'>3</span> 의          13
+## <span style='color: #555555;'>4</span> 제          13
+## <span style='color: #555555;'>5</span> 아해도      11
+## <span style='color: #555555;'>6</span> 아해가       8
+## <span style='color: #555555;'># … with 39 more rows</span>
+</code></pre>
+
 이제 분석결과를 `ggplot2`의 막대도표로 시각화하자. 4회 이상 등장한 단어만 포함시키자.
 
 
-```{r brs10 }
+
+```r
 txt_tk %>%
   filter(n >= 4) %>% 
   mutate(word = reorder(word, n)) %>% 
   ggplot(aes(word, n)) +
   geom_col() +
   coord_flip()
-
 ```
+
+<img src="03-hello-world_files/figure-html/brs10-1.png" width="576" style="display: block; margin: auto;" />
 
 
 ### 과제

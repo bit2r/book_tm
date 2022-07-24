@@ -481,7 +481,7 @@ sosul_v %>% glimpse
 ```
 
 <pre class="r-output"><code>##  Named chr [1:93] "17원 50전(十七圓五十錢)--- 젋은 화가 A의 눈물 한 방울\n\n  지은이: 나도향\n\n    출전: 개벽, &lt;1923&gt;\n\n    공개"| __truncated__ ...
-##  - attr(*, "names")= chr [1:93] "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/2.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/3.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/4.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/5.xhtml" ...
+##  - attr(*, "names")= chr [1:93] "C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/2.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/3.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/4.xhtml" "C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/5.xhtml" ...
 </code></pre>
 
 
@@ -758,25 +758,25 @@ sosul_df %>% glimpse()
 jikji_all_df$nchar[1:10]
 ```
 
-<pre class="r-output"><code>##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/1.xhtml 
+<pre class="r-output"><code>##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/1.xhtml 
 ##                                                                    102011 
-##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/9.xhtml 
+##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/9.xhtml 
 ##                                                                     86078 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/90.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/90.xhtml 
 ##                                                                     61151 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/84.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/84.xhtml 
 ##                                                                     51379 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/78.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/78.xhtml 
 ##                                                                     36357 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/85.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/85.xhtml 
 ##                                                                     32444 
-##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/4.xhtml 
+##  C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/4.xhtml 
 ##                                                                     27801 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/20.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/20.xhtml 
 ##                                                                     23159 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/68.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/68.xhtml 
 ##                                                                     21976 
-## C:/Users/STATKC~1/AppData/Local/Temp/RtmpoXb4Un/jikji/OEBPS/Text/71.xhtml 
+## C:/Users/STATKC~1/AppData/Local/Temp/RtmpQhjsca/jikji/OEBPS/Text/71.xhtml 
 ##                                                                     21821
 </code></pre>
 

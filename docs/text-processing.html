@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>4 . 텍스트 전처리 | R 텍스트마이닝</title>
+<title>5 . 텍스트 전처리 | R 텍스트마이닝</title>
 <meta name="author" content="한국 R 사용자회">
 <meta name="description" content="텍스트 원데이터(Raw data)를 R에서 처리하는 방식은 오래전부터 많은 함수와 도구가 개발되어 현재도 사용가능하다. 하지만 tidyverse 생태계를 구성하고 있는 stringr은 문자열(string)을 다루기 위해서 개발된 전용 패키지로 티블(tibble) 데이터프레임과 결합할 경우 텍스트 전처리 작업에 생산성을 높일 수 있다. stringr...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="4 . 텍스트 전처리 | R 텍스트마이닝">
+<meta property="og:title" content="5 . 텍스트 전처리 | R 텍스트마이닝">
 <meta property="og:type" content="book">
 <meta property="og:description" content="텍스트 원데이터(Raw data)를 R에서 처리하는 방식은 오래전부터 많은 함수와 도구가 개발되어 현재도 사용가능하다. 하지만 tidyverse 생태계를 구성하고 있는 stringr은 문자열(string)을 다루기 위해서 개발된 전용 패키지로 티블(tibble) 데이터프레임과 결합할 경우 텍스트 전처리 작업에 생산성을 높일 수 있다. stringr...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="4 . 텍스트 전처리 | R 텍스트마이닝">
+<meta name="twitter:title" content="5 . 텍스트 전처리 | R 텍스트마이닝">
 <meta name="twitter:description" content="텍스트 원데이터(Raw data)를 R에서 처리하는 방식은 오래전부터 많은 함수와 도구가 개발되어 현재도 사용가능하다. 하지만 tidyverse 생태계를 구성하고 있는 stringr은 문자열(string)을 다루기 위해서 개발된 전용 패키지로 티블(tibble) 데이터프레임과 결합할 경우 텍스트 전처리 작업에 생산성을 높일 수 있다. stringr...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +21,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -44,19 +66,19 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">들어가며</a></li>
-<li><a class="" href="%EC%A0%80%EC%9E%91%EC%97%90-%EA%B8%B0%EC%97%AC%ED%95%98%EC%8B%A0-%EB%B6%84.html">저작에 기여하신 분</a></li>
 <li class="book-part">환경설정</li>
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
-<li><a class="" href="browse.html"><span class="header-section-number">2</span> 헬로 월드</a></li>
-<li><a class="" href="view-text.html"><span class="header-section-number">3</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="prep.html"><span class="header-section-number">2</span> 준비운동</a></li>
+<li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
+<li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="active" href="text-processing.html"><span class="header-section-number">4</span> 텍스트 전처리</a></li>
-<li><a class="" href="text-clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></li>
-<li><a class="" href="tf-idf.html"><span class="header-section-number">6</span> 단어 빈도수</a></li>
+<li><a class="active" href="text-processing.html"><span class="header-section-number">5</span> 텍스트 전처리</a></li>
+<li><a class="" href="text-clean.html"><span class="header-section-number">6</span> 정제(전처리)</a></li>
+<li><a class="" href="tf-idf.html"><span class="header-section-number">7</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
-<li><a class="" href="sentiment.html"><span class="header-section-number">7</span> 감성분석</a></li>
-<li><a class="" href="topic-modeling.html"><span class="header-section-number">8</span> 주제모형</a></li>
-<li><a class="" href="anal4topic.html"><span class="header-section-number">9</span> 주제모형(공변인)</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></li>
+<li><a class="" href="topic-modeling.html"><span class="header-section-number">9</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">10</span> 주제모형(공변인)</a></li>
 </ul>
 
         <div class="book-extra">
@@ -64,9 +86,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="text-processing" class="section level1" number="4">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="text-processing" class="section level1" number="5">
 <h1>
-<span class="header-section-number">4 . </span> 텍스트 전처리<a class="anchor" aria-label="anchor" href="#text-processing"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5 . </span> 텍스트 전처리<a class="anchor" aria-label="anchor" href="#text-processing"><i class="fas fa-link"></i></a>
 </h1>
 <p>텍스트 원데이터(Raw data)를 R에서 처리하는 방식은 오래전부터 많은 함수와 도구가
 개발되어 현재도 사용가능하다. 하지만 <code>tidyverse</code> 생태계를 구성하고 있는
@@ -78,9 +100,9 @@
 <div class="figure">
 <img src="images/text-manipulatin.png" style="width:100.0%" alt=""><p class="caption">텍스트 처리 <code>tibble</code>과 <code>stringr</code> 조합</p>
 </div>
-<div id="text-repex" class="section level2" number="4.1">
+<div id="text-repex" class="section level2" number="5.1">
 <h2>
-<span class="header-section-number">4.1</span> 정규표현식<a class="anchor" aria-label="anchor" href="#text-repex"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1</span> 정규표현식<a class="anchor" aria-label="anchor" href="#text-repex"><i class="fas fa-link"></i></a>
 </h2>
 <p>텍스트 데이터는 신문기사, 책, 블로그, 채팅로그 등 다양한 형태로 나타난다. 이런 텍스트를 다루는데 별도 언어가 필요한데
 이것이 <strong>정규표현식(regular expression)</strong>이다. 강력한 정규표현식을 사용하기 위해서 기본적으로 R에서 문자열을 불러오고 패턴을 매칭하고,
@@ -101,9 +123,9 @@
 가장 많이 활용되는 기능만 뽑아서 가장 생산성 높게 사용하는 툴체인으로 활용가능하다.
 정규표현식의 보다 자세한 사항은 데이터 과학 프로그래밍 <a href="https://r2bit.com/book_programming/regex.html">정규표현식</a>을 참고한다.</p>
 </div>
-<div id="nlp-stringr-basic-operation" class="section level2" number="4.2">
+<div id="nlp-stringr-basic-operation" class="section level2" number="5.2">
 <h2>
-<span class="header-section-number">4.2</span> 문자열 기본 작업<a class="anchor" aria-label="anchor" href="#nlp-stringr-basic-operation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2</span> 문자열 기본 작업<a class="anchor" aria-label="anchor" href="#nlp-stringr-basic-operation"><i class="fas fa-link"></i></a>
 </h2>
 <p>기본적으로 작업하는 기본 문자열 작업은 문자열을 찾고, 문자열을 쪼개고, 문자열을 치환하는 작업이다.
 <code>stringr</code>에서 문자열 매칭에 문자열을 탐지하고, 탐지된 문자열을 뽑아내고, 매칭된 문자열 갯수를 찾아내는 기본작업을 지원한다.
@@ -116,7 +138,7 @@
 <p>문자열을 특정 패터에 맞춰 쪼개고 나면 <code><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a></code> 함수를 통해 반환되는 객체는 리스트 자료형이 된다. 왜냐하면 고정된 길이를 갖지 않을 수 있기 때문에
 반환되는 리스트를 <code><a href="https://rdrr.io/r/base/lapply.html">lapply()</a></code> 함수와 연동하여 길이를 바로 구하는 것도 많이 작어되는 기본 작업 패턴이다.
 그리고 <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all()</a></code> 함수를 활용하여 문자열을 치환하는 것도 많이 사용되는 패턴이다.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></span>
 <span></span>
@@ -126,19 +148,19 @@
 <span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">hangul</span>, pattern <span class="op">=</span> <span class="st">"자동차"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1]  TRUE FALSE  TRUE
 </code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">hangul</span>, pattern <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/modifiers.html">fixed</a></span><span class="op">(</span><span class="st">"자동차"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1]  TRUE FALSE  TRUE
 </code></pre>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">hangul</span>, pattern <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/modifiers.html">fixed</a></span><span class="op">(</span><span class="st">"자동차"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "자동차"                 "한국산 자동차와 손수레"
 </code></pre>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_count.html">str_count</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">hangul</span>, pattern <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/modifiers.html">fixed</a></span><span class="op">(</span><span class="st">"자동차"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] 1 0 1
 </code></pre>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 2. 문자열 쪼개기 -------------------------</span></span>
 <span><span class="va">hangul</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"한국산 자동차와 손수레 그리고 오토바이"</span><span class="op">)</span></span>
 <span></span>
@@ -146,12 +168,12 @@
 <pre class="r-output"><code>## [[1]]
 ## [1] "한국산 자동차" " 손수레"       "오토바이"
 </code></pre>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">hangul</span>, pattern <span class="op">=</span> <span class="st">" 그리고 |와"</span>, n<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [[1]]
 ## [1] "한국산 자동차"           " 손수레 그리고 오토바이"
 </code></pre>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hanguls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"한국산 자동차와 손수레 그리고 오토바이"</span>,</span>
 <span>             <span class="st">"독일산 자동차 그리고 아우토반"</span><span class="op">)</span></span>
 <span></span>
@@ -160,13 +182,13 @@
 ## [1,] "한국산 자동차" " 손수레"  "오토바이"
 ## [2,] "독일산 자동차" "아우토반" ""
 </code></pre>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hanguls_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">hanguls</span>, pattern <span class="op">=</span> <span class="st">" 그리고 |와"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_int</a></span><span class="op">(</span><span class="va">hanguls_split</span>, <span class="va">length</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] 3 2
 </code></pre>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 3. 매칭된 문자열 치환 --------------------</span></span>
 <span></span>
 <span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">hanguls</span>,</span>
@@ -176,9 +198,9 @@
 ## [2] "독일산 자동차 그리고 아우토반"
 </code></pre>
 </div>
-<div id="tibble-stringr" class="section level2" number="4.3">
+<div id="tibble-stringr" class="section level2" number="5.3">
 <h2>
-<span class="header-section-number">4.3</span> tibble + stringr<a class="anchor" aria-label="anchor" href="#tibble-stringr"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.3</span> tibble + stringr<a class="anchor" aria-label="anchor" href="#tibble-stringr"><i class="fas fa-link"></i></a>
 </h2>
 <p>짧은 텍스트는 문자열과 <code>stringr</code> 정규표현식을 조합하여 처리해도 되지만,
 데이터프레임 <code>dplyr</code> 기본기를 익힌 경우 텍스트 문자열을 데이터프레임으로
@@ -187,7 +209,7 @@
 <p>이상의 오감도 텍스트를 가져와서 텍스트 분석을 시작할 경우 파일에 읽어와도 되지만,
 문자열로 읽어 <code>ogamdo_txt</code> 변수에 저장해 두고 이를 몇단계를 거쳐 데이터프레임으로
 변환시킨다.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ogamdo_txt</span> <span class="op">&lt;-</span> <span class="st">"13인의 아해가 도로로 질주하오.</span></span>
@@ -239,7 +261,7 @@
 몇 문장에 숫자가 포함되어 있는지 <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> 함수와 숫자패턴을 탐지하는 정규표현식
 <code>\\d</code> 를 조합하면 부울 참/거짓으로 변수를 생성시킬 수 있고 이를 <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> 개수 함수를
 사용하면 빈도를 쉽게 구할 수 있다.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>숫자여부 <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">text</span>, <span class="st">"\\d"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">숫자여부</span><span class="op">)</span></span></code></pre></div>
@@ -256,7 +278,7 @@
 <p>전체적인 텍스트 정제작업이 마무리된 경우 <code><a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a></code> 함수를 사용해서 해당
 변수의 모든 텍스트를 추출하고 <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code> 함수로 각 행별로 구분되었던 문자열을
 <code>collapse = " "</code> 인자를 넣어 하나의 텍스트로 묶어 작업을 마무리 한다.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ogamdo_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_trim</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -268,15 +290,15 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="view-text.html"><span class="header-section-number">3</span> 텍스트 살펴보기</a></div>
-<div class="next"><a href="text-clean.html"><span class="header-section-number">5</span> 정제(전처리)</a></div>
+<div class="prev"><a href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></div>
+<div class="next"><a href="text-clean.html"><span class="header-section-number">6</span> 정제(전처리)</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#text-processing"><span class="header-section-number">4</span> 텍스트 전처리</a></li>
-<li><a class="nav-link" href="#text-repex"><span class="header-section-number">4.1</span> 정규표현식</a></li>
-<li><a class="nav-link" href="#nlp-stringr-basic-operation"><span class="header-section-number">4.2</span> 문자열 기본 작업</a></li>
-<li><a class="nav-link" href="#tibble-stringr"><span class="header-section-number">4.3</span> tibble + stringr</a></li>
+<li><a class="nav-link" href="#text-processing"><span class="header-section-number">5</span> 텍스트 전처리</a></li>
+<li><a class="nav-link" href="#text-repex"><span class="header-section-number">5.1</span> 정규표현식</a></li>
+<li><a class="nav-link" href="#nlp-stringr-basic-operation"><span class="header-section-number">5.2</span> 문자열 기본 작업</a></li>
+<li><a class="nav-link" href="#tibble-stringr"><span class="header-section-number">5.3</span> tibble + stringr</a></li>
 </ul>
 
       <div class="book-extra">
@@ -293,7 +315,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-23.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

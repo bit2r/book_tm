@@ -13,12 +13,10 @@ new_session: yes
 rmd_files: [
   "index.Rmd",
 
-  # 공통사항 -------
-  "00-about-the-author.Rmd",
-
   # 설치 및 환경설정 -------
   "01-setup.Rmd",
-  "02-hello-world.Rmd",
+  "02-prep.Rmd",
+  "03-hello-world.Rmd",
 
   # 텍스트 살펴보기 -------
   "10-view-text.Rmd",
