@@ -105,7 +105,7 @@
 <p>예를 들어, 기간대별로 말뭉치의 주제가 어떻게 변하는지, 혹은 문서의 분류에 따라 주제가 어떻게 다른지 등을 분석할 수 있다. 주제의 구조적인 측면은 다룬다고 해서 구조적 주제모형(structural topic models)이라고 한다.</p>
 <p>공변인을 투입한 주제모형 분석이므로 여기서는 동적 주제모형과 구조적 주제모형을 모두 공변인 주제모형(Covariates topic models)이라고 하겠다.</p>
 <p><a href="https://cran.r-project.org/web/packages/stm/index.html"><code>stm</code>패키지</a>와 <a href="https://cran.r-project.org/web/packages/keyATM/index.html"><code>keyATM</code>패키지</a>는 말뭉치의 메타데이터를 공변인으로 투입해 말뭉치의 주제에 대한 회귀분석 기능을 제공한다. <code>keyATM</code>이 보다 최근의 패키지라 보다 다양한 기능이 있지만, 윈도에서 멀티바이트문자를 지원하지 않아 윈도에서는 한글문서를 분석할 수 없다는 단점이 있다.</p>
-<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb289"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pkg_v</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"tidytext"</span>, <span class="st">"stm"</span>, <span class="st">"lubridate"</span><span class="op">)</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">pkg_v</span>, <span class="va">require</span>, ch <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [[1]]
@@ -140,12 +140,12 @@
 </ul>
 <p>모두 14,097건이다.</p>
 <p>다운로드한 엑셀파일을 작업디렉토리 아래 <code>data</code>폴더로 복사한다. <code>data</code>폴더에서 ‘News’로 시작해서’.xlsx’로 끝나는 파일명만 표시해 보자.</p>
-<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">'data'</span>, pattern <span class="op">=</span> <span class="st">'^News.*20210101.*\\.xlsx$'</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "NewsResult_20210101-20210330.xlsx"
 </code></pre>
 <p>데이터셋의 파일명이 ’NewsResult_20210101-20210330.xlsx’이다.</p>
-<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20210101-20210330.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##  [1] "뉴스 식별자"                 
 ##  [2] "일자"                        
@@ -168,7 +168,7 @@
 ## [19] "분석제외 여부"
 </code></pre>
 <p>분석에 필요한 열을 선택해 데이터프레임으로 저장한다. 분석 텍스트는 제목과 본문이다. 제목은 본문의 핵심 내용을 반영하므로, 제목과 본문을 모두 주제모형 분석에 투입한다. 시간별, 언론사별, 분류별로 분석할 계획이므로, 해당 열을 모두 선택한다. 키워드 열은 빅카인즈가 본문에서 추출한 키워드 중 단순 숫자, 이메일주소, 시간이 아닌 단어 등이다. 빅카인즈의 형태소분석결과를 이용할 계획이므로 키워드 열도 선택한다. 빅카인즈는 본문을 200자까지만 무료로 제공하지만, 빅카인즈에서 형태소분석을 통해 추출한 키워드는 기사 전문에서 추출한 결과다. 키워드를 이용하면 기사 전문을 이용하는 효과가 있다.</p>
-<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb292"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20210101-20210330.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">일자</span>, <span class="va">제목</span>, <span class="va">본문</span>, <span class="va">언론사</span>, cat <span class="op">=</span> <span class="va">`통합 분류1`</span>, <span class="va">키워드</span><span class="op">)</span> </span>
@@ -186,27 +186,27 @@
 <span class="header-section-number">10.2.2</span> (선택) 표집<a class="anchor" aria-label="anchor" href="#%EC%84%A0%ED%83%9D-%ED%91%9C%EC%A7%91"><i class="fas fa-link"></i></a>
 </h3>
 <p>LDA 모형은 베이지언 모형이므로 사후확률의 근사치를 주어진 자료로부터 반복적으로 계산해 주제를 추론한다. 복잡한 계산을 반복적으로 수행하기 때문에 컴퓨터 사양이 낮은 경우 분석이 매우 느릴 수 있다. 데이터 크기와 컴퓨터 서능에 따라 수십분 혹은 수시간 이상 소요될 수 있다. 주제모형 분석 방법 학습 맥락에서 시간 절약을 위해 데이터셋의 일부만 추려 분석에 활용한다. 아래 코드는 1만4천개 행에서 3천개행 표집.</p>
-<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">37</span><span class="op">)</span></span>
 <span><span class="va">vac_sample_df</span> <span class="op">&lt;-</span>   </span>
 <span>  <span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3000</span><span class="op">)</span> </span>
 <span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>기사 본문과 키워드를 비교해보자.</p>
-<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb294"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">키워드</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "국채,금리,상승,출발,뉴욕,증시,소폭,하락,정체중,미국,국채,금리,상승세,미국,증시,소폭,약세,출발,마무리,트레이더들,미국,대통령,인프라,투자,계획,매도,국채,30일,현지시간,기준,미국,뉴욕,증시,지수,하락,거래,다우평균,0.24%,S&amp;P,0.35%,나스닥,0.81%,거래,0.81%,채권시장,이날,뉴욕,채권,시장,개장,전자상,거래,만기,국채,금리,하루,0.06%,포인트,여파,코로나,바이러스,1월,수준,기록,미국,정부,사회,인프라,투자,패키지,법안,공개,예정,법안,사회,인프라,투자,패키지,3조,달러,사회,인프라,투자,전망,인플레이션,가능,부각,국채,금리,상승,압력,작용,가능성,국채,금리,상승,이외,매니저,한국,해지펀드,Bill,Hwang,운용,펀드,이케고스,투자,주식,하락,여파,이케고스,지난주,마진콜,계약,가격,변화,부족,증거금,추가,납부,요구,블록딜,일반,주식,거래,양측,거래,상대방,대량,거래,시장,영향,가격,합의,정규장,거래,비아콤,CBS,디스커버리,주식,주식,낙차,발생,전문가들,증시,예상,예측,야후,파이낸스,30일,시황,보도,고용,동향,금요일,전망,이달,63만,일자리,창출,예상,수치,시작,코로나,펜데믹,수치"
 </code></pre>
-<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb295"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">제목</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "美 국채 금리 상승에 뉴욕 증시 소폭 하락 출발"
 </code></pre>
-<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb296"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">본문</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "정체중이었던 미국 국채금리가 다시 상승세를 보이면서 미국 증시가 소폭 약세를 보이며 출발했다. 1분기 마무리를 앞둔 트레이더들이 조 바이든 미국 대통령의 대규모 인프라 투자 계획 발표 전에 미 국채 매도를 늘리고 있다는 분석이 나온다. \n \n30일 오전 9시 40분(현지시간) 기준 미국 뉴욕 증시 3대 지수는 하락한채 거래 중이다. 다우평균은 전날보다 .."
 </code></pre>
 <p>분석 목적에 맞게 열을 재구성한다. 언론사는 ’여당지’와 ’야당지’로 구분한다. 분류는 ’사회면’와 ’비사회면’로 나눈다.</p>
-<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb297"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac2_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="co"># 중복기사 제거</span></span>
@@ -249,7 +249,7 @@
 ## $ catSoc <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> "비사회면", "비사회면", "사회면", "비사회면…
 </code></pre>
 <p>새로 생성된 열의 기사 양을 계산해보자.</p>
-<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb298"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cat</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 8 × 2</span>
 ##   cat         n
@@ -263,7 +263,7 @@
 ## <span style="color: #555555;"># … with 2 more rows</span>
 </code></pre>
 <p>문화와 스포츠를 검색단계서 선택하지 않았음에도 데이터셋에 포함된 이유는 하부 분류에 포함돼 있었기 때문이다.</p>
-<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb299"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">catSoc</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2 × 2</span>
 ##   catSoc       n
@@ -272,7 +272,7 @@
 ## <span style="color: #555555;">2</span> 사회면    <span style="text-decoration: underline;">5</span>654
 </code></pre>
 <p>비사회면 8436건, 사회면 5653건으로 문서 수에서 큰 차이가 나지 않는다.</p>
-<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb300"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 13 × 2</span>
 ##    week     n
@@ -285,7 +285,7 @@
 ## <span style="color: #555555;">6</span>     6   927
 ## <span style="color: #555555;"># … with 7 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb301"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac2_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">press</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2 × 2</span>
 ##   press      n
@@ -312,11 +312,11 @@
 </li>
 </ul>
 <p>이외에도 빈도 분석을 통해 정규표현식으로 걸러지지 않은 기호가 나오면 추가로 제거한다.</p>
-<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb302"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"!@#$... 전각ㆍㅣ문자 %^&amp;*()"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="st">"\\w+"</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "!@#$...  %^&amp;*()"
 </code></pre>
-<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb303"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fullchar_v</span> <span class="op">&lt;-</span> <span class="st">"ㆍ|ㅣ|‘|’|“|”|○|●|◎|◇|◆|□|■|△|▲|▽|▼|〓|◁|◀|▷|▶|♤|♠|♡|♥|♧|♣|⊙|◈|▣"</span></span>
 <span></span>
 <span><span class="va">vac_tk</span> <span class="op">&lt;-</span> </span>
@@ -337,7 +337,7 @@
 ## <span style="color: #555555;">6</span> 20210330 美 …  조선…  경제  1        13 야당… 비사…  증시 
 ## <span style="color: #555555;"># … with 24 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb304"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 30 × 9</span>
 ##   일자     text  언론사 cat   ID     week press catSoc word 
@@ -356,7 +356,7 @@
 <span class="header-section-number">10.2.3.2</span> 불용어 처리<a class="anchor" aria-label="anchor" href="#%EB%B6%88%EC%9A%A9%EC%96%B4-%EC%B2%98%EB%A6%AC"><i class="fas fa-link"></i></a>
 </h4>
 <p>빅카인즈의 형태소분석 결과를 이용하므로 별도의 불용어처리는 불필요하나, 의미없는 고빈도 단어를 선별할 필요가 있다. 단어의 총빈도를 계산해본다. ’백신’과 ’코로나19’의 빈도가 높다. 어느 한 단어가 압도적인 비중을 차지하는 것이 아니므로 제거하지 않고 그대로 둔다. ’코로나’는 ’코로나19’라는 질병의 이름으로 사용됐을수 있고, ’코로나바이러스’라는 병인으로 사용됐을수도 있으므로, ’코로나19’와 병합하지 말고 그대로 둔다.</p>
-<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb305"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">count_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
@@ -372,7 +372,7 @@
 ## <span style="color: #555555;">6</span> 코로나   <span style="text-decoration: underline;">12</span>120
 ## <span style="color: #555555;"># … with 34 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb306"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">count_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="fl">40</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 40 × 2</span>
 ##   word               n
@@ -392,7 +392,7 @@
 <span class="header-section-number">10.2.4</span> <code>stm</code>말뭉치<a class="anchor" aria-label="anchor" href="#stm%EB%A7%90%EB%AD%89%EC%B9%98"><i class="fas fa-link"></i></a>
 </h3>
 <p><code><a href="https://rdrr.io/pkg/stm/man/stm.html">stm()</a></code>함수에서 처리하는 데이터는 각 기사의 토큰이 하나의 열에 함께 있어야 한다. 정돈텍스트형식은 한개의 열에 하나의 토큰만 있으므로 <code><a href="https://stringr.tidyverse.org/reference/str_flatten.html">str_flatten()</a></code>함수로 하나의 열에 결합한다.</p>
-<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb307"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">combined_df</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -415,7 +415,7 @@
 ## $ catSoc <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> "비사회면", "비사회면", "사회면", "비사회면…
 </code></pre>
 <p><code><a href="https://rdrr.io/pkg/stm/man/textProcessor.html">textProcessor()</a></code>함수는 영문처리를 기본값으로 하고 있다. 영문은 두 글자 단어가 거의 없기 때문에 기본값이 세글자 이상만 분석에 투입하도록 기본값이 설정돼 있다. 국문은 두 글자 단어도 의미있는 단어가 많기 때문에, 단어의 길이를 두 글자 이상으로 설정한다.</p>
-<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb308"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">processed</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/stm/man/textProcessor.html">textProcessor</a></span><span class="op">(</span></span>
 <span>    documents <span class="op">=</span> <span class="va">combined_df</span><span class="op">$</span><span class="va">text2</span>,</span>
@@ -430,12 +430,12 @@
 ## Stemming... 
 ## Creating Output...
 </code></pre>
-<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb309"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">processed</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## A text corpus with 14090 documents, and an 121938 word dictionary. Use str() to inspect object or see documentation
 </code></pre>
 <p>prepDocuments()함수로 주제모형에 사용할 데이터의 인덱스(wordcounts)를 만든다. 이후 stm말뭉치와 기사 본문을 연결해 확인해야 하므로, 단어와 문서를 제거하지 않는다.</p>
-<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb310"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/stm/man/prepDocuments.html">prepDocuments</a></span><span class="op">(</span><span class="va">processed</span><span class="op">$</span><span class="va">documents</span>,</span>
 <span>                <span class="va">processed</span><span class="op">$</span><span class="va">vocab</span>,</span>
@@ -452,7 +452,7 @@
 ## wordcounts     121938 -none-     numeric
 </code></pre>
 <p>산출결과를 개별 객체로 저장한다. 이 객체들은 이후 모형구축에 사용된다.</p>
-<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">docs</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">$</span><span class="va">documents</span></span>
 <span><span class="va">vocab</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">$</span><span class="va">vocab</span></span>
 <span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="va">out</span><span class="op">$</span><span class="va">meta</span></span></code></pre></div>
@@ -470,7 +470,7 @@
 <p>보통 10개부터 100개까지 10개 단위로 주제의 수를 구분해 연구자들이 정성적으로 최종 주제의 수 판단한다.</p>
 <p>학습 상황이므로 계산시간을 줄이기 위해 주제의 수를 3개, 9개, 100개의 결과를 비교해보자.</p>
 <p>주제모형 분석은 사후 확률의 근사치를 주어진 자료로부터 반복적으로 최적화하는 계산을 수행하기 때문에 자료가 크면 계산시간이 오래 걸린다. 컴퓨터 성능에 따라 수십분 이상 소요될 수 있다.</p>
-<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb312"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">topicN</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">9</span>, <span class="fl">100</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">storage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stm/man/searchK.html">searchK</a></span><span class="op">(</span><span class="va">docs</span>, <span class="va">vocab</span>, K <span class="op">=</span> <span class="va">topicN</span><span class="op">)</span></span>
@@ -492,7 +492,7 @@
 <li>주의: 메타데이터 인자(<code>prevalence =~</code> 와 <code>content =~</code>)에 투입할 때 <code>=</code>가 아니라 <code>=~</code> !!!</li>
 </ul>
 <p>아래 모형에서는 언론사의 정치성향과 시간을 공변인으로 투입했다.</p>
-<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">meta_fit</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/stm/man/stm.html">stm</a></span><span class="op">(</span></span>
@@ -511,7 +511,7 @@
 <span></span>
 <span><span class="va">meta_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span><span class="op">(</span><span class="st">"data/meta_fit.rds"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">meta_fit</span> <span class="op">&lt;-</span>  </span>
 <span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="st">"data/meta_fit.rds"</span><span class="op">)</span></span>
 <span></span>
@@ -575,7 +575,7 @@
 <span class="header-section-number">10.4.1</span> 주제별 단어와 원문 결합<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%8B%A8%EC%96%B4%EC%99%80-%EC%9B%90%EB%AC%B8-%EA%B2%B0%ED%95%A9"><i class="fas fa-link"></i></a>
 </h3>
 <p>주제 단어가 추출된 원문을 살펴보면 해당 주제를 보다 명확하게 파악할 수 있다. 모형 구성에 투입한 데이터와 문서(이 경우 개별 기사) 본문이 포함된 데이터를 결합해야 한다. <code>stm</code>패키지는 <code><a href="https://rdrr.io/pkg/stm/man/findThoughts.html">findThoughts()</a></code>함수를 통해 각 모형별로 전형적인 문서를 확인할 수 있도록 한다.</p>
-<div class="sourceCode" id="cb328"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stm/man/findThoughts.html">findThoughts</a></span><span class="op">(</span></span>
 <span>  model <span class="op">=</span> <span class="va">meta_fit</span>,     <span class="co"># 구성한 주제모형</span></span>
 <span>  texts <span class="op">=</span> <span class="va">vac2_df</span><span class="op">$</span><span class="va">text</span>,  <span class="co"># 문서 본문 문자 벡터</span></span>
@@ -594,12 +594,12 @@
 </code></pre>
 <p>구성한 stm모형과 구성전 데이터프레임을 결합하면 보다 다양한 방식으로 문서의 원문을 탐색할 수 있다.</p>
 <p>결합하는 두 데이터프레임의 기준이 되는 열에 포함된 자료의 유형을 통일시킨다. 여기서는 정수(integer)로 통일시켰다.</p>
-<div class="sourceCode" id="cb329"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb316"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">td_gamma</span> <span class="op">&lt;-</span> <span class="va">meta_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>matrix <span class="op">=</span> <span class="st">"gamma"</span><span class="op">)</span></span>
 <span><span class="va">td_gamma</span><span class="op">$</span><span class="va">document</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">td_gamma</span><span class="op">$</span><span class="va">document</span><span class="op">)</span></span>
 <span><span class="va">combined_df</span><span class="op">$</span><span class="va">ID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">combined_df</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span> </span></code></pre></div>
 <p>각 주제는 독립된 열로 분리한다.</p>
-<div class="sourceCode" id="cb330"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_gamma</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ID</span>, <span class="va">text2</span>, <span class="va">text</span>, <span class="va">키워드</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -629,7 +629,7 @@
 ## $ tGamma9 <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> 0.001481, 0.014757, 0.313156, 0.004952, 0.…
 </code></pre>
 <p>각 주제별로 확률분포가 높은 문서를 확인해 보자. 각 문서에서 감마가 높은 순서로 정열하면, 해당 주제에 속할 확률이 높은 문서 순서대로 볼수 있다. <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code>함수를 이용하면 해당 열의 모든 내용을 볼수 있다.</p>
-<div class="sourceCode" id="cb331"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_gamma</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">tGamma7</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">text</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">9</span><span class="op">)</span></span></code></pre></div>
@@ -643,14 +643,14 @@
 ## [8] "금 “새정치만 10년째, 성과 뭔가?” 안 “정치개혁 초심 여전히 굳다” “10년 전 ‘새정치’라는 기치를 들고 나오셨다. 그런데 10년 동안 어떤 성과가 있었나?”(금태섭 후보) “금 후보나 저나 정치를 같은 시기에 시작했다. 정치를 개혁하겠단 초심, 의지는 여전히 굳고 똑같다.”(안철수 후보) 4월 서울시장 재보궐 선거에 출마한 안철수 국민의당 예비후보와 무소속 금태섭 예비후보가 18일 ‘문재인 정부의 4년 평가와.."        
 ## [9] "범야권 ‘단일화 시계’ 빨라지나 금태섭, 안철수에 “1:1 경선하자” 금태섭 전 더불어민주당 의원이 31일 서울시장 보궐선거 출마선언을 하면서 안철수 국민의당 대표를 향해 “제3지대 경선을 하자”고 제안했다. 금 전 의원은 이날 오전 서울 마포구 공연장에서 출마선언을 하면서 “서울시민의 삶을 바꾸고 변화의 새판을 열어야 하는 선거지만 정치권은 오래된 싸움만 하고 있다”며 “엄중한 시기를 오래되고 낡은 정치에 맡길 .."
 </code></pre>
-<div class="sourceCode" id="cb332"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_gamma</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">tGamma7</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">키워드</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">.</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span></span></code></pre></div>
 <pre class="r-output"><code>## [1] "교감,작품,반전,이낙연,사면,승부수,대표,이낙연,더불어민주당,이명박,박근혜,대통령,건의,인터뷰,언론,정국,평소,신중,성격,대표,권한,대통령,고유,사면,사면,대통령,정치,부담,대선,후보,지지율,자신,반전,계기,이날,민주당,사면,주장,모습,추락,승부수,관계자,민주당,핵심,중앙일보,메시지,대표,모습,통합,원래,이낙연,본모습,국가,좌고우면,설명,취임,문파,文派,강성,지지,비판,대표,목소리,신호,의미,이날,여론조사,각종,신년,여론,조사,대표,이재명,윤석열,지지,대선,주자,3위,대표,혼자,주장,여권,대통령,대표,사이,임기,마지막,화두,국민,통합,의기투합,4,모종,그림,발언,기획,대표,26일,차례,대통령,차례,독대,대표,당내,의견,청와대,국민,소통,수석,윤영찬,의원,참여,의원,중앙일보,통화,조언,대표,의견,교환,생각,임기,총대,멨나,대표,임기,마지막,대통령,구속,전직,대통령,정치,부담,총대,가능성,거론,친문,분류,의원,대통령,고민,대표,이슈,당직,의원,대표,신중,성격,대통령,영역,사람,혼자,독단,대통령,권한,이야기,임기,대표,지지,반발,각오,결단,추론,당내,부정,여론,김종민,최고,위원,통화,결정,국민,수용,대통령,사면권,국민,위임,권한,여야,국정농단,정치,상황,고민,극복,개선,방안,모색,논의,우상호,의원,페이스북,사람,반성,사과,박근혜,심판,사법,반대,공개적,가시화,내부,반발,가시,대표,명분,신년사,언급,사회,갈등,완화,국민,통합,비판,분출,의원,친문,재선,통합,이명박,박근혜,대통령,사면,국민,논의,당대표,대통령,압박,비판,상의,초선,최고,위원,본인,결단,전략통,의원,사면,수도,재선,당내,반발,확산,양상,게시판,민주당,권리당원,대통령,도전,생각,사퇴,촛불민심,뒤통수,비난,도배,대표,건의,해피엔딩,대통령,수용,여부,대통령,통합,이미지,대선후보,유력,대선,후보,청와대,반대,좌초,대표,오점,대표,모두발언,신년인,사회,발언,김대중,외환위기,노무현,안보,위기,문재인,코로나19,현직,대통령,위기,극복,거론,전진,통합,동시,통합,강조,주변,대표,윤석열,탄핵,배제,친문세력들,문자,폭탄,와중,반응,삼척동자,친문,초선,대표,비난,승부수,의미"
 </code></pre>
 <p>각 주제별로 대표 단어를 선택해 원문을 살펴보자.</p>
-<div class="sourceCode" id="cb333"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">text_gamma</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">tGamma2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">text</span>, <span class="st">"지원금"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -669,7 +669,7 @@
 <span class="header-section-number">10.4.2</span> 주제 이름 목록<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C-%EC%9D%B4%EB%A6%84-%EB%AA%A9%EB%A1%9D"><i class="fas fa-link"></i></a>
 </h3>
 <p>각 주제별로 주요 주제어와 해당 문서의 본문을 비교해 주제별로 주요 문서를 살펴보고 주제에 대한 이름을 짓는다. 각 주제별 주요 단어는 <code><a href="https://rdrr.io/pkg/stm/man/labelTopics.html">labelTopics()</a></code>함수를 통해 주요단어를 찾을 수 있다. 주제별 이름은 목록을 만들어 데이터프레임에 저장한다.</p>
-<div class="sourceCode" id="cb334"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stm/man/labelTopics.html">labelTopics</a></span><span class="op">(</span><span class="va">meta_fit</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## Topic 1 Top Words:
 ##       Highest Prob: 백신, 접종, 코로나, 아스트라제네카, 바이러스, 예방, 영국 
@@ -718,7 +718,7 @@
 ##       Score: 플라스틱, 쓰레기, 결혼, 축제, 일자리, 가구, 여성
 </code></pre>
 <p>주제별 이름 목록을 데이터프레임에 저장한다.</p>
-<div class="sourceCode" id="cb335"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">topic_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>topic <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,</span>
 <span>                     name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1. 백신 접종자"</span>,</span>
 <span>                              <span class="st">"2. 코로나 지원금"</span>,</span>
@@ -730,7 +730,7 @@
 <span>                              <span class="st">"8. 확진자 검진"</span>,</span>
 <span>                              <span class="st">"9. 사회 영향"</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
 <p>주제별 상위 7개 단어목록을 데이터프레임에 저장한 다음, 이름 목록과 결합한다.</p>
-<div class="sourceCode" id="cb336"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb323"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">td_beta</span> <span class="op">&lt;-</span> <span class="va">meta_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>matrix <span class="op">=</span> <span class="st">'beta'</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">term_topic_name</span> <span class="op">&lt;-</span> </span>
@@ -758,7 +758,7 @@
 <span class="header-section-number">10.4.3</span> 주제별 단어 분포도<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%8B%A8%EC%96%B4-%EB%B6%84%ED%8F%AC%EB%8F%84"><i class="fas fa-link"></i></a>
 </h3>
 <p>단어별로 부여된 베타 값을 이용해 주제별 단어 분포도를 각 주제의 이름과 함께 시각화한다.</p>
-<div class="sourceCode" id="cb337"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb324"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">term_topic_name</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">beta</span>, </span>
@@ -778,7 +778,7 @@
 <span class="header-section-number">10.4.4</span> 주제별 문서 분포도<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%AC%B8%EC%84%9C-%EB%B6%84%ED%8F%AC%EB%8F%84"><i class="fas fa-link"></i></a>
 </h3>
 <p>문서별로 부여된 감마 값을 이용한 주제별로 문서의 분포도를 각 주제의 이름과 함께 시각화한다.</p>
-<div class="sourceCode" id="cb338"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">td_gamma</span> <span class="op">&lt;-</span> <span class="va">meta_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>matrix <span class="op">=</span> <span class="st">'gamma'</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">doc_topic_name</span> <span class="op">&lt;-</span> </span>
@@ -799,7 +799,7 @@
 ## <span style="color: #555555;">6</span>        6     1 0.001<span style="text-decoration: underline;">41</span>  1. 백신 접종자
 ## <span style="color: #555555;"># … with 126,804 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">doc_topic_name</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gamma</span>, fill <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">50</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">+</span></span>
@@ -813,7 +813,7 @@
 <h3>
 <span class="header-section-number">10.4.5</span> 주제별 단어-문서 분포<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C%EB%B3%84-%EB%8B%A8%EC%96%B4-%EB%AC%B8%EC%84%9C-%EB%B6%84%ED%8F%AC-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb340"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 주제별 상위 7개 단어 추출</span></span>
 <span><span class="va">top_terms</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">td_beta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -843,7 +843,7 @@
 ## <span style="color: #555555;"># … with 3 more rows</span>
 </code></pre>
 <p>결합한 데이터프레임을 막대도표로 시각화.</p>
-<div class="sourceCode" id="cb341"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb328"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gamma_terms</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">gamma</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">gamma</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -870,7 +870,7 @@
 <p>회귀계수는 독립변수가 종속변수를 설명하는 정도다. 예를 들어, press(언론사 정치성향)가 각 주제를 예측하는 정도가 회귀계수이므로, 이 회귀계수가 야당지에 비해 여당지에서 해당 주제에 대해 평균적으로 더 많이 언급한 정도를 나타낸다. 회귀계수가 음수면 야당지에서 언급이 더 많은 주제이고, 양수면 여당지에서 언급이 더 많은 주제다. t값과 p값은 그 효과(회귀계수)가 0과 유의하게 다른지를 나타낸다.</p>
 <p>분석 결과는 <code><a href="https://rdrr.io/pkg/stm/man/plot.estimateEffect.html">plot.estimateEffect()</a></code>함수로 시각화한다. 주제 분포의 불확실성은 <code>uncertainty =</code>인자를 통해 다양한 방법으로 계산하는데, 기본값은 모든 경우를 고려하는 ’Global’이다. 만일 계산속도를 높이고 싶으면 추가적인 불확실성 계산을 생략하는 ’None’으로 투입한다.</p>
 <p>언론사의 정치성향(press)과 보도시점을 주 단위를 6개로 구분해 독립변수로 투입하고, 추출한 9개 주제를 종속변수로 투입해 분석해보자.</p>
-<div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb329"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">rating</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">press</span><span class="op">)</span></span>
 <span><span class="va">prep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/stm/man/estimateEffect.html">estimateEffect</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span> <span class="op">~</span> <span class="va">press</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/stm/man/s.html">s</a></span><span class="op">(</span><span class="va">week</span>, <span class="fl">6</span><span class="op">)</span>, </span>
 <span>                       stmobj <span class="op">=</span> <span class="va">meta_fit</span>,</span>
@@ -1043,12 +1043,12 @@
 <span class="header-section-number">10.5.1</span> 문서 내용 확인<a class="anchor" aria-label="anchor" href="#%EB%AC%B8%EC%84%9C-%EB%82%B4%EC%9A%A9-%ED%99%95%EC%9D%B8"><i class="fas fa-link"></i></a>
 </h3>
 <p>주제1은 ’백신접종’에 관련된 내용이다. 언론사 별로 각 주제에 대해 전형적인 기사가 무엇인지 확인해보자. 원문과 언론사 정보가 포함된 데이터프레임과 감마 계수 데이터프레임을 결합해 전형적인 기사를 찾을 수 있다.</p>
-<div class="sourceCode" id="cb343"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb330"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##  [1] "ID"     "text2"  "일자"   "text"   "언론사" "cat"   
 ##  [7] "키워드" "week"   "press"  "catSoc"
 </code></pre>
-<div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb331"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">td_gamma</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ID"</span> <span class="op">=</span> <span class="st">"document"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
@@ -1077,12 +1077,12 @@
 ## <span style="color: #555555;">#   tGamma7 &lt;dbl&gt;, tGamma8 &lt;dbl&gt;, tGamma9 &lt;dbl&gt;</span>
 </code></pre>
 <p>’백신 접종’을 주제로 보도한 기사에서 주제1의 감마 계수 상위 10대 기사 중 9건이 야당지 보도다. 기사의 제목과 본문을 살펴보자. 4번째가 여당지 기사이고, 나머지는 모두 야당지 기사다.</p>
-<div class="sourceCode" id="cb345"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb332"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##  [1] "ID"     "text2"  "일자"   "text"   "언론사" "cat"   
 ##  [7] "키워드" "week"   "press"  "catSoc"
 </code></pre>
-<div class="sourceCode" id="cb346"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb333"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">combined_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">td_gamma</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ID"</span> <span class="op">=</span> <span class="st">"document"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
@@ -1117,7 +1117,7 @@
 <h4>
 <span class="header-section-number">10.5.2.1</span> 정치성향에 따른 주제분포<a class="anchor" aria-label="anchor" href="#%EC%A0%95%EC%B9%98%EC%84%B1%ED%96%A5%EC%97%90-%EB%94%B0%EB%A5%B8-%EC%A3%BC%EC%A0%9C%EB%B6%84%ED%8F%AC"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb347"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb334"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stm/man/plot.estimateEffect.html">plot.estimateEffect</a></span><span class="op">(</span></span>
 <span>  <span class="va">prep</span>,</span>
 <span>  covariate <span class="op">=</span> <span class="st">"press"</span>,</span>
@@ -1134,7 +1134,7 @@
 <span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="51-tm-covariate_files/figure-html/cov26-1-1.png" width="576" style="display: block; margin: auto;"></div>
 <p><code>ggplot2</code>패키지를 이용하면 모다 다양한 방식으로 시각화할 수 있다. 앞서 명명한 주제의 이름이 막대도표에 표시되도록 먼저 데이터프레임을 결합한다.</p>
-<div class="sourceCode" id="cb348"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb335"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 주제 이름</span></span>
 <span><span class="va">topic_name</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 9 × 2</span>
@@ -1148,7 +1148,7 @@
 ## <span style="color: #555555;">6</span>     6 6. 교육 온라인  
 ## <span style="color: #555555;"># … with 3 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb349"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb336"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 공변인 계수</span></span>
 <span><span class="va">coef_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">prep</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1165,7 +1165,7 @@
 ## <span style="color: #555555;">6</span>     6 press여당지 -<span style="color: #BB0000;">0.011</span><span style="color: #BB0000; text-decoration: underline;">1</span>    0.004<span style="text-decoration: underline;">81</span>     -<span style="color: #BB0000;">2.31</span> 2.10<span style="color: #555555;">e</span><span style="color: #BB0000;">- 2</span>
 ## <span style="color: #555555;"># … with 3 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb350"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb337"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 주제별 상위 10개 단어 추출</span></span>
 <span><span class="va">top_terms</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">meta_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>matrix <span class="op">=</span> <span class="st">"beta"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1186,7 +1186,7 @@
 ## <span style="color: #555555;">6</span>     6 온라인 교육 코로나 서비스 지원 사업 학교          
 ## <span style="color: #555555;"># … with 3 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb351"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb338"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 데이터프레임 결합</span></span>
 <span><span class="va">term_coef_name</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">top_terms</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1206,7 +1206,7 @@
 ## $ p.value   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> 4.30e-40, 2.90e-13, 2.47e-02, 2.93e-01, …
 </code></pre>
 <p>데이터셋이 마련됐으면 막대도표에 시각화한다.</p>
-<div class="sourceCode" id="cb352"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">term_coef_name</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>,</span>
@@ -1234,7 +1234,7 @@
 <h4>
 <span class="header-section-number">10.5.2.2</span> 시간대별 주제 변화<a class="anchor" aria-label="anchor" href="#%EC%8B%9C%EA%B0%84%EB%8C%80%EB%B3%84-%EC%A3%BC%EC%A0%9C-%EB%B3%80%ED%99%94"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb353"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb340"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/stm/man/plot.estimateEffect.html">plot.estimateEffect</a></span><span class="op">(</span></span>
 <span>  <span class="va">prep</span>,</span>
 <span>  covariate <span class="op">=</span> <span class="st">"week"</span>,    </span>
@@ -1246,7 +1246,7 @@
 <span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="51-tm-covariate_files/figure-html/cov27-1.png" width="576" style="display: block; margin: auto;"></div>
 <p><code>ggplot2</code>패키지로 시각화하기 위해 먼저 데이터프레임을 결합한다.</p>
-<div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb341"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 주제 이름</span></span>
 <span><span class="va">topic_name</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 9 × 2</span>
@@ -1260,7 +1260,7 @@
 ## <span style="color: #555555;">6</span>     6 6. 교육 온라인  
 ## <span style="color: #555555;"># … with 3 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb355"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 공변인 계수</span></span>
 <span><span class="va">coef_time</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">prep</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1277,7 +1277,7 @@
 ## <span style="color: #555555;">6</span>     1 s(week, 6)6  0.046<span style="text-decoration: underline;">2</span>     0.014<span style="text-decoration: underline;">7</span>     3.16  1.60<span style="color: #555555;">e</span><span style="color: #BB0000;">- 3</span>
 ## <span style="color: #555555;"># … with 48 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb356"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb343"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 데이터프레임 결합</span></span>
 <span><span class="va">term_coef_time</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">coef_time</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1294,7 +1294,7 @@
 ## $ p.value   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> 6.54e-01, 5.68e-01, 2.54e-01, 3.54e-12, …
 ## $ name      <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> "1. 백신 접종자", "1. 백신 접종자", "1. …
 </code></pre>
-<div class="sourceCode" id="cb357"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">term_coef_time</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>term <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">term</span>, <span class="st">"\\d$"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>term <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">term</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1324,7 +1324,7 @@
 <span class="header-section-number">10.5.3</span> 주제 사이 상관성<a class="anchor" aria-label="anchor" href="#%EC%A3%BC%EC%A0%9C-%EC%82%AC%EC%9D%B4-%EC%83%81%EA%B4%80%EC%84%B1"><i class="fas fa-link"></i></a>
 </h3>
 <p>주제사이의 상관성을 표시할 수 있다.</p>
-<div class="sourceCode" id="cb358"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb345"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/reshape">reshape2</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">get_lower_tri</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
