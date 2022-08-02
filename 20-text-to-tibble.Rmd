@@ -11,7 +11,7 @@ source("_common.R")
 
 # (PART\*) 자료구조 {#tm-data-structure .unnumbered}
 
-# 텍스트 전처리  {#text-processing}
+# 텍스트 &rarr; 데이터프레임  {#text-to-tibble}
 
 텍스트 원데이터(Raw data)를 R에서 처리하는 방식은 오래전부터 많은 함수와 도구가
 개발되어 현재도 사용가능하다. 하지만 `tidyverse` 생태계를 구성하고 있는 
@@ -170,6 +170,8 @@ ogamdo_tbl %>%
 ```
 
 아직 한글화가 되어 있지 않지만, `stringr` 패키지에 담긴 `str_*`로 시작하는 다양한 함수에 대한 사항은 [String manipulation with stringr cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/strings.pdf)를 참고한다.
+
+
 
 
 

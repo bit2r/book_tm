@@ -6,6 +6,7 @@ editor_options:
 
 
 
+# (PART\*) 텍스트 살펴보기 {#tm-setup .unnumbered}
 
 # 텍스트 살펴보기 {#view-text}
 
@@ -184,39 +185,63 @@ yoon_tbl %>%
 
 <img src="10-view-text_files/figure-html/youn-top-five-ggpage-1.png" width="100%" style="display: block; margin: auto;" />
 
-## 취임사 요약
+## 뉴스기사 요약
 
-Ainize Teachable-NLP를 사용한 [kobart 문서요약 텍스트/신문기사](https://huggingface.co/ainize/kobart-news)를 사용하여 윤 대통령 취임사를 요약한다.
+Ainize Teachable-NLP를 사용한 [kobart 문서요약 텍스트/신문기사](https://huggingface.co/ainize/kobart-news)를 사용하여 
+한겨례 신문 [7월 물가 ‘두 달 연속 6%’…전기·가스·수도요금 16% 올라
+](https://www.hani.co.kr/arti/economy/economy_general/1053167.html) 기사의 일부를 
+발췌하여 기사를 요약해보자.
+
+허깅페이스 사전학습모형을 가져와서 신문기사 요약에 적용한다.
+사전학습모형이 크기 때문에 `cache_dir`를 별도 NAS 저장소에 저장시켜두고 
+이를 불러와서 텍스트 요약 작업을 수행한다.
 
 
 
 ```python
-from transformers import PreTrainedTokenizerFast, BartForConditionalGeneration
-#  사전 훈련 토큰, 모형 다운로드
-tokenizer = PreTrainedTokenizerFast.from_pretrained("ainize/kobart-news")
-model = BartForConditionalGeneration.from_pretrained("ainize/kobart-news")
-# 입력 텍스트
-with open('data/취임사_윤석열.txt') as f:
-  input_text = f.read()
-
-import re
-
-input_text = re.sub(r"\n", " ", input_text)
-
-
-
-input_ids = tokenizer.encode(input_text, return_tensors="pt")
-# Generate Summary Text Ids
-summary_text_ids = model.generate(
-    input_ids=input_ids,
-    bos_token_id=model.config.bos_token_id,
-    eos_token_id=model.config.eos_token_id,
-    length_penalty=2.0,
-    max_length=142,
-    min_length=56,
-    num_beams=4,
-)
-# Decoding Text
-print(tokenizer.decode(summary_text_ids[0], skip_special_tokens=True))
+from transformers import pipeline
 ```
+
+<pre class="r-output"><code>## &lt;frozen importlib._bootstrap&gt;:219: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
+</code></pre>
+
+```python
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
+summary_tokenizer = AutoTokenizer.from_pretrained("ainize/kobart-news",
+                                                  cache_dir="z:/dataset/hf/")
+                                          
+summary_model = AutoModelForSeq2SeqLM.from_pretrained("ainize/kobart-news",
+                                          cache_dir="z:/dataset/hf/")
+
+```
+
+<pre class="r-output"><code>## You passed along `num_labels=3` with an incompatible id to label map: {'0': 'NEGATIVE', '1': 'POSITIVE'}. The number of labels wil be overwritten to 2.
+</code></pre>
+
+```python
+summarizer = pipeline("summarization", 
+                      model = summary_model,
+                      tokenizer = summary_tokenizer)
+
+news_article = '''
+지난달 소비자물가가 6.3% 치솟았다. 지난 6월(6.0%)보다 상승폭이 더 커졌다. 최근 글로벌 경기 둔화 가능성이 확대되면서 국제유가가 하락해 국내 석유류 가격 상승세도 약간 둔화하는 모습을 보였지만, 지난달 공공요금 인상으로 인해 전기·가스·수도 가격이 부쩍 올랐다.
+
+통계청이 2일 발표한 ‘7월 소비자물가동향’을 보면, 지난달 소비자물가지수는 108.74(2020년=100)로 1년 전보다 6.3% 올랐다. 지난 6월에 이어 물가상승률이 두 달 연속 6%대를 나타낸 것은 외환위기 중이었던 1998년 10월∼11월 이후 23년 8개월 만이다. 여전히 전체 물가상승을 견인하는 품목은 석유류를 비롯한 공업제품이었다. 전체 6.3% 물가 상승분 가운데 1.59%포인트를 석유류가 차지했다. 다만 최근 국제유가가 내림세를 띠면서 국내 석유류 가격 상승률도 지난 6월 39.6%에서 7월 35.1%로 약간 둔화하는 모습을 나타냈다.
+'''
+                      
+hani_news = summarizer(news_article, max_length=100, min_length=30, do_sample=False)
+```
+
+
+```r
+library(reticulate)
+
+py$hani_news %>% 
+  unlist() %>% 
+  as.character(.)
+```
+
+<pre class="r-output"><code>## [1] "통계청이 2일 발표한 ‘7월 소비자물가동향’을 보면, 지난달 소비자물가지수는 108.74(2020년=100)로 1년 전보다 6.3% 올랐는데, 지난 6월에 이어 물가상승률이 두 달 연속 6%대를 나타낸 것은 외환위기 중이었던 1998년 10월∼11월 이후 23년 8개월 만이다."
+</code></pre>
 

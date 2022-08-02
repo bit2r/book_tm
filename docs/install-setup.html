@@ -70,10 +70,12 @@
 <li><a class="active" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="" href="prep.html"><span class="header-section-number">2</span> 준비운동</a></li>
 <li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
+<li class="book-part">텍스트 살펴보기</li>
 <li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="" href="text-processing.html"><span class="header-section-number">5</span> 텍스트 전처리</a></li>
-<li><a class="" href="text-clean.html"><span class="header-section-number">6</span> 정제(전처리)</a></li>
+<li><a class="" href="text-to-tibble.html"><span class="header-section-number">5</span> 텍스트 → 데이터프레임</a></li>
+<li><a class="" href="text-cleansing.html"><span class="header-section-number">6</span> 정제 (전처리)</a></li>
+<li class="book-part">기술통계</li>
 <li><a class="" href="tf-idf.html"><span class="header-section-number">7</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
 <li><a class="" href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></li>
@@ -527,133 +529,62 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 </div>
 </div>
 </div>
-<div id="konlp" class="section level2" number="1.5">
+<div id="파이썬-nltk-konlpy" class="section level2" number="1.5">
 <h2>
-<span class="header-section-number">1.5</span> <code>KoNLP</code><a class="anchor" aria-label="anchor" href="#konlp"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.5</span> 파이썬 <code>nltk</code>, <code>konlpy</code><a class="anchor" aria-label="anchor" href="#%ED%8C%8C%EC%9D%B4%EC%8D%AC-nltk-konlpy"><i class="fas fa-link"></i></a>
 </h2>
-<p>형태소 분석기 한나눔(Hannanum)을 R에서 사용할 수 있도록한 패키지다. CRAN에서 내려져 있기 때문에 <a href="https://github.com/haven-jeon/KoNLP">개발자 깃헙</a>에서 <code>remote</code>패키지의 <code>install_github()</code>함수를 이용해 설치한다.</p>
-<p><code>KoNLP</code>를 설치하기 위해서는 자바와 <code>rtools</code>가 필요하다.</p>
-<div id="자바jdk" class="section level3" number="1.5.1">
-<h3>
-<span class="header-section-number">1.5.1</span> 자바JDK<a class="anchor" aria-label="anchor" href="#%EC%9E%90%EB%B0%94jdk"><i class="fas fa-link"></i></a>
-</h3>
-<ol style="list-style-type: decimal">
-<li>
-<a href="https://www.oracle.com/java/technologies/javase-downloads.html">자바JDK</a>를 다운로드받아 설치한다.</li>
-</ol>
-<p><code>jdk</code>설치여부는 <code>C:\Program Files\Java\jdk-16</code>폴더에서 확인할 수 있다. Java SE 16보다 최신 버전이 있으면 최신버전으로 새로 설치한다.</p>
-<ol start="2" style="list-style-type: decimal">
-<li>윈도 <code>시스템 속성</code>창의 <code>환경변수</code>에서 <code>JAVA_HOME</code>을 설정한다.</li>
-</ol>
-<p><strong><code>시스템 속성</code>창 여는 방법</strong></p>
-<ul>
-<li>간단한 방법:</li>
-</ul>
-<p>윈도 실행창 단축키인 <code>윈도키</code>와 키보드의 <code>R</code>을 함께 누르면 윈도 실행창이 열린다. 실행창이 뜨면 <code>sysdm.cpl ,3</code>을 입력하고 엔터키를 누르면 <code>시스템 속성</code> 창이 열린다.</p>
-<ul>
-<li>복잡한 방법 (윈도10 기준):</li>
-</ul>
-<ol style="list-style-type: decimal">
-<li><p>윈도탐색기에서 <code>내 PC</code>에 마우스 커서를 놓고 마우스 오른쪽 버튼 클릭 -&gt; <code>속성(R)</code> 클릭해 윈도설정에서 <code>정보</code>창이 열린다.</p></li>
-<li><p>윈도설정에서 <code>정보</code>창이 열리면 <code>관련설정</code> 항목에서 <code>고급 시스템 설정</code> 클릭하면 <code>시스템 속성</code> 창의 <code>고급</code> 탭이 열린다.</p></li>
-</ol>
-<p><strong><code>환경변수</code> 설정하기</strong></p>
-<ol style="list-style-type: decimal">
-<li><p><code>시스템 속성</code>창 하단의 <code>환경설정</code>버튼을 클릭한다. <code>환경변수</code>창이 열리면 <code>시스템변수(S)</code>아래의 <code>새로만들기(W)</code>버튼을 클릭한다.</p></li>
-<li><p><code>새 시스템 변수</code> 창이 열리면 <code>변수 이름(N):</code>에 <code>JAVA_HOME</code>을 기입하고, <code>변수 값(V)</code>에서 JDK설치 경로 <code>C:\Program Files\Java\jdk-16\</code>를 기입하고 <code>확인</code>을 클릭한다.</p></li>
-</ol>
-</div>
-<div id="rtools" class="section level3" number="1.5.2">
-<h3>
-<span class="header-section-number">1.5.2</span> <code>rtools</code><a class="anchor" aria-label="anchor" href="#rtools"><i class="fas fa-link"></i></a>
-</h3>
-<ol style="list-style-type: decimal">
-<li><p>CRAN의 <a href="https://cran.r-project.org/bin/windows/Rtools/"><code>rtools</code>페이지</a>에 접속한다.</p></li>
-<li><p>설치된 R버전과 일치하는 버전의 <code>rtools</code>를 다운로드받는다. R이 4.0대 버전이면 <code>rtools40</code>을 설치한다.</p></li>
-</ol>
-<ul>
-<li>
-<code>rtools</code>는 다른 패키지와 달리 <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>함수로 설치하지 않고, 설치파일을 컴퓨터에서 직접 실행해 설치한다.</li>
-</ul>
-<ol start="3" style="list-style-type: decimal">
-<li>설치할때 경로변경하지 말고 <code>C:/Rtools</code>에 설치한다. 실치과정에서 <code>Add rtools to system PATH</code>가 체크돼 있는지 확인한다.</li>
-</ol>
-<ul>
-<li>기타 KoNLP 설치이슈에 대해서는 <a href="https://www.facebook.com/notes/r-korea-krugkorean-r-user-group/konlp-%EC%84%A4%EC%B9%98-%EC%9D%B4%EC%8A%88-%EA%B3%B5%EC%9C%A0/1847510068715020/">이 문서</a> 참조</li>
-</ul>
-</div>
-<div id="의존패키지" class="section level3" number="1.5.3">
-<h3>
-<span class="header-section-number">1.5.3</span> 의존패키지<a class="anchor" aria-label="anchor" href="#%EC%9D%98%EC%A1%B4%ED%8C%A8%ED%82%A4%EC%A7%80"><i class="fas fa-link"></i></a>
-</h3>
-<p>설치할 때 오류가 나는 경우가 있다. 의존패키지(패키지작동에 필요한 다른 패키지)가 설치돼 있지 않기 때문이다. 다음은 KoNLP의존 패키지다.</p>
-<ul>
-<li>rJava (&gt;= 0.9-8),</li>
-<li>utils (&gt;= 3.3.1),</li>
-<li>stringr (&gt;= 1.1.0),</li>
-<li>hash (&gt;= 2.2.6),</li>
-<li>tau (&gt;= 0.0-18),</li>
-<li>Sejong (&gt;= 0.01),</li>
-<li>RSQLite (&gt;= 1.0.0),</li>
-<li>devtools (&gt;= 1.12.0)</li>
-</ul>
-<p>아래 코드로 필요한 패키지가 이미 설치돼 있는지 확인할 수 있다.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">package_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"rJava"</span>, <span class="st">"utils"</span>, <span class="st">"stringr"</span>, <span class="st">"hash"</span>, <span class="st">"remote"</span>,</span>
-<span>                  <span class="st">"tau"</span>, <span class="st">"Sejong"</span>, <span class="st">"RSQLite"</span>, <span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="op">(</span> <span class="va">package_list_installed</span> <span class="op">&lt;-</span> <span class="va">package_list</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>,<span class="st">"Package"</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
-<pre class="r-output"><code>## [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE
+<p><code>reticulate</code> 패키지를 사용해서 파이썬 텍스트 처리 패키지 <code>nltk</code>, <code>konlpy</code> 기능을 활용하여 효과적인 한국어 텍스트 처리도 가능하다. 즉 <code>bitTA</code> 같은 텍스트 패키지를 사용해서 직접 R에서 텍스트 분석을 수행해도 되지만 파이썬에서 이미 구축된 한글 패키지를 파이썬에서 처리하고 결과값을 <code>reticulate</code> 패키지 통해서 R에서 후속 작업을 수행하는 작업흐름도 권장할만하다.</p>
+<div class="inline-figure"><img src="images/rpy-two-approaches.png" style="width:100.0%"></div>
+<p>먼저 <code>konlpy</code>는 기본 파이썬 패키지로 설치되지 않아 <code>pip install</code> 명령어로 설치한다. <code>nltk</code> 패키지는 아나콘다를 설치한 경우 자동으로 설치되어 있다. 하지만 <code>nltk.download()</code>을 실행하여 All Packages탭 선택 후에 <code>Punkt</code>와 <code>Stopwords</code>를 추가로 다운로드 받아 설치작업을 마무리한다.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="install-setup.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> pip install konlpy</span>
+<span id="cb22-2"><a href="install-setup.html#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="install-setup.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb22-4"><a href="install-setup.html#cb22-4" aria-hidden="true" tabindex="-1"></a>nltk.download()</span></code></pre></div>
+<p>RStudio 혹은 파이썬 IDE에서 설치된 파이썬 한글처리 패키지가 제대로 동작되는지 꼬꼬마를 사용해서 테스트한다.</p>
+<p>다음으로 파이썬에서 품사(Pos)를 꼬꼬마를 사용해서 처리한다.<br>
+처리한 결과를 파이썬 객체 예를 들어 <code>kkma_pos_res</code> 변수에 저장하고 이를 R에서 불러온다.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="install-setup.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span></code></pre></div>
+<pre class="r-output"><code>## &lt;frozen importlib._bootstrap&gt;:219: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
 </code></pre>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span> <span class="va">new_pkg</span> <span class="op">&lt;-</span> <span class="va">package_list</span><span class="op">[</span><span class="op">!</span><span class="va">package_list_installed</span><span class="op">]</span> <span class="op">)</span></span></code></pre></div>
-<pre class="r-output"><code>## [1] "rJava"  "hash"   "remote" "tau"    "Sejong"
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="install-setup.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> konlpy.tag <span class="im">import</span> Kkma</span>
+<span id="cb24-2"><a href="install-setup.html#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="install-setup.html#cb24-3" aria-hidden="true" tabindex="-1"></a>kkma <span class="op">=</span> Kkma()</span>
+<span id="cb24-4"><a href="install-setup.html#cb24-4" aria-hidden="true" tabindex="-1"></a>kkma.sentences(<span class="st">'한국어 텍스트 분석을 R로 가능해요? 딥러닝 시대 맞는건가요? 한편으로는 정말 빨리 잘 할 수 있을지 많이 기대됩니다.'</span>)</span></code></pre></div>
+<pre class="r-output"><code>## ['한국어 텍스트 분석을 R로 가능해요?', '딥 러닝 시대 맞는 건가요?', '한편으로는 정말 빨리 잘 할 수 있을지 많이 기대됩니다.']
 </code></pre>
-<p>아래 코드로 미설치된 패키지를 한번에 설치할 수 있다. 만일 설치가 안되면 이 교재 <a href="https://bookdown.org/ahn_media/bookdown-demo/prep.html#%EC%98%A4%EB%A5%98error"><code>2.4 오류</code></a>를 참고해 개별적으로 설치한다.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">new_pkg</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">new_pkg</span><span class="op">)</span></span></code></pre></div>
-<p>의존성 패키지가 의존하는 패키지가 있다. 만일 오류메시지가 나오면 메시지를 잘 읽어보고, 필요한 패키지를 추가로 설치한다.</p>
-<p>KoNLP설치 준비가 됐으면 아래 코드로 설치한다.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">'haven-jeon/KoNLP'</span>, </span>
-<span>                        upgrade <span class="op">=</span> <span class="st">"never"</span>, </span>
-<span>                        INSTALL_opts<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"--no-multiarch"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>제대로 설치됐는지 확인해보자.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="install-setup.html#cb25-1" aria-hidden="true" tabindex="-1"></a>kkma_pos_res <span class="op">=</span> kkma.pos(<span class="st">'한편으로는 정말 빨리 잘 할 수 있을지 많이 기대됩니다.'</span>)</span></code></pre></div>
+<p><code>reticulate</code>를 실행하게 되면 <code>py$...</code> 와 같은 방식으로 <code>...</code> 객체를 R에서 불러와서 후속작업을 수행할 수 있다.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># library(KoNLP)</span></span>
-<span><span class="co"># extractNoun("한글테스트입니다.")</span></span>
-<span><span class="co"># SimplePos09("한글테스트입니다.")</span></span></code></pre></div>
-<p><code>KoNLP</code>에서 사용할 사전을 설치하자. <code>NIADic</code>이 <code>SejongDic</code>보다 더 많은 형태소를 포함하고 있다. 설치과정에서 기 설치된 패키지 업데이트 여부를 묻는다. 모두 최신버전으로 업데이트한다.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">useNIADic</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>한글띄어쓰기가 안돼 있는 문서는 <code>autoSpacing = T</code>인자를 투입한다.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="st">"아버지가가방에들어가신다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="st">"아버지가가방에들어가신다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span>autoSpacing <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<p>띄어쓰기 안된 문서의 행태소 분석에는 <code>MeCab</code>이 유리하다.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="st">"한글테스트입니다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">SimplePos09</span><span class="op">(</span>autoSpacing <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="st">"한글테스트입니다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span> </span>
-<span><span class="st">"아버지가가방에들어가신다"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><code>KoNLP</code>를 이용해 띄어쓰기가 잘 안된 문서를 분석할 때는 <code>KoSpacing</code>패키지로 띄어쓰기를 조절할 수 있다(설치과정이 복잡하므로 선택 사항.)</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># remotes::install_github("haven-jeon/KoSpacing")</span></span>
-<span><span class="co"># library(KoSpacing)</span></span>
-<span><span class="co"># set_env()</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># spacing("한글테스트입니다.")</span></span></code></pre></div>
-<p><code>KoNLP</code>의 장점은 기존 사전에 사용자사전을 추가할 수 있다는데 있다.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="st">"힣탈로미를 어떻게 할까요"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">SimplePos09</span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">buildDictionary</span><span class="op">(</span>ext_dic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'sejong'</span>, <span class="st">'woorimalsam'</span><span class="op">)</span>,</span>
-<span>                user_dic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>term<span class="op">=</span><span class="st">"전작권"</span>, tag<span class="op">=</span><span class="st">'ncn'</span><span class="op">)</span>,</span>
-<span>                category_dic_nms<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'political'</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/">reticulate</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">buildDictionary</span><span class="op">(</span>ext_dic <span class="op">=</span> <span class="st">"woorimalsam"</span>, </span>
-<span>                user_dic<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"힣탈로미"</span>, <span class="st">"ncn"</span><span class="op">)</span>,</span>
-<span>                replace_usr_dic <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">pos_tbl</span> <span class="op">&lt;-</span> <span class="va">py</span><span class="op">$</span><span class="va">kkma_pos_res</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html">enframe</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">value</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>         pos  <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span><span class="op">(</span><span class="va">value</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">pos_tbl</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 15 × 4</span>
+##    name value      text  pos  
+##   <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;list&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>
+## <span style="color: #555555;">1</span>     1 <span style="color: #555555;">&lt;list [2]&gt;</span> 한편  NNG  
+## <span style="color: #555555;">2</span>     2 <span style="color: #555555;">&lt;list [2]&gt;</span> 으로  JKM  
+## <span style="color: #555555;">3</span>     3 <span style="color: #555555;">&lt;list [2]&gt;</span> 는    JX   
+## <span style="color: #555555;">4</span>     4 <span style="color: #555555;">&lt;list [2]&gt;</span> 정말  MAG  
+## <span style="color: #555555;">5</span>     5 <span style="color: #555555;">&lt;list [2]&gt;</span> 빨리  MAG  
+## <span style="color: #555555;">6</span>     6 <span style="color: #555555;">&lt;list [2]&gt;</span> 잘    MAG  
+## <span style="color: #555555;"># … with 9 more rows</span>
+</code></pre>
+<p>데이터프레임으로 가져왔기 때문에 NNG 명사만 추출하여 후속 작업을 이어간다.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pos_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="st">"NNG"</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 1 × 4</span>
+##    name value      text  pos  
+##   <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;list&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>
+## <span style="color: #555555;">1</span>     1 <span style="color: #555555;">&lt;list [2]&gt;</span> 한편  NNG
+</code></pre>
 
-</div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -688,13 +619,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <li><a class="nav-link" href="#%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%84%A4%EC%A0%95-%EC%98%A4%EB%A5%98"><span class="header-section-number">1.4.5</span> 파이썬 설정 오류</a></li>
 </ul>
 </li>
-<li>
-<a class="nav-link" href="#konlp"><span class="header-section-number">1.5</span> KoNLP</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#%EC%9E%90%EB%B0%94jdk"><span class="header-section-number">1.5.1</span> 자바JDK</a></li>
-<li><a class="nav-link" href="#rtools"><span class="header-section-number">1.5.2</span> rtools</a></li>
-<li><a class="nav-link" href="#%EC%9D%98%EC%A1%B4%ED%8C%A8%ED%82%A4%EC%A7%80"><span class="header-section-number">1.5.3</span> 의존패키지</a></li>
-</ul>
-</li>
+<li><a class="nav-link" href="#%ED%8C%8C%EC%9D%B4%EC%8D%AC-nltk-konlpy"><span class="header-section-number">1.5</span> 파이썬 nltk, konlpy</a></li>
 </ul>
 
       <div class="book-extra">
@@ -711,7 +636,7 @@ reticulate::use_python("C:\Users\[사용자ID]\AppData\Local\r-miniconda\envs\sp
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-24.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-08-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

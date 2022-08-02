@@ -8,20 +8,14 @@ editor_options:
 source("_common.R")
 ```
 
+# (PART\*) 기술통계 {#text-desc-stat .unnumbered}
 
 # 단어 빈도수 {#tf-idf}
 
-## 개관  {#tf-idf-overview}
-
-```{r cmp1, message=FALSE, warning=FALSE}
-pkg_v <- c("tidyverse", "tidytext","RcppMeCab")
-lapply(pkg_v, require, ch = T)
-
-```
-
-단어(term) - 문서(document) - 말뭉치(corpus)
-
 문서에 사용된 단어(term)를 통해 그 문서의 주제를 추론할 수 있다. 말뭉치는 문서들의 '뭉치'다. 신문 말뭉치는 여러 신문들의 기사를 모아놓은 것이고, 소설말뭉치는 여러 소설을 모아놓은 문서들의 집합이다. 말뭉치는 상대적인 개념이다. 예를 들어, 소설집을 말뭉치라고 하면 개별 소설이 문서가 된다. 반면, 소설 한편을 말뭉치라고 하면, 소설의 각 장이 문서가 된다. 
+
+![](images/term-document-corpus.png){width=100%}
+
 
 개별 문서의 주제를 추론하려면 모든 문서에 걸쳐 사용빈도가 높은 단어보다는 개별 문서에서만 사용빈도가 높은 단어를 찾아야 한다. 즉, 개별 문서에 등장하는 단어의 상대빈도가 높은 단어가 개별 문서의 의미를 잘 나타낸다. 
 
@@ -50,7 +44,7 @@ lapply(pkg_v, require, ch = T)
 
 tf_idf의 요소인 tf와 idf에 대해 각각 알아보자. 
 
-##### tf(term frequency)
+#### tf (term frequency)
 
 개별 문서(d)에 등장하는 단어(t)의 수를 각 문서에 등장한 모든 단어의 수로 나눈 값. 
 
@@ -62,7 +56,7 @@ $$
 - $tf_{total}$: 각 문서에 등장한 모든 단어의 수
 
 
-##### df(document frequency)
+#### df (document frequency)
 
 특정 단어(t)가 나타난 문서(D)의 수. df가 높다면 '은/는/이/가'처럼 대부분의 문서에서 사용되는 단어임을 나타낸다. 
 
@@ -71,7 +65,7 @@ df(t, D)
 $$
 
 
-##### idf(inverse document frequency)
+#### idf (inverse document frequency)
 
 전체 문서의 수(N)를 해당 단어의 df로 나눈 뒤 로그를 취한 값. 값이 클수록 특정 문서에서만 등장하는 특이한 단어라는 의미가 된다. 
 
@@ -80,12 +74,13 @@ idf(t, D) = log(\frac{N}{df})
 $$
 
 
-##### tf_idf
+#### tf_idf
+
 tf와 idf를 곱하면 tf_idf를 구할 수 있다. 
 
 
 $$
-  tfidf(t, d, D) = tf(t, d) \times idf(t, D)
+  \text{tf_idf}(t, d, D) = tf(t, d) \times idf(t, D)
 $$
 
 - `t`: 단어
@@ -96,7 +91,11 @@ $$
 
 짧은 문장을 이용해 tf_idf의 원리를 파악해 보자. 먼저 토큰화한다. 여기서 각 행은 개별 문서에 해당하고, 4개 행의 합의 말뭉치에 해당한다. 각 행을 식별하기 위해 문장별로 토큰화해 ID를 부여하자. 
 
-```{r cmp2 }
+```{r tf-idf-application }
+library(magrittr) # 파이프 연산자 %>%
+library(stringr)  # 문자열 처리 
+library(tidytext) # 깔끔한 텍스트 티블에서 처리
+
 sky_v <-  c( "The sky is blue.", 
            "The sun is bright today.",
            "The sun in the sky is bright.", 
@@ -104,11 +103,10 @@ sky_v <-  c( "The sky is blue.",
 
 sky_doc <- tibble(text = sky_v) %>% 
   unnest_tokens(sentence, text, token = "sentences") %>% 
-  mutate(lineID = row_number()) %>% 
-  mutate(lineID = as.factor(lineID))
+  mutate(line_id = row_number()) %>% 
+  mutate(line_id = as.factor(line_id))
 
 sky_doc
-
 ```
 
 #### tf
@@ -124,44 +122,36 @@ $$
 
 tf의 분자인 $tf_{document}$(각 문서에 등장한 해당 단어의 빈도)를 구한다. 여기서 각 문서는 각 행이다. 따라서 각 행에서 등장한 단어의 빈도를 계산하면 된다.   
 
-```{r cmp3 }
-sky_tfd <- 
-sky_doc %>% 
+```{r tf-idf-application-word-line }
+sky_tfd <- sky_doc %>% 
   unnest_tokens(word, sentence) %>% 
   anti_join(stop_words) %>% 
-  count(lineID, word) %>% 
-  rename(tfdoc = n)
+  count(line_id, word, name = "tf_doc")
   
 sky_tfd
-
 ```
 
 tf의 분모 $tf_{total}$(각 문서에 등장한 모든 단어의 수)를 구한다. 각 행을 이루는 모든 단어의 수를 계산하면 된다. 
 
-```{r cmp4 }
+```{r tf-idf-application-line-ttl }
 sky_tft <- sky_tfd %>% 
-  mutate(N = length(unique(lineID))) %>%  #total number of documnets
-  count(lineID) %>% 
-  rename(tftotal = n)
+  mutate(N = length(unique(line_id))) %>%  # total number of documnets
+  count(line_id, name = "tf_total")
 
 sky_tft
-
 ```
 
 $tf_{document}$(각 문서에 등장한 해당 단어의 빈도)를 $tf_{total}$(각 문서에 등장한 모든 단어의 수)로 나눈다. 
 
-```{r cmp5 }
+```{r tf-idf-application-tfidf-sky  }
 sky_tf <- left_join(sky_tfd, sky_tft) %>% 
-  mutate(tf = tfdoc/tftotal)
+  mutate(tf = tf_doc/tf_total)
 
 sky_tf
-
 ```
 
 
-
-
-#### df(document frequency)
+#### df (document frequency)
 
 특정 단어(t)가 나타난 문서(D)의 수. df가 높다면 '은/는/이/가'처럼 대부분의 문서에서 사용되는 단어임을 나타낸다. 
 
@@ -170,7 +160,10 @@ df(t, D)
 $$
 특정 단어가 등장한 문서의 수를 계산해 구할 수 있다. 
   
-```{r cmp6 }
+```{r tf-idf-application-df  }
+# sky_tf %>% 
+#   count(word)
+
 sky_df <- table(sky_tf$word) %>% 
   as.data.frame() %>% 
   rename(word = Var1, df = Freq)
@@ -183,7 +176,7 @@ sky_df
 'sun': 2,3, 4번 행에 등장했으므로 3
   
   
-#### idf(inverse document frequency)
+#### idf (inverse document frequency)
 
 전체 문서의 수(N)를 해당 단어의 df로 나눈 뒤 로그를 취한 값. 값이 클수록 특정 문서에서만 등장하는 특이한 단어라는 의미가 된다. 
 
@@ -193,10 +186,9 @@ $$
 
 공식을 그대로 적용해 계산한다. `sky_tf`에 N의 값을 계산해 두 데이터프레임을 열방향 결합한다. 
 
-```{r cmp7 }
-sky_tf <- 
-  sky_tf %>% 
-  mutate(N = length(unique(lineID))) #total number of documnets
+```{r tf-idf-application-idf }
+sky_tf <- sky_tf %>% 
+  mutate(N = length(unique(line_id))) #total number of documnets
 
 sky_idf <- 
   left_join(sky_tf, sky_df) %>% 
@@ -210,6 +202,7 @@ sky_idf
 
 
 #### tf_idf
+
 tf와 idf를 곱하면 tf_idf를 구할 수 있다. 
 
 
@@ -222,40 +215,30 @@ $$
 - `D`: 개별 문서의 집합(말뭉치)
 
 
-```{r cmp8 }
+```{r tf-idf-application-tfidf }
 sky_idf %>% 
   mutate(tf_idf = tf * idf) %>% 
   arrange(-tf_idf)
-
-
 ```
 
 
+### `bind_tf_idf()` 함수
 
 
-### `bind_tf_idf(tbl, term, document, n)`
-
-`tidytext`패키지에서 제공하는 `bind_tf_idf()`함수를 이용하면 tf_idf를 계산할 수 있다. 
+`tidytext`패키지에서 제공하는 `bind_tf_idf(tbl, term, document, n)`함수를 이용하면 tf_idf를 계산할 수 있다. 
 
 - tbl: 정돈데이터(한행에 값 하나).
-
 - term: 문자열이나 기호 등의 단어가 저장된 열.
-
 - document: 문자열이나 기호 등의 문서식별부호가 저장된 열.
-
 - n: 문자열이나 기호 등의 문서-용어의 빈도가 저장된 열.	
 
 
-```{r cmp9 }
+```{r tf-idf-application-function }
 sky_tfd %>% 
-  bind_tf_idf(tbl = ., term = word, document = lineID, n = tfdoc)
-
+  bind_tf_idf(tbl = ., term = word, document = line_id, n = tf_doc)
 ```
 
-
-
-
-## 승산비(odds ratio)
+## 승산비 (odds ratio)
 
 문서의 상대빈도를 구하는 또 다른 방법이 승산비다. 승산(odds)의 비를 이용해 복수의 문서에 등장한 단어의 상대적인 빈도 계산할 수 있다. 따라서 승산비는 2종의 문서에 대해서만 구할 수 있다. 
 
@@ -266,7 +249,6 @@ sky_tfd %>%
 $$
 승산비 = \frac{승산A}{승산B}
 $$
-
 
 - 비(ratio)
 
@@ -283,8 +265,8 @@ $$
 $$
 승산(odds) = \frac{발생빈도(n) + 1}{총빈도(total) + 1}
 $$
-분자와 분모에 각각 1을 더하는 이유는 발생빈도가 0인 경우도 있기 때문이다. 분모가 0이면 무한대가 된다. 
 
+분자와 분모에 각각 1을 더하는 이유는 발생빈도가 0인 경우도 있기 때문이다. 분모가 0이면 무한대가 된다. 
 
 
 ### 자료준비
@@ -294,71 +276,60 @@ $$
 - [Naver sentiment movie corpus](https://github.com/e9t/nsmc)
 
 
-```{r cmp10 , eval=FALSE}
+```{r odds-tfidf-naver , eval=FALSE}
 url_v <- 'https://github.com/e9t/nsmc/raw/master/ratings.txt'
 dest_v <- 'data/ratings.txt'
 
 download.file(url_v, dest_v, mode = "wb")
 list.files('data/.')
-
 ```
 
 다운로드한 자료 이입 및 검토
 
-```{r cmp11 }
+```{r odds-tfidf-naver-read }
 read_lines("data/ratings.txt") %>% glimpse()
-
 ```
 
 공백문자 `\t`으로 구분된 문자데이터이므로, `read_tsv()`로 이입한다. 
 
-```{r cmp12 }
+```{r odds-tfidf-naver-tsv }
 read_tsv("data/ratings.txt") %>% glimpse()
-
 ```
 
-```{r cmp13 }
+```{r odds-tfidf-naver-tbl }
 ratings_df <- read_tsv("data/ratings.txt") 
 head(ratings_df)
-
 ```
 
 데이터셋이 커 처리에 시간이 걸리므로 각 라벨별로 1000개 행씩 추출한다. 
 
-```{r cmp14 }
+```{r odds-tfidf-naver-sample }
 set.seed(37)
-by1000_df <- 
-  ratings_df %>% 
+
+by1000_df <- ratings_df %>% 
   group_by(label) %>% 
   sample_n(size = 1000)
 
 by1000_df %>% glimpse()
-
 ```
 
 `RcppMeCab`패키지에서 `pos()`함수로 형태소를 추출한 뒤, 일반명사('nng')만 추출해 빈도를 계산한다. 
 
-```{r cmp15 }
+```{r odds-tfidf-naver-pos }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
-  count(word, sort = T)
-
+  count(word, sort = TRUE)
 ```
-
-
-
-
-#### 자료 준비
 
 영화평은 긍정적인 평에는 '1', 부정적인 평에는 '0'으로 분류돼 있다. 긍정적인 평과 부정적인 평에 사용된 명사의 승산비를 구해보자. 이를 위해 long form을 wide form으로 변형해 `label`열의 값을 열의 헤더로 변환하고, 각 열의 값으로는 토큰을 투입한다. 결측값이 있으면 연산이 안되므로 `NA`값은 '0'으로 채운다. 
 
 
-```{r cmp }
+```{r odds-tfidf-naver-odds-dataset }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -370,13 +341,13 @@ by1000_df %>%
 ```
 
 
-#### 승산비 계산
+### 승산비 계산
 
 긍정평과 부정평의 승산을 구한다음, 승산비를 계산한다.
 
-```{r cmp16 }
+```{r odds-tfidf-naver-odds-calc }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -396,10 +367,9 @@ by1000_df %>%
 승산비를 이용해 영화의 긍정평과 부정평에서 상대적으로 많이 사용된 명사를 추출했다. 순서대로 정렬하자. 
 
 
-```{r cmp17 }
-rate_odds_df <- 
-by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+```{r odds-tfidf-naver-odds-sort }
+rate_odds_df <- by1000_df %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -412,36 +382,38 @@ by1000_df %>%
          odds_nega = ((nega+1)/sum(nega+1))) %>% 
   mutate(posi_odds_ratio = (odds_posi / odds_nega)) %>% 
   # 긍정평과 부정평 각각 상위 20개씩 필터 
-  filter(rank(posi_odds_ratio) <= 20 | rank(-posi_odds_ratio) <= 20) %>%   arrange(-posi_odds_ratio)
+  filter(rank(posi_odds_ratio) <= 20 | rank(-posi_odds_ratio) <= 20) %>%  
+  arrange(-posi_odds_ratio)
 
 rate_odds_df %>% head()
 rate_odds_df %>% tail()
-  
 ```
 
 
 '밋'과 'ㄷ'이 사용된 문장을 살펴보자. `drop = `인자에 `FALSE`를 투입하면 토큰화한 문장을 제거하지 않고 남겨둔다. 
 
-```{r cmp18 }
+```{r odds-tfidf-naver-odds-drop }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos, drop = F) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos, drop = FALSE) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word == "밋" | word == "ㄷ") 
 
 ```
 
+
+::: {#rccpmecab-pos .rmdtip}
+
 '재밋었음'에서 `MeCab`형태소 분석기가 '밋'을 명사로 추출한 결과이다. 
 
-```{r cmp19 }
-enc2utf8("재밋었음10자는뭐여") %>% pos()
-
+```{r odds-tfidf-naver-odds-mecab }
+enc2utf8("재밋었음10자는뭐여") %>% RcppMeCab::pos()
 ```
-
+:::
 
 막대도표로 시각화하자. 긍정평과 부정평 도표를 분리해 표시하기 위해 승산비 1을 기준으로 크면 '긍정평' 작으면 '부정평'을 부여한다. 
 
-```{r cmp20 }
+```{r odds-tfidf-naver-odds-viz }
 rate_odds_df %>% 
   mutate(label = ifelse(posi_odds_ratio > 1, "긍정평", "부정평")) %>% 
   mutate(word = reorder(word, posi_odds_ratio)) %>% 
@@ -457,9 +429,9 @@ rate_odds_df %>%
 
 중요도가 비슷한 단어를 추출해보자. 승산비가 1이면 분자와 분모가 같으므로 긍정평과 부정평의 승산이 같다는 의미다. 
 
-```{r cmp21 }
+```{r odds-tfidf-naver-odds-work }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -479,9 +451,9 @@ by1000_df %>%
 
 중요도가 비슷하면서 빈도가 높은 단어를 찾아 보자. 
 
-```{r cmp22 }
+```{r odds-tfidf-naver-odds-inspect }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -501,10 +473,10 @@ by1000_df %>%
 ```
 
 
-
 ### 로그승산비
 
 - 로그승산비(log odds ratio)
+
 승산비에 로그를 위한 값. 로그를 취하면 1보다 작은수는 음수가 되고, 1보다 큰수는 양수가 된다. 
 
 $$
@@ -512,9 +484,9 @@ $$
 $$
 
 
-```{r cmp23 }
+```{r odds-tfidf-naver-log-odds }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -527,19 +499,15 @@ by1000_df %>%
          odds_nega = ((nega+1)/sum(nega+1))) %>% 
   # 승산비에 로그를 취한다.
   mutate(log_odds_ratio = log(odds_posi / odds_nega)) 
-  
 
 ```
-
-
 
 로그 승산비를 이용하면 하나의 도표에 상대빈도를 표시할 수 있다. 먼저 로그승산비를 구한뒤, 0을 기준으로 긍정평과 부정평을 group으로 구분한다. 긍정평과 부정평 집단별로 구분돼 있으므로, 로그승산비의 절대값 상위 10개를 지정하면, 긍정평과 부정평 별로 각각 상위 10개 단어를 추출할 수 있다. 
 
 
-```{r cmp24 }
-rate_log_df <- 
-by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+```{r odds-tfidf-naver-log-odds-inspect }
+rate_log_df <- by1000_df %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -557,14 +525,12 @@ rate_log_df  %>%
   group_by(label  = ifelse(log_odds_ratio > 0, "긍정평", "부정평")) %>% 
   # 긍정평과 부정평별 각각 상위 10개 
   slice_max(abs(log_odds_ratio), n = 10) 
-  
-
 
 ```
 
-막대도표로 시각화.  
+막대도표로 시각화하면 다음과 같은 긍부정에 기여하는 중요단어를 한눈에 일별할 수 있다. 
 
-```{r cmp25 }
+```{r odds-tfidf-naver-log-odds-viz }
 rate_log_df %>% 
   group_by(label  = ifelse(log_odds_ratio > 0, "긍정평", "부정평")) %>% 
   slice_max(abs(log_odds_ratio), n = 10) %>% 
@@ -573,57 +539,44 @@ rate_log_df %>%
              y = reorder(word, log_odds_ratio),
              fill = label)) +
   geom_col() 
-
-
 ```
 
 
+### 가중로그승산비
 
+로그승산비는 문서 2종에 대한 승산으로 비를 구하므로, 3종 이상의 문서로 구성된 말뭉치에 적용할 수 없는 한계가 있다. `tf_idf`는 3종 이상의 문서로 구성된 말뭉치에 적용할 수 있지만, tf_idf계산 방식에서 오는 한계가 있다. 모든 문서에 걸쳐 등장하는 단어라 해서 반드시 불용어처럼 문서의 의미파악에 기여하지 못하는 것이 아니기 때문이다. 
 
-
-
-
-
-
-## 가중로그승산비
-
-로그승산비는 문서 2종에 대한 승산으로 비를 구하므로, 3종 이상의 문서로 구성된 말뭉치에 적용할 수 없는 한계가 있다. tf_idf는 3종 이상의 문서로 구성된 말뭉치에 적용할 수 있지만, tf_idf계산 방식에서 오는 한계가 있다. 모든 문서에 걸쳐 등장하는 단어라 해서 반드시 불용어처럼 문서의 의미파악에 기여하지 못하는 것이 아니기 때문이다. 
-
-tf_idf의 한계를 Tyler Schnoebelen이 [Monroe, Colaresi, and Quinn(2008)](Monroe, Colaresi, and Quinn(2008)의 연구를 토대 블로그문서
+`tf_idf`의 한계를 Tyler Schnoebelen이 [Monroe, Colaresi, and Quinn(2008)](Monroe, Colaresi, and Quinn(2008)의 연구를 토대 블로그문서
 ["I dare say you will never use tf-idf again"](https://medium.com/@TSchnoebelen/i-dare-say-you-will-never-use-tf-idf-again-4918408b2310)을 통해 지적하며, 대안으로 로그승산비에 베이지언 확률모형을 적용한 [가중로그승산비(weighted log odds ratio)](https://bookdown.org/Maxine/tidy-text-mining/weighted-log-odds-ratio.html)를 제안했다. 
 
 이에 `tidytext` 개발자인 Julia Silge가 [`tydylo`](https://github.com/juliasilge/tidylo)패키지를 개발해 가중로그승산비를 간단하게 계산할 수 있도록 했다. ([Silge의 패키지 소개 글](https://juliasilge.com/blog/introducing-tidylo/))
 
 
-```{r cmp26 , eval=FALSE}
+```{r odds-tidylo , eval=FALSE}
 install.packages("tidylo")
-
 ```
 
 
-### `bind_log_odds(tbl, set, feature, n, uninformative = FALSE, unweighted = FALSE)`
+### `bind_log_odds()` 함수 
 
+
+`bind_log_odds(tbl, set, feature, n, uninformative = FALSE, unweighted = FALSE)` 함수 주요 인자를 살펴보면 다음과 같다.
 
 - tbl: 정돈데이터(feature와 set이 하나의 행에 저장).
-
 - set: feature를 비교하기 위한 set(group)에 대한 정보(예: 긍정 vs. 부정)이 저장된 열.
-
 - feature: feature(단어나 바이그램 등의 텍스트자료)가 저장된 열.
-
 - n: feature-set의 빈도를 저장한 열.
-
 - uninformative: uninformative 디리슐레 분포 사용 여부. 기본값은 `FALSE`.	
-
 - unweighted: 비가중 로그승산 사용여부. 기본값은 `FALSE`. `TRUE`로 지정하면 비가중 로그승산비(`log_odds`) 열을 추가한다. 
+
 
 가중로그승산비를 이용해 네이버영화 댓글 중 긍정평과 부정평에 사용된 단어의 상대빈도를 구해보자. 
 
-```{r cmp27 }
+```{r odds-tidylo-naver }
 library(tidylo)
 
-weighted_log_odds_df <- 
-by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+weighted_log_odds_df <- by1000_df %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -640,61 +593,55 @@ weighted_log_odds_df
 긍정평과 부정평별 가중로그승산비 상위 10개 추출한다.
 
 
-```{r cmp28 }
+```{r odds-tidylo-naver-top10 }
 weighted_log_odds_df %>%   
   group_by(label = ifelse(label > 0, "긍정평", "부정평")) %>% 
-  slice_max(abs(log_odds_weighted), n = 10) # 긍정평과 부정평별 각각 상위 10개 
-
-
+  slice_max(abs(log_odds_weighted), n = 10) # 긍정평과 부정평별 각각 상위 10개
 ```
 
-막대도표로 시각화한다.
+막대도표로 시각화한다. 특히 `reorder_within()` 함수를 사용하게 되면 작은창(facet)
+에 따라 내림차순하여 시각적으로 깔끔하게 구현할 수 있다.
 
-```{r cmp29 }
+```{r odds-tidylo-naver-top10-viz }
+
 weighted_log_odds_df %>%   
   group_by(label = ifelse(label > 0, "긍정평", "부정평")) %>% 
   slice_max(abs(log_odds_weighted), n = 10) %>%  # 긍정평과 부정평별 각각 상위 10개 
   
   ggplot(aes(x = log_odds_weighted,
-             y = reorder(word, log_odds_weighted),
+             y = reorder_within(word, log_odds_weighted, label),
              fill = label)) +
-  geom_col(show.legend = F) +
-  facet_wrap(~label, scale = "free")
-
-
+  scale_y_reordered() +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~label, scale = "free_y")
 ```
 
 
 부정평으로 분류된 내용 중 '최고'와 '감동'이 부정평에 들어 있다. 어떤 문장인지 확인해보자. 
 
 
-```{r cmp30 }
+```{r odds-tidylo-naver-inspect }
 by1000_df %>% 
-  unnest_tokens(word, document, token = pos, drop = F) %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos, drop = FALSE) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
   filter(label == 0) %>% 
   filter(word == "최고" | word == "감동")
-
-
 ```
 
 '억지로 끼워 맞추려는 감동 설정' '감동 없음' 등 단어 하나만을 토큰으로 사용했을 때의 한계를 잘 보여주는 사례. 
 
 '감동적 그자체 영화'를 부정평으로 분류한 것은 라벨링 오류. 
 
+## 지표 비교
 
-
-### 지표 비교
-
-#### 로그승산비
-
+### 로그승산비
 
 먼저 가중치를 사용하지않은 로그승산비를 구한다.  
 
 
-```{r cmp31 }
+```{r odds-comp }
 rate_log_df  %>% # 승산비에 로그를 취한다.
   group_by(label  = ifelse(log_odds_ratio > 0, "긍정평", "부정평")) %>% 
   slice_max(abs(log_odds_ratio), n = 10) %>%  # 긍정평과 부정평별 각각 상위 10개 
@@ -704,19 +651,17 @@ rate_log_df  %>% # 승산비에 로그를 취한다.
              fill = label)) +
   geom_col(show.legend = F) +
   facet_wrap(~label, scale = "free")
-
 ```
 
 
 
-#### tf_idf
+### tf_idf
 
-tf_idf 계산
+tf_idf 계산를 계산한다.
 
-```{r cmp32 }
-tf_idf_df <- 
-by1000_df %>% 
-  unnest_tokens(word, document, token = pos) %>% 
+```{r odds-comp-tfidf }
+tf_idf_df <- by1000_df %>% 
+  unnest_tokens(word, document, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == "nng") %>% 
   filter(word != "영화") %>% 
@@ -730,7 +675,7 @@ tf_idf_df
 
 긍정평과 부정평별 상위 10개 추출한다.
 
-```{r cmp33 }
+```{r odds-comp-tfidf-top10 }
 tf_idf_df %>% 
   group_by(label = ifelse(label > 0, "긍정평", "부정평")) %>% 
   slice_max(tf_idf, n = 10) # 긍정평과 부정평별 각각 상위 10개 
@@ -739,7 +684,7 @@ tf_idf_df %>%
 
 막대도표로 시각화한다.
 
-```{r cmp34 }
+```{r odds-comp-tfidf-top10-viz }
 tf_idf_df %>% 
   group_by(label = ifelse(label > 0, "긍정평", "부정평")) %>% 
   slice_max(tf_idf, n = 10) %>% # 긍정평과 부정평별 각각 상위 10개 
@@ -750,17 +695,16 @@ tf_idf_df %>%
   geom_col(show.legend = F) +
   facet_wrap(~label, scale = "free")
 
-
 ```
 
 
 
-#### 비교 
+### 비교 
 
 가중로그승산비, 로그승산비, tf_idf의 값을 비교해보자. 먼저 3개 데이터프레임을 행방향으로 결합해 하나의 데이터프레임으로 저장한다. 
 
 
-```{r cmp35 }
+```{r tfidf-comp-data }
 wlo_df <- 
 weighted_log_odds_df %>%   
   group_by(label = ifelse(label > 0, "긍정평", "부정평")) %>% 
@@ -782,28 +726,24 @@ tf_idf_df %>%
 
 bind_rows(wlo_df, rlo_df, ti_df, .id = "ID") %>% tail(20)
 
-
-
-
 ```
 
 
 
-```{r cmp36 }
+```{r tfidf-comp-data-viz }
 bind_rows(wlo_df, rlo_df, ti_df, .id = "ID") %>% 
-  mutate(ID = ifelse(ID == "1", "1.가중로그승산비", 
-                     ifelse(ID == "2", "2.로그승산비", "3.tf_idf"))
-         ) %>% 
+  mutate(ID = case_when(ID == "1" ~ "1.가중로그승산비",
+                        ID == "2" ~ "2.로그승산비",
+                        TRUE ~ "3.tf_idf")) %>% 
   
   ggplot(aes(x = score,
-             y = reorder(word, score),
+             y = reorder_within(word, score, list(ID, label) ),
              fill = label)
          ) +
   geom_col(show.legend = F) +
-  facet_wrap( ~ label+ID, scales = "free", ncol = 3)
+  scale_y_reordered() +
+  facet_wrap( ~ label+ID, scales = "free_y", ncol = 3)
 ```
-
-
 
 
 ## 연습
@@ -841,7 +781,7 @@ bind_rows(wlo_df, rlo_df, ti_df, .id = "ID") %>%
 
 파일명을 확인한다. `NewsResult_20210201-20210228.xlsx`다. 
 
-```{r cmp37 , eval=FALSE}
+```{r bigkinds , eval=FALSE}
 list.files("data/.")
 
 ```
@@ -849,20 +789,19 @@ list.files("data/.")
 `readxl`패키지의 `read_excel()`함수로 해당 파일을 R환경으로 이입한다. 
 
 
-```{r cmp38 ,eval=FALSE}
+```{r bigkinds-excel ,eval=FALSE}
 readxl::read_excel("data/NewsResult_20210201-20210228.xlsx") %>% glimpse()
 
 ```
 
 분석에 활용할 열만 추출해 `vac_df`에 할당한다.
 
-```{r cmp39 }
+```{r bigkinds-excel-select }
 vac_df <- 
   readxl::read_excel("data/NewsResult_20210201-20210228.xlsx") %>% 
   select(제목, 언론사, 본문, URL)
 
 vac_df %>% glimpse()
-
 ```
 
 
@@ -871,16 +810,14 @@ vac_df %>% glimpse()
 먼저 `drop_na()`함수로 결측값을 제거하고, 토큰화한 다음, `pos`함수로 일반명사만 추출해, `vac_tk`로 저장한다. 
 
 
-```{r cmp40 }
-vac_tk <- 
-vac_df %>% 
+```{r bigkinds-excel-clean }
+vac_tk <- vac_df %>% 
   drop_na() %>% 
-  unnest_tokens(word, 제목, token = pos) %>% 
+  unnest_tokens(word, 제목, token = RcppMeCab::pos) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == 'nng')
 
 vac_tk
-
 ```
 
 
@@ -889,11 +826,11 @@ vac_tk
 총빈도, 감정어빈도, tf_idf, 로그승산비, 가중로그승산비 등 다양한 분석 방법을 배웠다. 총빈도와 가중로그승산비를 구해 언론사별 어떤 차이가 있는지 살펴보자. (분석 결과를 해석할 때는 2021년 2월 한달 기간에 국한한 자료를 이용한 점에 주의해야 한다.) 
 
 
-#### 언론사별 총빈도
+### 언론사별 총빈도
 
-```{r cmp41 }
+```{r bigkinds-excel-tf }
 vac_tk %>% 
-  count(언론사, word, sort = T) %>% 
+  count(언론사, word, sort = TRUE) %>% 
   filter(word != "경향") %>% 
   filter(word != "포토") %>% 
   filter(word != "문화") %>% 
@@ -905,51 +842,55 @@ vac_tk %>%
   slice_max(n, n = 7) %>% 
   
   ggplot(aes(x = n,
-             y = reorder(word, n),
+             y = reorder_within(word, n, 언론사),
              fill = 언론사)
          ) +
   geom_col(show.legend = F) +
-  facet_wrap( ~ 언론사, scales = "free")
-
+  scale_y_reordered() +
+  facet_wrap( ~ 언론사, scales = "free_y")
 ```
 
 
 주요 단어가 사용된 내용(제목)을 살펴보자.
 
-```{r cmp42 }
+```{r bigkinds-excel-tf-inspect }
 vac_df %>% 
   drop_na() %>% 
-  unnest_tokens(word, 제목, token = pos, drop = F) %>% 
+  unnest_tokens(word, 제목, token = RcppMeCab::pos, drop = F) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == 'nng') %>% 
-  filter(word == "카") %>% .$제목
+  filter(word == "카") %>% 
+  pull(제목)
 
 ```
+
+::: {#rccpmecab-pos-covid .rmdtip}
 
 '카'의 빈도가 높았던 이유는 '아스트라제네카'를 형태소분석기가 하나의 일반명사로 추출하지 않았기 때문이다. 
 
-```{r cmp43 }
-enc2utf8("아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 이상’은 의사가 판단") %>% pos()
-
-
+```{r bigkinds-excel-tf-mecab }
+enc2utf8("아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 이상’은 의사가 판단") %>% RcppMeCab::pos()
 ```
 
+:::
 
-```{r cmp44 }
+```{r bigkinds-excel-tf-title }
 vac_df %>% 
   drop_na() %>% 
-  unnest_tokens(word, 제목, token = pos, drop = F) %>% 
+  unnest_tokens(word, 제목, token = RcppMeCab::pos, drop = F) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == 'nng') %>% 
-  filter(word == "이상") %>% .$제목
+  filter(word == "이상") %>% 
+  pull(제목)
 
 ```
 
 
-#### 언론사별 가중로그승산비
+### 언론사별 가중로그승산비
 
+언론사별 가중로그승산비를 구하고 이를 시각화하여 비교해보자.
 
-```{r cmp45 }
+```{r bigkinds-excel-tf-media }
 vac_tk %>% 
   count(언론사, word) %>% 
   filter(word != "경향") %>% 
@@ -971,57 +912,61 @@ vac_tk %>%
          ) +
   geom_col(show.legend = F) +
   facet_wrap( ~ 언론사, scales = "free")
-
-
 ```
 
 주요 단어가 사용된 내용(제목)을 살펴보자.
 
-```{r cmp46 }
+```{r bigkinds-excel-tf-media-inspect }
 vac_df %>% 
   drop_na() %>% 
-  unnest_tokens(word, 제목, token = pos, drop = F) %>% 
+  unnest_tokens(word, 제목, token = RcppMeCab::pos, drop = F) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == 'nng') %>% 
   filter(언론사 == "경향신문") %>% 
-  filter(word == "현장") %>% .$제목
+  filter(word == "현장") %>% 
+  pull(제목)
 
 ```
 
+품사로 명사(`nng`), 언론사로 "문화일보", 단어 "확정"이 들어간 신문기사 제목을 추출해보자.
 
-```{r cmp47 }
+```{r bigkinds-excel-tf-media-munhwa }
 vac_df %>% 
   drop_na() %>% 
-  unnest_tokens(word, 제목, token = pos, drop = F) %>% 
+  unnest_tokens(word, 제목, token = RcppMeCab::pos, drop = F) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == 'nng') %>% 
   filter(언론사 == "문화일보") %>% 
-  filter(word == "확정") %>% .$제목
-
+  filter(word == "확정") %>% 
+  pull(제목)
 ```
 
+품사로 명사(`nng`), 언론사로 "조선일보", 단어 "국민"이 들어간 신문기사 제목을 추출해보자.
 
-```{r cmp48 }
+
+```{r bigkinds-excel-tf-media-chosun }
 vac_df %>% 
   drop_na() %>% 
-  unnest_tokens(word, 제목, token = pos, drop = F) %>% 
+  unnest_tokens(word, 제목, token = RcppMeCab::pos, drop = F) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == 'nng') %>% 
   filter(언론사 == "조선일보") %>% 
-  filter(word == "국민") %>% .$제목
-
+  filter(word == "국민") %>%
+  pull(제목)
 ```
 
+품사로 명사(`nng`), 언론사로 "한겨레", 단어 "뒤"가 들어간 신문기사 제목을 추출해보자.
 
-```{r cmp49 }
+
+```{r bigkinds-excel-tf-media-hani }
 vac_df %>% 
   drop_na() %>% 
-  unnest_tokens(word, 제목, token = pos, drop = F) %>% 
+  unnest_tokens(word, 제목, token = RcppMeCab::pos, drop = F) %>% 
   separate(word, c("word", "pos"), sep = "/") %>% 
   filter(pos == 'nng') %>% 
   filter(언론사 == "한겨레") %>% 
-  filter(word == "뒤") %>% .$제목
-
+  filter(word == "뒤") %>%
+  pull(제목)
 ```
 
 
@@ -1031,10 +976,9 @@ vac_df %>%
 
 먼저 총빈도를 구한다. 
 
-```{r cmp50 }
-total_fq <- 
-vac_tk %>% 
-  count(언론사, word, sort = T) %>% 
+```{r bigkinds-media-freq }
+total_fq <- vac_tk %>% 
+  count(언론사, word, sort = TRUE) %>% 
   filter(word != "경향") %>% 
   filter(word != "포토") %>% 
   filter(word != "문화") %>% 
@@ -1046,14 +990,12 @@ vac_tk %>%
   slice_max(n, n = 7) 
 
 total_fq
-
 ```
 
-상대빈도
+이번에는 상대빈도를 구한다.
 
-```{r cmp51 }
-wlo_fq <- 
-vac_tk %>% 
+```{r bigkinds-media-relfreq }
+wlo_fq <- vac_tk %>% 
   count(언론사, word) %>% 
   filter(word != "경향") %>% 
   filter(word != "포토") %>% 
@@ -1074,44 +1016,33 @@ wlo_fq
 
 총빈도와 상대빈도 데이터프레임을 행방향으로 결합한다. 
 
-```{r cmp52 }
+```{r bigkinds-media-merge }
 bind_rows(
   select(total_fq, 언론사, word, score = n),
   select(wlo_fq, 언론사, word, score = log_odds_weighted),
   .id = "ID") %>% 
   mutate(ID = ifelse(ID == 1, "total", "wlo")) %>% 
+  ungroup() %>% 
   
-  ggplot(aes(x = score,
-             y = reorder(word, score),
+  ggplot(aes(x = reorder_within(word, score, list(ID, 언론사)),
+             y = score,
              fill = 언론사)
          ) +
-  geom_col(show.legend = F) +
-  facet_wrap(~ID+언론사, scales = "free", ncol = 4)
-  
-
-
+  geom_col(show.legend = FALSE) +
+  scale_x_reordered() +
+  facet_wrap(~ID+언론사, scales = "free_y", ncol = 4) +
+  coord_flip()
 ```
 
 전반적으로 4개 언론사는 백신과 관련하여 2021년 2월 한달간 '이상'(특정 연령 이상)과 아스트라제네카 백신에 대한 내용을 주로 다뤘다. 
 
 언론사별로는 경향신문은 '오늘'과 '현장', 문화일보는 '미국'과 '누적', 조선일보는 '국민'과 '속도', 한겨레는 '뒤'와 '팔' 등에 관련된 기사를 다른 언론사에 비해 상대적으로 더 다뤘다. 
 
-
-
-
-#### 과제
+## 과제
 
 빅카인즈에서 언론사별로 관심 분야의 기사를 추출해 보도 내용을 분석할 수 있도록 시각화하시오. 
 
 - 보도에 사용된 단어의 총빈도에 대해 선택한 언론사별 비교 시각화
-
 - 보도에 사용된 단어의 상대빈도에 대해 선택한 언론사별 비교 시각화
-
 - 총빈도와 상대빈도에 대해 언론사별로 비교 시각화 
-
-
-
-
-
-
 

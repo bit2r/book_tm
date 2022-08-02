@@ -70,10 +70,12 @@
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="active" href="prep.html"><span class="header-section-number">2</span> 준비운동</a></li>
 <li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
+<li class="book-part">텍스트 살펴보기</li>
 <li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="" href="text-processing.html"><span class="header-section-number">5</span> 텍스트 전처리</a></li>
-<li><a class="" href="text-clean.html"><span class="header-section-number">6</span> 정제(전처리)</a></li>
+<li><a class="" href="text-to-tibble.html"><span class="header-section-number">5</span> 텍스트 → 데이터프레임</a></li>
+<li><a class="" href="text-cleansing.html"><span class="header-section-number">6</span> 정제 (전처리)</a></li>
+<li class="book-part">기술통계</li>
 <li><a class="" href="tf-idf.html"><span class="header-section-number">7</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
 <li><a class="" href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></li>
@@ -102,9 +104,9 @@
 <p>R Studio에서 버전을 확인하는 방법은 다음과 같다.</p>
 <pre><code>Tools -&gt; Check for Package Updates ...</code></pre>
 <p>패키지를 설치할 때는 RStudio를 관리자 권한으로 실행해야 제대로 설치된다. 윈도가 보안정책을 강화했기 때문이다.</p>
-<div id="rtools-1" class="section level3" number="2.1.1">
+<div id="rtools" class="section level3" number="2.1.1">
 <h3>
-<span class="header-section-number">2.1.1</span> <code>rtools</code><a class="anchor" aria-label="anchor" href="#rtools-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">2.1.1</span> <code>rtools</code><a class="anchor" aria-label="anchor" href="#rtools"><i class="fas fa-link"></i></a>
 </h3>
 <p>윈도에서 R의 다양한 패키지를 설치하고 사용하는데 필요한 패키지다. (맥이나 리눅스에서는 설치 불필요.)</p>
 <ol style="list-style-type: decimal">
@@ -135,9 +137,9 @@
 </li>
 </ul>
 <p>먼저 <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>함수를 이용해 <code>tidyverse</code> 패키지를 설치하고, <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>함수를 이용해 현재의 R환경에 올려 패키지를 사용할 수 있도록 하자.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
@@ -178,18 +180,18 @@
 </h3>
 <p>텍스트마이닝에는 여러 종류의 패키지가 필요하다. 이 모든 것을 매번 설치하고 번번히 실행하는 것이 번거롭다. 게다가 이미 설치된 패키지가 무엇이 있는지 기억하기 어렵기 때문에, 패키지를 반복해서 설치하는 경우가 있다. 설치돼 있는 패키지는 설치를 피하고, 새로운 패키지만 골라서 동시에 설치하는 방법을 알아보자.</p>
 <p>명령어 앞뒤로 괄호<code>( )</code>를 치면 할당한 객체의 내용을 콘솔에서 보여준다.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="prep.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>( <span class="fu">installed.packages</span>()[,<span class="st">"Package"</span>] )</span>
-<span id="cb39-2"><a href="prep.html#cb39-2" aria-hidden="true" tabindex="-1"></a>package_list <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"tidyverse"</span>, <span class="st">"epubr"</span>, <span class="st">"showtext"</span>,</span>
-<span id="cb39-3"><a href="prep.html#cb39-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"tidytext"</span>, <span class="st">"tidymodels"</span>, <span class="st">"tidygraph"</span>, <span class="st">"textclean"</span></span>
-<span id="cb39-4"><a href="prep.html#cb39-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"topicmodels"</span>, <span class="st">"stm"</span>)</span>
-<span id="cb39-5"><a href="prep.html#cb39-5" aria-hidden="true" tabindex="-1"></a>( package_list_installed <span class="ot">&lt;-</span> package_list <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">"Package"</span>] )</span>
-<span id="cb39-6"><a href="prep.html#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="prep.html#cb39-7" aria-hidden="true" tabindex="-1"></a>( new_pkg <span class="ot">&lt;-</span> package_list[<span class="sc">!</span>package_list_installed] )</span>
-<span id="cb39-8"><a href="prep.html#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(new_pkg)) <span class="fu">install.packages</span>(new_pkg)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="prep.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>( <span class="fu">installed.packages</span>()[,<span class="st">"Package"</span>] )</span>
+<span id="cb34-2"><a href="prep.html#cb34-2" aria-hidden="true" tabindex="-1"></a>package_list <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"tidyverse"</span>, <span class="st">"epubr"</span>, <span class="st">"showtext"</span>,</span>
+<span id="cb34-3"><a href="prep.html#cb34-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"tidytext"</span>, <span class="st">"tidymodels"</span>, <span class="st">"tidygraph"</span>, <span class="st">"textclean"</span></span>
+<span id="cb34-4"><a href="prep.html#cb34-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"topicmodels"</span>, <span class="st">"stm"</span>)</span>
+<span id="cb34-5"><a href="prep.html#cb34-5" aria-hidden="true" tabindex="-1"></a>( package_list_installed <span class="ot">&lt;-</span> package_list <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[,<span class="st">"Package"</span>] )</span>
+<span id="cb34-6"><a href="prep.html#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="prep.html#cb34-7" aria-hidden="true" tabindex="-1"></a>( new_pkg <span class="ot">&lt;-</span> package_list[<span class="sc">!</span>package_list_installed] )</span>
+<span id="cb34-8"><a href="prep.html#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">length</span>(new_pkg)) <span class="fu">install.packages</span>(new_pkg)</span></code></pre></div>
 <p>설치한 여러 패키지를 동시에 R환경에 올리는 방법은 다음과 같다.</p>
 <p><code>lapply</code>함수는 데이터 하부요소에 대해 투입한 함수를 하나 씩 반복적으로 실행해준다. <code>for</code>의 반복문보다 효율적이어서 자주 쓰는 함수다.</p>
 <p>아래 코드는 <code>require</code>함수를 설치해야 하는 패키지 목록이 담겨 있는 <code>package_list</code>의 하부요소(개별 패키지)에 대해 하나씩 실행하라는 의미다. <code>character.only = TRUE</code> 대신 <code>ch = T</code>로 입력해도 된다.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">package_list</span>, <span class="va">require</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/zpackages.html">.packages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">)</span></span></code></pre></div>
 <p><code>library</code>대신 <code>require</code>를 쓴 이유는 반복실행 과정에 처리 결과에 대한 <code>TRUE</code>와 <code>FALSE</code>가 필요하기 때문이다. <code>require</code>와 <code>library</code>는 둘다 패키지를 R환경에 올리지만, <code>require</code>가 처리 결과에 대한 <code>TRUE</code>와 <code>FALSE</code>를 산출한다.</p>
@@ -274,7 +276,7 @@ library(magrittr)</a></code></pre>
 <pre><code>Error in unnest_tokens(., output = word, input = text) : 
   함수 "unnest_tokens"를 찾을 수 없습니다  </code></pre>
 <p>오류메시지의 내용을 보니, <code>unnest_tokens</code>함수가 없다고 한다. <code>unnest_tokens</code>가 어디에 속해 있는 함수인지 검색해보자. <code>tidytext</code>패키지의 함수란 정보를 어렵지 않게 찾을 수 있다. 따라서 <code>unnest_tokens</code>함수를 제공하는 패키지 <code>tidytext</code>를 실행한다. 설치가 안돼 있으면 설치부터 한다.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span></code></pre></div>
 <ul>
@@ -466,7 +468,7 @@ load("myData.RData") 작업디렉토리 파일을 현 작업공간에 객체로 
 <li><a class="nav-link" href="#prep"><span class="header-section-number">2</span> 준비운동</a></li>
 <li>
 <a class="nav-link" href="#%ED%8C%A8%ED%82%A4%EC%A7%80%EC%99%80-rtools"><span class="header-section-number">2.1</span> 패키지와 rtools</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#rtools-1"><span class="header-section-number">2.1.1</span> rtools</a></li>
+<li><a class="nav-link" href="#rtools"><span class="header-section-number">2.1.1</span> rtools</a></li>
 <li><a class="nav-link" href="#tidyverse"><span class="header-section-number">2.1.2</span> tidyverse</a></li>
 <li><a class="nav-link" href="#%ED%8C%A8%ED%82%A4%EC%A7%80-%EC%9D%BC%EA%B4%84%EC%84%A4%EC%B9%98"><span class="header-section-number">2.1.3</span> 패키지 일괄설치</a></li>
 </ul>
@@ -523,7 +525,7 @@ load("myData.RData") 작업디렉토리 파일을 현 작업공간에 객체로 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-24.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-08-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -70,10 +70,12 @@
 <li><a class="" href="install-setup.html"><span class="header-section-number">1</span> 설치 및 환경설정</a></li>
 <li><a class="" href="prep.html"><span class="header-section-number">2</span> 준비운동</a></li>
 <li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
+<li class="book-part">텍스트 살펴보기</li>
 <li><a class="active" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="" href="text-processing.html"><span class="header-section-number">5</span> 텍스트 전처리</a></li>
-<li><a class="" href="text-clean.html"><span class="header-section-number">6</span> 정제(전처리)</a></li>
+<li><a class="" href="text-to-tibble.html"><span class="header-section-number">5</span> 텍스트 → 데이터프레임</a></li>
+<li><a class="" href="text-cleansing.html"><span class="header-section-number">6</span> 정제 (전처리)</a></li>
+<li class="book-part">기술통계</li>
 <li><a class="" href="tf-idf.html"><span class="header-section-number">7</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
 <li><a class="" href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></li>
@@ -96,7 +98,7 @@
 </h2>
 <p>윤석열 대통령 취임사 텍스트를 <code>취임사_윤석열.txt</code> 파일로 저장한 후에
 특정 단어 <strong>자유</strong> 를 탐색하여 색상을 달리하여 출력해보자.</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## 기본 텍스트 패키지</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span>
@@ -204,7 +206,7 @@
 이를 위해서 먼저 텍스트를 각행별로 텍스트를 데이터프레임으로 변환시킨다.
 그리고 나서 메카브(MeCab) 형태소 분석기를 사용해서 연설문 형태소 분석을 수행하고
 명사만 추출한 후에 가장 빈도수가 높은 단어 3개를 뽑아낸다.</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">RcppMeCab</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span></span>
 <span></span>
@@ -231,7 +233,7 @@
 <p>윤 대통령 취임사에서 가장 많이 언급된 명사 3개(자유, 국민, 시민)가 취임사 어느
 부분에 위치하는지 시각화를 한다. 이를 위해서 <a href="https://cran.r-project.org/web/packages/ggpage/"><code>ggpage</code></a>
 패키지를 활용하여 <code><a href="https://rdrr.io/pkg/ggpage/man/ggpage_build.html">ggpage_build()</a></code> 함수와 <code><a href="https://rdrr.io/pkg/ggpage/man/ggpage_plot.html">ggpage_plot()</a></code> 함수를 사용하여 깔끔하게 시각화한다.</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/EmilHvitfeldt/ggpage">ggpage</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">yoon_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -254,38 +256,47 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"NanumGothic"</span><span class="op">)</span>  </span></code></pre></div>
 <div class="inline-figure"><img src="10-view-text_files/figure-html/youn-top-five-ggpage-1.png" width="100%" style="display: block; margin: auto;"></div>
 </div>
-<div id="취임사-요약" class="section level2" number="4.3">
+<div id="뉴스기사-요약" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">4.3</span> 취임사 요약<a class="anchor" aria-label="anchor" href="#%EC%B7%A8%EC%9E%84%EC%82%AC-%EC%9A%94%EC%95%BD"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> 뉴스기사 요약<a class="anchor" aria-label="anchor" href="#%EB%89%B4%EC%8A%A4%EA%B8%B0%EC%82%AC-%EC%9A%94%EC%95%BD"><i class="fas fa-link"></i></a>
 </h2>
-<p>Ainize Teachable-NLP를 사용한 <a href="https://huggingface.co/ainize/kobart-news">kobart 문서요약 텍스트/신문기사</a>를 사용하여 윤 대통령 취임사를 요약한다.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb79-1"><a href="view-text.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> PreTrainedTokenizerFast, BartForConditionalGeneration</span>
-<span id="cb79-2"><a href="view-text.html#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  사전 훈련 토큰, 모형 다운로드</span></span>
-<span id="cb79-3"><a href="view-text.html#cb79-3" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> PreTrainedTokenizerFast.from_pretrained(<span class="st">"ainize/kobart-news"</span>)</span>
-<span id="cb79-4"><a href="view-text.html#cb79-4" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> BartForConditionalGeneration.from_pretrained(<span class="st">"ainize/kobart-news"</span>)</span>
-<span id="cb79-5"><a href="view-text.html#cb79-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 입력 텍스트</span></span>
-<span id="cb79-6"><a href="view-text.html#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/취임사_윤석열.txt'</span>) <span class="im">as</span> f:</span>
-<span id="cb79-7"><a href="view-text.html#cb79-7" aria-hidden="true" tabindex="-1"></a>  input_text <span class="op">=</span> f.read()</span>
-<span id="cb79-8"><a href="view-text.html#cb79-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-9"><a href="view-text.html#cb79-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb79-10"><a href="view-text.html#cb79-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-11"><a href="view-text.html#cb79-11" aria-hidden="true" tabindex="-1"></a>input_text <span class="op">=</span> re.sub(<span class="vs">r"\n"</span>, <span class="st">" "</span>, input_text)</span>
-<span id="cb79-12"><a href="view-text.html#cb79-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-13"><a href="view-text.html#cb79-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-14"><a href="view-text.html#cb79-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-15"><a href="view-text.html#cb79-15" aria-hidden="true" tabindex="-1"></a>input_ids <span class="op">=</span> tokenizer.encode(input_text, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
-<span id="cb79-16"><a href="view-text.html#cb79-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Summary Text Ids</span></span>
-<span id="cb79-17"><a href="view-text.html#cb79-17" aria-hidden="true" tabindex="-1"></a>summary_text_ids <span class="op">=</span> model.generate(</span>
-<span id="cb79-18"><a href="view-text.html#cb79-18" aria-hidden="true" tabindex="-1"></a>    input_ids<span class="op">=</span>input_ids,</span>
-<span id="cb79-19"><a href="view-text.html#cb79-19" aria-hidden="true" tabindex="-1"></a>    bos_token_id<span class="op">=</span>model.config.bos_token_id,</span>
-<span id="cb79-20"><a href="view-text.html#cb79-20" aria-hidden="true" tabindex="-1"></a>    eos_token_id<span class="op">=</span>model.config.eos_token_id,</span>
-<span id="cb79-21"><a href="view-text.html#cb79-21" aria-hidden="true" tabindex="-1"></a>    length_penalty<span class="op">=</span><span class="fl">2.0</span>,</span>
-<span id="cb79-22"><a href="view-text.html#cb79-22" aria-hidden="true" tabindex="-1"></a>    max_length<span class="op">=</span><span class="dv">142</span>,</span>
-<span id="cb79-23"><a href="view-text.html#cb79-23" aria-hidden="true" tabindex="-1"></a>    min_length<span class="op">=</span><span class="dv">56</span>,</span>
-<span id="cb79-24"><a href="view-text.html#cb79-24" aria-hidden="true" tabindex="-1"></a>    num_beams<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb79-25"><a href="view-text.html#cb79-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb79-26"><a href="view-text.html#cb79-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Decoding Text</span></span>
-<span id="cb79-27"><a href="view-text.html#cb79-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tokenizer.decode(summary_text_ids[<span class="dv">0</span>], skip_special_tokens<span class="op">=</span><span class="va">True</span>))</span></code></pre></div>
+<p>Ainize Teachable-NLP를 사용한 <a href="https://huggingface.co/ainize/kobart-news">kobart 문서요약 텍스트/신문기사</a>를 사용하여
+한겨례 신문 <a href="https://www.hani.co.kr/arti/economy/economy_general/1053167.html">7월 물가 ‘두 달 연속 6%’…전기·가스·수도요금 16% 올라</a> 기사의 일부를
+발췌하여 기사를 요약해보자.</p>
+<p>허깅페이스 사전학습모형을 가져와서 신문기사 요약에 적용한다.
+사전학습모형이 크기 때문에 <code>cache_dir</code>를 별도 NAS 저장소에 저장시켜두고
+이를 불러와서 텍스트 요약 작업을 수행한다.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb75-1"><a href="view-text.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span></code></pre></div>
+<pre class="r-output"><code>## &lt;frozen importlib._bootstrap&gt;:219: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
+</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb76-1"><a href="view-text.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoModelForSeq2SeqLM, AutoTokenizer</span>
+<span id="cb76-2"><a href="view-text.html#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-3"><a href="view-text.html#cb76-3" aria-hidden="true" tabindex="-1"></a>summary_tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(<span class="st">"ainize/kobart-news"</span>,</span>
+<span id="cb76-4"><a href="view-text.html#cb76-4" aria-hidden="true" tabindex="-1"></a>                                                  cache_dir<span class="op">=</span><span class="st">"z:/dataset/hf/"</span>)</span>
+<span id="cb76-5"><a href="view-text.html#cb76-5" aria-hidden="true" tabindex="-1"></a>                                          </span>
+<span id="cb76-6"><a href="view-text.html#cb76-6" aria-hidden="true" tabindex="-1"></a>summary_model <span class="op">=</span> AutoModelForSeq2SeqLM.from_pretrained(<span class="st">"ainize/kobart-news"</span>,</span>
+<span id="cb76-7"><a href="view-text.html#cb76-7" aria-hidden="true" tabindex="-1"></a>                                          cache_dir<span class="op">=</span><span class="st">"z:/dataset/hf/"</span>)</span></code></pre></div>
+<pre class="r-output"><code>## You passed along `num_labels=3` with an incompatible id to label map: {'0': 'NEGATIVE', '1': 'POSITIVE'}. The number of labels wil be overwritten to 2.
+</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb77-1"><a href="view-text.html#cb77-1" aria-hidden="true" tabindex="-1"></a>summarizer <span class="op">=</span> pipeline(<span class="st">"summarization"</span>, </span>
+<span id="cb77-2"><a href="view-text.html#cb77-2" aria-hidden="true" tabindex="-1"></a>                      model <span class="op">=</span> summary_model,</span>
+<span id="cb77-3"><a href="view-text.html#cb77-3" aria-hidden="true" tabindex="-1"></a>                      tokenizer <span class="op">=</span> summary_tokenizer)</span>
+<span id="cb77-4"><a href="view-text.html#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="view-text.html#cb77-5" aria-hidden="true" tabindex="-1"></a>news_article <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb77-6"><a href="view-text.html#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="st">지난달 소비자물가가 6.3% 치솟았다. 지난 6월(6.0%)보다 상승폭이 더 커졌다. 최근 글로벌 경기 둔화 가능성이 확대되면서 국제유가가 하락해 국내 석유류 가격 상승세도 약간 둔화하는 모습을 보였지만, 지난달 공공요금 인상으로 인해 전기·가스·수도 가격이 부쩍 올랐다.</span></span>
+<span id="cb77-7"><a href="view-text.html#cb77-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="view-text.html#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="st">통계청이 2일 발표한 ‘7월 소비자물가동향’을 보면, 지난달 소비자물가지수는 108.74(2020년=100)로 1년 전보다 6.3% 올랐다. 지난 6월에 이어 물가상승률이 두 달 연속 6%대를 나타낸 것은 외환위기 중이었던 1998년 10월∼11월 이후 23년 8개월 만이다. 여전히 전체 물가상승을 견인하는 품목은 석유류를 비롯한 공업제품이었다. 전체 6.3% 물가 상승분 가운데 1.59%포인트를 석유류가 차지했다. 다만 최근 국제유가가 내림세를 띠면서 국내 석유류 가격 상승률도 지난 6월 39.6%에서 7월 35.1%로 약간 둔화하는 모습을 나타냈다.</span></span>
+<span id="cb77-9"><a href="view-text.html#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb77-10"><a href="view-text.html#cb77-10" aria-hidden="true" tabindex="-1"></a>                      </span>
+<span id="cb77-11"><a href="view-text.html#cb77-11" aria-hidden="true" tabindex="-1"></a>hani_news <span class="op">=</span> summarizer(news_article, max_length<span class="op">=</span><span class="dv">100</span>, min_length<span class="op">=</span><span class="dv">30</span>, do_sample<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/reticulate/">reticulate</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">py</span><span class="op">$</span><span class="va">hani_news</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span></span></code></pre></div>
+<pre class="r-output"><code>## [1] "통계청이 2일 발표한 ‘7월 소비자물가동향’을 보면, 지난달 소비자물가지수는 108.74(2020년=100)로 1년 전보다 6.3% 올랐는데, 지난 6월에 이어 물가상승률이 두 달 연속 6%대를 나타낸 것은 외환위기 중이었던 1998년 10월∼11월 이후 23년 8개월 만이다."
+</code></pre>
 
 </div>
 </div>
@@ -294,14 +305,14 @@
 
   <div class="chapter-nav">
 <div class="prev"><a href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></div>
-<div class="next"><a href="text-processing.html"><span class="header-section-number">5</span> 텍스트 전처리</a></div>
+<div class="next"><a href="text-to-tibble.html"><span class="header-section-number">5</span> 텍스트 → 데이터프레임</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#view-text"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
 <li><a class="nav-link" href="#text-highlight"><span class="header-section-number">4.1</span> 특정 단어 강조</a></li>
 <li><a class="nav-link" href="#text-highlight-locatin"><span class="header-section-number">4.2</span> 단어 위치</a></li>
-<li><a class="nav-link" href="#%EC%B7%A8%EC%9E%84%EC%82%AC-%EC%9A%94%EC%95%BD"><span class="header-section-number">4.3</span> 취임사 요약</a></li>
+<li><a class="nav-link" href="#%EB%89%B4%EC%8A%A4%EA%B8%B0%EC%82%AC-%EC%9A%94%EC%95%BD"><span class="header-section-number">4.3</span> 뉴스기사 요약</a></li>
 </ul>
 
       <div class="book-extra">
@@ -318,7 +329,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-07-24.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-08-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

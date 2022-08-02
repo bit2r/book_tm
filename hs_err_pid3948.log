@@ -1,0 +1,456 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (t:/workspace/open/src/hotspot/os_cpu/windows_x86/os_windows_x86.cpp:145), pid=3948, tid=22268
+#  guarantee(result == EXCEPTION_CONTINUE_EXECUTION) failed: Unexpected result from topLevelExceptionFilter
+#
+# JRE version: OpenJDK Runtime Environment (13.0.1+9) (build 13.0.1+9)
+# Java VM: OpenJDK 64-Bit Server VM (13.0.1+9, mixed mode, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dfile.encoding=UTF8 -ea -Xmx1024m 
+
+Host: Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz, 8 cores, 7G,  Windows 10 , 64 bit Build 19041 (10.0.19041.1806)
+Time: Tue Aug  2 11:23:04 2022 대한민국 표준시 elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000232029fd800):  JavaThread "Python Reference Queue" daemon [_thread_in_native, id=22268, stack(0x000000c680000000,0x000000c681000000)]
+
+Stack: [0x000000c680000000,0x000000c681000000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  0x00007ffed3036eca
+C  0x00007ffed3182c6a
+C  0x00007ffed318441f
+C  0x00007ffed31849d7
+C  0x00007ffed2c5d9dc
+C  0x00007ffed3036b8c
+C  [ntdll.dll+0xa229f]
+C  [ntdll.dll+0x51454]
+C  [ntdll.dll+0xa0dce]
+C  0x00007ffed400735d
+C  0x00007ffed4007392
+C  0x00007ffed3f33884
+C  0x00007ffed3f36393
+C  0x00007ffed42448eb
+C  [python38.dll+0x16bd9]  dict_dealloc+0x239  (dictobject.c:1990)
+C  [python38.dll+0x924e8]  subtype_clear+0xa8  (typeobject.c:1143)
+C  [python38.dll+0x90ce0]  delete_garbage+0x50  (gcmodule.c:949)
+C  [python38.dll+0x9042d]  collect+0x165  (gcmodule.c:1128)
+C  [python38.dll+0x8f18d]  collect_with_callback+0x45  (gcmodule.c:1241)
+C  [python38.dll+0xf64c3]  PyGC_Collect+0x63  (gcmodule.c:1834)
+C  0x00007ffed35a8184
+C  0x000002322f9ef4f7
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  org.jpype.ref.JPypeReferenceNative.wake()V+0
+j  org.jpype.ref.JPypeReferenceQueue$Worker.run()V+42
+j  java.lang.Thread.run()V+11 java.base@13.0.1
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x0000023274fe1760, length=13, elements={
+0x00000232029f6000, 0x00000232029f5000, 0x00000232029f6800, 0x00000232029f4800,
+0x00000232029f8800, 0x00000232231ce800, 0x00000232421f8800, 0x00000232029f2800,
+0x00000232029fb800, 0x00000232029fc800, 0x00000232029fd800, 0x000002324256a800,
+0x0000023242808800
+}
+
+Java Threads: ( => current thread )
+  0x00000232029f6000 JavaThread "main" [_thread_in_native, id=2664, stack(0x000000c6cca00000,0x000000c6cda00000)]
+  0x00000232029f5000 JavaThread "Reference Handler" daemon [_thread_blocked, id=8324, stack(0x000000c6f5a00000,0x000000c6f6a00000)]
+  0x00000232029f6800 JavaThread "Finalizer" daemon [_thread_blocked, id=1784, stack(0x000000c6f6a00000,0x000000c6f7a00000)]
+  0x00000232029f4800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=2172, stack(0x000000c6f7a00000,0x000000c6f8a00000)]
+  0x00000232029f8800 JavaThread "Attach Listener" daemon [_thread_blocked, id=22080, stack(0x000000c6f8a00000,0x000000c6f9a00000)]
+  0x00000232231ce800 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=1380, stack(0x000000c6f9a00000,0x000000c6faa00000)]
+  0x00000232421f8800 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=17064, stack(0x000000c6faa00000,0x000000c6fba00000)]
+  0x00000232029f2800 JavaThread "Sweeper thread" daemon [_thread_blocked, id=22452, stack(0x000000c6fba00000,0x000000c6fca00000)]
+  0x00000232029fb800 JavaThread "Service Thread" daemon [_thread_blocked, id=22488, stack(0x000000c6fca00000,0x000000c6fda00000)]
+  0x00000232029fc800 JavaThread "Common-Cleaner" daemon [_thread_blocked, id=8496, stack(0x000000c6fea00000,0x000000c6ffa00000)]
+=>0x00000232029fd800 JavaThread "Python Reference Queue" daemon [_thread_in_native, id=22268, stack(0x000000c680000000,0x000000c681000000)]
+  0x000002324256a800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=13572, stack(0x000000c683000000,0x000000c684000000)]
+  0x0000023242808800 JavaThread "C2 CompilerThread2" daemon [_thread_blocked, id=13108, stack(0x000000c684000000,0x000000c685000000)]
+
+Other Threads:
+  0x00000232231cd800 VMThread "VM Thread" [stack: 0x000000c6f4a00000,0x000000c6f5a00000] [id=1696]
+  0x0000023202a06800 WatcherThread [stack: 0x000000c6fda00000,0x000000c6fea00000] [id=1440]
+  0x0000023202a06000 GCTaskThread "GC Thread#0" [stack: 0x000000c6efa00000,0x000000c6f0a00000] [id=19520]
+  0x0000023202a03000 GCTaskThread "GC Thread#1" [stack: 0x000000c681000000,0x000000c682000000] [id=15136]
+  0x0000023202a08000 GCTaskThread "GC Thread#2" [stack: 0x000000c682000000,0x000000c683000000] [id=16896]
+  0x0000023223155800 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000c6f0a00000,0x000000c6f1a00000] [id=8640]
+  0x0000023202a04000 ConcurrentGCThread "G1 Conc#0" [stack: 0x000000c6f1a00000,0x000000c6f2a00000] [id=14632]
+  0x0000023202a02000 ConcurrentGCThread "G1 Conc#1" [stack: 0x000000c685000000,0x000000c686000000] [id=12332]
+  0x0000023242081800 ConcurrentGCThread "G1 Refine#0" [stack: 0x000000c6f2a00000,0x000000c6f3a00000] [id=9000]
+  0x0000023202e59000 ConcurrentGCThread "G1 Young RemSet Sampling" [stack: 0x000000c6f3a00000,0x000000c6f4a00000] [id=8320]
+
+Threads with active compile tasks:
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap address: 0x00000000c0000000, size: 1024 MB, Compressed Oops mode: 32-bit
+Narrow klass base: 0x0000000800000000, Narrow klass shift: 3
+Compressed class space size: 1073741824 Address: 0x0000000800b40000
+
+Heap:
+ garbage-first heap   total 30720K, used 9625K [0x00000000c0000000, 0x0000000100000000)
+  region size 1024K, 6 young (6144K), 1 survivors (1024K)
+ Metaspace       used 2420K, capacity 4938K, committed 5120K, reserved 1056768K
+  class space    used 216K, capacity 471K, committed 512K, reserved 1048576K
+Heap Regions: E=young(eden), S=young(survivor), O=old, HS=humongous(starts), HC=humongous(continues), CS=collection set, F=free, A=archive, TAMS=top-at-mark-start (previous, next)
+|   0|0x00000000c0000000, 0x00000000c00d5e80, 0x00000000c0100000| 83%| O|  |TAMS 0x00000000c00d5e80, 0x00000000c0000000| Untracked 
+|   1|0x00000000c0100000, 0x00000000c0200000, 0x00000000c0200000|100%| O|  |TAMS 0x00000000c0200000, 0x00000000c0100000| Untracked 
+|   2|0x00000000c0200000, 0x00000000c0200000, 0x00000000c0300000|  0%| F|  |TAMS 0x00000000c0200000, 0x00000000c0200000| Untracked 
+|   3|0x00000000c0300000, 0x00000000c0400000, 0x00000000c0400000|100%| O|  |TAMS 0x00000000c0300000, 0x00000000c0300000| Untracked 
+|   4|0x00000000c0400000, 0x00000000c0500000, 0x00000000c0500000|100%| O|  |TAMS 0x00000000c0400000, 0x00000000c0400000| Untracked 
+|   5|0x00000000c0500000, 0x00000000c0600000, 0x00000000c0600000|100%| O|  |TAMS 0x00000000c0500000, 0x00000000c0500000| Untracked 
+|   6|0x00000000c0600000, 0x00000000c0633600, 0x00000000c0700000| 20%| O|  |TAMS 0x00000000c0600000, 0x00000000c0600000| Untracked 
+|   7|0x00000000c0700000, 0x00000000c0700000, 0x00000000c0800000|  0%| F|  |TAMS 0x00000000c0700000, 0x00000000c0700000| Untracked 
+|   8|0x00000000c0800000, 0x00000000c0800000, 0x00000000c0900000|  0%| F|  |TAMS 0x00000000c0800000, 0x00000000c0800000| Untracked 
+|   9|0x00000000c0900000, 0x00000000c0900000, 0x00000000c0a00000|  0%| F|  |TAMS 0x00000000c0900000, 0x00000000c0900000| Untracked 
+|  10|0x00000000c0a00000, 0x00000000c0a00000, 0x00000000c0b00000|  0%| F|  |TAMS 0x00000000c0a00000, 0x00000000c0a00000| Untracked 
+|  11|0x00000000c0b00000, 0x00000000c0b00000, 0x00000000c0c00000|  0%| F|  |TAMS 0x00000000c0b00000, 0x00000000c0b00000| Untracked 
+|  12|0x00000000c0c00000, 0x00000000c0c00000, 0x00000000c0d00000|  0%| F|  |TAMS 0x00000000c0c00000, 0x00000000c0c00000| Untracked 
+|  13|0x00000000c0d00000, 0x00000000c0d00000, 0x00000000c0e00000|  0%| F|  |TAMS 0x00000000c0d00000, 0x00000000c0d00000| Untracked 
+|  14|0x00000000c0e00000, 0x00000000c0e00000, 0x00000000c0f00000|  0%| F|  |TAMS 0x00000000c0e00000, 0x00000000c0e00000| Untracked 
+|  15|0x00000000c0f00000, 0x00000000c0f00000, 0x00000000c1000000|  0%| F|  |TAMS 0x00000000c0f00000, 0x00000000c0f00000| Untracked 
+|  16|0x00000000c1000000, 0x00000000c1000000, 0x00000000c1100000|  0%| F|  |TAMS 0x00000000c1000000, 0x00000000c1000000| Untracked 
+|  17|0x00000000c1100000, 0x00000000c1100000, 0x00000000c1200000|  0%| F|  |TAMS 0x00000000c1100000, 0x00000000c1100000| Untracked 
+|  18|0x00000000c1200000, 0x00000000c1200000, 0x00000000c1300000|  0%| F|  |TAMS 0x00000000c1200000, 0x00000000c1200000| Untracked 
+|  19|0x00000000c1300000, 0x00000000c1300000, 0x00000000c1400000|  0%| F|  |TAMS 0x00000000c1300000, 0x00000000c1300000| Untracked 
+|  20|0x00000000c1400000, 0x00000000c1400000, 0x00000000c1500000|  0%| F|  |TAMS 0x00000000c1400000, 0x00000000c1400000| Untracked 
+|  21|0x00000000c1500000, 0x00000000c1500000, 0x00000000c1600000|  0%| F|  |TAMS 0x00000000c1500000, 0x00000000c1500000| Untracked 
+|  22|0x00000000c1600000, 0x00000000c1600000, 0x00000000c1700000|  0%| F|  |TAMS 0x00000000c1600000, 0x00000000c1600000| Untracked 
+|  23|0x00000000c1700000, 0x00000000c1700000, 0x00000000c1800000|  0%| F|  |TAMS 0x00000000c1700000, 0x00000000c1700000| Untracked 
+|  24|0x00000000c1800000, 0x00000000c18cdcd8, 0x00000000c1900000| 80%| E|  |TAMS 0x00000000c1800000, 0x00000000c1800000| Complete 
+|  25|0x00000000c1900000, 0x00000000c1a00000, 0x00000000c1a00000|100%| E|CS|TAMS 0x00000000c1900000, 0x00000000c1900000| Complete 
+|  48|0x00000000c3000000, 0x00000000c3100000, 0x00000000c3100000|100%| E|CS|TAMS 0x00000000c3000000, 0x00000000c3000000| Complete 
+|  49|0x00000000c3100000, 0x00000000c3200000, 0x00000000c3200000|100%| E|CS|TAMS 0x00000000c3100000, 0x00000000c3100000| Complete 
+|  67|0x00000000c4300000, 0x00000000c435d030, 0x00000000c4400000| 36%| S|CS|TAMS 0x00000000c4300000, 0x00000000c4300000| Complete 
+|  68|0x00000000c4400000, 0x00000000c4500000, 0x00000000c4500000|100%| E|CS|TAMS 0x00000000c4400000, 0x00000000c4400000| Complete 
+
+Card table byte_map: [0x0000023224a00000,0x0000023224c00000] _byte_map_base: 0x0000023224400000
+
+Marking Bits (Prev, Next): (CMBitMap*) 0x0000023202bce168, (CMBitMap*) 0x0000023202bce128
+ Prev Bits: [0x000002323e9e0000, 0x000002323f9e0000)
+ Next Bits: [0x0000023224e00000, 0x0000023225e00000)
+
+Polling page: 0x0000023223d70000
+
+Metaspace:
+
+Usage:
+  Non-class:      4.36 MB capacity,     2.15 MB ( 49%) used,     2.20 MB ( 51%) free+waste,     5.25 KB ( <1%) overhead. 
+      Class:    471.00 KB capacity,   216.02 KB ( 46%) used,   252.04 KB ( 54%) free+waste,     2.94 KB ( <1%) overhead. 
+       Both:      4.82 MB capacity,     2.36 MB ( 49%) used,     2.45 MB ( 51%) free+waste,     8.19 KB ( <1%) overhead. 
+
+Virtual space:
+  Non-class space:        8.00 MB reserved,       4.50 MB ( 56%) committed 
+      Class space:        1.00 GB reserved,     512.00 KB ( <1%) committed 
+             Both:        1.01 GB reserved,       5.00 MB ( <1%) committed 
+
+Chunk freelists:
+   Non-Class:  13.00 KB
+       Class:  1.00 KB
+        Both:  14.00 KB
+
+MaxMetaspaceSize: 17179869184.00 GB
+CompressedClassSpaceSize: 1.00 GB
+
+CodeHeap 'non-profiled nmethods': size=120000Kb used=391Kb max_used=391Kb free=119608Kb
+ bounds [0x00000232374b0000, 0x0000023237720000, 0x000002323e9e0000]
+CodeHeap 'profiled nmethods': size=120000Kb used=1558Kb max_used=1558Kb free=118442Kb
+ bounds [0x000002322ff80000, 0x00000232301f0000, 0x00000232374b0000]
+CodeHeap 'non-nmethods': size=5760Kb used=1137Kb max_used=1177Kb free=4622Kb
+ bounds [0x000002322f9e0000, 0x000002322fc50000, 0x000002322ff80000]
+ total_blobs=1778 nmethods=883 adapters=288
+ compilation: enabled
+              stopped_count=0, restarted_count=0
+ full_count=0
+
+Compilation events (20 events):
+Event: 0.492 Thread 0x00000232421f8800 nmethod 443 0x000002323001ca10 code [0x000002323001cbc0, 0x000002323001cd58]
+Event: 0.492 Thread 0x00000232421f8800  442       3       org.jpype.manager.MethodResolution::isMoreSpecificThan (519 bytes)
+Event: 0.493 Thread 0x00000232231ce800 nmethod 436 0x00000232374cdd10 code [0x00000232374cdea0, 0x00000232374ce118]
+Event: 0.493 Thread 0x00000232231ce800  437       4       org.jpype.manager.MethodResolution::of (2 bytes)
+Event: 0.493 Thread 0x00000232231ce800 nmethod 437 0x00000232374ce590 code [0x00000232374ce700, 0x00000232374ce738]
+Event: 0.493 Thread 0x00000232231ce800  414       4       java.util.HashMap::afterNodeAccess (1 bytes)
+Event: 0.493 Thread 0x00000232231ce800 nmethod 414 0x00000232374ce890 code [0x00000232374cea20, 0x00000232374cea98]
+Event: 0.495 Thread 0x00000232421f8800 nmethod 442 0x000002323001ce10 code [0x000002323001d5c0, 0x0000023230022030]
+Event: 0.495 Thread 0x00000232421f8800  445       3       java.util.zip.ZipFile::getZipEntry (308 bytes)
+Event: 0.496 Thread 0x00000232421f8800 nmethod 445 0x0000023230023b10 code [0x0000023230023e80, 0x0000023230025cd0]
+Event: 0.496 Thread 0x00000232421f8800  446       3       java.util.jar.JarFile$JarFileEntry::<init> (16 bytes)
+Event: 0.496 Thread 0x00000232421f8800 nmethod 446 0x0000023230026810 code [0x00000232300269c0, 0x0000023230026cb0]
+Event: 0.496 Thread 0x00000232421f8800  447       3       java.util.jar.JarEntry::<init> (6 bytes)
+Event: 0.496 Thread 0x00000232421f8800 nmethod 447 0x0000023230026d90 code [0x0000023230026f40, 0x00000232300270f0]
+Event: 0.496 Thread 0x00000232421f8800  448       3       java.util.zip.ZipEntry::<init> (74 bytes)
+Event: 0.496 Thread 0x00000232421f8800 nmethod 448 0x0000023230027190 code [0x0000023230027380, 0x00000232300279a0]
+Event: 0.496 Thread 0x00000232421f8800  444   !   3       java.util.jar.JarFile::checkForSpecialAttributes (163 bytes)
+Event: 0.497 Thread 0x00000232421f8800 nmethod 444 0x0000023230027b90 code [0x0000023230027ec0, 0x00000232300292d0]
+Event: 0.497 Thread 0x00000232421f8800  450       1       sun.invoke.util.Wrapper::basicTypeChar (5 bytes)
+Event: 0.497 Thread 0x00000232421f8800 nmethod 450 0x00000232374ceb90 code [0x00000232374ced20, 0x00000232374cee58]
+
+GC Heap History (2 events):
+Event: 0.478 GC heap before
+{Heap before GC invocations=0 (full 0):
+ garbage-first heap   total 131072K, used 3072K [0x00000000c0000000, 0x0000000100000000)
+  region size 1024K, 4 young (4096K), 0 survivors (0K)
+ Metaspace       used 1420K, capacity 4708K, committed 4864K, reserved 1056768K
+  class space    used 137K, capacity 439K, committed 512K, reserved 1048576K
+}
+Event: 0.484 GC heap after
+{Heap after GC invocations=1 (full 1):
+ garbage-first heap   total 10240K, used 1560K [0x00000000c0000000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 1420K, capacity 4708K, committed 4864K, reserved 1056768K
+  class space    used 137K, capacity 439K, committed 512K, reserved 1048576K
+}
+
+Deoptimization events (4 events):
+Event: 0.332 Thread 0x00000232029f6000 Uncommon trap: trap_request=0xffffff45 fr.pc=0x00000232374b4ab0 relative=0x0000000000000210
+Event: 0.332 Thread 0x00000232029f6000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00000232374b4ab0 method=java.lang.String.hashCode()I @ 13 c2
+Event: 0.332 Thread 0x00000232029f6000 DEOPT PACKING pc=0x00000232374b4ab0 sp=0x000000c6cd9c9ad0
+Event: 0.332 Thread 0x00000232029f6000 DEOPT UNPACKING pc=0x000002322fa2912f sp=0x000000c6cd9c9a68 mode 2
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (4 events):
+Event: 0.283 Thread 0x00000232029f6000 Exception <a 'java/lang/NoClassDefFoundError'{0x00000000c7ea4fd8}: org/jpype/classloader/DynamicClassLoader> (0x00000000c7ea4fd8) 
+thrown [t:/workspace/open/src/hotspot/share/classfile/systemDictionary.cpp, line 221]
+Event: 0.380 Thread 0x00000232029f6000 Exception <a 'sun/nio/fs/WindowsException'{0x00000000c7da0890}> (0x00000000c7da0890) 
+thrown [t:/workspace/open/src/hotspot/share/prims/jni.cpp, line 598]
+Event: 0.381 Thread 0x00000232029f6000 Exception <a 'sun/nio/fs/WindowsException'{0x00000000c7da1108}> (0x00000000c7da1108) 
+thrown [t:/workspace/open/src/hotspot/share/prims/jni.cpp, line 598]
+Event: 0.452 Thread 0x00000232029f6000 Exception <a 'java/lang/IncompatibleClassChangeError'{0x00000000c7c27198}: Found class java.lang.Object, but interface was expected> (0x00000000c7c27198) 
+thrown [t:/workspace/open/src/hotspot/share/interpreter/linkResolver.cpp, line 833]
+
+Events (20 events):
+Event: 0.472 loading class jdk/internal/reflect/ClassDefiner$1
+Event: 0.472 loading class jdk/internal/reflect/ClassDefiner$1 done
+Event: 0.472 loading class jdk/internal/reflect/BootstrapConstructorAccessorImpl
+Event: 0.472 loading class jdk/internal/reflect/BootstrapConstructorAccessorImpl done
+Event: 0.475 loading class java/lang/Deprecated
+Event: 0.475 loading class java/lang/Deprecated done
+Event: 0.476 loading class java/lang/annotation/Documented
+Event: 0.476 loading class java/lang/annotation/Documented done
+Event: 0.478 Executing VM operation: G1CollectFull
+Event: 0.484 Executing VM operation: G1CollectFull done
+Event: 0.485 loading class java/util/function/ToIntFunction
+Event: 0.485 loading class java/util/function/ToIntFunction done
+Event: 0.485 loading class java/util/function/ToLongFunction
+Event: 0.485 loading class java/util/function/ToLongFunction done
+Event: 0.485 loading class java/util/function/ToDoubleFunction
+Event: 0.485 loading class java/util/function/ToDoubleFunction done
+Event: 0.492 loading class org/jpype/JPypeSignal
+Event: 0.492 loading class org/jpype/JPypeSignal done
+Event: 0.492 Executing VM operation: RevokeBias
+Event: 0.492 Executing VM operation: RevokeBias done
+
+
+Dynamic libraries:
+0x00007ff60af10000 - 0x00007ff60c863000 	C:\Program Files\RStudio\bin\rsession-utf8.exe
+0x00007fff6ec70000 - 0x00007fff6ee68000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007fff6e4d0000 - 0x00007fff6e58d000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007fff6c410000 - 0x00007fff6c6de000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007fff6e1e0000 - 0x00007fff6e28e000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007fff6e9b0000 - 0x00007fff6ea4e000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007fff6dd40000 - 0x00007fff6dddc000 	C:\WINDOWS\System32\sechost.dll
+0x00007fff6e870000 - 0x00007fff6e995000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007fff6e770000 - 0x00007fff6e7db000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007fff6ea50000 - 0x00007fff6eaa5000 	C:\WINDOWS\System32\SHLWAPI.dll
+0x00007fff6c9f0000 - 0x00007fff6cb46000 	C:\WINDOWS\System32\CRYPT32.dll
+0x00007fff6c8f0000 - 0x00007fff6c9f0000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007fff6e330000 - 0x00007fff6e4d0000 	C:\WINDOWS\System32\USER32.dll
+0x00007fff6c810000 - 0x00007fff6c832000 	C:\WINDOWS\System32\win32u.dll
+0x00007fff6e020000 - 0x00007fff6e04a000 	C:\WINDOWS\System32\GDI32.dll
+0x00007fff6cbc0000 - 0x00007fff6cccb000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007fff6c6e0000 - 0x00007fff6c77d000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007fff6d5f0000 - 0x00007fff6dd34000 	C:\WINDOWS\System32\SHELL32.dll
+0x00007fff6baf0000 - 0x00007fff6bb5a000 	C:\WINDOWS\SYSTEM32\MSWSOCK.dll
+0x00007fff6dde0000 - 0x00007fff6df0a000 	C:\WINDOWS\System32\ole32.dll
+0x00007fff6d290000 - 0x00007fff6d5e4000 	C:\WINDOWS\System32\combase.dll
+0x00007fff6c390000 - 0x00007fff6c3b7000 	C:\WINDOWS\System32\bcrypt.dll
+0x00007fff6ccd0000 - 0x00007fff6cd26000 	C:\WINDOWS\System32\WLDAP32.dll
+0x00007fff41320000 - 0x00007fff41392000 	C:\Program Files\R\R-4.2.0\bin\x64\Rgraphapp.dll
+0x00007fff6cd30000 - 0x00007fff6ce0a000 	C:\WINDOWS\System32\comdlg32.dll
+0x00007fff6df70000 - 0x00007fff6e01d000 	C:\WINDOWS\System32\shcore.dll
+0x00007fff44590000 - 0x00007fff4461d000 	C:\Program Files\RStudio\bin\MSVCP140.dll
+0x00007fff6e740000 - 0x00007fff6e770000 	C:\WINDOWS\System32\IMM32.dll
+0x00007ffedb5f0000 - 0x00007ffedd89f000 	C:\Program Files\R\R-4.2.0\bin\x64\R.dll
+0x00007fff601a0000 - 0x00007fff601bb000 	C:\Program Files\RStudio\bin\VCRUNTIME140.dll
+0x00007fff623d0000 - 0x00007fff623dc000 	C:\Program Files\RStudio\bin\VCRUNTIME140_1.dll
+0x00007fff60280000 - 0x00007fff6028c000 	C:\WINDOWS\SYSTEM32\Secur32.dll
+0x00007fff5d0d0000 - 0x00007fff5d180000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_5.82.19041.1110_none_792d1c772443f647\COMCTL32.dll
+0x00007fff5e4c0000 - 0x00007fff5e4c7000 	C:\WINDOWS\SYSTEM32\MSIMG32.dll
+0x00007fff5b890000 - 0x00007fff5b8b7000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007fff41720000 - 0x00007fff4176b000 	C:\Program Files\R\R-4.2.0\bin\x64\Rblas.dll
+0x00007fff642c0000 - 0x00007fff642ca000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007fff455f0000 - 0x00007fff45617000 	C:\Program Files\R\R-4.2.0\bin\x64\Riconv.dll
+0x00007fff6bc80000 - 0x00007fff6bc8c000 	C:\WINDOWS\SYSTEM32\CRYPTBASE.DLL
+0x00007fff6c280000 - 0x00007fff6c2b2000 	C:\WINDOWS\SYSTEM32\SSPICLI.DLL
+0x00007fff6a450000 - 0x00007fff6abe4000 	C:\WINDOWS\SYSTEM32\windows.storage.dll
+0x00007fff6bd10000 - 0x00007fff6bd40000 	C:\WINDOWS\SYSTEM32\Wldp.dll
+0x00007fff4d8a0000 - 0x00007fff4d8b7000 	C:\WINDOWS\system32\napinsp.dll
+0x00007fff4d8f0000 - 0x00007fff4d90b000 	C:\WINDOWS\system32\pnrpnsp.dll
+0x00007fff4d910000 - 0x00007fff4d925000 	C:\WINDOWS\system32\wshbth.dll
+0x00007fff68030000 - 0x00007fff6804d000 	C:\WINDOWS\system32\NLAapi.dll
+0x00007fff6b7b0000 - 0x00007fff6b7eb000 	C:\WINDOWS\SYSTEM32\IPHLPAPI.DLL
+0x00007fff6b800000 - 0x00007fff6b8cb000 	C:\WINDOWS\SYSTEM32\DNSAPI.dll
+0x00007fff6e9a0000 - 0x00007fff6e9a8000 	C:\WINDOWS\System32\NSI.dll
+0x00007fff4e0d0000 - 0x00007fff4e0e2000 	C:\WINDOWS\System32\winrnr.dll
+0x00007fff6c2d0000 - 0x00007fff6c2ef000 	C:\WINDOWS\SYSTEM32\profapi.dll
+0x00007fff6c780000 - 0x00007fff6c802000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007fff6a250000 - 0x00007fff6a262000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007fff69d70000 - 0x00007fff69e0e000 	C:\WINDOWS\system32\uxtheme.dll
+0x00007fff5a300000 - 0x00007fff5a314000 	C:\Program Files\R\R-4.2.0\library\methods\libs\x64\methods.dll
+0x00007fff45250000 - 0x00007fff4527d000 	C:\Program Files\R\R-4.2.0\library\utils\libs\x64\utils.dll
+0x00007fff25a10000 - 0x00007fff25c71000 	C:\Program Files\R\R-4.2.0\library\grDevices\libs\x64\grDevices.dll
+0x00007fff3e6c0000 - 0x00007fff3e715000 	C:\Program Files\R\R-4.2.0\library\graphics\libs\x64\graphics.dll
+0x00007fff3e610000 - 0x00007fff3e6b1000 	C:\Program Files\R\R-4.2.0\library\stats\libs\x64\stats.dll
+0x00007ffef5400000 - 0x00007ffef5676000 	C:\Program Files\R\R-4.2.0\bin\x64\Rlapack.dll
+0x00007fff3e230000 - 0x00007fff3e28b000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\rlang\libs\x64\rlang.dll
+0x00007fff3e5d0000 - 0x00007fff3e609000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\cli\libs\x64\cli.dll
+0x00007ffed6580000 - 0x00007ffedb5e4000 	C:\Program Files\RStudio\bin\rsclang\x86_64\libclang.dll
+0x00007fff6e110000 - 0x00007fff6e1dd000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007fff49590000 - 0x00007fff495b0000 	C:\Program Files\R\R-4.2.0\library\tools\libs\x64\tools.dll
+0x00007ffeec9d0000 - 0x00007ffeed904000 	C:\PROGRA~1\R\R-42~1.0\modules\x64\internet.dll
+0x00007fff5c810000 - 0x00007fff5cce6000 	C:\WINDOWS\SYSTEM32\WININET.dll
+0x00007fff3e1c0000 - 0x00007fff3e1e3000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\digest\libs\x64\digest.dll
+0x00007fff3e180000 - 0x00007fff3e1b6000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\fastmap\libs\x64\fastmap.dll
+0x00007fff67ce0000 - 0x00007fff67ced000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\htmltools\libs\x64\htmltools.dll
+0x00007fff5d920000 - 0x00007fff5d92d000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\xfun\libs\x64\xfun.dll
+0x00007fff3b5f0000 - 0x00007fff3b61f000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\yaml\libs\x64\yaml.dll
+0x00007fff49300000 - 0x00007fff49320000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\fansi\libs\x64\fansi.dll
+0x00007fff5d5d0000 - 0x00007fff5d5dd000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\ellipsis\libs\x64\ellipsis.dll
+0x00007fff5d400000 - 0x00007fff5d40e000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\magrittr\libs\x64\magrittr.dll
+0x00007fff5c000000 - 0x00007fff5c00e000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\glue\libs\x64\glue.dll
+0x00007fff3abb0000 - 0x00007fff3ac04000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\utf8\libs\x64\utf8.dll
+0x00007fff34310000 - 0x00007fff3445d000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\vctrs\libs\x64\vctrs.dll
+0x00007fff5ba10000 - 0x00007fff5ba1e000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\tibble\libs\x64\tibble.dll
+0x00007fff482a0000 - 0x00007fff482b1000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\purrr\libs\x64\purrr.dll
+0x00007fff39a40000 - 0x00007fff39a78000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\dplyr\libs\x64\dplyr.dll
+0x00007fff34d60000 - 0x00007fff34da8000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\tidyr\libs\x64\tidyr.dll
+0x00007fff33e10000 - 0x00007fff33f63000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\Rcpp\libs\x64\Rcpp.dll
+0x00007fff1e2c0000 - 0x00007fff1e3c4000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\plyr\libs\x64\plyr.dll
+0x00007ffee6e10000 - 0x00007ffee731b000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\stringi\libs\x64\stringi.dll
+0x00007fff0bb60000 - 0x00007fff0bc6b000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\reshape2\libs\x64\reshape2.dll
+0x00007ffeec670000 - 0x00007ffeec9c3000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\sysfonts\libs\x64\sysfonts.dll
+0x00007fff46000000 - 0x00007fff4601d000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\showtext\libs\x64\showtext.dll
+0x00007ffee6cd0000 - 0x00007ffee6e05000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\readxl\libs\x64\readxl.dll
+0x00007fff342b0000 - 0x00007fff34301000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\SnowballC\libs\x64\SnowballC.dll
+0x00007ffee6b40000 - 0x00007ffee6cc5000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\hunspell\libs\x64\hunspell.dll
+0x00007fff6b030000 - 0x00007fff6b063000 	C:\WINDOWS\SYSTEM32\ntmarta.dll
+0x00007fff48200000 - 0x00007fff48231000 	C:\Program Files\R\R-4.2.0\library\grid\libs\x64\grid.dll
+0x00007fff601c0000 - 0x00007fff601ce000 	C:\Program Files\R\R-4.2.0\library\lattice\libs\x64\lattice.dll
+0x00007fff1e1f0000 - 0x00007fff1e2b4000 	C:\Program Files\R\R-4.2.0\library\Matrix\libs\x64\Matrix.dll
+0x00007fff49480000 - 0x00007fff494a1000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\jsonlite\libs\x64\jsonlite.dll
+0x00007fff3e2b0000 - 0x00007fff3e300000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\png\libs\x64\png.dll
+0x00007ffef5cf0000 - 0x00007ffef5e30000 	C:\Users\statkclee\AppData\Local\R\win-library\4.2\reticulate\libs\x64\reticulate.dll
+0x00007ffee6700000 - 0x00007ffee6b32000 	C:\Users\statkclee\anaconda3\python38.dll
+0x00007fff6c050000 - 0x00007fff6c068000 	C:\WINDOWS\SYSTEM32\CRYPTSP.dll
+0x00007fff6b420000 - 0x00007fff6b454000 	C:\WINDOWS\system32\rsaenh.dll
+0x00007fff4f330000 - 0x00007fff4f33f000 	C:\Users\statkclee\anaconda3\python3.DLL
+0x00007fff48710000 - 0x00007fff48730000 	C:\Users\STATKC~1\ANACON~1\DLLs\_ctypes.pyd
+0x00007fff4ef40000 - 0x00007fff4ef4b000 	C:\Users\STATKC~1\ANACON~1\DLLs\libffi-7.dll
+0x0000000062f80000 - 0x0000000064e08000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\.libs\libopenblas.FB5AE2TYXYH2IJRDKGDGQ3XBKLKTF43H.gfortran-win_amd64.dll
+0x00007ffef5a30000 - 0x00007ffef5ce2000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\core\_multiarray_umath.cp38-win_amd64.pyd
+0x00007fff45ec0000 - 0x00007fff45ed5000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\core\_multiarray_tests.cp38-win_amd64.pyd
+0x00007fff44870000 - 0x00007fff44886000 	C:\Users\STATKC~1\ANACON~1\DLLs\_socket.pyd
+0x00007fff4bab0000 - 0x00007fff4bab9000 	C:\Users\STATKC~1\ANACON~1\DLLs\select.pyd
+0x00007fff429a0000 - 0x00007fff429bd000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\linalg\_umath_linalg.cp38-win_amd64.pyd
+0x00007fff41700000 - 0x00007fff4171f000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\fft\_pocketfft_internal.cp38-win_amd64.pyd
+0x00007fff32ac0000 - 0x00007fff32b4c000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\mtrand.cp38-win_amd64.pyd
+0x00007fff37b00000 - 0x00007fff37b26000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\bit_generator.cp38-win_amd64.pyd
+0x00007fff363e0000 - 0x00007fff3640f000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\_common.cp38-win_amd64.pyd
+0x00007fff4af80000 - 0x00007fff4af8d000 	C:\Users\STATKC~1\ANACON~1\DLLs\_hashlib.pyd
+0x00007ffeed980000 - 0x00007ffeedccb000 	C:\Users\statkclee\anaconda3\Library\bin\libcrypto-1_1-x64.dll
+0x00007fff34d20000 - 0x00007fff34d5e000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\_bounded_integers.cp38-win_amd64.pyd
+0x00007fff41300000 - 0x00007fff41315000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\_mt19937.cp38-win_amd64.pyd
+0x00007fff3fe10000 - 0x00007fff3fe24000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\_philox.cp38-win_amd64.pyd
+0x00007fff3e290000 - 0x00007fff3e2a7000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\_pcg64.cp38-win_amd64.pyd
+0x00007fff4aa40000 - 0x00007fff4aa50000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\_sfc64.cp38-win_amd64.pyd
+0x00007fff25960000 - 0x00007fff25a04000 	C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random\_generator.cp38-win_amd64.pyd
+0x00007fff34280000 - 0x00007fff342ad000 	C:\Users\STATKC~1\ANACON~1\DLLs\_elementtree.pyd
+0x00007fff2d7a0000 - 0x00007fff2d7d1000 	C:\Users\STATKC~1\ANACON~1\DLLs\pyexpat.pyd
+0x00007fff34250000 - 0x00007fff34277000 	C:\Users\STATKC~1\ANACON~1\DLLs\_ssl.pyd
+0x00007fff1d970000 - 0x00007fff1da1c000 	C:\Users\statkclee\anaconda3\Library\bin\libssl-1_1-x64.dll
+0x00007fff3e160000 - 0x00007fff3e177000 	C:\Users\STATKC~1\ANACON~1\DLLs\_bz2.pyd
+0x00007fff33de0000 - 0x00007fff33e0a000 	C:\Users\STATKC~1\ANACON~1\DLLs\_lzma.pyd
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\RStudio\bin;C:\WINDOWS\SYSTEM32;C:\Program Files\R\R-4.2.0\bin\x64;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_5.82.19041.1110_none_792d1c772443f647;C:\Program Files\R\R-4.2.0\library\methods\libs\x64;C:\Program Files\R\R-4.2.0\library\utils\libs\x64;C:\Program Files\R\R-4.2.0\library\grDevices\libs\x64;C:\Program Files\R\R-4.2.0\library\graphics\libs\x64;C:\Program Files\R\R-4.2.0\library\stats\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\rlang\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\cli\libs\x64;C:\Program Files\RStudio\bin\rsclang\x86_64;C:\Program Files\R\R-4.2.0\library\tools\libs\x64;C:\PROGRA~1\R\R-42~1.0\modules\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\digest\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\fastmap\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\htmltools\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\xfun\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\yaml\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\fansi\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\ellipsis\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\magrittr\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\glue\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\utf8\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\vctrs\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\tibble\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\purrr\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\dplyr\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\tidyr\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\Rcpp\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\plyr\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\stringi\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\reshape2\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\sysfonts\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\showtext\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\readxl\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\SnowballC\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\hunspell\libs\x64;C:\Program Files\R\R-4.2.0\library\grid\libs\x64;C:\Program Files\R\R-4.2.0\library\lattice\libs\x64;C:\Program Files\R\R-4.2.0\library\Matrix\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\jsonlite\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\png\libs\x64;C:\Users\statkclee\AppData\Local\R\win-library\4.2\reticulate\libs\x64;C:\Users\statkclee\anaconda3;C:\Users\STATKC~1\ANACON~1\DLLs;C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\.libs;C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\core;C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\linalg;C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\fft;C:\Users\STATKC~1\ANACON~1\lib\site-packages\numpy\random;C:\Users\statkclee\anaconda3\Library\bin;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\.libs;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\_lib;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\spatial;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse\csgraph;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\linalg;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\special;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\spatial\transform;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\ndimage;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse\linalg\_isolve;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse\linalg\_dsolve;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse\linalg\_eigen\arpack;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse\linalg\isolve;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse\linalg\dsolve;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\sparse\linalg\eigen\arpack;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\optimize;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\optimize\_trlib;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\optimize\_lsq;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\optimize\_highs;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\integrate;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\interpolate;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\stats;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\stats\_boost;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\stats\_unuran;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e;C:\Users\STATKC~1\ANACON~1\lib\site-packages\regex;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\__check_build;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\utils;C:\Users\STATKC~1\ANACON~1\lib\site-packages\win32;C:\Users\STATKC~1\ANACON~1\lib\site-packages\psutil;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\feature_extraction;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\preprocessing;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\datasets;C:\Users\STATKC~1\ANACON~1\lib\site-packages\scipy\io\matlab;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\svm;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\metrics\cluster;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\metrics;C:\Users\STATKC~1\ANACON~1\lib\site-packages\sklearn\linear_model;C:\Windows\System32\IME\IMEKR;C:\Windows\System32\IME\shared;C:\Users\STATKC~1\ANACON~1\lib\site-packages;C:\Program Files\OpenJDK\jdk-13.0.1\bin\server;C:\Program Files\OpenJDK\jdk-13.0.1\bin
+
+VM Arguments:
+jvm_args: -Dfile.encoding=UTF8 -ea -Xmx1024m 
+java_command: <unknown>
+java_class_path (initial): C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\bin;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\aho-corasick.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\jhannanum-0.8.4.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\kkma-2.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\komoran-3.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\open-korean-text-2.1.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\scala-library-2.12.3.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\shineware-common-1.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\shineware-ds-1.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\snakeyaml-1.12.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\twitter-text-1.14.7.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\jhannanum-0.8.4.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\kkma-2.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\aho-corasick.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\shineware-common-1.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\shineware-ds-1.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\komoran-3.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\snakeyaml-1.12.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\scala-library-2.12.3.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\open-korean-text-2.1.0.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\twitter-text-1.14.7.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\aho-corasick.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\jhannanum-0.8.4.jar;C:\Users\statkclee\anaconda3\Lib\site-packages\konlpy\java\kkma-2.0.jar;C:\Users\statkclee\anaconda3
+Launcher Type: generic
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 134217728                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 1073741824                                {product} {command line}
+   size_t MaxNewSize                               = 643825664                                 {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5836300                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122910970                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122910970                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 1073741824                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\OpenJDK\jdk-13.0.1
+PATH=C:\Users\statkclee\anaconda3;C:\Users\statkclee\anaconda3\Library\mingw-w64\bin;C:\Users\statkclee\anaconda3\Library\usr\bin;C:\Users\statkclee\anaconda3\Library\bin;C:\Users\statkclee\anaconda3\Scripts;C:\Users\statkclee\anaconda3\bin;C:\Users\STATKC~1\ANACON~1\condabin;C:\Users\STATKC~1\ANACON~1;C:\Users\STATKC~1\ANACON~1\Library\mingw-w64\bin;C:\Users\STATKC~1\ANACON~1\Library\usr\bin;C:\Users\STATKC~1\ANACON~1\Library\bin;C:\Users\STATKC~1\ANACON~1\Scripts;C:\Users\STATKC~1\ANACON~1\bin;C:\Users\statkclee\anaconda3\Scripts;C:\Users\statkclee\anaconda3;c:\rtools42\x86_64-w64-mingw32.static.posix\bin;c:\rtools42\usr\bin;C:\Program Files\R\R-4.2.0\bin\x64;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\libnvvp;C:\Python310\Scripts;C:\Python310;C:\Program Files (x86)\NAT Service;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\ePapyrus\Papyrus-PlugIn-web;C:\Program Files (x86)\ePapyrus\Papyrus-PlugIn-web\Addins;C:\Program Files (x86)\Calibre2;C:\cmder;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\statkclee\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\ProgramData\chocolatey\bin;C:\Program Files\OpenJDK\jdk-13.0.1\bin;c:\Work\전자기록다운로드;C:\Work;C:\Program Files\Git\cmd;C:\Users\statkclee\anaconda3;C:\Users\statkclee\anaconda3\Library\bin;C:\Users\statkclee\anaconda3\Scripts;C:\Program Files\nodejs;C:\Program Files\Quarto\bin;C:\Program Files\gs\gs9.56.1\bin;C:\Program Files\PowerShell\7;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\x64;C:\Program Files\NVIDIA Corporation\Nsight Compute 2020.3.0;C:\Program Fil
+USERNAME=statkclee
+DISPLAY=:0
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 158 Stepping 9, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 19041 (10.0.19041.1806)
+HyperV virtualization detected
+
+CPU:total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 158 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, rtm, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx, fma
+
+Memory: 4k page, system-wide physical 8140M (666M free)
+TotalPageFile size 17532M (AvailPageFile size 4884M)
+current process WorkingSet (physical memory assigned to process): 557M, peak: 557M
+current process commit charge ("private bytes"): 1049M, peak: 1138M
+
+vm_info: OpenJDK 64-Bit Server VM (13.0.1+9) for windows-amd64 JRE (13.0.1+9), built on Oct  6 2019 12:39:43 by "mach5one" with unknown MS VC++:1916
+
+END.

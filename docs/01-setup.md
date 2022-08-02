@@ -487,165 +487,87 @@ parsedtxt
 ## 18     d2           1        9          . PUNCT   .
 </code></pre>
 
+## 파이썬 `nltk`, `konlpy`
 
-## `KoNLP`
+`reticulate` 패키지를 사용해서 파이썬 텍스트 처리 패키지 `nltk`, `konlpy` 기능을 활용하여 효과적인 한국어 텍스트 처리도 가능하다. 즉 `bitTA` 같은 텍스트 패키지를 사용해서 직접 R에서 텍스트 분석을 수행해도 되지만 파이썬에서 이미 구축된 한글 패키지를 파이썬에서 처리하고 결과값을 `reticulate` 패키지 통해서 R에서 후속 작업을 수행하는 작업흐름도 권장할만하다.
 
-형태소 분석기 한나눔(Hannanum)을 R에서 사용할 수 있도록한 패키지다. CRAN에서 내려져 있기 때문에 [개발자 깃헙](https://github.com/haven-jeon/KoNLP)에서 `remote`패키지의 `install_github()`함수를 이용해 설치한다. 
+![](images/rpy-two-approaches.png){width=100%}
 
-`KoNLP`를 설치하기 위해서는 자바와 `rtools`가 필요하다. 
-
-### 자바JDK
-
-1. [자바JDK](https://www.oracle.com/java/technologies/javase-downloads.html)를 다운로드받아 설치한다. 
-
-`jdk`설치여부는 `C:\Program Files\Java\jdk-16`폴더에서 확인할 수 있다. Java SE 16보다 최신 버전이 있으면 최신버전으로 새로 설치한다. 
-
-2. 윈도 `시스템 속성`창의 `환경변수`에서 `JAVA_HOME`을 설정한다. 
-
-**`시스템 속성`창 여는 방법** 
-
-- 간단한 방법: 
-
-윈도 실행창 단축키인 `윈도키`와 키보드의 `R`을 함께 누르면 윈도 실행창이 열린다. 실행창이 뜨면 `sysdm.cpl ,3`을 입력하고 엔터키를 누르면 `시스템 속성` 창이 열린다. 
-
-- 복잡한 방법 (윈도10 기준): 
-
-1. 윈도탐색기에서 `내 PC`에 마우스 커서를 놓고 마우스 오른쪽 버튼 클릭 -> `속성(R)` 클릭해 윈도설정에서 `정보`창이 열린다. 
-
-2. 윈도설정에서 `정보`창이 열리면 `관련설정` 항목에서 `고급 시스템 설정` 클릭하면  `시스템 속성` 창의 `고급` 탭이 열린다. 
-
-**`환경변수` 설정하기**
-
-1. `시스템 속성`창 하단의 `환경설정`버튼을 클릭한다. `환경변수`창이 열리면 `시스템변수(S)`아래의 `새로만들기(W)`버튼을 클릭한다. 
-
-2. `새 시스템 변수` 창이 열리면 `변수 이름(N):`에 `JAVA_HOME`을 기입하고, `변수 값(V)`에서 JDK설치 경로 `C:\Program Files\Java\jdk-16\`를 기입하고 `확인`을 클릭한다.
+먼저 `konlpy`는 기본 파이썬 패키지로 설치되지 않아 `pip install` 명령어로 설치한다. `nltk` 패키지는 아나콘다를 설치한 경우 자동으로 설치되어 있다. 하지만  `nltk.download()`을 실행하여 All Packages탭 선택 후에 `Punkt`와 `Stopwords`를 추가로 다운로드 받아 설치작업을 마무리한다.
 
 
-### `rtools`
+```python
+! pip install konlpy
 
-1. CRAN의 [`rtools`페이지](https://cran.r-project.org/bin/windows/Rtools/)에 접속한다.
-
-2. 설치된 R버전과 일치하는 버전의 `rtools`를 다운로드받는다. R이 4.0대 버전이면 `rtools40`을 설치한다. 
-
-- `rtools`는 다른 패키지와 달리 `install.packages()`함수로 설치하지 않고, 설치파일을 컴퓨터에서 직접 실행해 설치한다. 
-
-3. 설치할때 경로변경하지 말고 `C:/Rtools`에 설치한다. 실치과정에서 `Add rtools to system PATH`가 체크돼 있는지 확인한다. 
-
-- 기타 KoNLP 설치이슈에 대해서는 [이 문서](https://www.facebook.com/notes/r-korea-krugkorean-r-user-group/konlp-%EC%84%A4%EC%B9%98-%EC%9D%B4%EC%8A%88-%EA%B3%B5%EC%9C%A0/1847510068715020/) 참조
-
-### 의존패키지
-
-설치할 때 오류가 나는 경우가 있다. 의존패키지(패키지작동에 필요한 다른 패키지)가 설치돼 있지 않기 때문이다. 다음은 KoNLP의존 패키지다. 
-
-- rJava (>= 0.9-8),
-- utils (>= 3.3.1),
-- stringr (>= 1.1.0),
-- hash (>= 2.2.6),
-- tau (>= 0.0-18),
-- Sejong (>= 0.01),
-- RSQLite (>= 1.0.0),
-- devtools (>= 1.12.0)
-
-아래 코드로 필요한 패키지가 이미 설치돼 있는지 확인할 수 있다. 
-
-
-```r
-package_list <- c("rJava", "utils", "stringr", "hash", "remote",
-                  "tau", "Sejong", "RSQLite", "devtools")
-( package_list_installed <- package_list %in% installed.packages()[,"Package"] )
+import nltk
+nltk.download()
 ```
 
-<pre class="r-output"><code>## [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE
+RStudio 혹은 파이썬 IDE에서 설치된 파이썬 한글처리 패키지가 제대로 동작되는지 꼬꼬마를 사용해서 테스트한다.
+
+다음으로 파이썬에서 품사(Pos)를 꼬꼬마를 사용해서 처리한다.  
+처리한 결과를 파이썬 객체 예를 들어 `kkma_pos_res` 변수에 저장하고 이를 R에서 불러온다.
+
+
+```python
+import nltk
+```
+
+<pre class="r-output"><code>## &lt;frozen importlib._bootstrap&gt;:219: RuntimeWarning: scipy._lib.messagestream.MessageStream size changed, may indicate binary incompatibility. Expected 56 from C header, got 64 from PyObject
 </code></pre>
 
-```r
-( new_pkg <- package_list[!package_list_installed] )
+```python
+from konlpy.tag import Kkma
+
+kkma = Kkma()
+kkma.sentences('한국어 텍스트 분석을 R로 가능해요? 딥러닝 시대 맞는건가요? 한편으로는 정말 빨리 잘 할 수 있을지 많이 기대됩니다.')
 ```
 
-<pre class="r-output"><code>## [1] "rJava"  "hash"   "remote" "tau"    "Sejong"
+<pre class="r-output"><code>## ['한국어 텍스트 분석을 R로 가능해요?', '딥 러닝 시대 맞는 건가요?', '한편으로는 정말 빨리 잘 할 수 있을지 많이 기대됩니다.']
 </code></pre>
 
-아래 코드로 미설치된 패키지를 한번에 설치할 수 있다. 만일 설치가 안되면 이 교재 [`2.4 오류`](https://bookdown.org/ahn_media/bookdown-demo/prep.html#%EC%98%A4%EB%A5%98error)를 참고해 개별적으로 설치한다. 
+```python
+kkma_pos_res = kkma.pos('한편으로는 정말 빨리 잘 할 수 있을지 많이 기대됩니다.')
+```
+
+`reticulate`를 실행하게 되면 `py$...` 와 같은 방식으로 `...` 객체를 R에서 불러와서 후속작업을 수행할 수 있다. 
 
 
 ```r
-if(length(new_pkg)) install.packages(new_pkg)
+library(reticulate)
+library(tidyverse)
+
+pos_tbl <- py$kkma_pos_res %>% 
+  enframe() %>% 
+  mutate(text = map_chr(value, 1),
+         pos  = map_chr(value, 2))
+  
+pos_tbl
 ```
 
-의존성 패키지가 의존하는 패키지가 있다. 만일 오류메시지가 나오면 메시지를 잘 읽어보고, 필요한 패키지를 추가로 설치한다. 
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 15 × 4</span>
+##    name value      text  pos  
+##   <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;list&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>
+## <span style='color: #555555;'>1</span>     1 <span style='color: #555555;'>&lt;list [2]&gt;</span> 한편  NNG  
+## <span style='color: #555555;'>2</span>     2 <span style='color: #555555;'>&lt;list [2]&gt;</span> 으로  JKM  
+## <span style='color: #555555;'>3</span>     3 <span style='color: #555555;'>&lt;list [2]&gt;</span> 는    JX   
+## <span style='color: #555555;'>4</span>     4 <span style='color: #555555;'>&lt;list [2]&gt;</span> 정말  MAG  
+## <span style='color: #555555;'>5</span>     5 <span style='color: #555555;'>&lt;list [2]&gt;</span> 빨리  MAG  
+## <span style='color: #555555;'>6</span>     6 <span style='color: #555555;'>&lt;list [2]&gt;</span> 잘    MAG  
+## <span style='color: #555555;'># … with 9 more rows</span>
+</code></pre>
 
-KoNLP설치 준비가 됐으면 아래 코드로 설치한다. 
+데이터프레임으로 가져왔기 때문에 NNG 명사만 추출하여 후속 작업을 이어간다.
 
 
 ```r
-remotes::install_github('haven-jeon/KoNLP', 
-                        upgrade = "never", 
-                        INSTALL_opts=c("--no-multiarch"))
+pos_tbl %>% 
+  filter(pos == "NNG")
 ```
 
-제대로 설치됐는지 확인해보자. 
-
-
-```r
-# library(KoNLP)
-# extractNoun("한글테스트입니다.")
-# SimplePos09("한글테스트입니다.")
-```
-
-`KoNLP`에서 사용할 사전을 설치하자. `NIADic`이 `SejongDic`보다 더 많은 형태소를 포함하고 있다. 설치과정에서 기 설치된 패키지 업데이트 여부를 묻는다. 모두 최신버전으로 업데이트한다. 
-
-
-```r
-useNIADic()
-```
-
-한글띄어쓰기가 안돼 있는 문서는  `autoSpacing = T`인자를 투입한다. 
-
-
-```r
-"아버지가가방에들어가신다" %>% SimplePos09()
-"아버지가가방에들어가신다" %>% SimplePos09(autoSpacing = T)
-```
-
-
-띄어쓰기 안된 문서의 행태소 분석에는 `MeCab`이 유리하다. 
-
-
-```r
-"한글테스트입니다" %>% SimplePos09(autoSpacing = T)
-"한글테스트입니다" %>% enc2utf8() %>% RcppMeCab::pos() 
-"아버지가가방에들어가신다" %>% enc2utf8() %>% RcppMeCab::pos() 
-```
-
-
-`KoNLP`를 이용해 띄어쓰기가 잘 안된 문서를 분석할 때는 `KoSpacing`패키지로 띄어쓰기를 조절할 수 있다(설치과정이 복잡하므로 선택 사항.)
-
-
-```r
-# remotes::install_github("haven-jeon/KoSpacing")
-# library(KoSpacing)
-# set_env()
-# 
-# spacing("한글테스트입니다.")
-```
-
-
-`KoNLP`의 장점은 기존 사전에 사용자사전을 추가할 수 있다는데 있다. 
-
-
-```r
-"힣탈로미를 어떻게 할까요" %>% SimplePos09
-```
-
-
-```r
-buildDictionary(ext_dic = c('sejong', 'woorimalsam'),
-                user_dic = data.frame(term="전작권", tag='ncn'),
-                category_dic_nms=c('political'))
-
-buildDictionary(ext_dic = "woorimalsam", 
-                user_dic=data.frame("힣탈로미", "ncn"),
-                replace_usr_dic = T)
-```
-
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 1 × 4</span>
+##    name value      text  pos  
+##   <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;list&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>
+## <span style='color: #555555;'>1</span>     1 <span style='color: #555555;'>&lt;list [2]&gt;</span> 한편  NNG
+</code></pre>
 

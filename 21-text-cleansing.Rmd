@@ -1,33 +1,27 @@
 
----
-output: html_document
-editor_options: 
-  chunk_output_type: console
----
 
-```{r setup, include = FALSE}
+```{r setup-cleaning, include = FALSE}
 source("_common.R")
 ```
 
-
-# 정제(전처리)  {#text-clean}
+# 정제 (전처리) {#text-cleansing}
 
 정제는 자료정보지식지혜(DIKW, Data/Information/Knowledge, Wisdom)위계론의 1차부호화 단계에 해당한다. 정제를 거친 자료를 분석하는 2차부호화 과정을 거쳐 자료가 정보로 가공된다. 광물 정제과정에 비유할 수 있다. 금광석 등 광물을 캐면 먼저 잘게 분쇄한다. 불순물을 제거하고, 규격화한 금괴로 가공한다. 마찬가지로 원자료를 분석할 수 있는 단위로 분쇄(토큰화)하고, 불순물을 제거(불용어 제거)한 다음, 규격화한 양식으로 정규화한다. 
 
  - 토큰화
  - 불용어제거
  - 정규화
- 
+
+![](images/text-concept-tools.png){width=100%} 
 
 ```{r clean-pkg}
 pkg_l <- c("tidyverse", "tidytext", "textdata")
-purrr::map(pkg_l, require, ch = T)
+purrr::map(pkg_l, require, ch = TRUE)
 ```
 
+## 토큰화 {#clean-tokenization}
 
-## `unnest_tokens()` 함수
-
-텍스트 원자료를 분석할 수 있도록 토큰(token)으로 잘게 나누는 단계다. 토큰의 단위는 분석 목적에 따라 글자, 단어, 엔그램(n-gram), 문장, 문단 등 다양하게 지정할 수 있다. 
+텍스트 원자료를 분석할 수 있도록 토큰(token)으로 잘게 나누는 단계다. 토큰의 단위는 분석 목적에 따라 글자, 단어, 엔그램(n-gram), 문장, 문단 등 다양하게 지정할 수 있다. `tidytext` 패키지 `unnest_tokens()` 함수에 인자를 달리하여 텍스트를 다양한 형태로 분절하여 후속작업을 할 수 있다.
 
 ```{r clean-pkg-unnest, eval = FALSE}
 unnest_tokens(df, output, input, 
@@ -51,7 +45,6 @@ unnest_tokens(df, output, input,
 
 `unnest_tokens()`함수에서 토큰의 기본값으로 설정된 단위는 단어("words")다. 
 
-
 ```{r clean-token-word}
 
 text_v <- 
@@ -64,7 +57,7 @@ tibble(text = text_v) %>%
                 token = "words")
 ```
 
-###  글자 토큰
+### 글자 토큰
 
 `token = `인자에 "characters"를 투입하면 글자 단위로 토큰화한다. 
 
@@ -122,12 +115,9 @@ tibble(text = text_v) %>%
 ```
 
 
-
-
 ### 문서형식
 
-`format = `인자를 `format = c("text", "man", "latex", "html", "xml")` 다양하게 
-적용해 토큰화하는 문서의 형식을 지정할 수 있다. 
+`format = `인자를 `format = c("text", "man", "latex", "html", "xml")` 다양하게 적용해 토큰화하는 문서의 형식을 지정할 수 있다. 
 
 "html"문서를 토큰화해보자. 
 
@@ -177,9 +167,10 @@ tibble(text = text_v) %>%
 ```
 
 
-## 불용어(stop words) 제거
+## 불용어 제거
 
-불용어는 말 그대로 사용하지 않는 단어다.  불용어를 문자 그대로 해석하면 사용하지 않는 단어에 국한된다. 넓은 의미로 해석하면, 사용빈도가 높아 분석에 의미가 없거나, 내용을 나타내는데 기여하지 않는 단어, 숫자, 특수문자, 구두점, 공백문자, 기호 등이 포함된다.
+불용어(stop words)는 말 그대로 사용하지 않는 단어다. 
+불용어를 문자 그대로 해석하면 사용하지 않는 단어에 국한된다. 넓은 의미로 해석하면, 사용빈도가 높아 분석에 의미가 없거나, 내용을 나타내는데 기여하지 않는 단어, 숫자, 특수문자, 구두점, 공백문자, 기호 등이 포함된다.
 
 무엇이 불용어가 돼야 하는지는 상황에 따라 다르다. 에를 들어, 대명사는 대부분의 불용어사전에 불용어로 포함돼 있지만, 분석 목적에 따라서는 대명사는 분석의 핵심단위가 되기도 한다. 기호도 마찬가지다. 기호를 이용한 이모티콘은 문서의 의미를 전달하기 때문에 모든 기호를 일괄적으로 제거해서는 안된다. 
 
@@ -349,9 +340,9 @@ tibble(text = text_v) %>%
 ```
 
 
-### `filter()`
+### `dplyr` 동사로 제거
 
-`filter()`함수를 이용해 불용어사전을 수정하지 않고 불용어를 추가로 제거할 수 있다. 
+`dplyr` 패키지 `filter()`함수를 이용해 불용어사전을 수정하지 않고 불용어를 추가로 제거할 수 있다. 
 
 예를 들어, 숫자를 불용어로 취급해 제거하는 상황에서 숫자를 불용어 사전에 넣지 말고 `filter()`로 걸러보자. 정규표현식(regex: regular expression)에서 숫자를 의미하는 `[:digit:]` 또는 `\\d`를 이용해 `filter()`함수와 `str_detect()`함수 및 부정연산자 `!`를 이용해 걸러낸다. 
 
@@ -444,11 +435,6 @@ postag_df %>%
 한국어뿐 아니라 일본어와 중국어 형태소 분석도 가능하고 실행속도가 빠르다.  
  일본교토대학정보학연구대학원과 일본전신전화의 커뮤니케이션기본과학연구소가 공동으로 개발한 오픈소스 형태소 분석기 [`MeCab`](https://taku910.github.io/mecab/) 기반이다.  [은전](https://bitbucket.org/eunjeon/mecab-ko-dic/src/master/) 프로젝트로 한국어 형태소를 분석할수 있게 개발했다. [`RcppMeCab`패키지](https://github.com/junhewk/RcppMeCab)는 `MeCab`을 R에서 사용할 수 있도록 한 패키지다. 일본어 기반이라 띄어쓰기에 덜 민감하다. 
 
-#### `KoNLP`
-
-Java 기반의 한나눔(Hannanum) 분석기 기반이다. 널리 사용되는 형태소분석기다. NIADic, Sejong등 사전을 선택할 수 있다. [사용설명서](https://github.com/haven-jeon/KoNLP/blob/master/etcs/KoNLP-API.md)가 있고, 사용자 사전을 수정하기 용이하다. 
-
-
 ### RcppMeCab
 
 `RcppMeCab`패키지를 설치하고 실행하자. 설치되는 기본폴더는 `C:\mecab`다. 설치폴더를 변경하지 않는다. 
@@ -493,17 +479,15 @@ iconv(x, from = "UTF-8", to = "CP949")`
 
 `x`는 문자벡터. 자세한 사용법은 `?iconv` 참조. 
 
-#### `join = FALSE`
+### `join = FALSE`
 
 `join = FALSE`인자를 이용하면 품사태그를 제외하고 형태소만 산출한다. 
 
 ```{r clean-mecab-join}
 test_v %>% pos(join = FALSE)
-
 ```
 
-
-#### `format = "data.frame"`
+### `format = "data.frame"`
 
 `format = "data.frame"`을 지정하면 데이터프레임으로 산출한다.
 
@@ -511,7 +495,7 @@ test_v %>% pos(join = FALSE)
 test_v %>% pos(format = "data.frame")
 ```
 
-#### `posParallel(x)`
+### `posParallel(x)`
 
 `posParallel()`함수는 메모리를 많이 사용하지만 병렬처리를 통해 처리속도가 빠르다. 
 
@@ -527,9 +511,9 @@ test_v %>% posParallel(format = "data.frame")
 구글 colab에서 파이썬을 구동하면 `KoNLPy`패키지를 설치해 다양한 패키지로 형태소를 분석할 수 있다. 
 
 
-### 연습
+## 연습
 
-이상의 `오감도`를 `KoNLP`와 `RcppMeCab`을 이용해 각각 형태소분석해 자주 사용된 단어의 빈도를 비교하자. 이 결과를 형태소를 추출하지 않은 결과와도 비교하자. 
+이상의 `오감도`를 `RcppMeCab`을 이용해 각각 형태소분석해 자주 사용된 단어의 빈도를 비교하자. 이 결과를 형태소를 추출하지 않은 결과와도 비교하자. 
 
 
 ```{r clean-ogamdo}
@@ -561,45 +545,7 @@ ogamdo_txt <- "13인의 아해가 도로로 질주하오.
 
 ```
 
-
-#### `KoNLP`
-
-`KoNLP`의 `SimplePos09()`함수를 `unnset_tokens()`의 `token = `인자로 투입하면 오류가 발생한다.  
-
-
-```{r clean42, eval=FALSE}
-ogamdo_txt %>% tibble(text = .) %>% 
-  unnest_tokens(word, text, token = SimplePos09)
-
-```
-
-문자벡터에서 형태소 추출해 데이터프레임으로 저장한다. 
-
-```{r clean43, eval = FALSE}
-ogamdo_txt %>% SimplePos09() %>% flatten_dfc() %>% 
-  pivot_longer(everything(), names_to = "header", values_to = "value") %>% 
-  separate_rows(value, sep = "\\+") %>% 
-  separate(value, into = c("word", "pos"), sep = "/") %>% 
-  count(word, sort = T) %>% 
-  filter(str_length(word) > 1) %>% 
-  slice_max(n, n = 10) %>% 
-  mutate(word = reorder(word, n)) %>% 
-  ggplot() + geom_col(aes(word, n)) +
-  coord_flip()
-
-```
-
-`KoNLP`의 ` extractNoun()`함수 이용
-
-```{r clean44, eval = FALSE}
-ogamdo_txt %>% extractNoun() %>% tibble(text = .)
-
-```
-
-
-#### `RcppMeCab`
-
-`RcppMeCab`의 `pos()`함수 이용
+`RcppMeCab`의 `pos()`함수를 이용하여 품사를 추출하여 시각화한다.
 
 ```{r mecab-ogamdo-pos}
 # enc2utf8(ogamdo_txt) %>%       # 윈도에서 인코딩 이슈가 있는 경우
@@ -636,8 +582,7 @@ ogamdo_txt %>% enc2utf8 %>%
 ```
 
 
-
-#### 형태소 미추출
+### 형태소 미추출
 
 형태소를 추출하지 않고 작업을 하게 되면 공백을 단위로 단어를 분절하여 작업이 진행되어 
 형태소 분석이 반영된 것과 차이를 확인할 수 있다.
@@ -656,78 +601,7 @@ ogamdo_txt %>% tibble(text = .) %>%
 ```
 
 
-#### 비교
-
-먼저 데이터프레임으로 결합한 후 행과 열 확인.
-
-```{r clean48, eval = FALSE}
-KoNLP_df <- ogamdo_txt %>% SimplePos09() %>% flatten_dfc() %>% 
-  pivot_longer(everything(), names_to = "header", values_to = "value") %>% 
-  separate_rows(value, sep = "\\+") %>% 
-  separate(value, into = c("word", "pos"), sep = "/") %>% 
-  count(word, sort = T) %>% 
-  filter(str_length(word) > 1) %>% 
-  slice_max(n, n = 10)
-
-MeCab_df <- ogamdo_txt %>% enc2utf8 %>% tibble(text = .) %>% 
-  unnest_tokens(word, text, token = pos) %>% 
-  separate(col = word, 
-           into = c("word", "morph"), 
-           sep = "/" ) %>% 
-  count(word, sort = T) %>% 
-  filter(str_length(word) > 1) %>% 
-  slice_max(n, n = 10)
-
-word_df <- ogamdo_txt %>% tibble(text = .) %>% 
-  unnest_tokens(word, text) %>% 
-  count(word, sort = T) %>% 
-  filter(str_length(word) > 1) %>% 
-  slice_max(n, n = 10)
-
-KoNLP_df %>% glimpse()
-MeCab_df %>% glimpse()
-word_df %>% glimpse()
-
-```
-
-행의 수와 열의 이름이 같으므로 세 데이터프레임을 행방향 결합할 수 있다. 결합한 데이터프레임으로 막대도표로 시각화한다.
-
-```{r clean49, eval = FALSE}
-df <- bind_rows(KoNLP = KoNLP_df, MeCab = MeCab_df, word = word_df, .id = "ID")
-
-df %>% mutate(word = reorder(word, n)) %>% 
-  ggplot() + geom_col(aes(word, n, fill = ID)) + 
-  coord_flip()
-
-```
-
-세 경우에 대해 `ID`열로 값이 부여돼 있으므로 `facet_wrap()`함수로 구분할 수 있다. 
-
-```{r clean50, eval = FALSE}
-df %>% mutate(word = reorder(word, n)) %>% 
-  ggplot() + geom_col(aes(word, n, fill = ID), show.legend = F) + 
-  coord_flip() +
-  facet_wrap(~ID)
-
-```
-
-라벨을 세개의 도표에 분리해 표시하자. scales =인자를 “free”로 지정한다. 기본값은 “fixed”다.
-
-```{r clean51, eval = FALSE}
-df %>% mutate(word = reorder(word, n)) %>% 
-  ggplot() + geom_col(aes(word, n, fill = ID), show.legend = F) + 
-  coord_flip() +
-  facet_wrap(~ID, scales = "free") +
-  ggtitle("형태소분석기 비교") +
-  xlab("단어") + ylab("빈도") +
-  theme(plot.title = element_text(size = 24, hjust = 0.5),
-        axis.title.x = element_text(size = 18),
-        axis.title.y = element_text(size = 18))
-
-```
-
-
-### 어간 추출
+## 어간 추출
 
 어간(stem) 추출과 표제어 추출에 대한 설명은 [참고 문헌](https://smltar.com/stemming.html)을 참고한다. 어간추출 패키지는 다른 알고리즘을 적용하고 있는
 `SnowballC`와 `hunspell` 패키지가 있다.
@@ -781,9 +655,9 @@ love_v %>%
 
 
 
-### 표제어 추출 
+## 표제어 추출 
 
-#### 어간과 표제어의 차이
+### 어간과 표제어의 차이
 
 어근은 단어의 일부로서 변하지 않는다. 
 예를 들어, "produced" "producing" "production"의 표제어(lemme)는 "produce"이고 
@@ -802,7 +676,7 @@ word_v <- c("love", "loves", "loved", "You", "You're", "You'll", "me", "my", "my
 SnowballC::wordStem(word_v)
 ```
 
-#### `spacyr` 표제어 추출
+### `spacyr` 표제어 추출
 
 어간추출과 달리, went의 표제어인 go로 산출한다. me에 대해서는 I를 표제어로 산출하나, my에 대해서는 my를 표제어로 제시한다. 
 
@@ -816,9 +690,7 @@ spacy_parse(word_v, tag = TRUE, entity = FALSE, lemma = FALSE)
 ```
 
 
-
-
-### 연습
+## 연습
 
 셰익스피어의 소네트27을 `SnowbalC`와 `spacyr`을 이용해 분석해 보자
 
@@ -841,7 +713,7 @@ For thee, and for myself, no quietness find."
 
 ```
 
-#### `SnowballC`
+### `SnowballC`
 
 `unnest_tokens()`의 `token = `인자에 `wordStem()`함수를 투입하면 오류 발생.
 
@@ -874,7 +746,7 @@ s27_v %>% tibble(text = . ) %>%
 
 
 
-#### `spacyr`
+### `spacyr`
 
 `spacy_parse()`는 표제어(lemme)와 품사 태그(pos) 등의 정보가 포함된 데이터프레임으로 산출한다. 
 
@@ -902,7 +774,7 @@ s27_v %>% spacy_parse() %>%
 ```
 
 
-#### 비교
+### 비교
 
 불용어를 제거하지 않고 SnowballC 및 spacyr를 이용한 정규화 결과와 정규화하지 않은 결과를 비교해보자.
 
@@ -1081,7 +953,7 @@ For thee, and for myself, no quietness find."
 ```
 
 
-### 과제
+## 과제
 
 구텐베르크 프로젝트에서 영문 문서 한편을 선택해 두 가지 방식의 정규화(`SnowballC`를 이용한 어근 추출과 `spacyr`을 이용한 표제어 추출)한 결과와 정규화하지 않은 결과를 비교한다. 
 

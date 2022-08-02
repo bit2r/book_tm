@@ -1,7 +1,7 @@
 --- 
 title: "R 텍스트마이닝"
 author: "한국 R 사용자회"
-date: "2022-07-24"
+date: "2022-08-02"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book

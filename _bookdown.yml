@@ -13,26 +13,25 @@ new_session: yes
 rmd_files: [
   "index.Rmd",
 
-  # 설치 및 환경설정 -------
+  # 0. 설치 및 환경설정 -------
   "01-setup.Rmd",
-  "02-prep.Rmd",
+  "02-basics.Rmd",
   "03-hello-world.Rmd",
 
-  # 텍스트 살펴보기 -------
+  # 1. 텍스트 살펴보기 -------
   "10-view-text.Rmd",
 
-  # 텍스트를 숫자변환 -------
-  "20-text-manipulation.Rmd",
+  # 2. 텍스트 --> 데이터프레임 변환 -------
+  "20-text-to-tibble.Rmd",
   "21-text-cleansing.Rmd",
-  "22-tf-idf.Rmd",
-  #
-  # # 텍스트 빈도분석 -------
-  # "30-word-freq.Rmd",
-  #
-  # 감성분석 -------
+
+  # 3. 기술통계 -------
+  "30-word-freq.Rmd",
+
+  # 4. 감성분석 -------
   "40-sentiment.Rmd",
 
-  # 주제모형 -------
+  # 5. 주제모형 -------
   "50-tm.Rmd",
   "51-tm-covariate.Rmd",
 
