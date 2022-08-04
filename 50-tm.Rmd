@@ -37,17 +37,14 @@ donation, too.")
 
 ```{r topic2, message=FALSE, warning=FALSE}
 pkg_v <- c("tidyverse", "tidytext", "tidylo")
-lapply(pkg_v, require, ch = T)
-
+purrr::walk(pkg_v, require, ch = T)
 ```
 
 ```{r topic3}
-ap_count <- 
-ap_v %>% tibble(text = .) %>% 
-  unnest_tokens(word, text, drop = F) %>% 
+ap_count <- ap_v %>% tibble(text = .) %>% 
+  unnest_tokens(word, text, drop = FALSE) %>% 
   anti_join(stop_words) %>% 
-  count(word, sort = T) %>% head(10)
-
+  count(word, sort = TRUE) %>% head(10)
 ```
 
 상대빈도를 구해보자.
@@ -55,8 +52,7 @@ ap_v %>% tibble(text = .) %>%
 먼저 문장 단위로 토큰화해 문장별 ID를 구한다음 단어 단위로 토큰화한다. 대문자 앞의 마침표와 공백(`"\\.\\s(?=[:upper:])"`)을 기준으로 구분하면 된다.  
 
 ```{r topic4}
-ap_tfidf <- 
-ap_v %>% tibble(text = .) %>% 
+ap_tfidf <- ap_v %>% tibble(text = .) %>% 
   mutate(text = str_squish(text)) %>% 
   unnest_tokens(sentence, text, token = "regex", pattern = "\\.\\s(?=[:upper:])") %>% 
   mutate(ID = row_number()) %>% 
@@ -66,8 +62,7 @@ ap_v %>% tibble(text = .) %>%
   bind_tf_idf(term = word, document = ID, n = n) %>% 
   arrange(-tf_idf) %>% head(10)
 
-ap_wlo <- 
-ap_v %>% tibble(text = .) %>% 
+ap_wlo <- ap_v %>% tibble(text = .) %>% 
   mutate(text = str_squish(text)) %>% 
   unnest_tokens(sentence, text, token = "regex", pattern = "\\.\\s(?=[:upper:])") %>% 
   mutate(ID = row_number()) %>% 
@@ -91,13 +86,13 @@ bind_cols(
 
 총빈도와 상대빈도를 보면, 허스트재단이 링컨아트센터에 기부금 발표한 내용이란 것을 추론할 수 있지만, 기사에는 보다 다양한 주제를 담고 있다. 기사의 내용을 읽어보면 다양한 주제가 있음을 알수 있다 (Figure \@ref(fig:ap)).
 
-```{r echo=F, ap, fig.cap="AP 기사", dpi=30}
+```{r echo=F, ap, fig.cap="AP 기사", out.width="100%"}
 knitr::include_graphics("images/ap.png")
-
 ```
+
 기사에 포함된 단어 중 같은 색으로 구부된 단어들을 모아보면 예술, 재정, 아동, 교육 등의 주제를 나타내는 일관된 단어로 구성됐음을 알수 있다 (Figure \@ref(fig:ap2)). 
 
-```{r echo=F, ap2, fig.cap="AP 기사 주제", dpi=30}
+```{r echo=F, ap2, fig.cap="AP 기사 주제", out.width="100%"}
 knitr::include_graphics("images/ap2.png")
 
 ```
@@ -106,15 +101,14 @@ Blei 등 일군의 전산학자들은 문서 내 단어의 확률분포를 계�
 
 - Blei, D. M., Ng, A. Y., & Jordan, M. I. (2003). Latent dirichlet allocation. Journal of Machine Learning Research, 3, 993-1022.
 
-19세기 독일 수학자 러죈 디리클레(Lejeune Dirichlet, 1805 ~ 1859)가 제시한 디리클래 분포(Dirichlet distribution)를 이용해 문서에 잠재된 주제를 추론하기에 잠재 디리클레 할당(LDA: Latent Dirichlet Allocation)이라고 했다. 문서의 주제를 추론하는 방법이므로 주제모형(topic models)이라고 한다. 
+19세기 독일 수학자 러죈 디리클레(Lejeune Dirichlet, 1805 ~ 1859)가 제시한 디리클래 분포(Dirichlet distribution)를 이용해 문서에 잠재된 주제를 추론하기에 잠재 디리클레 할당(LDA: Latent Dirichlet Allocation)이라고 했다. 문서의 주제를 추론하는 방법이므로 **주제모형(topic models)**이라고 한다. 
 
 Beli(2012)가 설명한 LDA에 대한 직관적인 이해는 다음과 같다. Figure\@ref(fig:topic)에 제시된 논문 "Seeking life's bare (genetics) necessities"은 진화의 틀에서 유기체가 생존하기 위해 필요한 유전자의 수를 결정하기 위한 데이터분석에 대한 내용이다. 문서(documents)에 파란색으로 표시된 'computer' 'prediction' 등은 데이터분석에 대한 단어들이다. 분홍색으로 표시된 'life' 'organism'은 진화생물학에 대한 내용이다. 노란색으로 표시된 'sequenced' 'genes'는 유전학에 대한 내용이다. 이 논문의 모든 단어를 이런 식으로 분류하면 아마도 이 논문은 유전학, 데이터분석, 진화생물학 등이 상이한 비율로 혼합돼 있음을 알게 된다. 
 
 - Blei, D. M. (2012). Probabilistic topic models. Communications of the ACM, 55(4), 77-84.
 
-```{r echo=F, dpi=30, topic, fig.cap="LDA의 직관적 예시"}
+```{r echo=F, dpi=30, topic, fig.cap="LDA의 직관적 예시", out.width="100%"}
 knitr::include_graphics("images/topic.jpg")
-
 ```
 
 LDA에는 다음과 같은 전제가 있다. 
@@ -132,19 +126,19 @@ LDA에서 정의하는 주제(topic)는 특정 단어에 대한 분포다. 예�
 LDA에서는 문서를 주머니에 무작위로 섞여 있는 임의의 혼합물로 본다(Bag of words). 일반적으로 사용하는 문장처럼 문법이라는 짜임새있는 구조로 보는 것이 아니다. 임의의 혼합물이지만 온전하게 무작위로 섞여 있는 것은 아니다. 서로 함께 모여 있는 군집이 확률적으로 존재한다. 즉, 주제모형에서 접근하는 문서는 잠재된 주제의 혼합물로서, 각 주제를 구성하는 단어 단위가 확률적으로 혼합된 주머니(bag)인 셈이다.
 
 - 개별 문서: 여러 주제(topic)가 섞여 있는 혼합물
-  - 문서마다 주제(예술, 교육, 예산 등)의 분포 비율 상이
-  - 주제(예: 예술)마다 단어(예: 오페라, 교향악단)의 분포 상이
+- 문서마다 주제(예술, 교육, 예산 등)의 분포 비율 상이
+- 주제(예: 예술)마다 단어(예: 오페라, 교향악단)의 분포 상이
 
 주제모형의 목표는 말뭉치에서 주제의 자동추출이다. 문서 자체는 관측가능하지만, 주제의 구조(문서별 주제의 분포와 문서별-단어별 주제할당)는 감춰져 있다. 감춰진 주제의 구조를 찾아내는 작업은 뒤집어진 생성과정이라고 할 수 있다. 관측된 말뭉치를 생성하는 감춰진 구조를 찾아내는 작업이기 때문이다. 문서에 대한 사전 정보없이 문서의 주제를 분류하기 때문에 주제모형은 비지도학습(unsupervised learning) 방식의 기계학습(machine learning)이 된다. 
 
 - 기계학습(machine learing)
-  - 인공지능 작동방식. 투입한 데이터에서 규칙성 탐지해 분류 및 예측. 지도학습, 비지도학습, 강화학습 등으로 구분.  
+    - 인공지능 작동방식. 투입한 데이터에서 규칙성 탐지해 분류 및 예측. 지도학습, 비지도학습, 강화학습 등으로 구분.  
 - 지도학습(supervised learning)
-  - 인간이 사전에 분류한 결과를 학습해 투입한 자료에서 규칙성 혹은 경향  발견
+    - 인간이 사전에 분류한 결과를 학습해 투입한 자료에서 규칙성 혹은 경향  발견
 - 비지도학습(unsupervised learning)  
-  - 사전분류한 결과 없이 기계 스스로 투입한 자료에서 규칙성 혹은 경향 발견
+    - 사전분류한 결과 없이 기계 스스로 투입한 자료에서 규칙성 혹은 경향 발견
 - 강화학습(reinforced learning)
-  - 행동의 결과에 대한 피드백(보상, 처벌 등)을 통해 투입한 자료에서 규칙성 혹은 경향 발견
+    - 행동의 결과에 대한 피드백(보상, 처벌 등)을 통해 투입한 자료에서 규칙성 혹은 경향 발견
 
 주제모형의 효용은 대량의 문서에서 의미구조를 닮은 주제구조를 추론해 주석을 자동으로 부여할 수 있다는데 있다. 
 
@@ -156,7 +150,103 @@ LDA에서는 문서를 주머니에 무작위로 섞여 있는 임의의 혼합�
 
 여기서는 구조적 주제모형(structural topic model)이 가능한 `stm`패키지를 이용한다. `stm`은 메타데이터를 이용한 추출한 주제에 대하여 다양한 분석을 할 수 있는 장점이 있다. 
 
+### 작업흐름 {#nlp-topic-model}
 
+단어가 모이면 토픽이 되고, 토픽이 모이면 문서가 되는 방식을 상상하는 것이 필요하다.
+
+**토픽(topic)**은 문서 모임을 추상화한 것으로 토픽을 듣게 되면 토픽을 구성할 단어를 어림 짐작할 수 있게 된다. 예를 들어, 전쟁이라고 하면 총, 군인, 탱크, 비행기 등이 관련된 단어로 연관된다. 여러 토픽이 모여서 문서가 되고, 문서는 여러 토픽을 담게 된다.
+
+**토픽 모형(topci modeling)**은 문서로부터 모형을 적합시켜 토픽을 찾아내는 과정으로 정의할 수 있다. 토픽모형을 활용함으로써 문서를 분류하는데 종종 활용된다. 특히, LDA(Latent Dirichlet Allocation) 모형이 가장 많이 활용되고 있다.
+
+텍스트에서 토픽모형을 개발하는 순서는 대략 다음과 같다.
+
+1. 텍스트를 DTM을 변환시킨다.
+    - 명사를 추출할 경우와, 동사를 추출할 경우로 나눠서 살펴볼 수도 있다.
+1. LDA는 DTM을 입력값을 받아 문서별로 토픽에 대한 연관성을 나타내는 행렬과 토픽에 단어가 속할 확률 행렬을 출력값으로 반환한다.
+    - 제어 매개변수(control parameter)를 적절히 설정한다.
+1. 출력된 행렬은 세부적으로 정보를 확인할 때 필요하고 우선, 시각매체를 사용하여 시각화한다.
+    - $\beta$ 행렬은 토픽에 단어가 포함될 확률
+    - $\gamma$ 행렬은 문서에 토픽이 포함될 확률
+
+### 개념 예제 {#nlp-topic-model-hello-world}
+
+문장을 금융 관련 문서1, 문서2를 준비하고, 식당관련 문장을 문서3, 문서4로 준비한다.
+문서5는 금융과 식당이 뒤섞이도록 준비한다.
+이를 `topicmodels` 팩키지를 활용하여 `LDA` 분석작업을 수행한다.
+그리고 나서 결과값을 문서-토픽 행렬로 표현하고 좀더 직관적으로 볼 수 있도록 `ggplot`으로 시각화한다.  
+
+```{r nlp-topic-hello-world}
+library(tidyverse)
+library(tidytext)
+library(topicmodels)
+
+## 예제 데이터
+sample_text <- c("부실 대출로 인해서 은행은 벌금을 지불하는데 동의했다",
+                 "은행에 대출을 늦게 갚은 경우, 은행에서 지연에 대해 이자를 물릴 것이다.", 
+                 "시내에 새로운 식당이 생겼습니다.",
+                 "테헤란로에 맛집 식당이 있습니다.",
+                 "새로 개장하려고 하는 식당 대출을 어떻게 상환할 계획입니까?")
+
+sample_df <- tibble(
+  document = paste0("문서", 1:5),
+  text = sample_text
+)
+
+## BOW 데이터 변환
+sample_bow <- sample_df %>% 
+  ## 문서 내 텍스트에서 명사 추출
+  mutate(mecab_pos = map(text, RcppMeCab::pos) ) %>% 
+  unnest(mecab_pos) %>% 
+  unnest(mecab_pos) %>% 
+  separate(mecab_pos, into = c("nouns", "pos"), sep = "/") %>% 
+  filter(pos == "NNG") %>% 
+  ## 문서별 명사 빈도수
+  group_by(document) %>% 
+  count(nouns, sort = TRUE)
+
+## DTM 변환
+sample_dtm <- sample_bow %>% 
+  cast_dtm(document = document, term = nouns, value = n) %>% 
+  as.matrix
+
+## LDA 모형 적합
+sample_lda <- LDA(sample_dtm, k = 2,  method="Gibbs", 
+                  control=list(alpha=0.1, delta=0.1, seed=1357))
+
+## 토픽 결과 - 행렬
+tidy(sample_lda, matrix="gamma") %>% 
+  arrange(document) %>% 
+  spread(topic, gamma)
+
+## 토픽 결과 - 시각화
+### 문서 - 토픽
+
+doc_topic_g <- tidy(sample_lda, matrix="gamma") %>% 
+  mutate(topic = as.factor(topic)) %>% 
+  ggplot(aes(x = document, y=gamma)) + 
+    geom_col(aes(fill = topic), position=position_dodge()) +
+    scale_fill_manual(values = c("orange", "midnightblue")) +
+    theme_light() +
+    labs(title="금융, 식당 분류 토픽모형",
+         subtitle = "문서 토픽 행렬")
+
+### 토픽 - 단어
+topic_word_g <- tidy(sample_lda, matrix="beta") %>% 
+  ggplot(aes(x = term, y=beta)) + 
+    geom_col(aes(fill=as.factor(topic)), position=position_dodge()) +
+    scale_fill_manual(values = c("orange", "midnightblue")) +
+    theme_light() +
+    labs(title="금융, 식당 분류 토픽모형",
+         subtitle = "토픽 단어 행렬") +
+    theme(axis.text.x = element_text(angle=90),
+          legend.position = "none")
+
+cowplot::plot_grid(doc_topic_g, topic_word_g)
+```
+
+상기 사례를 통해서 문서가 두가지 주제 금융과 식당으로 분류되고 문서를 
+구성하는 단어는 금융과 식당 중 어떤 주제에 더 많은 기여를 하는지 확인이
+가능하다.
 
 ## 자료 준비
 
@@ -167,15 +257,14 @@ LDA에서는 문서를 주머니에 무작위로 섞여 있는 임의의 혼합�
 - 언론사: 중앙일보, 조선일보, 한겨레, 경향신문, 한국경제, 매일경제
 - 분석: 분석 기사
 
-모두 5145건이다. 
+모두 5,145건이다. 
 
 ### 자료 이입 
 
 다운로드한 기사를 작업디렉토리 아래 `data`폴더에 복사한다. 
 
-```{r topic9}
+```{r topic9, eval = FALSE}
 list.files("data/.")
-
 ```
 
 파일명이 'NewsResult_20200101-20201201.xlsx'다. 
@@ -188,8 +277,7 @@ readxl::read_excel("data/NewsResult_20200101-20201231.xlsx") %>% names()
 분석에 필요한 열을 선택해 데이터프레임으로 저장한다. 분석 텍스트는 제목과 본문이다. 빅카인즈는 본문을 200자까지만 무료로 제공하지만, 학습 목적을 달성하기에는 충분하다. 제목은 본문의 핵심 내용을 반영하므로, 제목과 본문을 모두 주제모형 분석에 투입한다. 시간별, 언론사별, 분류별로 분석할 계획이므로, 해당 열을 모두 선택한다. 
 
 ```{r topic11}
-ai_df <- 
-readxl::read_excel("data/NewsResult_20200101-20201231.xlsx") %>% 
+ai_df <- readxl::read_excel("data/NewsResult_20200101-20201231.xlsx") %>% 
   select(일자, 제목, 본문, 언론사, cat = `통합 분류1`) 
 ai_df %>% head()
 
@@ -211,10 +299,9 @@ DB에 같은 기사가 중복 등록되는 경우가 있으므로, `dplyr`패키
 ```{r topic13}
 library(lubridate) 
 
-ai2_df <- 
-ai_df %>% 
+ai2_df <- ai_df %>% 
   # 중복기사 제거
-  distinct(제목, .keep_all = T) %>% 
+  distinct(제목, .keep_all = TRUE) %>% 
   # 기사별 ID부여
   mutate(ID = factor(row_number())) %>% 
   # 월별로 구분한 열 추가
@@ -228,7 +315,7 @@ ai_df %>%
     언론사 == "조선일보" ~ "종합지",
     언론사 == "중앙일보" ~ "종합지",
     언론사 == "경향신문" ~ "종합지",
-    언론사 == "한겨레" ~ "종합지",
+    언론사 == "한겨레"   ~ "종합지",
     언론사 == "한국경제" ~ "경제지",
     TRUE ~ "경제지") ) %>% 
   # 기사 분류 구분 
@@ -248,15 +335,14 @@ ai2_df %>% names()
 ai2_df$cat %>% unique()
 ai2_df$month %>% unique()
 ai2_df$press %>% unique()
-
 ```
 
 분류별, 월별로 기사의 양을 계산해보자.
 
 ```{r topic15}
-ai2_df %>% count(cat, sort = T)
-ai2_df %>% count(month, sort = T)
-ai2_df %>% count(press, sort = T)
+ai2_df %>% count(cat, sort = TRUE, name = "기사건수")
+ai2_df %>% count(month, sort = TRUE, name = "기사건수")
+ai2_df %>% count(press, sort = TRUE, name = "기사건수")
 
 ```
 
@@ -265,72 +351,76 @@ ai2_df %>% count(press, sort = T)
 
 #### 토큰화
 
-`KoNLP`패키지의 `extractNoun()`함수로 명사만 추출해 토큰화한다. 명사가 문서의 주제를 잘 나타내므로 주제모형에서는 주로 명사를 이용하지만, 목적에 따라서는 다른 품사(용언 등)를 분석에 투여하기도 한다. 
+`RcppMeCab`패키지의 `pos()`함수로 명사만 추출해 토큰화한다. 명사가 문서의 주제를 잘 나타내므로 주제모형에서는 주로 명사를 이용하지만, 목적에 따라서는 다른 품사(용언 등)를 분석에 투여하기도 한다. 
 
 (* 형태소 추출전에 문자 혹은 공백 이외의 요소(예: 구둣점)를 먼저 제거한다.) 
 
 ```{r topic16, eval = FALSE}
-# library(KoNLP)
-# ai_tk <- 
-# ai2_df %>% 
-#   mutate(text = str_remove_all(text, "[^(\\w+|\\s)]")) %>%  # 문자 혹은 공백 이외 것 제거
-#   unnest_tokens(word, text, token = extractNoun, drop = F) 
-# ai_tk %>% glimpse()
+library(RmecabKo)
 
+ai_tk <- ai2_df %>%
+  # 문자 혹은 공백 이외 것 제거
+  mutate(text = str_remove_all(text, "[^(\\w+|\\s)]")) %>%  
+  # 메카브로 품사 중 명사만 추출
+  unnest_tokens(word, text, token = RcppMeCab::pos, drop = FALSE) %>% 
+  separate(col = word, 
+         into = c("word", "morph"), 
+         sep = "/" ) %>% 
+  filter(morph == "nng")
+
+ai_tk %>% glimpse()
 ```
 
-
 #### 불용어 제거
+
 '인공지능'으로 검색한 기사이므로, '인공지능'관련 단어는 제거한다. 
 문자가 아닌 요소를 모두 제거한다. (숫자를 반드시 제거해야 하는 것은 아니다.)
 
 ```{r topic17, eval = FALSE}
-ai_tk <- 
-ai_tk %>% 
+ai_tk <- ai_tk %>% 
   filter(!word %in% c("인공지능", "AI", "ai", "인공지능AI", "인공지능ai")) %>% 
   filter(str_detect(word, "[:alpha:]+")) 
-
 ```
 
 단어의 총빈도와 상대빈도를 살펴보자
 
 ```{r topic18, eval = FALSE}
-ai_tk %>% count(word, sort = T)
-
+ai_tk %>% count(word, sort = TRUE)
 ```
 
 상대빈도가 높은 단어와 낮은 단어를 확인한다. 
 
 ```{r topic19, eval = FALSE}
-ai_tk %>% count(cat, word, sort = T) %>% 
+ai_tk %>% count(cat, word, sort = TRUE) %>% 
   bind_log_odds(set = cat, feature = word, n = n) %>% 
   arrange(log_odds_weighted)
 
-ai_tk %>% count(cat, word, sort = T) %>% 
+ai_tk %>% count(cat, word, sort = TRUE) %>% 
   bind_tf_idf(term = word, document = word, n = n) %>% 
   arrange(idf)
 
 ```
 
-한글자 단어는 문서의 주제를 나타내는데 기여하지 못하는 경우도 있고, 고유명사인데 형태소로 분리돼 있는 경우도 있다. 상대빈도가 높은 단어를 살펴 특이한 단어가 있으면 형태소 추출전 단어가 무엇인지 확인한다. 특이한 경우가 없으면 한글자 단어는 모두 제거한다.
-tibble데이터프레임은 문자열의 일부만 보여준다.  `pull()`함수로 열에 포함된 문자열을 벡터로 출력하므로, 모든 내용을 확인할 수 있다. 
+한글자 단어는 문서의 주제를 나타내는데 기여하지 못하는 경우도 있고, 
+고유명사인데 형태소로 분리돼 있는 경우도 있다. 
+상대빈도가 높은 단어를 살펴 특이한 단어가 있으면 형태소 추출전 단어가 무엇인지 확인한다. 특이한 경우가 없으면 한글자 단어는 모두 제거한다.
+tibble 데이터프레임은 문자열의 일부만 보여준다.  
+`pull()`함수로 열에 포함된 문자열을 벡터로 출력하므로, 모든 내용을 확인할 수 있다. 
 
 ```{r topic20, eval = FALSE}
 ai_tk %>% 
   filter(word == "하") %>% pull(text) %>% head(3)
-
 ```
 
 
 '기업' '기술' 등의 단어는 총사용빈도가 높지만, 상대빈도는 낮다. 대부분의 분류에서 널리 사용된 단어다. 지금 제거할필요는 없지만, 제거가능성을 염두에 둔다. 
 
 ```{r topic21, eval = FALSE}
-ai_tk %>% 
-  filter(str_length(word) > 1) -> ai2_tk
+ai2_tk <- ai_tk %>% 
+  filter(str_length(word) > 1)
 
 ai2_tk %>% 
-  count(word, sort = T) 
-
+  count(word, sort = TRUE) 
 ```
 
 상대빈도를 다시 확인하자. 
@@ -340,20 +430,102 @@ ai2_tk %>% count(cat, word, sort = T) %>%
   bind_log_odds(set = cat, feature = word, n = n) %>% 
   arrange(-log_odds_weighted)
 
-ai2_tk %>% count(cat, word, sort = T) %>% 
+ai2_tf_idf <- ai2_tk %>% count(cat, word, sort = T) %>% 
   bind_tf_idf(term = word, document = word, n = n) %>% 
   arrange(tf_idf)
+```
 
+각 분야별 가장 `tf-idf` 값을 기준으로 높은 단어를 10개 뽑아 시각화를 한다.
+특별한 모형이나 가정이 수반되지 않는 시각화로 직관적이지만 중복되는 `tf-idf`이
+많은 경우 소통에 어려움이 있을 수 있다.
+
+```{r topic-eda-without-stm}
+ai2_tf_idf %>% 
+    group_by(cat) %>%
+    slice_max(tf_idf, n = 10, with_ties = FALSE) %>%
+    ungroup() %>% 
+  
+    ggplot(aes(word, tf_idf, fill = cat)) +
+      geom_col(alpha = 0.8, show.legend = FALSE) +
+      facet_wrap(~ cat, scales = "free", ncol = 3) +
+      scale_x_reordered() +
+      coord_flip() +
+      theme(strip.text=element_text(size=11)) +
+      labs(x = NULL, y = "tf-idf",
+           title = "주제별 tf-idf 값이 가장 높은 단어")
 ```
 
 
 
 ### stm 말뭉치
 
+```{r}
+library(stm)
+
+ai_news_raw <- readxl::read_excel("data/NewsResult_20200101-20201231.xlsx")
+
+set.seed(02138)
+
+ai_news_tidy <- ai_news_raw %>% 
+  janitor::clean_names(ascii = FALSE) %>% 
+  select(news_id = 뉴스_식별자, keyword = 키워드) %>% 
+  slice_sample(prop = 0.01) %>% # 5145 중 1% 51개
+  mutate(keyword = map(keyword, str_split, pattern = ",")) %>% 
+  unnest(keyword) %>% 
+  unnest(keyword)
+
+
+ai_news_sparse <- ai_news_tidy %>% 
+  count(news_id, keyword) %>%
+  cast_sparse(news_id, keyword, n)
+
+dim(ai_news_sparse)
+
+ai_topic_model <- stm(ai_news_sparse, K = 10, verbose = FALSE)
+
+library(stm)
+library(furrr)
+plan(multisession)
+
+many_models <- tibble(K = c(5, 10, 20, 30, 40, 50)) %>% 
+  mutate(topic_model = future_map(K, ~stm(ai_news_sparse, K = .,
+                                          verbose = FALSE)))
+
+heldout <- make.heldout(ai_news_sparse)
+
+k_result <- many_models %>%
+  mutate(exclusivity = map(topic_model, exclusivity),
+         semantic_coherence = map(topic_model, semanticCoherence, ai_news_sparse),
+         eval_heldout = map(topic_model, eval.heldout, heldout$missing),
+         residual = map(topic_model, checkResiduals, ai_news_sparse),
+         bound =  map_dbl(topic_model, function(x) max(x$convergence$bound)),
+         lfact = map_dbl(topic_model, function(x) lfactorial(x$settings$dim$K)),
+         lbound = bound + lfact,
+         iterations = map_dbl(topic_model, function(x) length(x$convergence$bound)))
+
+k_result
+
+k_result %>%
+  transmute(K,
+            `Lower bound` = lbound,
+            Residuals = map_dbl(residual, "dispersion"),
+            `Semantic coherence` = map_dbl(semantic_coherence, mean),
+            `Held-out likelihood` = map_dbl(eval_heldout, "expected.heldout")) %>%
+  gather(Metric, Value, -K) %>%
+  ggplot(aes(K, Value, color = Metric)) +
+  geom_line(size = 1.5, alpha = 0.7, show.legend = FALSE) +
+  facet_wrap(~Metric, scales = "free_y") +
+  labs(x = "K (number of topics)",
+       y = NULL,
+       title = "Model diagnostics by number of topics",
+       subtitle = "These diagnostics indicate that a good number of topics would be around 10")
+
+```
+
+
 
 ```{r topic23, eval=FALSE}
 install.packages("stm", dependencies = T)
-
 ```
 
 토큰화한 데이터프레임을 `stm`패키지 형식의 말뭉치로 변환한다. 이를 위해 먼저 분리된 토큰을 원래 문장에 속한 하나의 열로 저장한다.
@@ -364,8 +536,7 @@ install.packages("stm", dependencies = T)
 
 
 ```{r topic24, eval = FALSE}
-combined_df <-
-  ai2_tk %>%
+combined_df <- ai2_tk %>%
   group_by(ID) %>%
   summarise(text2 = str_flatten(word, " ")) %>%
   ungroup() %>% 
@@ -385,8 +556,9 @@ combined_df %>% glimpse()
 
 ```{r topic25, eval = FALSE}
 library(stm)
-processed <- 
-  ai2_df %>% textProcessor(documents = combined_df$text2, metadata = .)
+
+processed <- ai2_df %>% 
+  textProcessor(documents = combined_df$text2, metadata = .)
 
 ```
 
@@ -400,12 +572,10 @@ out <-
 
 ```
 
-
 제거할수 있는 단어와 문서의 수를 `plotRemoved()`함수로 확인할 수 있다. 
 
 ```{r topic27, eval = FALSE}
 plotRemoved(processed$documents, lower.thresh = seq(0, 100, by = 5))
-
 ```
 
 `lower.thresh = `로 최소값 설정하면 빈도가 낮아 제거할 용어의 수를 설정할 수 있다. 설정값을 너무 높게 잡으면 분석의 정확도가 떨어진다. 여기서는 계산 편의를 위해 설정값을 높게 잡았다. 
@@ -437,9 +607,7 @@ meta <- out$meta
 
 - 배타성(exclusivity): 특정 주제에 등장한 단어가 다른 주제에는 나오지 않는 정도. 확산타당도에 해당. 
 - 의미 일관성(semantic coherence): 특정 주제에 높은 확률로 나타나는 단어가 동시에 등장하는 정도. 수렴타당도에 해당.
-
 - 지속성(heldout likelihood): 데이터 일부가 존재하지 않을 때의 모형 예측 지속 정도. 
-
 - 잔차(residual): 투입한 데이터로 모형을 설명하지 못하는 오차. 
 
 배타성, 의미 일관성, 지속성이 높을 수록, 그리고 잔차가 작을수록 모형의 적절성 증가. 
@@ -508,13 +676,11 @@ stm패키지의 자세한 내용은 패키지 저자 Roberts의 [stm홈페이지
 분석한 모형을 통해 말뭉치에 포함된 주제와 주제별 단어의 의미가 무엇인지 전달하기 위해서는 우선 모형에 대한 해석을 제시할 수 있는 시각화가 필요하다. 이를 위해서는 먼저 주요 계수의 의미를 이해할 필요가 있다. 주제모형에서 주제별 확률분포를 나타내는 베타와 감마다. 
 
 - 베타 $\beta$: 단어가 각 주제에 등장할 확률. 각 단어별로 베타 값 부여. stm모형 요약에서 제시한 Highest probability의 지표다. 
-
 - 감마 $\gamma$: 문서가 각 주제에 등장할 확률. 각 문서별로 감마 값 부여. 
 
 즉, 베타와 감마 계수를 이용해 시각화하면 주제와 주제단어의 의미를 간명하게 나타낼 수 있다. 
 
 먼저 `tidy()`함수를 이용해 `stm()`함수로 주제모형을 계산한 결과를 정돈텍스트 형식으로 변환한다([줄리아 실기의 시각화 참고](https://juliasilge.com/blog/evaluating-stm/))
-
 
 학습편의를 위해 주제의 수롤 6개로 조정해 다시 모형을 구성하자. 
 
@@ -614,8 +780,7 @@ plot(stm_fit, type = "summary", n = 5)
 `td_beta`에서 주제별로 상위 5개 단어 추출해 `top_terms`에 할당한다.  각 주제별로 그룹을 묶어 list형식으로 각 상위단어 5개를 각 주제에 리스트로 묶어준 다음, 다시 데이터프레임의 열로 바꿔준다.  
 
 ```{r topic37, eval = FALSE}
-top_terms <- 
-td_beta %>% 
+top_terms <- td_beta %>% 
   group_by(topic) %>% 
   slice_max(beta, n = 5) %>% 
   select(topic, term) %>% 
@@ -628,8 +793,7 @@ td_beta %>%
 `td_gamma`에서 각 주제별 감마 평균값 계산해 `top_terms`(주제별로 추출한 상위 5개 단어 데이터프레임)와 결합해 `gamma_terms`에 할당한다. 
 
 ```{r topic38, eval = FALSE}
-gamma_terms <- 
-td_gamma %>% 
+gamma_terms <- td_gamma %>% 
   group_by(topic) %>% 
   summarise(gamma = mean(gamma)) %>% 
   left_join(top_terms, by = 'topic') %>% 
@@ -645,17 +809,17 @@ X축을 0에서 1까지 설정한 이유는 구간을 국소로 설정할 경우
 gamma_terms %>% 
   
   ggplot(aes(x = gamma, y = topic, fill = topic)) +
-  geom_col(show.legend = F) +
-  geom_text(aes(label = round(gamma, 2)), # 소수점 2자리 
-            hjust = 1.4) +                # 라벨을 막대도표 안쪽으로 이동
-  geom_text(aes(label = terms), 
-            hjust = -0.05) +              # 단어를 막대도표 바깥으로 이동
-  scale_x_continuous(expand = c(0, 0),    # x축 막대 위치를 Y축쪽으로 조정
-                     limit = c(0, 1)) +   # x축 범위 설정
-  labs(x = expression("문서 확률분포"~(gamma)), y = NULL,
-       title = "인공지능 관련보도 상위 주제어",
-       subtitle = "주제별로 기여도가 높은 단어 중심") +
-  theme(plot.title = element_text(size = 20))
+    geom_col(show.legend = F) +
+    geom_text(aes(label = round(gamma, 2)), # 소수점 2자리 
+              hjust = 1.4) +                # 라벨을 막대도표 안쪽으로 이동
+    geom_text(aes(label = terms), 
+              hjust = -0.05) +              # 단어를 막대도표 바깥으로 이동
+    scale_x_continuous(expand = c(0, 0),    # x축 막대 위치를 Y축쪽으로 조정
+                       limit = c(0, 1)) +   # x축 범위 설정
+    labs(x = expression("문서 확률분포"~(gamma)), y = NULL,
+         title = "인공지능 관련보도 상위 주제어",
+         subtitle = "주제별로 기여도가 높은 단어 중심") +
+    theme(plot.title = element_text(size = 20))
   
 ```
 
