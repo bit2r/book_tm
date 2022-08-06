@@ -449,17 +449,17 @@ by1000_df %>%
   count(word, sort = TRUE)
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,831 × 3</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,819 × 3</span>
 ## <span style='color: #555555;'># Groups:   label [2]</span>
 ##   label word       n
 ##   <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>
 ## <span style='color: #555555;'>1</span>     1 최고      83
 ## <span style='color: #555555;'>2</span>     1 감동      58
 ## <span style='color: #555555;'>3</span>     1 연기      58
-## <span style='color: #555555;'>4</span>     0 감독      46
-## <span style='color: #555555;'>5</span>     0 스토리    46
-## <span style='color: #555555;'>6</span>     0 시간      46
-## <span style='color: #555555;'># … with 2,825 more rows</span>
+## <span style='color: #555555;'>4</span>     1 생각      51
+## <span style='color: #555555;'>5</span>     0 감독      46
+## <span style='color: #555555;'>6</span>     0 스토리    46
+## <span style='color: #555555;'># … with 2,813 more rows</span>
 </code></pre>
 
 영화평은 긍정적인 평에는 '1', 부정적인 평에는 '0'으로 분류돼 있다. 긍정적인 평과 부정적인 평에 사용된 명사의 승산비를 구해보자. 이를 위해 long form을 wide form으로 변형해 `label`열의 값을 열의 헤더로 변환하고, 각 열의 값으로는 토큰을 투입한다. 결측값이 있으면 연산이 안되므로 `NA`값은 '0'으로 채운다. 
@@ -478,7 +478,7 @@ by1000_df %>%
               values_fill = list(n = 0))
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,303 × 3</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,294 × 3</span>
 ##   word    `0`   `1`
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>
 ## <span style='color: #555555;'>1</span> 가가      1     0
@@ -487,7 +487,7 @@ by1000_df %>%
 ## <span style='color: #555555;'>4</span> 가든      1     0
 ## <span style='color: #555555;'>5</span> 가리      1     0
 ## <span style='color: #555555;'>6</span> 가문      1     0
-## <span style='color: #555555;'># … with 2,297 more rows</span>
+## <span style='color: #555555;'># … with 2,288 more rows</span>
 </code></pre>
 
 
@@ -512,16 +512,16 @@ by1000_df %>%
   mutate(posi_odds_ratio = (odds_posi / odds_nega)) 
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,303 × 6</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,294 × 6</span>
 ##   word   nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 가가      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.542
-## <span style='color: #555555;'>2</span> 가관      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.542
-## <span style='color: #555555;'>3</span> 가능      1     4  0.000<span style='text-decoration: underline;'>904</span>  0.000<span style='text-decoration: underline;'>334</span>           2.71 
-## <span style='color: #555555;'>4</span> 가든      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.542
-## <span style='color: #555555;'>5</span> 가리      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.542
-## <span style='color: #555555;'>6</span> 가문      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.542
-## <span style='color: #555555;'># … with 2,297 more rows</span>
+## <span style='color: #555555;'>1</span> 가가      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.541
+## <span style='color: #555555;'>2</span> 가관      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.541
+## <span style='color: #555555;'>3</span> 가능      1     4  0.000<span style='text-decoration: underline;'>903</span>  0.000<span style='text-decoration: underline;'>334</span>           2.70 
+## <span style='color: #555555;'>4</span> 가든      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.541
+## <span style='color: #555555;'>5</span> 가리      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.541
+## <span style='color: #555555;'>6</span> 가문      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>           0.541
+## <span style='color: #555555;'># … with 2,288 more rows</span>
 </code></pre>
 
 
@@ -553,12 +553,12 @@ rate_odds_df %>% head()
 <pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 6 × 6</span>
 ##   word   nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 굿        0    18   0.003<span style='text-decoration: underline;'>44</span>  0.000<span style='text-decoration: underline;'>167</span>            20.6
-## <span style='color: #555555;'>2</span> 밋        0    16   0.003<span style='text-decoration: underline;'>07</span>  0.000<span style='text-decoration: underline;'>167</span>            18.4
-## <span style='color: #555555;'>3</span> ㄷ        0    15   0.002<span style='text-decoration: underline;'>89</span>  0.000<span style='text-decoration: underline;'>167</span>            17.3
-## <span style='color: #555555;'>4</span> 삶        0    10   0.001<span style='text-decoration: underline;'>99</span>  0.000<span style='text-decoration: underline;'>167</span>            11.9
-## <span style='color: #555555;'>5</span> 마음      0     9   0.001<span style='text-decoration: underline;'>81</span>  0.000<span style='text-decoration: underline;'>167</span>            10.8
-## <span style='color: #555555;'>6</span> 최고      8    83   0.015<span style='text-decoration: underline;'>2</span>   0.001<span style='text-decoration: underline;'>50</span>             10.1
+## <span style='color: #555555;'>1</span> 굿        0    17   0.003<span style='text-decoration: underline;'>25</span>  0.000<span style='text-decoration: underline;'>167</span>           19.5 
+## <span style='color: #555555;'>2</span> 밋        0    16   0.003<span style='text-decoration: underline;'>07</span>  0.000<span style='text-decoration: underline;'>167</span>           18.4 
+## <span style='color: #555555;'>3</span> ㄷ        0    15   0.002<span style='text-decoration: underline;'>89</span>  0.000<span style='text-decoration: underline;'>167</span>           17.3 
+## <span style='color: #555555;'>4</span> 삶        0    11   0.002<span style='text-decoration: underline;'>17</span>  0.000<span style='text-decoration: underline;'>167</span>           13.0 
+## <span style='color: #555555;'>5</span> 최고      8    83   0.015<span style='text-decoration: underline;'>2</span>   0.001<span style='text-decoration: underline;'>50</span>            10.1 
+## <span style='color: #555555;'>6</span> 만족      0     8   0.001<span style='text-decoration: underline;'>62</span>  0.000<span style='text-decoration: underline;'>167</span>            9.73
 </code></pre>
 
 ```r
@@ -569,9 +569,9 @@ rate_odds_df %>% tail()
 ##   word    nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
 ## <span style='color: #555555;'>1</span> 낭비       9     0  0.000<span style='text-decoration: underline;'>181</span>   0.001<span style='text-decoration: underline;'>67</span>          0.108 
-## <span style='color: #555555;'>2</span> 얘기      10     0  0.000<span style='text-decoration: underline;'>181</span>   0.001<span style='text-decoration: underline;'>84</span>          0.098<span style='text-decoration: underline;'>5</span>
-## <span style='color: #555555;'>3</span> 쓰레기    36     2  0.000<span style='text-decoration: underline;'>543</span>   0.006<span style='text-decoration: underline;'>17</span>          0.087<span style='text-decoration: underline;'>9</span>
-## <span style='color: #555555;'>4</span> 돈        19     0  0.000<span style='text-decoration: underline;'>181</span>   0.003<span style='text-decoration: underline;'>34</span>          0.054<span style='text-decoration: underline;'>2</span>
+## <span style='color: #555555;'>2</span> 얘기      10     0  0.000<span style='text-decoration: underline;'>181</span>   0.001<span style='text-decoration: underline;'>84</span>          0.098<span style='text-decoration: underline;'>3</span>
+## <span style='color: #555555;'>3</span> 쓰레기    36     2  0.000<span style='text-decoration: underline;'>542</span>   0.006<span style='text-decoration: underline;'>18</span>          0.087<span style='text-decoration: underline;'>7</span>
+## <span style='color: #555555;'>4</span> 돈        19     0  0.000<span style='text-decoration: underline;'>181</span>   0.003<span style='text-decoration: underline;'>34</span>          0.054<span style='text-decoration: underline;'>1</span>
 ## <span style='color: #555555;'>5</span> 짜증      24     0  0.000<span style='text-decoration: underline;'>181</span>   0.004<span style='text-decoration: underline;'>17</span>          0.043<span style='text-decoration: underline;'>3</span>
 ## <span style='color: #555555;'>6</span> 최악      24     0  0.000<span style='text-decoration: underline;'>181</span>   0.004<span style='text-decoration: underline;'>17</span>          0.043<span style='text-decoration: underline;'>3</span>
 </code></pre>
@@ -662,11 +662,11 @@ by1000_df %>%
 ##   word    nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
 ## <span style='color: #555555;'>1</span> 이야기    14    13   0.002<span style='text-decoration: underline;'>53</span>   0.002<span style='text-decoration: underline;'>50</span>           1.01 
-## <span style='color: #555555;'>2</span> 정도      18    16   0.003<span style='text-decoration: underline;'>07</span>   0.003<span style='text-decoration: underline;'>17</span>           0.970
-## <span style='color: #555555;'>3</span> 결말       7     6   0.001<span style='text-decoration: underline;'>27</span>   0.001<span style='text-decoration: underline;'>34</span>           0.948
-## <span style='color: #555555;'>4</span> 느낌       7     6   0.001<span style='text-decoration: underline;'>27</span>   0.001<span style='text-decoration: underline;'>34</span>           0.948
-## <span style='color: #555555;'>5</span> 이상      15    13   0.002<span style='text-decoration: underline;'>53</span>   0.002<span style='text-decoration: underline;'>67</span>           0.948
-## <span style='color: #555555;'>6</span> 팬         7     6   0.001<span style='text-decoration: underline;'>27</span>   0.001<span style='text-decoration: underline;'>34</span>           0.948
+## <span style='color: #555555;'>2</span> 개봉      10     9   0.001<span style='text-decoration: underline;'>81</span>   0.001<span style='text-decoration: underline;'>84</span>           0.983
+## <span style='color: #555555;'>3</span> 정도      18    16   0.003<span style='text-decoration: underline;'>07</span>   0.003<span style='text-decoration: underline;'>17</span>           0.968
+## <span style='color: #555555;'>4</span> 결말       7     6   0.001<span style='text-decoration: underline;'>26</span>   0.001<span style='text-decoration: underline;'>34</span>           0.946
+## <span style='color: #555555;'>5</span> 몰입       7     6   0.001<span style='text-decoration: underline;'>26</span>   0.001<span style='text-decoration: underline;'>34</span>           0.946
+## <span style='color: #555555;'>6</span> 이상      15    13   0.002<span style='text-decoration: underline;'>53</span>   0.002<span style='text-decoration: underline;'>67</span>           0.946
 ## <span style='color: #555555;'># … with 14 more rows</span>
 </code></pre>
 
@@ -696,12 +696,12 @@ by1000_df %>%
 <pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 20 × 6</span>
 ##   word    nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>           <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 이야기    14    13    0.020<span style='text-decoration: underline;'>1</span>    0.020<span style='text-decoration: underline;'>1</span>           1.00 
-## <span style='color: #555555;'>2</span> 정도      18    16    0.024<span style='text-decoration: underline;'>5</span>    0.025<span style='text-decoration: underline;'>4</span>           0.963
-## <span style='color: #555555;'>3</span> 이상      15    13    0.020<span style='text-decoration: underline;'>1</span>    0.021<span style='text-decoration: underline;'>4</span>           0.942
-## <span style='color: #555555;'>4</span> 드라마    35    35    0.051<span style='text-decoration: underline;'>8</span>    0.048<span style='text-decoration: underline;'>1</span>           1.08 
-## <span style='color: #555555;'>5</span> 배우      27    22    0.033<span style='text-decoration: underline;'>1</span>    0.037<span style='text-decoration: underline;'>4</span>           0.884
-## <span style='color: #555555;'>6</span> 연출      14    11    0.017<span style='text-decoration: underline;'>3</span>    0.020<span style='text-decoration: underline;'>1</span>           0.861
+## <span style='color: #555555;'>1</span> 이야기    14    13    0.020<span style='text-decoration: underline;'>1</span>    0.019<span style='text-decoration: underline;'>9</span>           1.01 
+## <span style='color: #555555;'>2</span> 정도      18    16    0.024<span style='text-decoration: underline;'>4</span>    0.025<span style='text-decoration: underline;'>2</span>           0.968
+## <span style='color: #555555;'>3</span> 이상      15    13    0.020<span style='text-decoration: underline;'>1</span>    0.021<span style='text-decoration: underline;'>2</span>           0.947
+## <span style='color: #555555;'>4</span> 연출      14    12    0.018<span style='text-decoration: underline;'>7</span>    0.019<span style='text-decoration: underline;'>9</span>           0.938
+## <span style='color: #555555;'>5</span> 드라마    35    35    0.051<span style='text-decoration: underline;'>6</span>    0.047<span style='text-decoration: underline;'>7</span>           1.08 
+## <span style='color: #555555;'>6</span> 배우      27    22    0.033<span style='text-decoration: underline;'>0</span>    0.037<span style='text-decoration: underline;'>1</span>           0.889
 ## <span style='color: #555555;'># … with 14 more rows</span>
 </code></pre>
 
@@ -735,16 +735,16 @@ by1000_df %>%
   mutate(log_odds_ratio = log(odds_posi / odds_nega)) 
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,303 × 6</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,294 × 6</span>
 ##   word   nega  posi odds_posi odds_nega log_odds_ratio
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 가가      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.613</span>
-## <span style='color: #555555;'>2</span> 가관      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.613</span>
-## <span style='color: #555555;'>3</span> 가능      1     4  0.000<span style='text-decoration: underline;'>904</span>  0.000<span style='text-decoration: underline;'>334</span>          0.997
-## <span style='color: #555555;'>4</span> 가든      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.613</span>
-## <span style='color: #555555;'>5</span> 가리      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.613</span>
-## <span style='color: #555555;'>6</span> 가문      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.613</span>
-## <span style='color: #555555;'># … with 2,297 more rows</span>
+## <span style='color: #555555;'>1</span> 가가      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.615</span>
+## <span style='color: #555555;'>2</span> 가관      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.615</span>
+## <span style='color: #555555;'>3</span> 가능      1     4  0.000<span style='text-decoration: underline;'>903</span>  0.000<span style='text-decoration: underline;'>334</span>          0.995
+## <span style='color: #555555;'>4</span> 가든      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.615</span>
+## <span style='color: #555555;'>5</span> 가리      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.615</span>
+## <span style='color: #555555;'>6</span> 가문      1     0  0.000<span style='text-decoration: underline;'>181</span>  0.000<span style='text-decoration: underline;'>334</span>         -<span style='color: #BB0000;'>0.615</span>
+## <span style='color: #555555;'># … with 2,288 more rows</span>
 </code></pre>
 
 로그 승산비를 이용하면 하나의 도표에 상대빈도를 표시할 수 있다. 먼저 로그승산비를 구한뒤, 0을 기준으로 긍정평과 부정평을 group으로 구분한다. 긍정평과 부정평 집단별로 구분돼 있으므로, 로그승산비의 절대값 상위 10개를 지정하면, 긍정평과 부정평 별로 각각 상위 10개 단어를 추출할 수 있다. 
@@ -773,17 +773,17 @@ rate_log_df  %>%
   slice_max(abs(log_odds_ratio), n = 10) 
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 22 × 7</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 26 × 7</span>
 ## <span style='color: #555555;'># Groups:   label [2]</span>
 ##   word   nega  posi odds_posi odds_nega log_odds_ratio label
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>          <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>
-## <span style='color: #555555;'>1</span> 굿        0    18   0.003<span style='text-decoration: underline;'>44</span>  0.000<span style='text-decoration: underline;'>167</span>           3.02 긍정…
+## <span style='color: #555555;'>1</span> 굿        0    17   0.003<span style='text-decoration: underline;'>25</span>  0.000<span style='text-decoration: underline;'>167</span>           2.97 긍정…
 ## <span style='color: #555555;'>2</span> 밋        0    16   0.003<span style='text-decoration: underline;'>07</span>  0.000<span style='text-decoration: underline;'>167</span>           2.91 긍정…
 ## <span style='color: #555555;'>3</span> ㄷ        0    15   0.002<span style='text-decoration: underline;'>89</span>  0.000<span style='text-decoration: underline;'>167</span>           2.85 긍정…
-## <span style='color: #555555;'>4</span> 삶        0    10   0.001<span style='text-decoration: underline;'>99</span>  0.000<span style='text-decoration: underline;'>167</span>           2.48 긍정…
-## <span style='color: #555555;'>5</span> 마음      0     9   0.001<span style='text-decoration: underline;'>81</span>  0.000<span style='text-decoration: underline;'>167</span>           2.38 긍정…
-## <span style='color: #555555;'>6</span> 최고      8    83   0.015<span style='text-decoration: underline;'>2</span>   0.001<span style='text-decoration: underline;'>50</span>            2.31 긍정…
-## <span style='color: #555555;'># … with 16 more rows</span>
+## <span style='color: #555555;'>4</span> 삶        0    11   0.002<span style='text-decoration: underline;'>17</span>  0.000<span style='text-decoration: underline;'>167</span>           2.56 긍정…
+## <span style='color: #555555;'>5</span> 최고      8    83   0.015<span style='text-decoration: underline;'>2</span>   0.001<span style='text-decoration: underline;'>50</span>            2.31 긍정…
+## <span style='color: #555555;'>6</span> 만족      0     8   0.001<span style='text-decoration: underline;'>62</span>  0.000<span style='text-decoration: underline;'>167</span>           2.28 긍정…
+## <span style='color: #555555;'># … with 20 more rows</span>
 </code></pre>
 
 막대도표로 시각화하면 다음과 같은 긍부정에 기여하는 중요단어를 한눈에 일별할 수 있다. 
@@ -852,17 +852,17 @@ weighted_log_odds_df <- by1000_df %>%
 weighted_log_odds_df
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,831 × 4</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,819 × 4</span>
 ## <span style='color: #555555;'># Groups:   label [2]</span>
 ##   label word      n log_odds_weighted
 ##   <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>             <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
 ## <span style='color: #555555;'>1</span>     0 짜증     24              3.18
 ## <span style='color: #555555;'>2</span>     0 최악     24              3.18
-## <span style='color: #555555;'>3</span>     1 굿       18              3.16
+## <span style='color: #555555;'>3</span>     1 굿       17              3.07
 ## <span style='color: #555555;'>4</span>     1 최고     83              3.06
 ## <span style='color: #555555;'>5</span>     1 밋       16              2.98
 ## <span style='color: #555555;'>6</span>     1 ㄷ       15              2.88
-## <span style='color: #555555;'># … with 2,825 more rows</span>
+## <span style='color: #555555;'># … with 2,813 more rows</span>
 </code></pre>
 
 긍정평과 부정평별 가중로그승산비 상위 10개 추출한다.
@@ -875,17 +875,17 @@ weighted_log_odds_df %>%
   slice_max(abs(log_odds_weighted), n = 10) # 긍정평과 부정평별 각각 상위 10개
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 20 × 4</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 22 × 4</span>
 ## <span style='color: #555555;'># Groups:   label [2]</span>
 ##   label  word      n log_odds_weighted
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>             <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 긍정평 굿       18              3.16
+## <span style='color: #555555;'>1</span> 긍정평 굿       17              3.07
 ## <span style='color: #555555;'>2</span> 긍정평 최고     83              3.06
 ## <span style='color: #555555;'>3</span> 긍정평 밋       16              2.98
 ## <span style='color: #555555;'>4</span> 긍정평 ㄷ       15              2.88
-## <span style='color: #555555;'>5</span> 긍정평 삶       10              2.35
+## <span style='color: #555555;'>5</span> 긍정평 삶       11              2.46
 ## <span style='color: #555555;'>6</span> 긍정평 감동     58              2.28
-## <span style='color: #555555;'># … with 14 more rows</span>
+## <span style='color: #555555;'># … with 16 more rows</span>
 </code></pre>
 
 막대도표로 시각화한다. 특히 `reorder_within()` 함수를 사용하게 되면 작은창(facet)
@@ -981,17 +981,17 @@ tf_idf_df <- by1000_df %>%
 tf_idf_df
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,831 × 6</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 2,819 × 6</span>
 ## <span style='color: #555555;'># Groups:   label [2]</span>
 ##   label word      n       tf   idf   tf_idf
 ##   <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span>     0 가가      1 0.000<span style='text-decoration: underline;'>271</span> 0.693 0.000<span style='text-decoration: underline;'>188</span>
-## <span style='color: #555555;'>2</span>     0 가관      1 0.000<span style='text-decoration: underline;'>271</span> 0.693 0.000<span style='text-decoration: underline;'>188</span>
-## <span style='color: #555555;'>3</span>     0 가능      1 0.000<span style='text-decoration: underline;'>271</span> 0     0       
-## <span style='color: #555555;'>4</span>     0 가든      1 0.000<span style='text-decoration: underline;'>271</span> 0.693 0.000<span style='text-decoration: underline;'>188</span>
-## <span style='color: #555555;'>5</span>     0 가리      1 0.000<span style='text-decoration: underline;'>271</span> 0.693 0.000<span style='text-decoration: underline;'>188</span>
-## <span style='color: #555555;'>6</span>     0 가문      1 0.000<span style='text-decoration: underline;'>271</span> 0.693 0.000<span style='text-decoration: underline;'>188</span>
-## <span style='color: #555555;'># … with 2,825 more rows</span>
+## <span style='color: #555555;'>1</span>     0 가가      1 0.000<span style='text-decoration: underline;'>270</span> 0.693 0.000<span style='text-decoration: underline;'>187</span>
+## <span style='color: #555555;'>2</span>     0 가관      1 0.000<span style='text-decoration: underline;'>270</span> 0.693 0.000<span style='text-decoration: underline;'>187</span>
+## <span style='color: #555555;'>3</span>     0 가능      1 0.000<span style='text-decoration: underline;'>270</span> 0     0       
+## <span style='color: #555555;'>4</span>     0 가든      1 0.000<span style='text-decoration: underline;'>270</span> 0.693 0.000<span style='text-decoration: underline;'>187</span>
+## <span style='color: #555555;'>5</span>     0 가리      1 0.000<span style='text-decoration: underline;'>270</span> 0.693 0.000<span style='text-decoration: underline;'>187</span>
+## <span style='color: #555555;'>6</span>     0 가문      1 0.000<span style='text-decoration: underline;'>270</span> 0.693 0.000<span style='text-decoration: underline;'>187</span>
+## <span style='color: #555555;'># … with 2,813 more rows</span>
 </code></pre>
 
 긍정평과 부정평별 상위 10개 추출한다.
@@ -1003,17 +1003,17 @@ tf_idf_df %>%
   slice_max(tf_idf, n = 10) # 긍정평과 부정평별 각각 상위 10개 
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 22 × 6</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 21 × 6</span>
 ## <span style='color: #555555;'># Groups:   label [2]</span>
 ##   label  word      n      tf   idf  tf_idf
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>   <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>   <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 긍정평 굿       18 0.005<span style='text-decoration: underline;'>58</span> 0.693 0.003<span style='text-decoration: underline;'>87</span>
-## <span style='color: #555555;'>2</span> 긍정평 밋       16 0.004<span style='text-decoration: underline;'>96</span> 0.693 0.003<span style='text-decoration: underline;'>44</span>
-## <span style='color: #555555;'>3</span> 긍정평 ㄷ       15 0.004<span style='text-decoration: underline;'>65</span> 0.693 0.003<span style='text-decoration: underline;'>22</span>
-## <span style='color: #555555;'>4</span> 긍정평 삶       10 0.003<span style='text-decoration: underline;'>10</span> 0.693 0.002<span style='text-decoration: underline;'>15</span>
-## <span style='color: #555555;'>5</span> 긍정평 마음      9 0.002<span style='text-decoration: underline;'>79</span> 0.693 0.001<span style='text-decoration: underline;'>93</span>
-## <span style='color: #555555;'>6</span> 긍정평 만족      8 0.002<span style='text-decoration: underline;'>48</span> 0.693 0.001<span style='text-decoration: underline;'>72</span>
-## <span style='color: #555555;'># … with 16 more rows</span>
+## <span style='color: #555555;'>1</span> 긍정평 굿       17 0.005<span style='text-decoration: underline;'>24</span> 0.693 0.003<span style='text-decoration: underline;'>63</span>
+## <span style='color: #555555;'>2</span> 긍정평 밋       16 0.004<span style='text-decoration: underline;'>93</span> 0.693 0.003<span style='text-decoration: underline;'>42</span>
+## <span style='color: #555555;'>3</span> 긍정평 ㄷ       15 0.004<span style='text-decoration: underline;'>62</span> 0.693 0.003<span style='text-decoration: underline;'>20</span>
+## <span style='color: #555555;'>4</span> 긍정평 삶       11 0.003<span style='text-decoration: underline;'>39</span> 0.693 0.002<span style='text-decoration: underline;'>35</span>
+## <span style='color: #555555;'>5</span> 긍정평 만족      8 0.002<span style='text-decoration: underline;'>46</span> 0.693 0.001<span style='text-decoration: underline;'>71</span>
+## <span style='color: #555555;'>6</span> 긍정평 행복      7 0.002<span style='text-decoration: underline;'>16</span> 0.693 0.001<span style='text-decoration: underline;'>49</span>
+## <span style='color: #555555;'># … with 15 more rows</span>
 </code></pre>
 
 막대도표로 시각화한다.
@@ -1068,12 +1068,12 @@ bind_rows(wlo_df, rlo_df, ti_df, .id = "ID") %>% tail(20)
 ## <span style='color: #555555;'># Groups:   label [2]</span>
 ##   ID    label  word  score
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 3     긍정평 ㄷ    1.93 
-## <span style='color: #555555;'>2</span> 3     긍정평 삶    1.29 
-## <span style='color: #555555;'>3</span> 3     긍정평 마음  1.16 
-## <span style='color: #555555;'>4</span> 3     긍정평 만족  1.03 
-## <span style='color: #555555;'>5</span> 3     긍정평 감정  0.902
-## <span style='color: #555555;'>6</span> 3     긍정평 행복  0.902
+## <span style='color: #555555;'>1</span> 3     긍정평 밋    2.05 
+## <span style='color: #555555;'>2</span> 3     긍정평 ㄷ    1.92 
+## <span style='color: #555555;'>3</span> 3     긍정평 삶    1.41 
+## <span style='color: #555555;'>4</span> 3     긍정평 만족  1.02 
+## <span style='color: #555555;'>5</span> 3     긍정평 행복  0.897
+## <span style='color: #555555;'>6</span> 3     긍정평 뒤    0.769
 ## <span style='color: #555555;'># … with 14 more rows</span>
 </code></pre>
 
@@ -1182,7 +1182,7 @@ vac_tk <- vac_df %>%
 vac_tk
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 3,570 × 5</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 3,633 × 5</span>
 ##   언론사   본문                           URL    word  pos  
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>                          <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>
 ## <span style='color: #555555;'>1</span> 경향신문 <span style='color: #555555;'>"</span>이틀간 2만322명에 접종 마쳐 … http:… 백신  nng  
@@ -1191,7 +1191,7 @@ vac_tk
 ## <span style='color: #555555;'>4</span> 경향신문 <span style='color: #555555;'>"</span>이틀간 2만322명에 접종 마쳐 … http:… 곳곳  nng  
 ## <span style='color: #555555;'>5</span> 경향신문 <span style='color: #555555;'>"</span>이틀간 2만322명에 접종 마쳐 … http:… 방역  nng  
 ## <span style='color: #555555;'>6</span> 경향신문 <span style='color: #555555;'>"</span>이틀간 2만322명에 접종 마쳐 … http:… 해이  nng  
-## <span style='color: #555555;'># … with 3,564 more rows</span>
+## <span style='color: #555555;'># … with 3,627 more rows</span>
 </code></pre>
 
 
@@ -1298,11 +1298,11 @@ enc2utf8("아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 �
 <pre class="r-output"><code>## $`아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 이상’은 의사가 판단`
 ##  [1] "아스트라/NNP" "제/NP"        "네/XSN"      
 ##  [4] "카/NNG"       "‘/SY"        "모든/MM"     
-##  [7] "연령층/NNG"   "접종/NNG"     "’/SY"       
-## [10] "허가/NNG"     "‘/SY"        "65/SN"       
-## [13] "살/NNBC"      "이상/NNG"     "’/SY"       
-## [16] "은/JX"        "의사/NNG"     "가/JKS"      
-## [19] "판단/NNG"
+##  [7] "연령/NNG"     "층/XSN"       "접종/NNG"    
+## [10] "’/SY"        "허가/NNG"     "‘/SY"       
+## [13] "65/SN"        "살/NNBC"      "이상/NNG"    
+## [16] "’/SY"        "은/JX"        "의사/NNG"    
+## [19] "가/JKS"       "판단/NNG"
 </code></pre>
 
 :::
@@ -1506,14 +1506,14 @@ total_fq
 
 <pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 32 × 3</span>
 ## <span style='color: #555555;'># Groups:   언론사 [4]</span>
-##   언론사   word      n
-##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>
-## <span style='color: #555555;'>1</span> 경향신문 오늘     19
-## <span style='color: #555555;'>2</span> 경향신문 카       14
-## <span style='color: #555555;'>3</span> 경향신문 시작     13
-## <span style='color: #555555;'>4</span> 경향신문 집단     13
-## <span style='color: #555555;'>5</span> 경향신문 고령     10
-## <span style='color: #555555;'>6</span> 경향신문 이상     10
+##   언론사   word       n
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>
+## <span style='color: #555555;'>1</span> 경향신문 코로나    23
+## <span style='color: #555555;'>2</span> 경향신문 오늘      19
+## <span style='color: #555555;'>3</span> 경향신문 카        14
+## <span style='color: #555555;'>4</span> 경향신문 시작      13
+## <span style='color: #555555;'>5</span> 경향신문 고령      10
+## <span style='color: #555555;'>6</span> 경향신문 이상      10
 ## <span style='color: #555555;'># … with 26 more rows</span>
 </code></pre>
 
@@ -1539,17 +1539,17 @@ wlo_fq <- vac_tk %>%
 wlo_fq 
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 38 × 4</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 58 × 4</span>
 ## <span style='color: #555555;'># Groups:   언론사 [4]</span>
-##   언론사   word      n log_odds_weighted
-##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>             <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span> 경향신문 현장      5              2.74
-## <span style='color: #555555;'>2</span> 경향신문 오늘     19              2.46
-## <span style='color: #555555;'>3</span> 경향신문 국산      4              2.45
-## <span style='color: #555555;'>4</span> 경향신문 발        3              2.12
-## <span style='color: #555555;'>5</span> 경향신문 사회      3              2.12
-## <span style='color: #555555;'>6</span> 경향신문 삶        3              2.12
-## <span style='color: #555555;'># … with 32 more rows</span>
+##   언론사   word       n log_odds_weighted
+##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>    <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;int&gt;</span>             <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
+## <span style='color: #555555;'>1</span> 경향신문 현장       5              2.76
+## <span style='color: #555555;'>2</span> 경향신문 국산       4              2.47
+## <span style='color: #555555;'>3</span> 경향신문 오늘      19              2.44
+## <span style='color: #555555;'>4</span> 경향신문 사회       3              2.14
+## <span style='color: #555555;'>5</span> 경향신문 삶         3              2.14
+## <span style='color: #555555;'>6</span> 경향신문 입소자     3              2.14
+## <span style='color: #555555;'># … with 52 more rows</span>
 </code></pre>
 
 총빈도와 상대빈도 데이터프레임을 행방향으로 결합한다. 

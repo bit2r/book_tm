@@ -322,16 +322,14 @@ con_v %>% enc2utf8 %>% tibble(text = .) %>%
   inner_join(knu_dic_df)
 ```
 
-<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 7 × 3</span>
+<pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 5 × 3</span>
 ##   word  morph sScore
 ##   <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span> <span style='color: #555555; font-style: italic;'>&lt;chr&gt;</span>  <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
 ## <span style='color: #555555;'>1</span> 조화  nng        2
 ## <span style='color: #555555;'>2</span> 능력  nng        1
-## <span style='color: #555555;'>3</span> 최고  nng        2
-## <span style='color: #555555;'>4</span> 향상  nng        1
-## <span style='color: #555555;'>5</span> 안전  nng        2
-## <span style='color: #555555;'>6</span> 행복  nng        2
-## <span style='color: #555555;'># … with 1 more row</span>
+## <span style='color: #555555;'>3</span> 향상  nng        1
+## <span style='color: #555555;'>4</span> 안전  nng        2
+## <span style='color: #555555;'>5</span> 행복  nng        2
 </code></pre>
 
 헌법 전문의 감정점수를 구해보자. 
@@ -353,7 +351,7 @@ con_v %>% enc2utf8 %>% tibble(text = .) %>%
 <pre class="r-output"><code>## <span style='color: #555555;'># A tibble: 1 × 1</span>
 ##   score
 ##   <span style='color: #555555; font-style: italic;'>&lt;dbl&gt;</span>
-## <span style='color: #555555;'>1</span>     9
+## <span style='color: #555555;'>1</span>     8
 </code></pre>
 
 

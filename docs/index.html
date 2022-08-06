@@ -72,15 +72,17 @@
 <li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
 <li class="book-part">텍스트 살펴보기</li>
 <li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="%ED%85%8D%EC%8A%A4%ED%8A%B8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%90%EC%83%89.html"><span class="header-section-number">5</span> 텍스트 데이터 탐색</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="" href="text-to-tibble.html"><span class="header-section-number">5</span> 텍스트 → 데이터프레임</a></li>
-<li><a class="" href="text-cleansing.html"><span class="header-section-number">6</span> 정제 (전처리)</a></li>
+<li><a class="" href="text-to-tibble.html"><span class="header-section-number">6</span> 텍스트 → 데이터프레임</a></li>
+<li><a class="" href="text-cleansing.html"><span class="header-section-number">7</span> 정제 (전처리)</a></li>
 <li class="book-part">기술통계</li>
-<li><a class="" href="tf-idf.html"><span class="header-section-number">7</span> 단어 빈도수</a></li>
+<li><a class="" href="tf-idf.html"><span class="header-section-number">8</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
-<li><a class="" href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></li>
-<li><a class="" href="topic-modeling.html"><span class="header-section-number">9</span> 주제모형</a></li>
-<li><a class="" href="anal4topic.html"><span class="header-section-number">10</span> 주제모형(공변인)</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">9</span> 감성분석</a></li>
+<li><a class="" href="topic-modeling.html"><span class="header-section-number">10</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">11</span> 주제모형(공변인)</a></li>
+<li><a class="" href="%EC%B0%B8%EA%B3%A0%EB%AC%B8%ED%97%8C.html">참고문헌</a></li>
 </ul>
 
         <div class="book-extra">
@@ -92,38 +94,25 @@
 <h1>들어가며<a class="anchor" aria-label="anchor" href="#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0"><i class="fas fa-link"></i></a>
 </h1>
 <hr>
-<p>사단법인 한국 알(R) 사용자회는 디지털 불평등 해소와 통계 대중화를 위해
-2022년 설립되었습니다. 오픈 통계 패키지 개발을 비롯하여
-최근에 데이터 사이언스 관련 교재도 함께 제작하여 발간하는 작업을 수행하고 있습니다.
-그 첫번째 결과물로 John Fox 교수님이 개발한 설치형 오픈 통계 패키지 <code>Rcmdr</code><span class="citation">(<a href="anal4topic.html#ref-fox2016using" role="doc-biblioref">Fox 2016</a>)</span> <span class="citation">(<a href="anal4topic.html#ref-rcmdr2022manual" role="doc-biblioref">Fox and Bouchet-Valat 2021</a>)</span> <span class="citation">(<a href="anal4topic.html#ref-rcmdr2005paper" role="doc-biblioref">Fox 2005</a>)</span> 를 신종화 님께서 한글화 및 문서화에 10년 넘게 기여해주신 한국알사용자회 저작권을 흔쾌히
-허락해 주셔서 <a href="https://r2bit.com/Rcmdr/">설치형 오픈 통계 패키지 - <code>Rcmdr</code></a>로 세상에 나왔습니다.</p>
-<p>두번째 활동을 여기저기 산재되어 있던 시각화 관련 자료를 묶어
-<strong><a href="https://r2bit.com/book_viz/">데이터 시각화(Data Visualization)</a></strong>를 전자책 형태로 공개하였고,
-데이터 분석 관련 저술을 이어 진행하게 되었습니다.</p>
-<p>세번째 활동으로 데이터 사이언스가 하나로 구성되지 않은 것을 간파하고
-데이터 사이언스를 지탱하는 기본기술을 5가지로 정리한
-<strong><a href="https://r2bit.com/book_analytics/">데이터 과학을 지탱하는 기본기</a></strong> 전자책을
-공개했습니다.</p>
-<p>네번째 활동으로 데이터 과학이 이제는 R 혹은 파이썬 언어가 중요한 것이 아니라
-데이터 과학 문제 해결에 집중한 <strong><a href="https://r2bit.com/book_programming/">데이터 과학 프로그래밍</a></strong>
-전자책을 공개했습니다. “데이터 과학 프로그래밍” 저작을 위해 <a href="https://www.py4e.com/book">“Python for Everybody”</a>와
-<a href="http://www.py4inf.com/">Python for Informatics: Exploring Information</a>에 기반하여
-2015년부터 시작된 <a href="http://aispiration.com/pythonlearn-kr/">모두를 위한 파이썬</a> 한글화
-프로젝트가 밑바탕이 되었습니다.</p>
-<p>데이터 분석 언어 R에 관한 지식을 신속히 습득하여 독자들이 갖고 있는 문제에
-접목시키고자 하시는 분은 한국 알(R) 사용자회에서 번역하여 공개한
-<a href="https://dl-dashboard.shinyapps.io/rbootcamp/">R 신병훈련소(Bootcamp)</a> 과정을
-추천드립니다.</p>
-<hr>
 <p>“R 텍스트 마이닝” 전자책은 한국 R 사용자회와 제주대학교 제주대학교 언론홍보학과
 <strong>안도현</strong> 교수님이 공동 작업한 저작물로 건강한 R 생태계 확대에 크게
-기여할 것으로 기대됩니다. 안도현 교수님의 <a href="http://text.minds.kr/">R로 배우는 텍스트마이닝</a>
-콘텐츠를 기반으로 한국 R 사용자회는 텍스트 분석/마이닝 전용
-<a href="https://github.com/bit2r/bitTA">bitTA</a> 패키지를 개발하여
-2022년 현재 시점 한국어 텍스트 분석의 새로운 여정을 시작하였습니다.</p>
+기여할 것으로 기대됩니다. 안도현 교수님의 <a href="http://text.minds.kr/">R로 배우는 텍스트마이닝</a> 콘텐츠를 기반으로 한국 R 사용자회는 텍스트 분석/마이닝 전용 <a href="https://github.com/bit2r/bitTA">bitTA</a> 패키지를 개발하여
+2022년 현재 시점 한국어 텍스트 분석의 새로운 여정을 시작했습니다.</p>
+<p>“R 텍스트 마이닝”은 한국어 텍스트 분석에 필요한 다양한 도구를 <code>bitTA</code> 패키지에
+내장하고 한국어 텍스트 전처리와 정제에 필요한 스크립트와 해석을 전자책에
+담아냈습니다. 또한, 대표적인 한글 소설과 “인공지능”과 “코로나19”
+뉴스기사로 감성분석과 주제모형을 개발작업을 진행하여 현업 담당자가
+실제 업무에 적용할 수 있도록 구성하였으며 <code>shiny</code> 앱을 내장하여 실제
+텍스트 마이닝 데이터 사이언스 제품개발에 관심있는 개발자도 전체적인 개발흐름을
+따라가며 구현에 도움이 되도록 구성했습니다.</p>
 <ul>
-<li><a href="http://text.minds.kr/">R로 배우는 텍스트마이닝 - 전자책</a></li>
 <li><a href="https://github.com/dataminds/textminds">R로 배우는 텍스트마이닝 - GitHub 저장소</a></li>
+<li>텍스트 마이닝 <a href="https://github.com/bit2r/bitTA"><code>bitTA</code> 패키지</a>
+<ul>
+<li>텍스트 마이닝 웹앱: <code>bitTA</code> 패키지 내장</li>
+</ul>
+</li>
+<li><a href="http://text.minds.kr/">R로 배우는 텍스트마이닝 - 전자책</a></li>
 </ul>
 <p>“R 텍스트마이닝” 저작물을 포함한 한국 알(R) 사용자회 저작물은 크리에이티브 커먼즈
 <a href="http://ccl.cckorea.org/about/">저작자표시-비영리-동일조건 변경 허락 (BY-NC-SA)</a>
@@ -147,32 +136,96 @@
 <span class="header-section-number">0.1</span> 구성<a class="anchor" aria-label="anchor" href="#%EA%B5%AC%EC%84%B1"><i class="fas fa-link"></i></a>
 </h2>
 <p>텍스트 마이닝에 필요한 R의 기초, 분석의 전단계, 그리고 분석 등으로 구성돼 있다.
-R에 익숙하면 곧바로 텍스트 분석에 필수 기초지식인 “자료구조”부터 시작할 것을 권장한다.</p>
-<div id="r기초" class="section level3" number="0.1.1">
+특히, 기존 텍스트 마이닝 Base R 을 최대한 <code>tidyverse</code> 패러다임을 담아
+깔끔한 데이터(tidy data)를 주요 자료구조로 탐색적 텍스트 마이닝을 구현할 수 있도록 했으며 <code>shiny</code> 앱을 <code>bitTA</code> 패키지에 담아 텍스트 분석 생산성을 높이도록 했다.</p>
+<p>텍스트 데이터가 엑셀과 같은 직사각형 데이터에 익숙한 분들도 다양한
+텍스트 전처리 기법을 담아 텍스트 전처리 업무에 대한 부담을 대폭 낮추면서
+어떠한 텍스트 데이터도 후속 시각화와 모형개발에 문제가 없도록
+자주 사용되는 기법을 담아내었다.</p>
+<p>텍스트 마이닝의 꽃인 감성분서과 주제모형을 별도 패키지와 데이터를 구하지 않고도
+<code>bitTA</code> 패키지에 담아 내었으며 한글 감성분석에 꼭 필요한 감성사전을 포함하여
+감성분석의 새지평을 열었으며 주제모형도 “인공지능”, “코로나19”를 실제 데이터로
+삼아 <code>tidytext</code> 체계를 담아내어 최신 텍스트 마이닝 추세를 반영하여
+한국어 텍스트 마이닝에 실전 사례로 확장하시는 독자에게 큰 도움이 되고자 노력을 하였습니다.</p>
+<div id="설치-및-환경설정" class="section level3" number="0.1.1">
 <h3>
-<span class="header-section-number">0.1.1</span> R기초<a class="anchor" aria-label="anchor" href="#r%EA%B8%B0%EC%B4%88"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.1.1</span> 설치 및 환경설정<a class="anchor" aria-label="anchor" href="#%EC%84%A4%EC%B9%98-%EB%B0%8F-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95"><i class="fas fa-link"></i></a>
 </h3>
-<p>R의 설치, 데이터유형과 구조, 시각화의 기초적인 내용과 R과 RStudio를 이용하는 과정에서 겪을 수 있는 문제해결 방법에 대해 다뤘다.</p>
+<p>텍스트 마이닝에 꼭 필요한 여러 패키지와 툴에 다양하게 다뤘습니다.
+<code>KoNLP</code>는 자바의존성을 갖고 2016년 이후 더이상 유지보수가 되고 있지 않아 관련
+패키지는 동일한 기능을 갖는 다른 패키지 메카브(Mecab)로 대체하였고,
+하지만, <code>KoNLP</code>에서 제공하는 기능은 파이썬에서 제공하는 텍스트 마이닝 연관 패키지를 <code>reticualte</code>를 사용해서 필요한 기능을 더 확장해서 사용할 수 있도록
+독자와 사용자의 편의성을 배려하였다.</p>
+<p>또한, 딥러닝 관련 사항도 일부 다뤄서 딥러닝 사전학습모형(pretrained model)을
+필요한 경우 텍스트 마이닝에 활용할 수 있는 초석도 마련하여 향후 딥러닝 관련
+텍스트 마이닝 분야도 함께 성장할 수 있도록 했다.</p>
+<p>텍스트 마이닝을 R 언어로 수행하면서 관련된 데이터유형과 구조, 시각화의 기초적인 내용과 R과 RStudio를 이용하는 과정에서 겪을 수 있는 문제해결 방법에 대해 다뤘다.</p>
 </div>
-<div id="분석-전단계" class="section level3" number="0.1.2">
+<div id="텍스트-살펴보기" class="section level3" number="0.1.2">
 <h3>
-<span class="header-section-number">0.1.2</span> 분석 전단계<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-%EC%A0%84%EB%8B%A8%EA%B3%84"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.1.2</span> 텍스트 살펴보기<a class="anchor" aria-label="anchor" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0"><i class="fas fa-link"></i></a>
 </h3>
-<p>텍스트마이닝의 전반적인 구조와 자료 수집과 불러오기, 정제(전처리)에 필요한 다양한 도구(stringr, dplyr, tidyr, purrr, regex 등)의 학습 및 정제(전처리)하는 방법에 대해 학습한다.</p>
+<p>텍스트 마이닝을 본격적으로 진행하기에 앞서 텍스트를 일별할 수 있는 방법에 대해
+소개하고 <code>shiny</code> 앱을 통해 텍스트 마이닝 전반에 대해 살펴볼 수 있도록 했다.
+특히, <code>bitTA</code> 패키지 내부에 텍스트 마이닝 <code>shiny</code> 앱이 내장되어 있어
+필요하면 바로 텍스트 마이닝 작업을 수행하는 것도 가능하도록 했다.</p>
 </div>
-<div id="분석-i" class="section level3" number="0.1.3">
+<div id="분석-전단계" class="section level3" number="0.1.3">
 <h3>
-<span class="header-section-number">0.1.3</span> 분석 I<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-i"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.1.3</span> 분석 전단계<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-%EC%A0%84%EB%8B%A8%EA%B3%84"><i class="fas fa-link"></i></a>
+</h3>
+<p>텍스트마이닝의 전반적인 구조와 자료 수집과 불러오기, 정제(전처리)에 필요한 다양한 도구(stringr, dplyr, tidyr, purrr, regex 등)의 학습 및 정제(전처리)하는 방법에 대해 학습한다. 이 과정을 통해 분석이 불가능한 텍스트를
+깔끔한 텍스트(<code>tidy text</code>) 즉 데이터프레임으로 변환시켜 후속 작업을 준비한다.</p>
+</div>
+<div id="기술-통계" class="section level3" number="0.1.4">
+<h3>
+<span class="header-section-number">0.1.4</span> 기술 통계<a class="anchor" aria-label="anchor" href="#%EA%B8%B0%EC%88%A0-%ED%86%B5%EA%B3%84"><i class="fas fa-link"></i></a>
 </h3>
 <p>단어의 빈도를 계산해 텍스트에서 의미를 추론하는 방식을 학습한다. 사전(감정사전)을 이용하는 방법, 상대적인 빈도(tf-idf, 가중로그승산비 등)를 계산하는 방법, 기계학습의 비지도학습(주제모형: topic models)으로 계산하는 방법 등을 학습한다.</p>
 </div>
-<div id="분석-ii-예정" class="section level3" number="0.1.4">
+<div id="분석-i" class="section level3" number="0.1.5">
 <h3>
-<span class="header-section-number">0.1.4</span> 분석 II (예정)<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-ii-%EC%98%88%EC%A0%95"><i class="fas fa-link"></i></a>
+<span class="header-section-number">0.1.5</span> 분석 I<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-i"><i class="fas fa-link"></i></a>
 </h3>
-<p>기계학습의 지도학습 방식에 대해 학습한다.</p>
-
+<p>텍스트 마이닝의 꽃인 감성분석과 주제모형, 공변량 주제모형으로 텍스트 분석 범위를
+모형까지 넓혀 실무업무에서 사용되는 다양한 기법을 현업과 밀접한 “인공지능”,
+“코로나19” 뉴스기사를 통해 생생한 현장의 모습을 담아내고자 했다.</p>
 </div>
+<div id="분석-ii-예정" class="section level3" number="0.1.6">
+<h3>
+<span class="header-section-number">0.1.6</span> 분석 II (예정)<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-ii-%EC%98%88%EC%A0%95"><i class="fas fa-link"></i></a>
+</h3>
+<p>텍스트 마이닝 기계학습의 지도학습 방식에 대해서는 별도 전자책으로 준비하여
+공개할 예정이다.</p>
+</div>
+</div>
+<div id="오픈-전자책" class="section level2" number="0.2">
+<h2>
+<span class="header-section-number">0.2</span> 오픈 전자책<a class="anchor" aria-label="anchor" href="#%EC%98%A4%ED%94%88-%EC%A0%84%EC%9E%90%EC%B1%85"><i class="fas fa-link"></i></a>
+</h2>
+<p>사단법인 한국 알(R) 사용자회는 디지털 불평등 해소와 통계 대중화를 위해
+2022년 설립되었습니다. 오픈 통계 패키지 개발을 비롯하여
+최근에 데이터 사이언스 관련 교재도 함께 제작하여 발간하는 작업을 수행하고 있습니다.
+그 첫번째 결과물로 John Fox 교수님이 개발한 설치형 오픈 통계 패키지 <code>Rcmdr</code><span class="citation">(<a href="%EC%B0%B8%EA%B3%A0%EB%AC%B8%ED%97%8C.html#ref-fox2016using" role="doc-biblioref">Fox 2016</a>)</span> <span class="citation">(<a href="%EC%B0%B8%EA%B3%A0%EB%AC%B8%ED%97%8C.html#ref-rcmdr2022manual" role="doc-biblioref">Fox and Bouchet-Valat 2021</a>)</span> <span class="citation">(<a href="%EC%B0%B8%EA%B3%A0%EB%AC%B8%ED%97%8C.html#ref-rcmdr2005paper" role="doc-biblioref">Fox 2005</a>)</span> 를 신종화 님께서 한글화 및 문서화에 10년 넘게 기여해주신 한국알사용자회 저작권을 흔쾌히
+허락해 주셔서 <a href="https://r2bit.com/Rcmdr/">설치형 오픈 통계 패키지 - <code>Rcmdr</code></a>로 세상에 나왔습니다.</p>
+<p>두번째 활동을 여기저기 산재되어 있던 시각화 관련 자료를 묶어
+<strong><a href="https://r2bit.com/book_viz/">데이터 시각화(Data Visualization)</a></strong>를 전자책 형태로 공개하였고,
+데이터 분석 관련 저술을 이어 진행하게 되었습니다.</p>
+<p>세번째 활동으로 데이터 사이언스가 하나로 구성되지 않은 것을 간파하고
+데이터 사이언스를 지탱하는 기본기술을 5가지로 정리한
+<strong><a href="https://r2bit.com/book_analytics/">데이터 과학을 지탱하는 기본기</a></strong> 전자책을
+공개했습니다.</p>
+<p>네번째 활동으로 데이터 과학이 이제는 R 혹은 파이썬 언어가 중요한 것이 아니라
+데이터 과학 문제 해결에 집중한 <strong><a href="https://r2bit.com/book_programming/">데이터 과학 프로그래밍</a></strong>
+전자책을 공개했습니다. “데이터 과학 프로그래밍” 저작을 위해 <a href="https://www.py4e.com/book">“Python for Everybody”</a>와
+<a href="http://www.py4inf.com/">Python for Informatics: Exploring Information</a>에 기반하여
+2015년부터 시작된 <a href="http://aispiration.com/pythonlearn-kr/">모두를 위한 파이썬</a> 한글화
+프로젝트가 밑바탕이 되었습니다.</p>
+<p>데이터 분석 언어 R에 관한 지식을 신속히 습득하여 독자들이 갖고 있는 문제에
+접목시키고자 하시는 분은 한국 알(R) 사용자회에서 번역하여 공개한
+<a href="https://dl-dashboard.shinyapps.io/rbootcamp/">R 신병훈련소(Bootcamp)</a> 과정을
+추천드립니다.</p>
+
 </div>
 </div>
 
@@ -187,12 +240,15 @@ R에 익숙하면 곧바로 텍스트 분석에 필수 기초지식인 “자료
 <li><a class="nav-link" href="#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0">들어가며</a></li>
 <li>
 <a class="nav-link" href="#%EA%B5%AC%EC%84%B1"><span class="header-section-number">0.1</span> 구성</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#r%EA%B8%B0%EC%B4%88"><span class="header-section-number">0.1.1</span> R기초</a></li>
-<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-%EC%A0%84%EB%8B%A8%EA%B3%84"><span class="header-section-number">0.1.2</span> 분석 전단계</a></li>
-<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-i"><span class="header-section-number">0.1.3</span> 분석 I</a></li>
-<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-ii-%EC%98%88%EC%A0%95"><span class="header-section-number">0.1.4</span> 분석 II (예정)</a></li>
+<li><a class="nav-link" href="#%EC%84%A4%EC%B9%98-%EB%B0%8F-%ED%99%98%EA%B2%BD%EC%84%A4%EC%A0%95"><span class="header-section-number">0.1.1</span> 설치 및 환경설정</a></li>
+<li><a class="nav-link" href="#%ED%85%8D%EC%8A%A4%ED%8A%B8-%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0"><span class="header-section-number">0.1.2</span> 텍스트 살펴보기</a></li>
+<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-%EC%A0%84%EB%8B%A8%EA%B3%84"><span class="header-section-number">0.1.3</span> 분석 전단계</a></li>
+<li><a class="nav-link" href="#%EA%B8%B0%EC%88%A0-%ED%86%B5%EA%B3%84"><span class="header-section-number">0.1.4</span> 기술 통계</a></li>
+<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-i"><span class="header-section-number">0.1.5</span> 분석 I</a></li>
+<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-ii-%EC%98%88%EC%A0%95"><span class="header-section-number">0.1.6</span> 분석 II (예정)</a></li>
 </ul>
 </li>
+<li><a class="nav-link" href="#%EC%98%A4%ED%94%88-%EC%A0%84%EC%9E%90%EC%B1%85"><span class="header-section-number">0.2</span> 오픈 전자책</a></li>
 </ul>
 
       <div class="book-extra">
@@ -209,7 +265,7 @@ R에 익숙하면 곧바로 텍스트 분석에 필수 기초지식인 “자료
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-08-02.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-08-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1217,7 +1217,7 @@ test_v %>% pos(format = "data.frame")
 
 <pre class="r-output"><code>##   doc_id sentence_id token_id  token    pos subtype
 ## 1      1           1        1   한글    NNG        
-## 2      1           1        2 테스트    NNG    행위
+## 2      1           1        2 테스트    NNG        
 ## 3      1           1        3 입니다 VCP+EF        
 ## 4      1           1        4      .     SF
 </code></pre>
@@ -1233,7 +1233,7 @@ test_v %>% posParallel(format = "data.frame")
 
 <pre class="r-output"><code>##   doc_id sentence_id token_id  token    pos subtype
 ## 1      1           1        1   한글    NNG        
-## 2      1           1        2 테스트    NNG    행위
+## 2      1           1        2 테스트    NNG        
 ## 3      1           1        3 입니다 VCP+EF        
 ## 4      1           1        4      .     SF
 </code></pre>

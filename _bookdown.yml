@@ -20,6 +20,7 @@ rmd_files: [
 
   # 1. 텍스트 살펴보기 -------
   "10-view-text.Rmd",
+  "11-explorer-text.Rmd",
 
   # 2. 텍스트 --> 데이터프레임 변환 -------
   "20-text-to-tibble.Rmd",
@@ -34,6 +35,9 @@ rmd_files: [
   # 5. 주제모형 -------
   "50-tm.Rmd",
   "51-tm-covariate.Rmd",
+
+  # 참고문헌
+  "references.Rmd"
 
 ]
 

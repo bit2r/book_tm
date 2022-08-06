@@ -263,8 +263,8 @@ cowplot::plot_grid(doc_topic_g, topic_word_g)
 
 다운로드한 기사를 작업디렉토리 아래 `data`폴더에 복사한다. 
 
-```{r topic9, eval = FALSE}
-list.files("data/.")
+```{r topic9, eval = TRUE}
+list.files("data/.", pattern = '^News.*20200101.*\\.xlsx$')
 ```
 
 파일명이 'NewsResult_20200101-20201201.xlsx'다. 
@@ -355,7 +355,7 @@ ai2_df %>% count(press, sort = TRUE, name = "기사건수")
 
 (* 형태소 추출전에 문자 혹은 공백 이외의 요소(예: 구둣점)를 먼저 제거한다.) 
 
-```{r topic16, eval = FALSE}
+```{r topic16, eval = TRUE}
 library(RmecabKo)
 
 ai_tk <- ai2_df %>%
@@ -376,7 +376,7 @@ ai_tk %>% glimpse()
 '인공지능'으로 검색한 기사이므로, '인공지능'관련 단어는 제거한다. 
 문자가 아닌 요소를 모두 제거한다. (숫자를 반드시 제거해야 하는 것은 아니다.)
 
-```{r topic17, eval = FALSE}
+```{r topic17, eval = TRUE}
 ai_tk <- ai_tk %>% 
   filter(!word %in% c("인공지능", "AI", "ai", "인공지능AI", "인공지능ai")) %>% 
   filter(str_detect(word, "[:alpha:]+")) 
@@ -384,13 +384,13 @@ ai_tk <- ai_tk %>%
 
 단어의 총빈도와 상대빈도를 살펴보자
 
-```{r topic18, eval = FALSE}
+```{r topic18, eval = TRUE}
 ai_tk %>% count(word, sort = TRUE)
 ```
 
 상대빈도가 높은 단어와 낮은 단어를 확인한다. 
 
-```{r topic19, eval = FALSE}
+```{r topic19, eval = TRUE}
 ai_tk %>% count(cat, word, sort = TRUE) %>% 
   bind_log_odds(set = cat, feature = word, n = n) %>% 
   arrange(log_odds_weighted)
@@ -407,7 +407,7 @@ ai_tk %>% count(cat, word, sort = TRUE) %>%
 tibble 데이터프레임은 문자열의 일부만 보여준다.  
 `pull()`함수로 열에 포함된 문자열을 벡터로 출력하므로, 모든 내용을 확인할 수 있다. 
 
-```{r topic20, eval = FALSE}
+```{r topic20, eval = TRUE}
 ai_tk %>% 
   filter(word == "하") %>% pull(text) %>% head(3)
 ```
@@ -415,7 +415,7 @@ ai_tk %>%
 
 '기업' '기술' 등의 단어는 총사용빈도가 높지만, 상대빈도는 낮다. 대부분의 분류에서 널리 사용된 단어다. 지금 제거할필요는 없지만, 제거가능성을 염두에 둔다. 
 
-```{r topic21, eval = FALSE}
+```{r topic21, eval = TRUE}
 ai2_tk <- ai_tk %>% 
   filter(str_length(word) > 1)
 
@@ -425,7 +425,7 @@ ai2_tk %>%
 
 상대빈도를 다시 확인하자. 
 
-```{r topic22, eval = FALSE}
+```{r topic22, eval = TRUE}
 ai2_tk %>% count(cat, word, sort = T) %>% 
   bind_log_odds(set = cat, feature = word, n = n) %>% 
   arrange(-log_odds_weighted)
@@ -456,10 +456,32 @@ ai2_tf_idf %>%
 ```
 
 
-
 ### stm 말뭉치
 
-```{r}
+주제모형(topic model) 개발을 위해서 함수에 들어가는 입력 데이터를 
+두가지 방식으로 다음과 같이 나눠 작업도 가능하다.
+
+#### `cast_*()` 방식
+
+텍스트 데이터를 EDA 작업을 할 경우 대부분 시각화를 통해서 인사이트 
+도출 작업을 수행할 경우 깔끔한 데이터(tidy data)가 편리하지만
+모형개발을 할 때는 깔끔한 데이터 보다는 `cast_dtm()` 함수를 사용해서 
+문서-단어-행렬(Document-term-matrix)로 바꿔줘야 주제모형을 개발할 수 있다.
+주제모형(topic model)을 데이터에 적합시켜 도출한 후에 면멸한 모형 검정을 위해서
+다시 `tidytext::tidy()` 함수를 사용해서 다시 깔끔한 데이터(tidy data) 변환시켜
+후속 작업을 수행한다.
+
+![토픽모형 개발 작업흐름](images/topic-model-workflow.png){width=100%}
+
+한국언론진흥재단 빅카인즈에서 제공한 기사데이터는 "키워드"를 별도로 제공하고 있다.
+주제모형 개발을 위해서 주제 발굴에 가장 영향이 큰 명사를 추출하여 이를 행렬로 
+변환시켜 `stm::stm()` 혹은 `topicmodels::LDA()` 함수를 사용해서 적절한
+주제를 찾아내고 이를 해석하고 소통하는 과정이다.
+
+따라서, 신속한 모형개발을 위해서 앞서 수행한 원문기사에서 명사를 추출하는 과정을 
+이미 사전에 기사마다 특정되어 있는 "키워드"를 사용한다.
+
+```{r stm-topic-workflow}
 library(stm)
 
 ai_news_raw <- readxl::read_excel("data/NewsResult_20200101-20201231.xlsx")
@@ -474,68 +496,35 @@ ai_news_tidy <- ai_news_raw %>%
   unnest(keyword) %>% 
   unnest(keyword)
 
-
 ai_news_sparse <- ai_news_tidy %>% 
   count(news_id, keyword) %>%
   cast_sparse(news_id, keyword, n)
 
 dim(ai_news_sparse)
 
-ai_topic_model <- stm(ai_news_sparse, K = 10, verbose = FALSE)
-
-library(stm)
-library(furrr)
-plan(multisession)
-
-many_models <- tibble(K = c(5, 10, 20, 30, 40, 50)) %>% 
-  mutate(topic_model = future_map(K, ~stm(ai_news_sparse, K = .,
-                                          verbose = FALSE)))
-
-heldout <- make.heldout(ai_news_sparse)
-
-k_result <- many_models %>%
-  mutate(exclusivity = map(topic_model, exclusivity),
-         semantic_coherence = map(topic_model, semanticCoherence, ai_news_sparse),
-         eval_heldout = map(topic_model, eval.heldout, heldout$missing),
-         residual = map(topic_model, checkResiduals, ai_news_sparse),
-         bound =  map_dbl(topic_model, function(x) max(x$convergence$bound)),
-         lfact = map_dbl(topic_model, function(x) lfactorial(x$settings$dim$K)),
-         lbound = bound + lfact,
-         iterations = map_dbl(topic_model, function(x) length(x$convergence$bound)))
-
-k_result
-
-k_result %>%
-  transmute(K,
-            `Lower bound` = lbound,
-            Residuals = map_dbl(residual, "dispersion"),
-            `Semantic coherence` = map_dbl(semantic_coherence, mean),
-            `Held-out likelihood` = map_dbl(eval_heldout, "expected.heldout")) %>%
-  gather(Metric, Value, -K) %>%
-  ggplot(aes(K, Value, color = Metric)) +
-  geom_line(size = 1.5, alpha = 0.7, show.legend = FALSE) +
-  facet_wrap(~Metric, scales = "free_y") +
-  labs(x = "K (number of topics)",
-       y = NULL,
-       title = "Model diagnostics by number of topics",
-       subtitle = "These diagnostics indicate that a good number of topics would be around 10")
-
+ai_news_sparse[1:10, 100:110]
 ```
 
+`ai_news_tidy` 데이터프레임은 탐색적 데이터 분석에 적합한 자료형태라 이를 `cast_sparse()` 함수를 사용해서 주제모형 개발에 적합한 형태로 변환시킨다.
+`cast_sparse()` 함수를 사용하는 이유는 동일한 정보를 저장하는데 `cast_dtm()`보다 저장공간을 절약하고 효율적이기 때문이다. 
+주제모형 개발작업흐름에 있어 개념적으로 봤을 때 큰 차이는 없다.
 
 
-```{r topic23, eval=FALSE}
-install.packages("stm", dependencies = T)
-```
+#### 순차 말뭉치 방식
 
-토큰화한 데이터프레임을 `stm`패키지 형식의 말뭉치로 변환한다. 이를 위해 먼저 분리된 토큰을 원래 문장에 속한 하나의 열로 저장한다.
+토큰화한 데이터프레임을 `stm`패키지 형식의 말뭉치로 변환한다. 
+이를 위해 먼저 분리된 토큰을 원래 문장에 속한 하나의 열로 저장한다.
 
 - `str_flatten()`은 `str_c()`함수와 달리, 문자열을 결합해 단일 요소로 산출한다.  
   - `str_c()`함수에  `collapse = `인자를 사용한 경우에 해당한다.  
   - `str_c()`는 R기본함수 `paste0()`와 비슷하다. 결측값 처리방법이 서로 다르다. 
 
 
-```{r topic24, eval = FALSE}
+```{r topic24, eval = TRUE}
+# install.packages("stm", dependencies = T)
+
+library(stm)
+
 combined_df <- ai2_tk %>%
   group_by(ID) %>%
   summarise(text2 = str_flatten(word, " ")) %>%
@@ -543,7 +532,6 @@ combined_df <- ai2_tk %>%
   inner_join(ai2_df, by = "ID")
 
 combined_df %>% glimpse()
-
 ```
 
 `textProcessor()`함수로 리스트 형식의 stm말뭉치로 변환한다. 'documents' 'vacab' 'meta'등의 하부요소가 생성된다. 'meta'에 텍스트데이터가 저장돼 있다. 
@@ -554,17 +542,16 @@ combined_df %>% glimpse()
 
 만일 `tm`패키지나 `SnowballC`패키지가 설치돼 있지 않으면 
 
-```{r topic25, eval = FALSE}
+```{r topic25, eval = TRUE}
 library(stm)
 
 processed <- ai2_df %>% 
   textProcessor(documents = combined_df$text2, metadata = .)
-
 ```
 
 `prepDocuments()`함수로 주제모형에 사용할 데이터의 인덱스(wordcounts)를 만든다.
 
-```{r topic26, eval = FALSE}
+```{r topic26, eval = TRUE}
 out <- 
   prepDocuments(processed$documents,
                      processed$vocab,
@@ -574,28 +561,26 @@ out <-
 
 제거할수 있는 단어와 문서의 수를 `plotRemoved()`함수로 확인할 수 있다. 
 
-```{r topic27, eval = FALSE}
+```{r topic27, eval = TRUE}
 plotRemoved(processed$documents, lower.thresh = seq(0, 100, by = 5))
 ```
 
 `lower.thresh = `로 최소값 설정하면 빈도가 낮아 제거할 용어의 수를 설정할 수 있다. 설정값을 너무 높게 잡으면 분석의 정확도가 떨어진다. 여기서는 계산 편의를 위해 설정값을 높게 잡았다. 
 
-```{r topic28, eval = FALSE}
+```{r topic28, eval = TRUE}
 out <-
   prepDocuments(processed$documents,
                 processed$vocab,
                 processed$meta, 
                 lower.thresh = 15)
-
 ```
 
 산출결과를 개별 객체로 저장한다. 이 객체들은 이후 모형구축에 사용된다. 
 
-```{r topic29, eval = FALSE}
+```{r topic29, eval = TRUE}
 docs <- out$documents
 vocab <- out$vocab
 meta <- out$meta
-
 ```
 
 
@@ -621,16 +606,101 @@ meta <- out$meta
 - [RStudio 코드 백그라운드에서 돌리기](https://www.youtube.com/watch?v=84rNE63H8gA)
  
 
-```{r  topic30, message=FALSE, warning=FALSE, eval = FALSE}
+```{r  topicN-search, eval = FALSE}
 # topicN <- seq(from = 10, to = 100, by = 10)
 topicN <- c(3, 10)
 
-storage <- searchK(out$documents, out$vocab, K = topicN)
-plot(storage)
+topicN_storage <- searchK(out$documents, out$vocab, K = topicN)
 
+topicN_storage %>% 
+  write_rds("data/topicN_storage.rds")
+```
+
+작업 시간이 오래 걸리기 때문에 작업결과를 로컬 디스크에 저장하고 나서 이를 다시
+가져와서 적절한 주제 선정에 대한 작업결과를 시각적으로 확인한다.
+
+```{r  topicN-search-show}
+topicN_storage <- 
+  read_rds("data/topicN_storage.rds")
+
+plot(topicN_storage)
 ```
 
 배타성, 지속성, 잔차 등 3개 지표에서 모두 주제의 수가 10개인 모형이 3개인 모형보다 우수하고, 3개인 모형은 의미일관성만 높다. 따라서 이미 10개로 분석한 모형을 그대로 이용한다. 
+
+### 기계학습 방식
+
+적절한 주제수 K를 선정하는 다른 방식을 기계학습모형 개발에 사용하는 
+하이퍼 패러미터(hyper parameter) 를 격자탐색, 무작위 탐색 등 다양한 방식이 있지만
+기본 개념은 패러미터를 달리하여, 즉 주제수(K)를 달리하여 데이터에 주제모형을
+적합시켜 가장 좋은 주제모형 특성을 갖는 K를 선정하는 방식이다.
+
+개념상 단순하며 직관적인데 이에 대한 단점은 시간이 오래 걸린다는 점이다.
+이를 보완하기 위해서 최근 컴퓨터가 멀티코어 병렬처리가 가능하기 때문에 `furrr` 
+패키지를 사용하여 병렬처리를 통해 이런 단점을 보완한다.
+
+따라서, 주제수 `K` 를 선정하기 위해서 기계학습 방식을 도입하여 지정된 K에 대해
+모두 주제모형 적합을 수행하고 학습 시간을 단축하기 위해서 병렬컴퓨팅을 통해
+신속히 결과를 취합하고 이를 후속 시각화 작업을 통해 최적의 K 를 선정한다.
+
+```{r topic-K-furrr, eval = FALSE}
+library(stm)
+# stm() 토픽모형 기본
+# ai_topic_model <- stm(ai_news_sparse, K = 10, verbose = FALSE)
+
+# 병렬처리 준비
+library(furrr)
+plan(multisession)
+
+# 주제수 선정: 1 ~ 10
+topic_tbl <- tibble(K = c(2:10))
+
+# 주제수를 달리하여 모형 적합
+many_models <- topic_tbl %>% 
+  mutate(topic_model = future_map(K, ~stm(ai_news_sparse, K = .,
+                                          verbose = FALSE)))
+
+heldout <- make.heldout(ai_news_sparse)
+
+k_result <- many_models %>%
+  mutate(exclusivity = map(topic_model, exclusivity),
+         semantic_coherence = map(topic_model, semanticCoherence, ai_news_sparse),
+         eval_heldout = map(topic_model, eval.heldout, heldout$missing),
+         residual = map(topic_model, checkResiduals, ai_news_sparse),
+         bound =  map_dbl(topic_model, function(x) max(x$convergence$bound)),
+         lfact = map_dbl(topic_model, function(x) lfactorial(x$settings$dim$K)),
+         lbound = bound + lfact,
+         iterations = map_dbl(topic_model, function(x) length(x$convergence$bound)))
+
+k_result %>% 
+  write_rds("data/k_result.rds")
+```
+
+`Held-out likelihood`, `Residuals`, `Semantic coherence` 값이 일치된 주제수 K에 대한 
+정보를 제공하지 않지만 대략 6~9 주제가 적절한 주제로 사료된다.
+이를 바탕으로 주제수를 선정하여 텍스트 데이터에 모형을 적합시키고 해석하는 과정을 거쳐
+최종적으로 소통에 필요한 후속 작업을 수행한다.
+
+```{r topic-K-furrr-viz}
+k_result <- 
+  read_rds("data/k_result.rds")
+
+k_result %>%
+  transmute(K,
+            `Lower bound` = lbound,
+            Residuals = map_dbl(residual, "dispersion"),
+            `Semantic coherence` = map_dbl(semantic_coherence, mean),
+            `Held-out likelihood` = map_dbl(eval_heldout, "expected.heldout")) %>%
+  gather(Metric, Value, -K) %>%
+  ggplot(aes(K, Value, color = Metric)) +
+  geom_line(size = 1.5, alpha = 0.7, show.legend = FALSE) +
+  facet_wrap(~Metric, scales = "free_y") +
+  labs(x = "K (주제 수)",
+       y = NULL,
+       title = "주제 수(K)를 달리한 모형 검진 통계량",
+       subtitle = "각 검진 통계량이 서로 다른 정보를 제공하고 있지만 대략 6 주제로 선정")
+
+```
 
 
 ### 주제모형 구성
@@ -670,7 +740,6 @@ stm패키지의 자세한 내용은 패키지 저자 Roberts의 [stm홈페이지
 - [Roberts, M. E., Stewart, B. M., & Airoldi, E. M. (2016). A model of text for experimentation in the social sciences. Journal of the American Statistical Association, 111(515), 988-1003.](https://scholar.princeton.edu/sites/default/files/bstewart/files/stm.pdf)
 
 
-
 ## 소통
 
 분석한 모형을 통해 말뭉치에 포함된 주제와 주제별 단어의 의미가 무엇인지 전달하기 위해서는 우선 모형에 대한 해석을 제시할 수 있는 시각화가 필요하다. 이를 위해서는 먼저 주요 계수의 의미를 이해할 필요가 있다. 주제모형에서 주제별 확률분포를 나타내는 베타와 감마다. 
@@ -684,7 +753,7 @@ stm패키지의 자세한 내용은 패키지 저자 Roberts의 [stm홈페이지
 
 학습편의를 위해 주제의 수롤 6개로 조정해 다시 모형을 구성하자. 
 
-```{r topic32, eval = FALSE}
+```{r topic32, eval = TRUE}
 stm_fit <-
   stm(
     documents = docs,
@@ -704,7 +773,7 @@ summary(stm_fit)
 
 베타 값을 이용해 주제별로 단어의 분포를 막대도표로 시각화하자. 
 
-```{r topic33, eval = FALSE}
+```{r topic33, eval = TRUE}
 td_beta <- stm_fit %>% tidy(matrix = 'beta') 
 
 td_beta %>% 
@@ -714,9 +783,10 @@ td_beta %>%
   mutate(topic = str_c("주제", topic)) %>% 
   
   ggplot(aes(x = beta, 
-             y = reorder(term, beta),
+             y = reorder_within(term, beta, topic),
              fill = topic)) +
   geom_col(show.legend = F) +
+  scale_y_reordered() +
   facet_wrap(~topic, scales = "free") +
   labs(x = expression("단어 확률분포: "~beta), y = NULL,
        title = "주제별 단어 확률 분포",
@@ -731,7 +801,7 @@ td_beta %>%
 
 각 문서가 각 주제별로 등장할 확률인 감마($\gamma$)의 분포가 어떻게 히스토그램으로 표시되는지 살펴보자. 
 
-```{r topic34, eval = FALSE}
+```{r topic34, eval = TRUE}
 td_gamma <- stm_fit %>% tidy(matrix = "gamma") 
 td_gamma %>% glimpse()
 td_gamma %>% 
@@ -744,9 +814,11 @@ td_gamma %>%
 
 `td_gamma`에는 문서별로 감마 값이 부여돼 있다. 1번 문서는 주제1에 포함될 확률(감마)이 0.4이고, 2번 문서는 주제1에 포함될 확률이 0.2다. 감마 값은 최저 0.04에서 최고 0.74까지 있다. 감마는 연속적인 값이므로 이 감마의 값을 일정한 구간(bin)으로 나누면, 각 감마의 구간에 문서(document)가 몇개 있는지 계산해, 감마 값에 따른 각 문서의 분포를 구할 수 있다. 연속하는 값을 구간(bin)으로 구분해 분포를 표시한 도표가 히스토그램이다. 
 
-주제별로 문서의 분포를 감마 값에 따라 히스토그램으로 시각해하자. `geom_histogram()`함수에서 `bins = `인자의 기본값은 30이다. 즉, bin을 30개로 나눠 분포를 그린다.  
+주제별로 문서의 분포를 감마 값에 따라 히스토그램으로 시각해하자. 
+`geom_histogram()`함수에서 `bins = `인자의 기본값은 30이다. 
+즉, bin을 30개로 나눠 분포를 그린다.  
 
-```{r topic35, eval = FALSE}
+```{r topic35, eval = TRUE}
 td_gamma %>% 
   ggplot(aes(x = gamma, fill = as.factor(topic))) +
   geom_histogram(bins = 100, show.legend = F) +
@@ -757,7 +829,8 @@ td_gamma %>%
   
 ```
 
-감마가 높은 문서(기사)가 많지 않고, 대부분 낮은 값에 치우쳐 있다. '인공지능' 단일 검색어로 추출한 말뭉치이기 때문이다. 
+감마가 높은 문서(기사)가 많지 않고, 대부분 낮은 값에 치우쳐 있다.
+'인공지능' 단일 검색어로 추출한 말뭉치이기 때문이다. 
 
 
 ### 주제별 단어-문서 분포
@@ -766,7 +839,7 @@ td_gamma %>%
 
 `stm` `plot()`함수는  `type = `인자에 'summary' 'labels' 'perspective' 'hist' 등을 투입해 다양한 방식으로 결과를 탐색할 수 있다. 기본적인 정보는 'summary'를 통해 제시한다.  
 
-```{r topic36, eval=FALSE}
+```{r topic36, eval = TRUE}
 plot(stm_fit, type = "summary", n = 5)
 ```
 
@@ -779,7 +852,7 @@ plot(stm_fit, type = "summary", n = 5)
 
 `td_beta`에서 주제별로 상위 5개 단어 추출해 `top_terms`에 할당한다.  각 주제별로 그룹을 묶어 list형식으로 각 상위단어 5개를 각 주제에 리스트로 묶어준 다음, 다시 데이터프레임의 열로 바꿔준다.  
 
-```{r topic37, eval = FALSE}
+```{r topic37, eval = TRUE}
 top_terms <- td_beta %>% 
   group_by(topic) %>% 
   slice_max(beta, n = 5) %>% 
@@ -792,7 +865,7 @@ top_terms <- td_beta %>%
 
 `td_gamma`에서 각 주제별 감마 평균값 계산해 `top_terms`(주제별로 추출한 상위 5개 단어 데이터프레임)와 결합해 `gamma_terms`에 할당한다. 
 
-```{r topic38, eval = FALSE}
+```{r topic38, eval = TRUE}
 gamma_terms <- td_gamma %>% 
   group_by(topic) %>% 
   summarise(gamma = mean(gamma)) %>% 
@@ -805,11 +878,11 @@ gamma_terms <- td_gamma %>%
 결합한 데이터프레임을 막대도표에 표시한다. 문서 확률분포 평균값과 주제별로 기여도가 높은 단어를 표시한다. 주제별로 문서의 확률분포와 단어의 확률분포를 한눈에 볼수 있다.
 X축을 0에서 1까지 설정한 이유는 구간을 국소로 설정할 경우, 막대도표가 크기가 상대적으로 크게 보여 결과적으로 데이터의 왜곡이 되기 때문이다. 
 
-```{r topic39, eval = FALSE}
+```{r topic39, eval = TRUE}
 gamma_terms %>% 
   
   ggplot(aes(x = gamma, y = topic, fill = topic)) +
-    geom_col(show.legend = F) +
+    geom_col(width = 0.5, show.legend = F) +
     geom_text(aes(label = round(gamma, 2)), # 소수점 2자리 
               hjust = 1.4) +                # 라벨을 막대도표 안쪽으로 이동
     geom_text(aes(label = terms), 
@@ -819,13 +892,13 @@ gamma_terms %>%
     labs(x = expression("문서 확률분포"~(gamma)), y = NULL,
          title = "인공지능 관련보도 상위 주제어",
          subtitle = "주제별로 기여도가 높은 단어 중심") +
-    theme(plot.title = element_text(size = 20))
-  
+    theme(plot.title = element_text(size = 20)) +
+    theme_light()
 ```
 
 
 
-### 과제 
+## 과제 
 
 1. 관심있는 검색어를 이용해 빅카인즈에서 기사를 검색해 수집한 기사의 주제모형을 구축한다.
 

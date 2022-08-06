@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>7 . 단어 빈도수 | R 텍스트마이닝</title>
+<title>8 . 단어 빈도수 | R 텍스트마이닝</title>
 <meta name="author" content="한국 R 사용자회">
 <meta name="description" content="문서에 사용된 단어(term)를 통해 그 문서의 주제를 추론할 수 있다. 말뭉치는 문서들의 ’뭉치’다. 신문 말뭉치는 여러 신문들의 기사를 모아놓은 것이고, 소설말뭉치는 여러 소설을 모아놓은 문서들의 집합이다. 말뭉치는 상대적인 개념이다. 예를 들어, 소설집을 말뭉치라고 하면 개별 소설이 문서가 된다. 반면, 소설 한편을 말뭉치라고 하면, 소설의 각...">
 <meta name="generator" content="bookdown 0.27 with bs4_book()">
-<meta property="og:title" content="7 . 단어 빈도수 | R 텍스트마이닝">
+<meta property="og:title" content="8 . 단어 빈도수 | R 텍스트마이닝">
 <meta property="og:type" content="book">
 <meta property="og:description" content="문서에 사용된 단어(term)를 통해 그 문서의 주제를 추론할 수 있다. 말뭉치는 문서들의 ’뭉치’다. 신문 말뭉치는 여러 신문들의 기사를 모아놓은 것이고, 소설말뭉치는 여러 소설을 모아놓은 문서들의 집합이다. 말뭉치는 상대적인 개념이다. 예를 들어, 소설집을 말뭉치라고 하면 개별 소설이 문서가 된다. 반면, 소설 한편을 말뭉치라고 하면, 소설의 각...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="7 . 단어 빈도수 | R 텍스트마이닝">
+<meta name="twitter:title" content="8 . 단어 빈도수 | R 텍스트마이닝">
 <meta name="twitter:description" content="문서에 사용된 단어(term)를 통해 그 문서의 주제를 추론할 수 있다. 말뭉치는 문서들의 ’뭉치’다. 신문 말뭉치는 여러 신문들의 기사를 모아놓은 것이고, 소설말뭉치는 여러 소설을 모아놓은 문서들의 집합이다. 말뭉치는 상대적인 개념이다. 예를 들어, 소설집을 말뭉치라고 하면 개별 소설이 문서가 된다. 반면, 소설 한편을 말뭉치라고 하면, 소설의 각...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -72,15 +72,17 @@
 <li><a class="" href="browse.html"><span class="header-section-number">3</span> 헬로 월드</a></li>
 <li class="book-part">텍스트 살펴보기</li>
 <li><a class="" href="view-text.html"><span class="header-section-number">4</span> 텍스트 살펴보기</a></li>
+<li><a class="" href="%ED%85%8D%EC%8A%A4%ED%8A%B8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%90%EC%83%89.html"><span class="header-section-number">5</span> 텍스트 데이터 탐색</a></li>
 <li class="book-part">자료구조</li>
-<li><a class="" href="text-to-tibble.html"><span class="header-section-number">5</span> 텍스트 → 데이터프레임</a></li>
-<li><a class="" href="text-cleansing.html"><span class="header-section-number">6</span> 정제 (전처리)</a></li>
+<li><a class="" href="text-to-tibble.html"><span class="header-section-number">6</span> 텍스트 → 데이터프레임</a></li>
+<li><a class="" href="text-cleansing.html"><span class="header-section-number">7</span> 정제 (전처리)</a></li>
 <li class="book-part">기술통계</li>
-<li><a class="active" href="tf-idf.html"><span class="header-section-number">7</span> 단어 빈도수</a></li>
+<li><a class="active" href="tf-idf.html"><span class="header-section-number">8</span> 단어 빈도수</a></li>
 <li class="book-part">텍스트 마이닝</li>
-<li><a class="" href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></li>
-<li><a class="" href="topic-modeling.html"><span class="header-section-number">9</span> 주제모형</a></li>
-<li><a class="" href="anal4topic.html"><span class="header-section-number">10</span> 주제모형(공변인)</a></li>
+<li><a class="" href="sentiment.html"><span class="header-section-number">9</span> 감성분석</a></li>
+<li><a class="" href="topic-modeling.html"><span class="header-section-number">10</span> 주제모형</a></li>
+<li><a class="" href="anal4topic.html"><span class="header-section-number">11</span> 주제모형(공변인)</a></li>
+<li><a class="" href="%EC%B0%B8%EA%B3%A0%EB%AC%B8%ED%97%8C.html">참고문헌</a></li>
 </ul>
 
         <div class="book-extra">
@@ -88,9 +90,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="tf-idf" class="section level1" number="7">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="tf-idf" class="section level1" number="8">
 <h1>
-<span class="header-section-number">7 . </span> 단어 빈도수<a class="anchor" aria-label="anchor" href="#tf-idf"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8 . </span> 단어 빈도수<a class="anchor" aria-label="anchor" href="#tf-idf"><i class="fas fa-link"></i></a>
 </h1>
 <p>문서에 사용된 단어(term)를 통해 그 문서의 주제를 추론할 수 있다. 말뭉치는 문서들의 ’뭉치’다. 신문 말뭉치는 여러 신문들의 기사를 모아놓은 것이고, 소설말뭉치는 여러 소설을 모아놓은 문서들의 집합이다. 말뭉치는 상대적인 개념이다. 예를 들어, 소설집을 말뭉치라고 하면 개별 소설이 문서가 된다. 반면, 소설 한편을 말뭉치라고 하면, 소설의 각 장이 문서가 된다.</p>
 <div class="inline-figure"><img src="images/term-document-corpus.png" style="width:100.0%"></div>
@@ -108,20 +110,20 @@
 <li>가중 로그 승산비(weighted log odds)</li>
 </ul>
 <p>베이지언 확률모형으로 가중치를 계산해 단어의 상대적인 빈도를 계산한다. tf_idf와 승산비의 단점을 보완한 방법이다.</p>
-<div id="tf_idf" class="section level2" number="7.1">
+<div id="tf_idf" class="section level2" number="8.1">
 <h2>
-<span class="header-section-number">7.1</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf"><i class="fas fa-link"></i></a>
 </h2>
 <p>단어빈도-역문서빈도(term frequency-inverse document frequency: tf_idf).</p>
 <p>말 그대로 개별 문서의 단어빈도(tf)와 문서전반에 걸쳐 사용된 정도의 역수(idf)를 곱해 구한다.</p>
-<div id="공식" class="section level3" number="7.1.1">
+<div id="공식" class="section level3" number="8.1.1">
 <h3>
-<span class="header-section-number">7.1.1</span> 공식<a class="anchor" aria-label="anchor" href="#%EA%B3%B5%EC%8B%9D"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1</span> 공식<a class="anchor" aria-label="anchor" href="#%EA%B3%B5%EC%8B%9D"><i class="fas fa-link"></i></a>
 </h3>
 <p>tf_idf의 요소인 tf와 idf에 대해 각각 알아보자.</p>
-<div id="tf-term-frequency" class="section level4" number="7.1.1.1">
+<div id="tf-term-frequency" class="section level4" number="8.1.1.1">
 <h4>
-<span class="header-section-number">7.1.1.1</span> tf (term frequency)<a class="anchor" aria-label="anchor" href="#tf-term-frequency"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1.1</span> tf (term frequency)<a class="anchor" aria-label="anchor" href="#tf-term-frequency"><i class="fas fa-link"></i></a>
 </h4>
 <p>개별 문서(d)에 등장하는 단어(t)의 수를 각 문서에 등장한 모든 단어의 수로 나눈 값.</p>
 <p><span class="math display">\[
@@ -134,27 +136,27 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 <span class="math inline">\(tf_{total}\)</span>: 각 문서에 등장한 모든 단어의 수</li>
 </ul>
 </div>
-<div id="df-document-frequency" class="section level4" number="7.1.1.2">
+<div id="df-document-frequency" class="section level4" number="8.1.1.2">
 <h4>
-<span class="header-section-number">7.1.1.2</span> df (document frequency)<a class="anchor" aria-label="anchor" href="#df-document-frequency"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1.2</span> df (document frequency)<a class="anchor" aria-label="anchor" href="#df-document-frequency"><i class="fas fa-link"></i></a>
 </h4>
 <p>특정 단어(t)가 나타난 문서(D)의 수. df가 높다면 ’은/는/이/가’처럼 대부분의 문서에서 사용되는 단어임을 나타낸다.</p>
 <p><span class="math display">\[
 df(t, D)
 \]</span></p>
 </div>
-<div id="idf-inverse-document-frequency" class="section level4" number="7.1.1.3">
+<div id="idf-inverse-document-frequency" class="section level4" number="8.1.1.3">
 <h4>
-<span class="header-section-number">7.1.1.3</span> idf (inverse document frequency)<a class="anchor" aria-label="anchor" href="#idf-inverse-document-frequency"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1.3</span> idf (inverse document frequency)<a class="anchor" aria-label="anchor" href="#idf-inverse-document-frequency"><i class="fas fa-link"></i></a>
 </h4>
 <p>전체 문서의 수(N)를 해당 단어의 df로 나눈 뒤 로그를 취한 값. 값이 클수록 특정 문서에서만 등장하는 특이한 단어라는 의미가 된다.</p>
 <p><span class="math display">\[
 idf(t, D) = log(\frac{N}{df})
 \]</span></p>
 </div>
-<div id="tf_idf-1" class="section level4" number="7.1.1.4">
+<div id="tf_idf-1" class="section level4" number="8.1.1.4">
 <h4>
-<span class="header-section-number">7.1.1.4</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.1.4</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf-1"><i class="fas fa-link"></i></a>
 </h4>
 <p>tf와 idf를 곱하면 tf_idf를 구할 수 있다.</p>
 <p><span class="math display">\[
@@ -170,12 +172,12 @@ idf(t, D) = log(\frac{N}{df})
 </ul>
 </div>
 </div>
-<div id="적용" class="section level3" number="7.1.2">
+<div id="적용" class="section level3" number="8.1.2">
 <h3>
-<span class="header-section-number">7.1.2</span> 적용<a class="anchor" aria-label="anchor" href="#%EC%A0%81%EC%9A%A9"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.2</span> 적용<a class="anchor" aria-label="anchor" href="#%EC%A0%81%EC%9A%A9"><i class="fas fa-link"></i></a>
 </h3>
 <p>짧은 문장을 이용해 tf_idf의 원리를 파악해 보자. 먼저 토큰화한다. 여기서 각 행은 개별 문서에 해당하고, 4개 행의 합의 말뭉치에 해당한다. 각 행을 식별하기 위해 문장별로 토큰화해 ID를 부여하자.</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span> <span class="co"># 파이프 연산자 %&gt;%</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://stringr.tidyverse.org">stringr</a></span><span class="op">)</span>  <span class="co"># 문자열 처리 </span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/juliasilge/tidytext">tidytext</a></span><span class="op">)</span> <span class="co"># 깔끔한 텍스트 티블에서 처리</span></span>
@@ -199,9 +201,9 @@ idf(t, D) = log(\frac{N}{df})
 ## <span style="color: #555555;">3</span> the sun in the sky is bright.               3      
 ## <span style="color: #555555;">4</span> we can see the shining sun, the bright sun. 4
 </code></pre>
-<div id="tf" class="section level4" number="7.1.2.1">
+<div id="tf" class="section level4" number="8.1.2.1">
 <h4>
-<span class="header-section-number">7.1.2.1</span> tf<a class="anchor" aria-label="anchor" href="#tf"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.2.1</span> tf<a class="anchor" aria-label="anchor" href="#tf"><i class="fas fa-link"></i></a>
 </h4>
 <p>개별 문서(d)에 등장하는 단어(t)의 수를 각 문서에 등장한 모든 단어의 수로 나눈 값.</p>
 <p><span class="math display">\[
@@ -214,7 +216,7 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 <span class="math inline">\(tf_{total}\)</span>: 각 문서에 등장한 모든 단어의 수</li>
 </ul>
 <p>tf의 분자인 <span class="math inline">\(tf_{document}\)</span>(각 문서에 등장한 해당 단어의 빈도)를 구한다. 여기서 각 문서는 각 행이다. 따라서 각 행에서 등장한 단어의 빈도를 계산하면 된다.</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tfd</span> <span class="op">&lt;-</span> <span class="va">sky_doc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">sentence</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">stop_words</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -233,7 +235,7 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 ## <span style="color: #555555;"># … with 4 more rows</span>
 </code></pre>
 <p>tf의 분모 <span class="math inline">\(tf_{total}\)</span>(각 문서에 등장한 모든 단어의 수)를 구한다. 각 행을 이루는 모든 단어의 수를 계산하면 된다.</p>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tft</span> <span class="op">&lt;-</span> <span class="va">sky_tfd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">line_id</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># total number of documnets</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">line_id</span>, name <span class="op">=</span> <span class="st">"tf_total"</span><span class="op">)</span></span>
@@ -248,7 +250,7 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 ## <span style="color: #555555;">4</span> 4              3
 </code></pre>
 <p><span class="math inline">\(tf_{document}\)</span>(각 문서에 등장한 해당 단어의 빈도)를 <span class="math inline">\(tf_{total}\)</span>(각 문서에 등장한 모든 단어의 수)로 나눈다.</p>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">sky_tfd</span>, <span class="va">sky_tft</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tf <span class="op">=</span> <span class="va">tf_doc</span><span class="op">/</span><span class="va">tf_total</span><span class="op">)</span></span>
 <span></span>
@@ -265,16 +267,16 @@ tf(t, d) = \frac{tf_{document}}{tf_{total}}
 ## <span style="color: #555555;"># … with 4 more rows</span>
 </code></pre>
 </div>
-<div id="df-document-frequency-1" class="section level4" number="7.1.2.2">
+<div id="df-document-frequency-1" class="section level4" number="8.1.2.2">
 <h4>
-<span class="header-section-number">7.1.2.2</span> df (document frequency)<a class="anchor" aria-label="anchor" href="#df-document-frequency-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.2.2</span> df (document frequency)<a class="anchor" aria-label="anchor" href="#df-document-frequency-1"><i class="fas fa-link"></i></a>
 </h4>
 <p>특정 단어(t)가 나타난 문서(D)의 수. df가 높다면 ’은/는/이/가’처럼 대부분의 문서에서 사용되는 단어임을 나타낸다.</p>
 <p><span class="math display">\[
 df(t, D)
 \]</span>
 특정 단어가 등장한 문서의 수를 계산해 구할 수 있다.</p>
-<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># sky_tf %&gt;% </span></span>
 <span><span class="co">#   count(word)</span></span>
 <span></span>
@@ -292,16 +294,16 @@ df(t, D)
 <p>‘blue’: 1번행에만 등장했으므로 1</p>
 <p>‘sun’: 2,3, 4번 행에 등장했으므로 3</p>
 </div>
-<div id="idf-inverse-document-frequency-1" class="section level4" number="7.1.2.3">
+<div id="idf-inverse-document-frequency-1" class="section level4" number="8.1.2.3">
 <h4>
-<span class="header-section-number">7.1.2.3</span> idf (inverse document frequency)<a class="anchor" aria-label="anchor" href="#idf-inverse-document-frequency-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.2.3</span> idf (inverse document frequency)<a class="anchor" aria-label="anchor" href="#idf-inverse-document-frequency-1"><i class="fas fa-link"></i></a>
 </h4>
 <p>전체 문서의 수(N)를 해당 단어의 df로 나눈 뒤 로그를 취한 값. 값이 클수록 특정 문서에서만 등장하는 특이한 단어라는 의미가 된다.</p>
 <p><span class="math display">\[
 idf(t, D) = log(\frac{N}{df})
 \]</span></p>
 <p>공식을 그대로 적용해 계산한다. <code>sky_tf</code>에 N의 값을 계산해 두 데이터프레임을 열방향 결합한다.</p>
-<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tf</span> <span class="op">&lt;-</span> <span class="va">sky_tf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">line_id</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co">#total number of documnets</span></span>
 <span></span>
@@ -323,9 +325,9 @@ idf(t, D) = log(\frac{N}{df})
 </code></pre>
 <p>3개 행에 걸쳐 등장하는 ’bright’의 idf가 1개 행에만 등장한 ’blue’보다 idf가 작다.</p>
 </div>
-<div id="tf_idf-2" class="section level4" number="7.1.2.4">
+<div id="tf_idf-2" class="section level4" number="8.1.2.4">
 <h4>
-<span class="header-section-number">7.1.2.4</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.2.4</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf-2"><i class="fas fa-link"></i></a>
 </h4>
 <p>tf와 idf를 곱하면 tf_idf를 구할 수 있다.</p>
 <p><span class="math display">\[
@@ -339,7 +341,7 @@ idf(t, D) = log(\frac{N}{df})
 <li>
 <code>D</code>: 개별 문서의 집합(말뭉치)</li>
 </ul>
-<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_idf</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tf_idf <span class="op">=</span> <span class="va">tf</span> <span class="op">*</span> <span class="va">idf</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">tf_idf</span><span class="op">)</span></span></code></pre></div>
@@ -356,9 +358,9 @@ idf(t, D) = log(\frac{N}{df})
 </code></pre>
 </div>
 </div>
-<div id="bind_tf_idf-함수" class="section level3" number="7.1.3">
+<div id="bind_tf_idf-함수" class="section level3" number="8.1.3">
 <h3>
-<span class="header-section-number">7.1.3</span> <code>bind_tf_idf()</code> 함수<a class="anchor" aria-label="anchor" href="#bind_tf_idf-%ED%95%A8%EC%88%98"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.1.3</span> <code>bind_tf_idf()</code> 함수<a class="anchor" aria-label="anchor" href="#bind_tf_idf-%ED%95%A8%EC%88%98"><i class="fas fa-link"></i></a>
 </h3>
 <p><code>tidytext</code>패키지에서 제공하는 <code>bind_tf_idf(tbl, term, document, n)</code>함수를 이용하면 tf_idf를 계산할 수 있다.</p>
 <ul>
@@ -367,7 +369,7 @@ idf(t, D) = log(\frac{N}{df})
 <li>document: 문자열이나 기호 등의 문서식별부호가 저장된 열.</li>
 <li>n: 문자열이나 기호 등의 문서-용어의 빈도가 저장된 열.</li>
 </ul>
-<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sky_tfd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/bind_tf_idf.html">bind_tf_idf</a></span><span class="op">(</span>tbl <span class="op">=</span> <span class="va">.</span>, term <span class="op">=</span> <span class="va">word</span>, document <span class="op">=</span> <span class="va">line_id</span>, n <span class="op">=</span> <span class="va">tf_doc</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 10 × 6</span>
@@ -383,9 +385,9 @@ idf(t, D) = log(\frac{N}{df})
 </code></pre>
 </div>
 </div>
-<div id="승산비-odds-ratio" class="section level2" number="7.2">
+<div id="승산비-odds-ratio" class="section level2" number="8.2">
 <h2>
-<span class="header-section-number">7.2</span> 승산비 (odds ratio)<a class="anchor" aria-label="anchor" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-odds-ratio"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2</span> 승산비 (odds ratio)<a class="anchor" aria-label="anchor" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-odds-ratio"><i class="fas fa-link"></i></a>
 </h2>
 <p>문서의 상대빈도를 구하는 또 다른 방법이 승산비다. 승산(odds)의 비를 이용해 복수의 문서에 등장한 단어의 상대적인 빈도 계산할 수 있다. 따라서 승산비는 2종의 문서에 대해서만 구할 수 있다.</p>
 <ul>
@@ -410,27 +412,27 @@ A:B = \frac{A}{B}
 승산(odds) = \frac{발생빈도(n) + 1}{총빈도(total) + 1}
 \]</span></p>
 <p>분자와 분모에 각각 1을 더하는 이유는 발생빈도가 0인 경우도 있기 때문이다. 분모가 0이면 무한대가 된다.</p>
-<div id="자료준비" class="section level3" number="7.2.1">
+<div id="자료준비" class="section level3" number="8.2.1">
 <h3>
-<span class="header-section-number">7.2.1</span> 자료준비<a class="anchor" aria-label="anchor" href="#%EC%9E%90%EB%A3%8C%EC%A4%80%EB%B9%84"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.1</span> 자료준비<a class="anchor" aria-label="anchor" href="#%EC%9E%90%EB%A3%8C%EC%A4%80%EB%B9%84"><i class="fas fa-link"></i></a>
 </h3>
 <p>네이버영화 댓글의 승산비를 구해보자. 댓글을 긍정과 부정으로 구분해 라벨링한 자료를 이용한다.</p>
 <ul>
 <li><a href="https://github.com/e9t/nsmc">Naver sentiment movie corpus</a></li>
 </ul>
-<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">url_v</span> <span class="op">&lt;-</span> <span class="st">'https://github.com/e9t/nsmc/raw/master/ratings.txt'</span></span>
 <span><span class="va">dest_v</span> <span class="op">&lt;-</span> <span class="st">'data/ratings.txt'</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url_v</span>, <span class="va">dest_v</span>, mode <span class="op">=</span> <span class="st">"wb"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">'data/.'</span><span class="op">)</span></span></code></pre></div>
 <p>다운로드한 자료 이입 및 검토</p>
-<div class="sourceCode" id="cb160"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_lines.html">read_lines</a></span><span class="op">(</span><span class="st">"data/ratings.txt"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>##  chr [1:200001] "id\tdocument\tlabel" ...
 </code></pre>
 <p>공백문자 <code>\t</code>으로 구분된 문자데이터이므로, <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv()</a></code>로 이입한다.</p>
-<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">"data/ratings.txt"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## Rows: 200,000
 ## Columns: 3
@@ -438,7 +440,7 @@ A:B = \frac{A}{B}
 ## $ document <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> "어릴때보고 지금다시봐도 재밌어요ㅋㅋ", "…
 ## $ label    <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
 </code></pre>
-<div class="sourceCode" id="cb162"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ratings_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">"data/ratings.txt"</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">ratings_df</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 6 × 3</span>
@@ -452,7 +454,7 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;">6</span>  2<span style="text-decoration: underline;">190</span>435 사랑을 해본사람이라면 처음부터 끝까지 웃을…     1
 </code></pre>
 <p>데이터셋이 커 처리에 시간이 걸리므로 각 라벨별로 1000개 행씩 추출한다.</p>
-<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">37</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">by1000_df</span> <span class="op">&lt;-</span> <span class="va">ratings_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -468,27 +470,27 @@ A:B = \frac{A}{B}
 ## $ label    <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
 </code></pre>
 <p><code>RcppMeCab</code>패키지에서 <code><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos()</a></code>함수로 형태소를 추출한 뒤, 일반명사(‘nng’)만 추출해 빈도를 계산한다.</p>
-<div class="sourceCode" id="cb164"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="st">"nng"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">!=</span> <span class="st">"영화"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,831 × 3</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,819 × 3</span>
 ## <span style="color: #555555;"># Groups:   label [2]</span>
 ##   label word       n
 ##   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>
 ## <span style="color: #555555;">1</span>     1 최고      83
 ## <span style="color: #555555;">2</span>     1 감동      58
 ## <span style="color: #555555;">3</span>     1 연기      58
-## <span style="color: #555555;">4</span>     0 감독      46
-## <span style="color: #555555;">5</span>     0 스토리    46
-## <span style="color: #555555;">6</span>     0 시간      46
-## <span style="color: #555555;"># … with 2,825 more rows</span>
+## <span style="color: #555555;">4</span>     1 생각      51
+## <span style="color: #555555;">5</span>     0 감독      46
+## <span style="color: #555555;">6</span>     0 스토리    46
+## <span style="color: #555555;"># … with 2,813 more rows</span>
 </code></pre>
 <p>영화평은 긍정적인 평에는 ‘1’, 부정적인 평에는 ’0’으로 분류돼 있다. 긍정적인 평과 부정적인 평에 사용된 명사의 승산비를 구해보자. 이를 위해 long form을 wide form으로 변형해 <code>label</code>열의 값을 열의 헤더로 변환하고, 각 열의 값으로는 토큰을 투입한다. 결측값이 있으면 연산이 안되므로 <code>NA</code>값은 ’0’으로 채운다.</p>
-<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -498,7 +500,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">label</span>,</span>
 <span>              values_from <span class="op">=</span> <span class="va">n</span>, </span>
 <span>              values_fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,303 × 3</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,294 × 3</span>
 ##   word    `0`   `1`
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>
 ## <span style="color: #555555;">1</span> 가가      1     0
@@ -507,15 +509,15 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;">4</span> 가든      1     0
 ## <span style="color: #555555;">5</span> 가리      1     0
 ## <span style="color: #555555;">6</span> 가문      1     0
-## <span style="color: #555555;"># … with 2,297 more rows</span>
+## <span style="color: #555555;"># … with 2,288 more rows</span>
 </code></pre>
 </div>
-<div id="승산비-계산" class="section level3" number="7.2.2">
+<div id="승산비-계산" class="section level3" number="8.2.2">
 <h3>
-<span class="header-section-number">7.2.2</span> 승산비 계산<a class="anchor" aria-label="anchor" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-%EA%B3%84%EC%82%B0"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.2</span> 승산비 계산<a class="anchor" aria-label="anchor" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-%EA%B3%84%EC%82%B0"><i class="fas fa-link"></i></a>
 </h3>
 <p>긍정평과 부정평의 승산을 구한다음, 승산비를 계산한다.</p>
-<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -529,19 +531,19 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>odds_posi <span class="op">=</span> <span class="op">(</span><span class="op">(</span><span class="va">posi</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">posi</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>         odds_nega <span class="op">=</span> <span class="op">(</span><span class="op">(</span><span class="va">nega</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">nega</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>posi_odds_ratio <span class="op">=</span> <span class="op">(</span><span class="va">odds_posi</span> <span class="op">/</span> <span class="va">odds_nega</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,303 × 6</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,294 × 6</span>
 ##   word   nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 가가      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.542
-## <span style="color: #555555;">2</span> 가관      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.542
-## <span style="color: #555555;">3</span> 가능      1     4  0.000<span style="text-decoration: underline;">904</span>  0.000<span style="text-decoration: underline;">334</span>           2.71 
-## <span style="color: #555555;">4</span> 가든      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.542
-## <span style="color: #555555;">5</span> 가리      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.542
-## <span style="color: #555555;">6</span> 가문      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.542
-## <span style="color: #555555;"># … with 2,297 more rows</span>
+## <span style="color: #555555;">1</span> 가가      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.541
+## <span style="color: #555555;">2</span> 가관      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.541
+## <span style="color: #555555;">3</span> 가능      1     4  0.000<span style="text-decoration: underline;">903</span>  0.000<span style="text-decoration: underline;">334</span>           2.70 
+## <span style="color: #555555;">4</span> 가든      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.541
+## <span style="color: #555555;">5</span> 가리      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.541
+## <span style="color: #555555;">6</span> 가문      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>           0.541
+## <span style="color: #555555;"># … with 2,288 more rows</span>
 </code></pre>
 <p>승산비를 이용해 영화의 긍정평과 부정평에서 상대적으로 많이 사용된 명사를 추출했다. 순서대로 정렬하자.</p>
-<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_odds_df</span> <span class="op">&lt;-</span> <span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -563,27 +565,27 @@ A:B = \frac{A}{B}
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 6 × 6</span>
 ##   word   nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 굿        0    18   0.003<span style="text-decoration: underline;">44</span>  0.000<span style="text-decoration: underline;">167</span>            20.6
-## <span style="color: #555555;">2</span> 밋        0    16   0.003<span style="text-decoration: underline;">07</span>  0.000<span style="text-decoration: underline;">167</span>            18.4
-## <span style="color: #555555;">3</span> ㄷ        0    15   0.002<span style="text-decoration: underline;">89</span>  0.000<span style="text-decoration: underline;">167</span>            17.3
-## <span style="color: #555555;">4</span> 삶        0    10   0.001<span style="text-decoration: underline;">99</span>  0.000<span style="text-decoration: underline;">167</span>            11.9
-## <span style="color: #555555;">5</span> 마음      0     9   0.001<span style="text-decoration: underline;">81</span>  0.000<span style="text-decoration: underline;">167</span>            10.8
-## <span style="color: #555555;">6</span> 최고      8    83   0.015<span style="text-decoration: underline;">2</span>   0.001<span style="text-decoration: underline;">50</span>             10.1
+## <span style="color: #555555;">1</span> 굿        0    17   0.003<span style="text-decoration: underline;">25</span>  0.000<span style="text-decoration: underline;">167</span>           19.5 
+## <span style="color: #555555;">2</span> 밋        0    16   0.003<span style="text-decoration: underline;">07</span>  0.000<span style="text-decoration: underline;">167</span>           18.4 
+## <span style="color: #555555;">3</span> ㄷ        0    15   0.002<span style="text-decoration: underline;">89</span>  0.000<span style="text-decoration: underline;">167</span>           17.3 
+## <span style="color: #555555;">4</span> 삶        0    11   0.002<span style="text-decoration: underline;">17</span>  0.000<span style="text-decoration: underline;">167</span>           13.0 
+## <span style="color: #555555;">5</span> 최고      8    83   0.015<span style="text-decoration: underline;">2</span>   0.001<span style="text-decoration: underline;">50</span>            10.1 
+## <span style="color: #555555;">6</span> 만족      0     8   0.001<span style="text-decoration: underline;">62</span>  0.000<span style="text-decoration: underline;">167</span>            9.73
 </code></pre>
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 6 × 6</span>
 ##   word    nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
 ## <span style="color: #555555;">1</span> 낭비       9     0  0.000<span style="text-decoration: underline;">181</span>   0.001<span style="text-decoration: underline;">67</span>          0.108 
-## <span style="color: #555555;">2</span> 얘기      10     0  0.000<span style="text-decoration: underline;">181</span>   0.001<span style="text-decoration: underline;">84</span>          0.098<span style="text-decoration: underline;">5</span>
-## <span style="color: #555555;">3</span> 쓰레기    36     2  0.000<span style="text-decoration: underline;">543</span>   0.006<span style="text-decoration: underline;">17</span>          0.087<span style="text-decoration: underline;">9</span>
-## <span style="color: #555555;">4</span> 돈        19     0  0.000<span style="text-decoration: underline;">181</span>   0.003<span style="text-decoration: underline;">34</span>          0.054<span style="text-decoration: underline;">2</span>
+## <span style="color: #555555;">2</span> 얘기      10     0  0.000<span style="text-decoration: underline;">181</span>   0.001<span style="text-decoration: underline;">84</span>          0.098<span style="text-decoration: underline;">3</span>
+## <span style="color: #555555;">3</span> 쓰레기    36     2  0.000<span style="text-decoration: underline;">542</span>   0.006<span style="text-decoration: underline;">18</span>          0.087<span style="text-decoration: underline;">7</span>
+## <span style="color: #555555;">4</span> 돈        19     0  0.000<span style="text-decoration: underline;">181</span>   0.003<span style="text-decoration: underline;">34</span>          0.054<span style="text-decoration: underline;">1</span>
 ## <span style="color: #555555;">5</span> 짜증      24     0  0.000<span style="text-decoration: underline;">181</span>   0.004<span style="text-decoration: underline;">17</span>          0.043<span style="text-decoration: underline;">3</span>
 ## <span style="color: #555555;">6</span> 최악      24     0  0.000<span style="text-decoration: underline;">181</span>   0.004<span style="text-decoration: underline;">17</span>          0.043<span style="text-decoration: underline;">3</span>
 </code></pre>
 <p>’밋’과 ’ㄷ’이 사용된 문장을 살펴보자. <code>drop =</code>인자에 <code>FALSE</code>를 투입하면 토큰화한 문장을 제거하지 않고 남겨둔다.</p>
-<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -603,7 +605,7 @@ A:B = \frac{A}{B}
 </code></pre>
 <div id="rccpmecab-pos" class="rmdtip">
 <p>’재밋었음’에서 <code>MeCab</code>형태소 분석기가 ’밋’을 명사로 추출한 결과이다.</p>
-<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="st">"재밋었음10자는뭐여"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## $재밋었음10자는뭐여
 ## [1] "재/XPN"    "밋/NNG"    "었/EP"     "음/ETN"   
@@ -612,7 +614,7 @@ A:B = \frac{A}{B}
 </code></pre>
 </div>
 <p>막대도표로 시각화하자. 긍정평과 부정평 도표를 분리해 표시하기 위해 승산비 1을 기준으로 크면 ‘긍정평’ 작으면 ’부정평’을 부여한다.</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">posi_odds_ratio</span> <span class="op">&gt;</span> <span class="fl">1</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>word <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">posi_odds_ratio</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -624,7 +626,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">label</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/odds-tfidf-naver-odds-viz-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>중요도가 비슷한 단어를 추출해보자. 승산비가 1이면 분자와 분모가 같으므로 긍정평과 부정평의 승산이 같다는 의미다.</p>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -645,15 +647,15 @@ A:B = \frac{A}{B}
 ##   word    nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
 ## <span style="color: #555555;">1</span> 이야기    14    13   0.002<span style="text-decoration: underline;">53</span>   0.002<span style="text-decoration: underline;">50</span>           1.01 
-## <span style="color: #555555;">2</span> 정도      18    16   0.003<span style="text-decoration: underline;">07</span>   0.003<span style="text-decoration: underline;">17</span>           0.970
-## <span style="color: #555555;">3</span> 결말       7     6   0.001<span style="text-decoration: underline;">27</span>   0.001<span style="text-decoration: underline;">34</span>           0.948
-## <span style="color: #555555;">4</span> 느낌       7     6   0.001<span style="text-decoration: underline;">27</span>   0.001<span style="text-decoration: underline;">34</span>           0.948
-## <span style="color: #555555;">5</span> 이상      15    13   0.002<span style="text-decoration: underline;">53</span>   0.002<span style="text-decoration: underline;">67</span>           0.948
-## <span style="color: #555555;">6</span> 팬         7     6   0.001<span style="text-decoration: underline;">27</span>   0.001<span style="text-decoration: underline;">34</span>           0.948
+## <span style="color: #555555;">2</span> 개봉      10     9   0.001<span style="text-decoration: underline;">81</span>   0.001<span style="text-decoration: underline;">84</span>           0.983
+## <span style="color: #555555;">3</span> 정도      18    16   0.003<span style="text-decoration: underline;">07</span>   0.003<span style="text-decoration: underline;">17</span>           0.968
+## <span style="color: #555555;">4</span> 결말       7     6   0.001<span style="text-decoration: underline;">26</span>   0.001<span style="text-decoration: underline;">34</span>           0.946
+## <span style="color: #555555;">5</span> 몰입       7     6   0.001<span style="text-decoration: underline;">26</span>   0.001<span style="text-decoration: underline;">34</span>           0.946
+## <span style="color: #555555;">6</span> 이상      15    13   0.002<span style="text-decoration: underline;">53</span>   0.002<span style="text-decoration: underline;">67</span>           0.946
 ## <span style="color: #555555;"># … with 14 more rows</span>
 </code></pre>
 <p>중요도가 비슷하면서 빈도가 높은 단어를 찾아 보자.</p>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -674,18 +676,18 @@ A:B = \frac{A}{B}
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 20 × 6</span>
 ##   word    nega  posi odds_posi odds_nega posi_odds_ratio
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 이야기    14    13    0.020<span style="text-decoration: underline;">1</span>    0.020<span style="text-decoration: underline;">1</span>           1.00 
-## <span style="color: #555555;">2</span> 정도      18    16    0.024<span style="text-decoration: underline;">5</span>    0.025<span style="text-decoration: underline;">4</span>           0.963
-## <span style="color: #555555;">3</span> 이상      15    13    0.020<span style="text-decoration: underline;">1</span>    0.021<span style="text-decoration: underline;">4</span>           0.942
-## <span style="color: #555555;">4</span> 드라마    35    35    0.051<span style="text-decoration: underline;">8</span>    0.048<span style="text-decoration: underline;">1</span>           1.08 
-## <span style="color: #555555;">5</span> 배우      27    22    0.033<span style="text-decoration: underline;">1</span>    0.037<span style="text-decoration: underline;">4</span>           0.884
-## <span style="color: #555555;">6</span> 연출      14    11    0.017<span style="text-decoration: underline;">3</span>    0.020<span style="text-decoration: underline;">1</span>           0.861
+## <span style="color: #555555;">1</span> 이야기    14    13    0.020<span style="text-decoration: underline;">1</span>    0.019<span style="text-decoration: underline;">9</span>           1.01 
+## <span style="color: #555555;">2</span> 정도      18    16    0.024<span style="text-decoration: underline;">4</span>    0.025<span style="text-decoration: underline;">2</span>           0.968
+## <span style="color: #555555;">3</span> 이상      15    13    0.020<span style="text-decoration: underline;">1</span>    0.021<span style="text-decoration: underline;">2</span>           0.947
+## <span style="color: #555555;">4</span> 연출      14    12    0.018<span style="text-decoration: underline;">7</span>    0.019<span style="text-decoration: underline;">9</span>           0.938
+## <span style="color: #555555;">5</span> 드라마    35    35    0.051<span style="text-decoration: underline;">6</span>    0.047<span style="text-decoration: underline;">7</span>           1.08 
+## <span style="color: #555555;">6</span> 배우      27    22    0.033<span style="text-decoration: underline;">0</span>    0.037<span style="text-decoration: underline;">1</span>           0.889
 ## <span style="color: #555555;"># … with 14 more rows</span>
 </code></pre>
 </div>
-<div id="로그승산비" class="section level3" number="7.2.3">
+<div id="로그승산비" class="section level3" number="8.2.3">
 <h3>
-<span class="header-section-number">7.2.3</span> 로그승산비<a class="anchor" aria-label="anchor" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.3</span> 로그승산비<a class="anchor" aria-label="anchor" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li>로그승산비(log odds ratio)</li>
@@ -694,7 +696,7 @@ A:B = \frac{A}{B}
 <p><span class="math display">\[
 로그 승산비 = log(\frac{승산A}{승산B})
 \]</span></p>
-<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -709,19 +711,19 @@ A:B = \frac{A}{B}
 <span>         odds_nega <span class="op">=</span> <span class="op">(</span><span class="op">(</span><span class="va">nega</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">nega</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="co"># 승산비에 로그를 취한다.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>log_odds_ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">odds_posi</span> <span class="op">/</span> <span class="va">odds_nega</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,303 × 6</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,294 × 6</span>
 ##   word   nega  posi odds_posi odds_nega log_odds_ratio
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 가가      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.613</span>
-## <span style="color: #555555;">2</span> 가관      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.613</span>
-## <span style="color: #555555;">3</span> 가능      1     4  0.000<span style="text-decoration: underline;">904</span>  0.000<span style="text-decoration: underline;">334</span>          0.997
-## <span style="color: #555555;">4</span> 가든      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.613</span>
-## <span style="color: #555555;">5</span> 가리      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.613</span>
-## <span style="color: #555555;">6</span> 가문      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.613</span>
-## <span style="color: #555555;"># … with 2,297 more rows</span>
+## <span style="color: #555555;">1</span> 가가      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.615</span>
+## <span style="color: #555555;">2</span> 가관      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.615</span>
+## <span style="color: #555555;">3</span> 가능      1     4  0.000<span style="text-decoration: underline;">903</span>  0.000<span style="text-decoration: underline;">334</span>          0.995
+## <span style="color: #555555;">4</span> 가든      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.615</span>
+## <span style="color: #555555;">5</span> 가리      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.615</span>
+## <span style="color: #555555;">6</span> 가문      1     0  0.000<span style="text-decoration: underline;">181</span>  0.000<span style="text-decoration: underline;">334</span>         -<span style="color: #BB0000;">0.615</span>
+## <span style="color: #555555;"># … with 2,288 more rows</span>
 </code></pre>
 <p>로그 승산비를 이용하면 하나의 도표에 상대빈도를 표시할 수 있다. 먼저 로그승산비를 구한뒤, 0을 기준으로 긍정평과 부정평을 group으로 구분한다. 긍정평과 부정평 집단별로 구분돼 있으므로, 로그승산비의 절대값 상위 10개를 지정하면, 긍정평과 부정평 별로 각각 상위 10개 단어를 추출할 수 있다.</p>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_log_df</span> <span class="op">&lt;-</span> <span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -741,20 +743,20 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">log_odds_ratio</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_ratio</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> </span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 22 × 7</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 26 × 7</span>
 ## <span style="color: #555555;"># Groups:   label [2]</span>
 ##   word   nega  posi odds_posi odds_nega log_odds_ratio label
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>
-## <span style="color: #555555;">1</span> 굿        0    18   0.003<span style="text-decoration: underline;">44</span>  0.000<span style="text-decoration: underline;">167</span>           3.02 긍정…
+## <span style="color: #555555;">1</span> 굿        0    17   0.003<span style="text-decoration: underline;">25</span>  0.000<span style="text-decoration: underline;">167</span>           2.97 긍정…
 ## <span style="color: #555555;">2</span> 밋        0    16   0.003<span style="text-decoration: underline;">07</span>  0.000<span style="text-decoration: underline;">167</span>           2.91 긍정…
 ## <span style="color: #555555;">3</span> ㄷ        0    15   0.002<span style="text-decoration: underline;">89</span>  0.000<span style="text-decoration: underline;">167</span>           2.85 긍정…
-## <span style="color: #555555;">4</span> 삶        0    10   0.001<span style="text-decoration: underline;">99</span>  0.000<span style="text-decoration: underline;">167</span>           2.48 긍정…
-## <span style="color: #555555;">5</span> 마음      0     9   0.001<span style="text-decoration: underline;">81</span>  0.000<span style="text-decoration: underline;">167</span>           2.38 긍정…
-## <span style="color: #555555;">6</span> 최고      8    83   0.015<span style="text-decoration: underline;">2</span>   0.001<span style="text-decoration: underline;">50</span>            2.31 긍정…
-## <span style="color: #555555;"># … with 16 more rows</span>
+## <span style="color: #555555;">4</span> 삶        0    11   0.002<span style="text-decoration: underline;">17</span>  0.000<span style="text-decoration: underline;">167</span>           2.56 긍정…
+## <span style="color: #555555;">5</span> 최고      8    83   0.015<span style="text-decoration: underline;">2</span>   0.001<span style="text-decoration: underline;">50</span>            2.31 긍정…
+## <span style="color: #555555;">6</span> 만족      0     8   0.001<span style="text-decoration: underline;">62</span>  0.000<span style="text-decoration: underline;">167</span>           2.28 긍정…
+## <span style="color: #555555;"># … with 20 more rows</span>
 </code></pre>
 <p>막대도표로 시각화하면 다음과 같은 긍부정에 기여하는 중요단어를 한눈에 일별할 수 있다.</p>
-<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_log_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">log_odds_ratio</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_ratio</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -765,20 +767,20 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/odds-tfidf-naver-log-odds-viz-1.png" width="576" style="display: block; margin: auto;"></div>
 </div>
-<div id="가중로그승산비" class="section level3" number="7.2.4">
+<div id="가중로그승산비" class="section level3" number="8.2.4">
 <h3>
-<span class="header-section-number">7.2.4</span> 가중로그승산비<a class="anchor" aria-label="anchor" href="#%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.4</span> 가중로그승산비<a class="anchor" aria-label="anchor" href="#%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><i class="fas fa-link"></i></a>
 </h3>
 <p>로그승산비는 문서 2종에 대한 승산으로 비를 구하므로, 3종 이상의 문서로 구성된 말뭉치에 적용할 수 없는 한계가 있다. <code>tf_idf</code>는 3종 이상의 문서로 구성된 말뭉치에 적용할 수 있지만, tf_idf계산 방식에서 오는 한계가 있다. 모든 문서에 걸쳐 등장하는 단어라 해서 반드시 불용어처럼 문서의 의미파악에 기여하지 못하는 것이 아니기 때문이다.</p>
 <p><code>tf_idf</code>의 한계를 Tyler Schnoebelen이 [Monroe, Colaresi, and Quinn(2008)](Monroe, Colaresi, and Quinn(2008)의 연구를 토대 블로그문서
 <a href="https://medium.com/@TSchnoebelen/i-dare-say-you-will-never-use-tf-idf-again-4918408b2310">“I dare say you will never use tf-idf again”</a>을 통해 지적하며, 대안으로 로그승산비에 베이지언 확률모형을 적용한 <a href="https://bookdown.org/Maxine/tidy-text-mining/weighted-log-odds-ratio.html">가중로그승산비(weighted log odds ratio)</a>를 제안했다.</p>
 <p>이에 <code>tidytext</code> 개발자인 Julia Silge가 <a href="https://github.com/juliasilge/tidylo"><code>tydylo</code></a>패키지를 개발해 가중로그승산비를 간단하게 계산할 수 있도록 했다. (<a href="https://juliasilge.com/blog/introducing-tidylo/">Silge의 패키지 소개 글</a>)</p>
-<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidylo"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="bind_log_odds-함수" class="section level3" number="7.2.5">
+<div id="bind_log_odds-함수" class="section level3" number="8.2.5">
 <h3>
-<span class="header-section-number">7.2.5</span> <code>bind_log_odds()</code> 함수<a class="anchor" aria-label="anchor" href="#bind_log_odds-%ED%95%A8%EC%88%98"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.2.5</span> <code>bind_log_odds()</code> 함수<a class="anchor" aria-label="anchor" href="#bind_log_odds-%ED%95%A8%EC%88%98"><i class="fas fa-link"></i></a>
 </h3>
 <p><code>bind_log_odds(tbl, set, feature, n, uninformative = FALSE, unweighted = FALSE)</code> 함수 주요 인자를 살펴보면 다음과 같다.</p>
 <ul>
@@ -790,7 +792,7 @@ A:B = \frac{A}{B}
 <li>unweighted: 비가중 로그승산 사용여부. 기본값은 <code>FALSE</code>. <code>TRUE</code>로 지정하면 비가중 로그승산비(<code>log_odds</code>) 열을 추가한다.</li>
 </ul>
 <p>가중로그승산비를 이용해 네이버영화 댓글 중 긍정평과 부정평에 사용된 단어의 상대빈도를 구해보자.</p>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://juliasilge.github.io/tidylo/">tidylo</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">weighted_log_odds_df</span> <span class="op">&lt;-</span> <span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -805,38 +807,38 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">log_odds_weighted</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">weighted_log_odds_df</span></span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,831 × 4</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,819 × 4</span>
 ## <span style="color: #555555;"># Groups:   label [2]</span>
 ##   label word      n log_odds_weighted
 ##   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>             <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
 ## <span style="color: #555555;">1</span>     0 짜증     24              3.18
 ## <span style="color: #555555;">2</span>     0 최악     24              3.18
-## <span style="color: #555555;">3</span>     1 굿       18              3.16
+## <span style="color: #555555;">3</span>     1 굿       17              3.07
 ## <span style="color: #555555;">4</span>     1 최고     83              3.06
 ## <span style="color: #555555;">5</span>     1 밋       16              2.98
 ## <span style="color: #555555;">6</span>     1 ㄷ       15              2.88
-## <span style="color: #555555;"># … with 2,825 more rows</span>
+## <span style="color: #555555;"># … with 2,813 more rows</span>
 </code></pre>
 <p>긍정평과 부정평별 가중로그승산비 상위 10개 추출한다.</p>
-<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weighted_log_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_weighted</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># 긍정평과 부정평별 각각 상위 10개</span></span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 20 × 4</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 22 × 4</span>
 ## <span style="color: #555555;"># Groups:   label [2]</span>
 ##   label  word      n log_odds_weighted
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>             <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 긍정평 굿       18              3.16
+## <span style="color: #555555;">1</span> 긍정평 굿       17              3.07
 ## <span style="color: #555555;">2</span> 긍정평 최고     83              3.06
 ## <span style="color: #555555;">3</span> 긍정평 밋       16              2.98
 ## <span style="color: #555555;">4</span> 긍정평 ㄷ       15              2.88
-## <span style="color: #555555;">5</span> 긍정평 삶       10              2.35
+## <span style="color: #555555;">5</span> 긍정평 삶       11              2.46
 ## <span style="color: #555555;">6</span> 긍정평 감동     58              2.28
-## <span style="color: #555555;"># … with 14 more rows</span>
+## <span style="color: #555555;"># … with 16 more rows</span>
 </code></pre>
 <p>막대도표로 시각화한다. 특히 <code><a href="https://rdrr.io/pkg/tidytext/man/reorder_within.html">reorder_within()</a></code> 함수를 사용하게 되면 작은창(facet)
 에 따라 내림차순하여 시각적으로 깔끔하게 구현할 수 있다.</p>
-<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weighted_log_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_weighted</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span>
@@ -849,7 +851,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">label</span>, scale <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/odds-tidylo-naver-top10-viz-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>부정평으로 분류된 내용 중 ’최고’와 ’감동’이 부정평에 들어 있다. 어떤 문장인지 확인해보자.</p>
-<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -873,16 +875,16 @@ A:B = \frac{A}{B}
 <p>’감동적 그자체 영화’를 부정평으로 분류한 것은 라벨링 오류.</p>
 </div>
 </div>
-<div id="지표-비교" class="section level2" number="7.3">
+<div id="지표-비교" class="section level2" number="8.3">
 <h2>
-<span class="header-section-number">7.3</span> 지표 비교<a class="anchor" aria-label="anchor" href="#%EC%A7%80%ED%91%9C-%EB%B9%84%EA%B5%90"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3</span> 지표 비교<a class="anchor" aria-label="anchor" href="#%EC%A7%80%ED%91%9C-%EB%B9%84%EA%B5%90"><i class="fas fa-link"></i></a>
 </h2>
-<div id="로그승산비-1" class="section level3" number="7.3.1">
+<div id="로그승산비-1" class="section level3" number="8.3.1">
 <h3>
-<span class="header-section-number">7.3.1</span> 로그승산비<a class="anchor" aria-label="anchor" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.1</span> 로그승산비<a class="anchor" aria-label="anchor" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>먼저 가중치를 사용하지않은 로그승산비를 구한다.</p>
-<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rate_log_df</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># 승산비에 로그를 취한다.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">log_odds_ratio</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_ratio</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span>
@@ -894,12 +896,12 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">label</span>, scale <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/odds-comp-1.png" width="576" style="display: block; margin: auto;"></div>
 </div>
-<div id="tf_idf-3" class="section level3" number="7.3.2">
+<div id="tf_idf-3" class="section level3" number="8.3.2">
 <h3>
-<span class="header-section-number">7.3.2</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.2</span> tf_idf<a class="anchor" aria-label="anchor" href="#tf_idf-3"><i class="fas fa-link"></i></a>
 </h3>
 <p>tf_idf 계산를 계산한다.</p>
-<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf_idf_df</span> <span class="op">&lt;-</span> <span class="va">by1000_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">document</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">word</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"word"</span>, <span class="st">"pos"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"/"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -910,37 +912,37 @@ A:B = \frac{A}{B}
 <span>              document <span class="op">=</span> <span class="va">label</span>,</span>
 <span>              n <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
 <span><span class="va">tf_idf_df</span></span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,831 × 6</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 2,819 × 6</span>
 ## <span style="color: #555555;"># Groups:   label [2]</span>
 ##   label word      n       tf   idf   tf_idf
 ##   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span>     0 가가      1 0.000<span style="text-decoration: underline;">271</span> 0.693 0.000<span style="text-decoration: underline;">188</span>
-## <span style="color: #555555;">2</span>     0 가관      1 0.000<span style="text-decoration: underline;">271</span> 0.693 0.000<span style="text-decoration: underline;">188</span>
-## <span style="color: #555555;">3</span>     0 가능      1 0.000<span style="text-decoration: underline;">271</span> 0     0       
-## <span style="color: #555555;">4</span>     0 가든      1 0.000<span style="text-decoration: underline;">271</span> 0.693 0.000<span style="text-decoration: underline;">188</span>
-## <span style="color: #555555;">5</span>     0 가리      1 0.000<span style="text-decoration: underline;">271</span> 0.693 0.000<span style="text-decoration: underline;">188</span>
-## <span style="color: #555555;">6</span>     0 가문      1 0.000<span style="text-decoration: underline;">271</span> 0.693 0.000<span style="text-decoration: underline;">188</span>
-## <span style="color: #555555;"># … with 2,825 more rows</span>
+## <span style="color: #555555;">1</span>     0 가가      1 0.000<span style="text-decoration: underline;">270</span> 0.693 0.000<span style="text-decoration: underline;">187</span>
+## <span style="color: #555555;">2</span>     0 가관      1 0.000<span style="text-decoration: underline;">270</span> 0.693 0.000<span style="text-decoration: underline;">187</span>
+## <span style="color: #555555;">3</span>     0 가능      1 0.000<span style="text-decoration: underline;">270</span> 0     0       
+## <span style="color: #555555;">4</span>     0 가든      1 0.000<span style="text-decoration: underline;">270</span> 0.693 0.000<span style="text-decoration: underline;">187</span>
+## <span style="color: #555555;">5</span>     0 가리      1 0.000<span style="text-decoration: underline;">270</span> 0.693 0.000<span style="text-decoration: underline;">187</span>
+## <span style="color: #555555;">6</span>     0 가문      1 0.000<span style="text-decoration: underline;">270</span> 0.693 0.000<span style="text-decoration: underline;">187</span>
+## <span style="color: #555555;"># … with 2,813 more rows</span>
 </code></pre>
 <p>긍정평과 부정평별 상위 10개 추출한다.</p>
-<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf_idf_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">tf_idf</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 22 × 6</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 21 × 6</span>
 ## <span style="color: #555555;"># Groups:   label [2]</span>
 ##   label  word      n      tf   idf  tf_idf
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 긍정평 굿       18 0.005<span style="text-decoration: underline;">58</span> 0.693 0.003<span style="text-decoration: underline;">87</span>
-## <span style="color: #555555;">2</span> 긍정평 밋       16 0.004<span style="text-decoration: underline;">96</span> 0.693 0.003<span style="text-decoration: underline;">44</span>
-## <span style="color: #555555;">3</span> 긍정평 ㄷ       15 0.004<span style="text-decoration: underline;">65</span> 0.693 0.003<span style="text-decoration: underline;">22</span>
-## <span style="color: #555555;">4</span> 긍정평 삶       10 0.003<span style="text-decoration: underline;">10</span> 0.693 0.002<span style="text-decoration: underline;">15</span>
-## <span style="color: #555555;">5</span> 긍정평 마음      9 0.002<span style="text-decoration: underline;">79</span> 0.693 0.001<span style="text-decoration: underline;">93</span>
-## <span style="color: #555555;">6</span> 긍정평 만족      8 0.002<span style="text-decoration: underline;">48</span> 0.693 0.001<span style="text-decoration: underline;">72</span>
-## <span style="color: #555555;"># … with 16 more rows</span>
+## <span style="color: #555555;">1</span> 긍정평 굿       17 0.005<span style="text-decoration: underline;">24</span> 0.693 0.003<span style="text-decoration: underline;">63</span>
+## <span style="color: #555555;">2</span> 긍정평 밋       16 0.004<span style="text-decoration: underline;">93</span> 0.693 0.003<span style="text-decoration: underline;">42</span>
+## <span style="color: #555555;">3</span> 긍정평 ㄷ       15 0.004<span style="text-decoration: underline;">62</span> 0.693 0.003<span style="text-decoration: underline;">20</span>
+## <span style="color: #555555;">4</span> 긍정평 삶       11 0.003<span style="text-decoration: underline;">39</span> 0.693 0.002<span style="text-decoration: underline;">35</span>
+## <span style="color: #555555;">5</span> 긍정평 만족      8 0.002<span style="text-decoration: underline;">46</span> 0.693 0.001<span style="text-decoration: underline;">71</span>
+## <span style="color: #555555;">6</span> 긍정평 행복      7 0.002<span style="text-decoration: underline;">16</span> 0.693 0.001<span style="text-decoration: underline;">49</span>
+## <span style="color: #555555;"># … with 15 more rows</span>
 </code></pre>
 <p>막대도표로 시각화한다.</p>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf_idf_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">tf_idf</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># 긍정평과 부정평별 각각 상위 10개 </span></span>
@@ -952,12 +954,12 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">label</span>, scale <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/odds-comp-tfidf-top10-viz-1.png" width="576" style="display: block; margin: auto;"></div>
 </div>
-<div id="비교-1" class="section level3" number="7.3.3">
+<div id="비교-1" class="section level3" number="8.3.3">
 <h3>
-<span class="header-section-number">7.3.3</span> 비교<a class="anchor" aria-label="anchor" href="#%EB%B9%84%EA%B5%90-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.3.3</span> 비교<a class="anchor" aria-label="anchor" href="#%EB%B9%84%EA%B5%90-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>가중로그승산비, 로그승산비, tf_idf의 값을 비교해보자. 먼저 3개 데이터프레임을 행방향으로 결합해 하나의 데이터프레임으로 저장한다.</p>
-<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wlo_df</span> <span class="op">&lt;-</span> </span>
 <span><span class="va">weighted_log_odds_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">label</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"긍정평"</span>, <span class="st">"부정평"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -982,15 +984,15 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;"># Groups:   label [2]</span>
 ##   ID    label  word  score
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 3     긍정평 ㄷ    1.93 
-## <span style="color: #555555;">2</span> 3     긍정평 삶    1.29 
-## <span style="color: #555555;">3</span> 3     긍정평 마음  1.16 
-## <span style="color: #555555;">4</span> 3     긍정평 만족  1.03 
-## <span style="color: #555555;">5</span> 3     긍정평 감정  0.902
-## <span style="color: #555555;">6</span> 3     긍정평 행복  0.902
+## <span style="color: #555555;">1</span> 3     긍정평 밋    2.05 
+## <span style="color: #555555;">2</span> 3     긍정평 ㄷ    1.92 
+## <span style="color: #555555;">3</span> 3     긍정평 삶    1.41 
+## <span style="color: #555555;">4</span> 3     긍정평 만족  1.02 
+## <span style="color: #555555;">5</span> 3     긍정평 행복  0.897
+## <span style="color: #555555;">6</span> 3     긍정평 뒤    0.769
 ## <span style="color: #555555;"># … with 14 more rows</span>
 </code></pre>
-<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">wlo_df</span>, <span class="va">rlo_df</span>, <span class="va">ti_df</span>, .id <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span><span class="va">ID</span> <span class="op">==</span> <span class="st">"1"</span> <span class="op">~</span> <span class="st">"1.가중로그승산비"</span>,</span>
 <span>                        <span class="va">ID</span> <span class="op">==</span> <span class="st">"2"</span> <span class="op">~</span> <span class="st">"2.로그승산비"</span>,</span>
@@ -1006,14 +1008,14 @@ A:B = \frac{A}{B}
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/tfidf-comp-data-viz-1.png" width="576" style="display: block; margin: auto;"></div>
 </div>
 </div>
-<div id="연습-3" class="section level2" number="7.4">
+<div id="연습-3" class="section level2" number="8.4">
 <h2>
-<span class="header-section-number">7.4</span> 연습<a class="anchor" aria-label="anchor" href="#%EC%97%B0%EC%8A%B5-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4</span> 연습<a class="anchor" aria-label="anchor" href="#%EC%97%B0%EC%8A%B5-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>’백신’관련 보도의 내용을 빅카인즈의 자료를 이용해 탐색해보자.</p>
-<div id="빅카인즈" class="section level3" number="7.4.1">
+<div id="빅카인즈" class="section level3" number="8.4.1">
 <h3>
-<span class="header-section-number">7.4.1</span> 빅카인즈<a class="anchor" aria-label="anchor" href="#%EB%B9%85%EC%B9%B4%EC%9D%B8%EC%A6%88"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.1</span> 빅카인즈<a class="anchor" aria-label="anchor" href="#%EB%B9%85%EC%B9%B4%EC%9D%B8%EC%A6%88"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://www.bigkinds.or.kr/">빅카인즈</a>는 언론진흥재단이 운영하는 뉴스빅데이터 분석서비스다. 종합일간지, 경제지, 지역일간지, 방송사 등의 기사를 분석할수 인터페이스를 제공한다. 빅카인즈인터페이스를 통해
 빅카인즈에서 제공하는 인터페이스으로 뉴스텍스트를 분석할 수 있다. 관계도, 키워드트렌드, 연관어분석 등이 가능하다. 사용자가 직접 분석할 수 있도록 데이터다운로드 서비스도 제공한다. 무료데이터는 일자, 언론사, 기고자, 제목, 분류, 인물, 위치, 본문(200자), 기사ULR 등이 포함돼 있다.</p>
@@ -1028,9 +1030,9 @@ A:B = \frac{A}{B}
 <li>‘STEP03·분석결과 및 시각화’를 클릭하면 ’데이터다운로드’ 메뉴가 나온다.</li>
 <li>오른쪽 하단의 ‘엑셀다운로드’ 클릭.</li>
 </ol>
-<div id="백신관련-보도-수집" class="section level4" number="7.4.1.1">
+<div id="백신관련-보도-수집" class="section level4" number="8.4.1.1">
 <h4>
-<span class="header-section-number">7.4.1.1</span> 백신관련 보도 수집<a class="anchor" aria-label="anchor" href="#%EB%B0%B1%EC%8B%A0%EA%B4%80%EB%A0%A8-%EB%B3%B4%EB%8F%84-%EC%88%98%EC%A7%91"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.1.1</span> 백신관련 보도 수집<a class="anchor" aria-label="anchor" href="#%EB%B0%B1%EC%8B%A0%EA%B4%80%EB%A0%A8-%EB%B3%B4%EB%8F%84-%EC%88%98%EC%A7%91"><i class="fas fa-link"></i></a>
 </h4>
 <p>모든 기사를 분석하기 위해서는 시간이 많이 걸리므로, 데이터셋의 크기를 줄이기 위해, 분석 대상을 2021년 2월 한달간 ‘경향신문’ ‘한겨레’ ‘문화일보’ ‘조선일보’ 등 4개 일간지에서 보도된 내용에 국한하자.</p>
 <p><code>4. 'STEP01·뉴스검색'</code> 창에서 다운로드할 기사의 범위 설정</p>
@@ -1042,13 +1044,13 @@ A:B = \frac{A}{B}
 </ul>
 <p>작업디렉토리 아래 <code>data</code>폴더에 다운로드 받는다.</p>
 <p>파일명을 확인한다. <code>NewsResult_20210201-20210228.xlsx</code>다.</p>
-<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="st">"data/."</span><span class="op">)</span></span></code></pre></div>
 <p><code>readxl</code>패키지의 <code>read_excel()</code>함수로 해당 파일을 R환경으로 이입한다.</p>
-<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20210201-20210228.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>분석에 활용할 열만 추출해 <code>vac_df</code>에 할당한다.</p>
-<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"data/NewsResult_20210201-20210228.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">제목</span>, <span class="va">언론사</span>, <span class="va">본문</span>, <span class="va">URL</span><span class="op">)</span></span>
@@ -1063,12 +1065,12 @@ A:B = \frac{A}{B}
 </code></pre>
 </div>
 </div>
-<div id="정제-1" class="section level3" number="7.4.2">
+<div id="정제-1" class="section level3" number="8.4.2">
 <h3>
-<span class="header-section-number">7.4.2</span> 정제<a class="anchor" aria-label="anchor" href="#%EC%A0%95%EC%A0%9C-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.2</span> 정제<a class="anchor" aria-label="anchor" href="#%EC%A0%95%EC%A0%9C-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>먼저 <code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code>함수로 결측값을 제거하고, 토큰화한 다음, <code>pos</code>함수로 일반명사만 추출해, <code>vac_tk</code>로 저장한다.</p>
-<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_tk</span> <span class="op">&lt;-</span> <span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1076,7 +1078,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="st">'nng'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">vac_tk</span></span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 3,570 × 5</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 3,633 × 5</span>
 ##   언론사   본문                           URL    word  pos  
 ##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>
 ## <span style="color: #555555;">1</span> 경향신문 <span style="color: #555555;">"</span>이틀간 2만322명에 접종 마쳐 … http:… 백신  nng  
@@ -1085,20 +1087,20 @@ A:B = \frac{A}{B}
 ## <span style="color: #555555;">4</span> 경향신문 <span style="color: #555555;">"</span>이틀간 2만322명에 접종 마쳐 … http:… 곳곳  nng  
 ## <span style="color: #555555;">5</span> 경향신문 <span style="color: #555555;">"</span>이틀간 2만322명에 접종 마쳐 … http:… 방역  nng  
 ## <span style="color: #555555;">6</span> 경향신문 <span style="color: #555555;">"</span>이틀간 2만322명에 접종 마쳐 … http:… 해이  nng  
-## <span style="color: #555555;"># … with 3,564 more rows</span>
+## <span style="color: #555555;"># … with 3,627 more rows</span>
 </code></pre>
 </div>
-<div id="분석-및-소통" class="section level3" number="7.4.3">
+<div id="분석-및-소통" class="section level3" number="8.4.3">
 <h3>
-<span class="header-section-number">7.4.3</span> 분석 및 소통<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-%EB%B0%8F-%EC%86%8C%ED%86%B5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.3</span> 분석 및 소통<a class="anchor" aria-label="anchor" href="#%EB%B6%84%EC%84%9D-%EB%B0%8F-%EC%86%8C%ED%86%B5"><i class="fas fa-link"></i></a>
 </h3>
 <p>총빈도, 감정어빈도, tf_idf, 로그승산비, 가중로그승산비 등 다양한 분석 방법을 배웠다. 총빈도와 가중로그승산비를 구해 언론사별 어떤 차이가 있는지 살펴보자. (분석 결과를 해석할 때는 2021년 2월 한달 기간에 국한한 자료를 이용한 점에 주의해야 한다.)</p>
 </div>
-<div id="언론사별-총빈도" class="section level3" number="7.4.4">
+<div id="언론사별-총빈도" class="section level3" number="8.4.4">
 <h3>
-<span class="header-section-number">7.4.4</span> 언론사별 총빈도<a class="anchor" aria-label="anchor" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EC%B4%9D%EB%B9%88%EB%8F%84"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.4</span> 언론사별 총빈도<a class="anchor" aria-label="anchor" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EC%B4%9D%EB%B9%88%EB%8F%84"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">!=</span> <span class="st">"경향"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1120,7 +1122,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">언론사</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/bigkinds-excel-tf-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>주요 단어가 사용된 내용(제목)을 살펴보자.</p>
-<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1174,19 +1176,19 @@ A:B = \frac{A}{B}
 </code></pre>
 <div id="rccpmecab-pos-covid" class="rmdtip">
 <p>’카’의 빈도가 높았던 이유는 ’아스트라제네카’를 형태소분석기가 하나의 일반명사로 추출하지 않았기 때문이다.</p>
-<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Encoding.html">enc2utf8</a></span><span class="op">(</span><span class="st">"아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 이상’은 의사가 판단"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre class="r-output"><code>## $`아스트라제네카 ‘모든 연령층 접종’ 허가 ‘65살 이상’은 의사가 판단`
 ##  [1] "아스트라/NNP" "제/NP"        "네/XSN"      
 ##  [4] "카/NNG"       "‘/SY"        "모든/MM"     
-##  [7] "연령층/NNG"   "접종/NNG"     "’/SY"       
-## [10] "허가/NNG"     "‘/SY"        "65/SN"       
-## [13] "살/NNBC"      "이상/NNG"     "’/SY"       
-## [16] "은/JX"        "의사/NNG"     "가/JKS"      
-## [19] "판단/NNG"
+##  [7] "연령/NNG"     "층/XSN"       "접종/NNG"    
+## [10] "’/SY"        "허가/NNG"     "‘/SY"       
+## [13] "65/SN"        "살/NNBC"      "이상/NNG"    
+## [16] "’/SY"        "은/JX"        "의사/NNG"    
+## [19] "가/JKS"       "판단/NNG"
 </code></pre>
 </div>
-<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1242,12 +1244,12 @@ A:B = \frac{A}{B}
 ## [46] "설 차례, 직계가족이라도 주소 다르면 5인이상 금지"
 </code></pre>
 </div>
-<div id="언론사별-가중로그승산비" class="section level3" number="7.4.5">
+<div id="언론사별-가중로그승산비" class="section level3" number="8.4.5">
 <h3>
-<span class="header-section-number">7.4.5</span> 언론사별 가중로그승산비<a class="anchor" aria-label="anchor" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.5</span> 언론사별 가중로그승산비<a class="anchor" aria-label="anchor" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><i class="fas fa-link"></i></a>
 </h3>
 <p>언론사별 가중로그승산비를 구하고 이를 시각화하여 비교해보자.</p>
-<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">!=</span> <span class="st">"경향"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1271,7 +1273,7 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span> <span class="op">~</span> <span class="va">언론사</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="30-word-freq_files/figure-html/bigkinds-excel-tf-media-1.png" width="576" style="display: block; margin: auto;"></div>
 <p>주요 단어가 사용된 내용(제목)을 살펴보자.</p>
-<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1287,7 +1289,7 @@ A:B = \frac{A}{B}
 ## [5] "[오늘은 이런 경향] 2월 9일 정 총리 답신 한달 지냈지만...현장 간호사들은..."
 </code></pre>
 <p>품사로 명사(<code>nng</code>), 언론사로 “문화일보”, 단어 “확정”이 들어간 신문기사 제목을 추출해보자.</p>
-<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1300,7 +1302,7 @@ A:B = \frac{A}{B}
 ## [2] "국내 1호 AZ백신 첫 접종 대상은 누구? 19일까지 명단 확정"
 </code></pre>
 <p>품사로 명사(<code>nng</code>), 언론사로 “조선일보”, 단어 “국민”이 들어간 신문기사 제목을 추출해보자.</p>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1316,7 +1318,7 @@ A:B = \frac{A}{B}
 ## [5] "“과학자 입 막으면 국민 건강권 침해” 기자협회 과학기자협회 공동 발표"
 </code></pre>
 <p>품사로 명사(<code>nng</code>), 언론사로 “한겨레”, 단어 “뒤”가 들어간 신문기사 제목을 추출해보자.</p>
-<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vac_df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tidytext/man/unnest_tokens.html">unnest_tokens</a></span><span class="op">(</span><span class="va">word</span>, <span class="va">제목</span>, token <span class="op">=</span> <span class="fu">RcppMeCab</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/RcppMeCab/man/pos.html">pos</a></span>, drop <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1331,13 +1333,13 @@ A:B = \frac{A}{B}
 ## [4] "예진 통과하면 간호사 4명 배치된 주사실로 접종 뒤 15~30분 관찰"
 </code></pre>
 </div>
-<div id="총빈도와-상대빈도-비교" class="section level3" number="7.4.6">
+<div id="총빈도와-상대빈도-비교" class="section level3" number="8.4.6">
 <h3>
-<span class="header-section-number">7.4.6</span> 총빈도와 상대빈도 비교<a class="anchor" aria-label="anchor" href="#%EC%B4%9D%EB%B9%88%EB%8F%84%EC%99%80-%EC%83%81%EB%8C%80%EB%B9%88%EB%8F%84-%EB%B9%84%EA%B5%90"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.4.6</span> 총빈도와 상대빈도 비교<a class="anchor" aria-label="anchor" href="#%EC%B4%9D%EB%B9%88%EB%8F%84%EC%99%80-%EC%83%81%EB%8C%80%EB%B9%88%EB%8F%84-%EB%B9%84%EA%B5%90"><i class="fas fa-link"></i></a>
 </h3>
 <p>언론사별로 각 기사에서 사용된 단어의 총빈도와 상대빈도를 비교하자.</p>
 <p>먼저 총빈도를 구한다.</p>
-<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">total_fq</span> <span class="op">&lt;-</span> <span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">!=</span> <span class="st">"경향"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1353,18 +1355,18 @@ A:B = \frac{A}{B}
 <span><span class="va">total_fq</span></span></code></pre></div>
 <pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 32 × 3</span>
 ## <span style="color: #555555;"># Groups:   언론사 [4]</span>
-##   언론사   word      n
-##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>
-## <span style="color: #555555;">1</span> 경향신문 오늘     19
-## <span style="color: #555555;">2</span> 경향신문 카       14
-## <span style="color: #555555;">3</span> 경향신문 시작     13
-## <span style="color: #555555;">4</span> 경향신문 집단     13
-## <span style="color: #555555;">5</span> 경향신문 고령     10
-## <span style="color: #555555;">6</span> 경향신문 이상     10
+##   언론사   word       n
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>
+## <span style="color: #555555;">1</span> 경향신문 코로나    23
+## <span style="color: #555555;">2</span> 경향신문 오늘      19
+## <span style="color: #555555;">3</span> 경향신문 카        14
+## <span style="color: #555555;">4</span> 경향신문 시작      13
+## <span style="color: #555555;">5</span> 경향신문 고령      10
+## <span style="color: #555555;">6</span> 경향신문 이상      10
 ## <span style="color: #555555;"># … with 26 more rows</span>
 </code></pre>
 <p>이번에는 상대빈도를 구한다.</p>
-<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">wlo_fq</span> <span class="op">&lt;-</span> <span class="va">vac_tk</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">언론사</span>, <span class="va">word</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">word</span> <span class="op">!=</span> <span class="st">"경향"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1381,20 +1383,20 @@ A:B = \frac{A}{B}
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">log_odds_weighted</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">7</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">wlo_fq</span> </span></code></pre></div>
-<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 38 × 4</span>
+<pre class="r-output"><code>## <span style="color: #555555;"># A tibble: 58 × 4</span>
 ## <span style="color: #555555;"># Groups:   언론사 [4]</span>
-##   언론사   word      n log_odds_weighted
-##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span> <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>             <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
-## <span style="color: #555555;">1</span> 경향신문 현장      5              2.74
-## <span style="color: #555555;">2</span> 경향신문 오늘     19              2.46
-## <span style="color: #555555;">3</span> 경향신문 국산      4              2.45
-## <span style="color: #555555;">4</span> 경향신문 발        3              2.12
-## <span style="color: #555555;">5</span> 경향신문 사회      3              2.12
-## <span style="color: #555555;">6</span> 경향신문 삶        3              2.12
-## <span style="color: #555555;"># … with 32 more rows</span>
+##   언론사   word       n log_odds_weighted
+##   <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #555555; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #555555; font-style: italic;">&lt;int&gt;</span>             <span style="color: #555555; font-style: italic;">&lt;dbl&gt;</span>
+## <span style="color: #555555;">1</span> 경향신문 현장       5              2.76
+## <span style="color: #555555;">2</span> 경향신문 국산       4              2.47
+## <span style="color: #555555;">3</span> 경향신문 오늘      19              2.44
+## <span style="color: #555555;">4</span> 경향신문 사회       3              2.14
+## <span style="color: #555555;">5</span> 경향신문 삶         3              2.14
+## <span style="color: #555555;">6</span> 경향신문 입소자     3              2.14
+## <span style="color: #555555;"># … with 52 more rows</span>
 </code></pre>
 <p>총빈도와 상대빈도 데이터프레임을 행방향으로 결합한다.</p>
-<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">total_fq</span>, <span class="va">언론사</span>, <span class="va">word</span>, score <span class="op">=</span> <span class="va">n</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">wlo_fq</span>, <span class="va">언론사</span>, <span class="va">word</span>, score <span class="op">=</span> <span class="va">log_odds_weighted</span><span class="op">)</span>,</span>
@@ -1415,9 +1417,9 @@ A:B = \frac{A}{B}
 <p>언론사별로는 경향신문은 ‘오늘’과 ’현장’, 문화일보는 ‘미국’과 ’누적’, 조선일보는 ‘국민’과 ’속도’, 한겨레는 ‘뒤’와 ’팔’ 등에 관련된 기사를 다른 언론사에 비해 상대적으로 더 다뤘다.</p>
 </div>
 </div>
-<div id="과제-2" class="section level2" number="7.5">
+<div id="과제-2" class="section level2" number="8.5">
 <h2>
-<span class="header-section-number">7.5</span> 과제<a class="anchor" aria-label="anchor" href="#%EA%B3%BC%EC%A0%9C-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">8.5</span> 과제<a class="anchor" aria-label="anchor" href="#%EA%B3%BC%EC%A0%9C-2"><i class="fas fa-link"></i></a>
 </h2>
 <p>빅카인즈에서 언론사별로 관심 분야의 기사를 추출해 보도 내용을 분석할 수 있도록 시각화하시오.</p>
 <ul>
@@ -1431,46 +1433,46 @@ A:B = \frac{A}{B}
 
 
   <div class="chapter-nav">
-<div class="prev"><a href="text-cleansing.html"><span class="header-section-number">6</span> 정제 (전처리)</a></div>
-<div class="next"><a href="sentiment.html"><span class="header-section-number">8</span> 감성분석</a></div>
+<div class="prev"><a href="text-cleansing.html"><span class="header-section-number">7</span> 정제 (전처리)</a></div>
+<div class="next"><a href="sentiment.html"><span class="header-section-number">9</span> 감성분석</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#tf-idf"><span class="header-section-number">7</span> 단어 빈도수</a></li>
+<li><a class="nav-link" href="#tf-idf"><span class="header-section-number">8</span> 단어 빈도수</a></li>
 <li>
-<a class="nav-link" href="#tf_idf"><span class="header-section-number">7.1</span> tf_idf</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#%EA%B3%B5%EC%8B%9D"><span class="header-section-number">7.1.1</span> 공식</a></li>
-<li><a class="nav-link" href="#%EC%A0%81%EC%9A%A9"><span class="header-section-number">7.1.2</span> 적용</a></li>
-<li><a class="nav-link" href="#bind_tf_idf-%ED%95%A8%EC%88%98"><span class="header-section-number">7.1.3</span> bind_tf_idf() 함수</a></li>
+<a class="nav-link" href="#tf_idf"><span class="header-section-number">8.1</span> tf_idf</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EA%B3%B5%EC%8B%9D"><span class="header-section-number">8.1.1</span> 공식</a></li>
+<li><a class="nav-link" href="#%EC%A0%81%EC%9A%A9"><span class="header-section-number">8.1.2</span> 적용</a></li>
+<li><a class="nav-link" href="#bind_tf_idf-%ED%95%A8%EC%88%98"><span class="header-section-number">8.1.3</span> bind_tf_idf() 함수</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-odds-ratio"><span class="header-section-number">7.2</span> 승산비 (odds ratio)</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#%EC%9E%90%EB%A3%8C%EC%A4%80%EB%B9%84"><span class="header-section-number">7.2.1</span> 자료준비</a></li>
-<li><a class="nav-link" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-%EA%B3%84%EC%82%B0"><span class="header-section-number">7.2.2</span> 승산비 계산</a></li>
-<li><a class="nav-link" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><span class="header-section-number">7.2.3</span> 로그승산비</a></li>
-<li><a class="nav-link" href="#%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><span class="header-section-number">7.2.4</span> 가중로그승산비</a></li>
-<li><a class="nav-link" href="#bind_log_odds-%ED%95%A8%EC%88%98"><span class="header-section-number">7.2.5</span> bind_log_odds() 함수</a></li>
+<a class="nav-link" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-odds-ratio"><span class="header-section-number">8.2</span> 승산비 (odds ratio)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EC%9E%90%EB%A3%8C%EC%A4%80%EB%B9%84"><span class="header-section-number">8.2.1</span> 자료준비</a></li>
+<li><a class="nav-link" href="#%EC%8A%B9%EC%82%B0%EB%B9%84-%EA%B3%84%EC%82%B0"><span class="header-section-number">8.2.2</span> 승산비 계산</a></li>
+<li><a class="nav-link" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><span class="header-section-number">8.2.3</span> 로그승산비</a></li>
+<li><a class="nav-link" href="#%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><span class="header-section-number">8.2.4</span> 가중로그승산비</a></li>
+<li><a class="nav-link" href="#bind_log_odds-%ED%95%A8%EC%88%98"><span class="header-section-number">8.2.5</span> bind_log_odds() 함수</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#%EC%A7%80%ED%91%9C-%EB%B9%84%EA%B5%90"><span class="header-section-number">7.3</span> 지표 비교</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84-1"><span class="header-section-number">7.3.1</span> 로그승산비</a></li>
-<li><a class="nav-link" href="#tf_idf-3"><span class="header-section-number">7.3.2</span> tf_idf</a></li>
-<li><a class="nav-link" href="#%EB%B9%84%EA%B5%90-1"><span class="header-section-number">7.3.3</span> 비교</a></li>
+<a class="nav-link" href="#%EC%A7%80%ED%91%9C-%EB%B9%84%EA%B5%90"><span class="header-section-number">8.3</span> 지표 비교</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84-1"><span class="header-section-number">8.3.1</span> 로그승산비</a></li>
+<li><a class="nav-link" href="#tf_idf-3"><span class="header-section-number">8.3.2</span> tf_idf</a></li>
+<li><a class="nav-link" href="#%EB%B9%84%EA%B5%90-1"><span class="header-section-number">8.3.3</span> 비교</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#%EC%97%B0%EC%8A%B5-3"><span class="header-section-number">7.4</span> 연습</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#%EB%B9%85%EC%B9%B4%EC%9D%B8%EC%A6%88"><span class="header-section-number">7.4.1</span> 빅카인즈</a></li>
-<li><a class="nav-link" href="#%EC%A0%95%EC%A0%9C-1"><span class="header-section-number">7.4.2</span> 정제</a></li>
-<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-%EB%B0%8F-%EC%86%8C%ED%86%B5"><span class="header-section-number">7.4.3</span> 분석 및 소통</a></li>
-<li><a class="nav-link" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EC%B4%9D%EB%B9%88%EB%8F%84"><span class="header-section-number">7.4.4</span> 언론사별 총빈도</a></li>
-<li><a class="nav-link" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><span class="header-section-number">7.4.5</span> 언론사별 가중로그승산비</a></li>
-<li><a class="nav-link" href="#%EC%B4%9D%EB%B9%88%EB%8F%84%EC%99%80-%EC%83%81%EB%8C%80%EB%B9%88%EB%8F%84-%EB%B9%84%EA%B5%90"><span class="header-section-number">7.4.6</span> 총빈도와 상대빈도 비교</a></li>
+<a class="nav-link" href="#%EC%97%B0%EC%8A%B5-3"><span class="header-section-number">8.4</span> 연습</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#%EB%B9%85%EC%B9%B4%EC%9D%B8%EC%A6%88"><span class="header-section-number">8.4.1</span> 빅카인즈</a></li>
+<li><a class="nav-link" href="#%EC%A0%95%EC%A0%9C-1"><span class="header-section-number">8.4.2</span> 정제</a></li>
+<li><a class="nav-link" href="#%EB%B6%84%EC%84%9D-%EB%B0%8F-%EC%86%8C%ED%86%B5"><span class="header-section-number">8.4.3</span> 분석 및 소통</a></li>
+<li><a class="nav-link" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EC%B4%9D%EB%B9%88%EB%8F%84"><span class="header-section-number">8.4.4</span> 언론사별 총빈도</a></li>
+<li><a class="nav-link" href="#%EC%96%B8%EB%A1%A0%EC%82%AC%EB%B3%84-%EA%B0%80%EC%A4%91%EB%A1%9C%EA%B7%B8%EC%8A%B9%EC%82%B0%EB%B9%84"><span class="header-section-number">8.4.5</span> 언론사별 가중로그승산비</a></li>
+<li><a class="nav-link" href="#%EC%B4%9D%EB%B9%88%EB%8F%84%EC%99%80-%EC%83%81%EB%8C%80%EB%B9%88%EB%8F%84-%EB%B9%84%EA%B5%90"><span class="header-section-number">8.4.6</span> 총빈도와 상대빈도 비교</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#%EA%B3%BC%EC%A0%9C-2"><span class="header-section-number">7.5</span> 과제</a></li>
+<li><a class="nav-link" href="#%EA%B3%BC%EC%A0%9C-2"><span class="header-section-number">8.5</span> 과제</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1487,7 +1489,7 @@ A:B = \frac{A}{B}
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-08-02.</p>
+    <p>"<strong>R 텍스트마이닝</strong>" was written by 한국 R 사용자회. It was last built on 2022-08-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
